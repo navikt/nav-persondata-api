@@ -23,6 +23,10 @@ java {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "21"
 }
+tasks.named<Jar>("bootJar") {
+    archiveFileName.set("app.jar")
+}
+
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
