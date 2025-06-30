@@ -1,0 +1,58 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: nav-persondata-api
+  namespace: holmes
+  labels:
+    team: holmes
+spec:
+  observability:
+    logging:
+      destinations:
+        - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: true
+      claims:
+        extra:
+          - "NAVident"
+          - "azp_name"
+  image: {{image}}
+  liveness:
+    path: /actuator/health
+    port: 8080
+    initialDelay: 20
+    timeout: 60
+  readiness:
+    path: /actuator/health
+    port: 8080
+    initialDelay: 20
+    timeout: 60
+  ingresses:
+    - https://nav-persondata-api.intern.dev.nav.no
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: "actuator/metrics"
+  webproxy: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: oppslag-bruker-frontend
+          namespace: holmes
+          cluster: dev-gcp
+    outbound:
