@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest
 
+import no.nav.security.token.support.core.api.Protected
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/me")
 class WhoamiController {
 
+    @Protected
     @GetMapping
     suspend fun whoami(@AuthenticationPrincipal principal: Jwt): Map<String, Any?> {
         return mapOf(

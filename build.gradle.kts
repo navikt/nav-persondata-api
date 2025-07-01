@@ -1,3 +1,4 @@
+val tokenSupportVersion = "5.0.30"
 plugins {
     id("org.springframework.boot") version "3.2.7"
     id("io.spring.dependency-management") version "1.1.4"
@@ -30,7 +31,7 @@ tasks.named<Jar>("bootJar") {
 
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -47,6 +48,10 @@ dependencies {
     * */
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
+    implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
+
 }
 
 tasks.withType<Test> {

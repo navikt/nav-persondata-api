@@ -1,5 +1,6 @@
 package no.nav.persondataapi
 
+import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.web.bind.annotation.GetMapping
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @SpringBootApplication
+@EnableJwtTokenValidation
+
 class Application
 
 fun main(args: Array<String>) {
