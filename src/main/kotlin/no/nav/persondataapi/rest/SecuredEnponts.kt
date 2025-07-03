@@ -1,6 +1,7 @@
 package no.nav.persondataapi.rest
 
 
+import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 
 class SecureedCpntroller {
     @GetMapping
-    @Unprotected
+    @Protected
     fun unprotectedPath() = "I am protected"
 }
