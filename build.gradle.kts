@@ -46,8 +46,6 @@ dependencies {
     /*
     * Sikkerhet
     * */
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
     implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
