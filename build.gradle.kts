@@ -46,6 +46,7 @@ dependencies {
     /*
     * Sikkerhet
     * */
+    implementation("no.nav.security:token-validation-spring")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("no.nav.security:token-validation-spring:${tokenSupportVersion}")
     implementation("no.nav.security:token-client-spring:${tokenSupportVersion}")
