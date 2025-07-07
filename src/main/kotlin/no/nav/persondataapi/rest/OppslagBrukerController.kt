@@ -5,12 +5,11 @@ import no.nav.persondataapi.service.OppslagService
 
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
-import org.springframework.core.io.ClassPathResource
-import org.springframework.util.StreamUtils
+
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
-import java.nio.charset.StandardCharsets
+
 
 @RestController
 class OppslagBrukerController(
@@ -19,7 +18,7 @@ class OppslagBrukerController(
 ) {
     @GetMapping("/oppslag-bruker")
     @Protected
-    fun userInfo(@RequestHeader("fnr") fnr: String): GrunnlagsData {
+    suspend fun userInfo(@RequestHeader("fnr") fnr: String): GrunnlagsData {
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val issuer = context.issuers.first()
         val claims = context.getClaims(issuer)
@@ -27,8 +26,8 @@ class OppslagBrukerController(
         val username = claims.getStringClaim("NAVident")
 
         println("Bruker $username gjorde oppslag på fnr: $fnr")
-
-        return oppslagService.hentGrunnlagsData(fnr, username)
+        val response = oppslagService.hentGrunnlagsData(fnr, username)
+        return response
     }
 
 }

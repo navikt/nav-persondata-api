@@ -1,23 +1,38 @@
-package no.nav.persondataapi.utbetaling.client
-
+package    no.nav.persondataapi.utbetaling.client
 import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.UtbetalingRespons
+import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import org.springframework.stereotype.Component
 
 @Component
 class UtbetalingClient {
 
-    fun hentUtbetalingerForAktor(fnr: String): UtbetalingRespons {
+    fun hentUtbetalingerForAktor(fnr: String): UtbetalingResultat {
         return runCatching {
             readJsonFileToDto<List<Utbetaling>>("$fnr.json")
         }.fold(
             onSuccess = { utbetalinger ->
-                UtbetalingRespons(status = true, utbetalinger = utbetalinger)
+                UtbetalingResultat(
+                    data = UtbetalingRespons(utbetalinger = utbetalinger),
+                    statusCode = 200
+                )
             },
             onFailure = { error ->
-                println("Feil ved lesing av utbetalinger for $fnr: ${error.message}")
-                UtbetalingRespons(status = false, utbetalinger = emptyList())
+                // 👇 Simulerer "ikke tilgang"-feil hvis fil ikke finnes
+                if (error.message?.contains("ikke tilgang") == true || fnr == "00000000000") {
+                    UtbetalingResultat(
+                        data = null,
+                        statusCode = 401,
+                        errorMessage = "Ingen tilgang til utbetalinger for $fnr"
+                    )
+                } else {
+                    UtbetalingResultat(
+                        data = null,
+                        statusCode = 500,
+                        errorMessage = "Feil ved lesing: ${error.message}"
+                    )
+                }
             }
         )
     }
