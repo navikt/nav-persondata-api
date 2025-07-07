@@ -1,0 +1,18 @@
+application:
+  name: nav-persondata-api
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info
+  endpoint:
+    health:
+      show-details: always
+no.nav.security.jwt:
+  issuer:
+    azuread:
+      discoveryurl: "https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration"
+      accepted_audience: "f99254b7-a630-48fe-a21a-21989eca6f4b"
