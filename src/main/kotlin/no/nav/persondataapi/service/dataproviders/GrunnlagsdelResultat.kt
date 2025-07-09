@@ -1,4 +1,4 @@
-package no.nav.persondataapi.service
+package no.nav.persondataapi.service.dataproviders
 
 data class GrunnlagsdelResultat(
     val type: GrunnlagsType,

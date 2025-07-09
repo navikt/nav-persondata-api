@@ -45,6 +45,12 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     /*
+    WebFlux
+    Dette gir deg WebClient, men ikke hele WebFlux runtime.
+🔸  Ingen Netty, ingen Reactor context, og ingen konflikt med Spring MVC
+     */
+    implementation("org.springframework:spring-webflux")
+    /*
     * Sikkerhet
     * */
     implementation("no.nav.security:token-validation-spring")

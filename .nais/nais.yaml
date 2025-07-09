@@ -30,6 +30,8 @@ spec:
         extra:
           - "NAVident"
           - "azp_name"
+    sidecar:
+      enabled: true
   image: {{image}}
   liveness:
     path: /actuator/health
@@ -58,3 +60,8 @@ spec:
           namespace: holmes
           cluster: dev-gcp
     outbound:
+  env:
+    - name: UTBETALING_SCOPE
+      value: api://dev-fss.okonomi.sokos-utbetaldata/.default
+    - name: UTBETALING_URL
+      value: https://sokos-utbetaldata.dev.intern.nav.no

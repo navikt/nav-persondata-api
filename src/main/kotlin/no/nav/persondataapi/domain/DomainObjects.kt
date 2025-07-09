@@ -1,6 +1,6 @@
 package no.nav.persondataapi.domain
 
-import no.nav.persondataapi.service.GrunnlagsdelResultat
+import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import java.time.ZonedDateTime
 
