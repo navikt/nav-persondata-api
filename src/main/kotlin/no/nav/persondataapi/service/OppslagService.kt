@@ -6,6 +6,8 @@ import kotlinx.coroutines.coroutineScope
 import no.nav.persondataapi.domain.GrunnlagsData
 
 import no.nav.persondataapi.domain.UtbetalingResultat
+import no.nav.persondataapi.service.dataproviders.GrunnlagsProvider
+import no.nav.persondataapi.service.dataproviders.GrunnlagsType
 
 import org.springframework.stereotype.Component
 import java.time.ZonedDateTime
