@@ -45,4 +45,20 @@ class OppslagBrukerController(
             oppslagService.hentGrunnlagsData(fnr, username)
         }
     }
+    @GetMapping("/utbetaling-token")
+    @Protected
+    fun utbetalingToken(@RequestHeader("fnr") fnr: String): String {
+        return runBlocking {
+            val context = tokenValidationContextHolder.getTokenValidationContext()
+            val token = context.firstValidToken?.encodedToken
+                ?: throw IllegalStateException("Fant ikke gyldig token")
+
+            val newToken = tokenService.exchangeToken(
+                token,
+                "api://dev-fss.okonomi.sokos-utbetaldata/.default)"
+            )
+            println("Hentet nytt token: $newToken")
+            newToken
+        }
+    }
 }
