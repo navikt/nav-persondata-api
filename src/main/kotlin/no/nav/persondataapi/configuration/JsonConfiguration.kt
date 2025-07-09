@@ -9,4 +9,5 @@ object JsonUtils {
     }
 
     inline fun <reified T> fromJson(json: String): T = mapper.readValue(json)
+    inline fun <reified T> toJson(obj: Any): T = mapper.valueToTree(obj)
 }

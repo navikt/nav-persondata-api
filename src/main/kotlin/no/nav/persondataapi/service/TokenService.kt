@@ -1,5 +1,10 @@
 package no.nav.persondataapi.service
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlinx.coroutines.reactive.awaitSingle
+import no.nav.persondataapi.configuration.JsonUtils
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
@@ -7,16 +12,19 @@ import org.springframework.web.reactive.function.client.WebClient
 
     @Component
 class TokenService (
-    @Qualifier("tokenWebClient")
-    private val tokenWebClient: WebClient
-) {
-    fun exchangeToken(userToken: String, target: String): String {
+        @Qualifier("tokenWebClient")
+        private val tokenWebClient: WebClient,
+        private val objectMapper: ObjectMapper
+    ) {
+         fun exchangeToken(userToken: String, target: String): String {
         val requestBody = mapOf(
             "identity_provider" to "azuread",
             "target" to target,
             "user_token" to userToken
         )
 
+            val v: JsonNode = JsonUtils.toJson(requestBody)
+            println(v.toPrettyString())
         val response = tokenWebClient.post()
             .bodyValue(requestBody)
             .retrieve()

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @SpringBootApplication
-@EnableJwtTokenValidation
-
 class Application
 
 fun main(args: Array<String>) {

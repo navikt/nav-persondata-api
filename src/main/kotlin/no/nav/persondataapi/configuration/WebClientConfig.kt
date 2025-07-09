@@ -3,12 +3,13 @@ package no.nav.persondataapi.configuration
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.context.request.RequestContextListener
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 class WebClientConfig {
 
-    @Value("\${NAIS_TOKEN_ENDPOINT}")
+    @Value("\${NAIS_TOKEN_EXCHANGE_ENDPOINT}")
     lateinit var tokenExchangeUrl: String
 
     @Bean
