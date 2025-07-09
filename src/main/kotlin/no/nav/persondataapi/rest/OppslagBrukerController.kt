@@ -37,7 +37,7 @@ class OppslagBrukerController(
 
             val newToken = tokenService.exchangeToken(
                 token,
-                "api://dev-fss.okonomi.sokos-utbetaldata/.default)"
+                "api://dev-fss.okonomi.sokos-utbetaldata/.default"
             )
 
             println("Hentet nytt token: $newToken")
@@ -55,7 +55,7 @@ class OppslagBrukerController(
 
             val newToken = tokenService.exchangeToken(
                 token,
-                "api://dev-fss.okonomi.sokos-utbetaldata/.default)"
+                "api://dev-fss.okonomi.sokos-utbetaldata/.default"
             )
             println("Hentet nytt token: $newToken")
             newToken
