@@ -7,3 +7,9 @@ data class GrunnlagsdelResultat(
     val status:Int? = null,
     val feilmelding: String? = null
 )
+
+data class GrunnlagsKontekst(
+    val fnr: String,
+    val saksbehandlerId: String,
+    val token: String
+)

@@ -6,5 +6,5 @@ import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 interface GrunnlagsProvider {
     val type: GrunnlagsType
 
-    suspend fun hent(fnr: String, saksbehandlerId: String): GrunnlagsdelResultat
+    suspend fun hent(kontekst: GrunnlagsKontekst): GrunnlagsdelResultat
 }

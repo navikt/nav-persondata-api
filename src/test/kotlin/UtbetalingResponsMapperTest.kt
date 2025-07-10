@@ -12,7 +12,7 @@ class UtbetalingResponsMapperTest {
     fun kanLeseResponsFraSOKOSUtbetalingsAPI() {
 
 
-        val jsonString = readJsonFromFile("12345678901.json")
+        val jsonString = readJsonFromFile("27525728205.json")
         val utbetalinger: List<Utbetaling> = JsonUtils.fromJson(jsonString)
 
         println(utbetalinger)

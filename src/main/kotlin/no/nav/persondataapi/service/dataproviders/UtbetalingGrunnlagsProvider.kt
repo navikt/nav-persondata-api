@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component
 class UtbetalingGrunnlagsProvider(val utbetalingClient: UtbetalingClient) : GrunnlagsProvider {
     override val type = GrunnlagsType.UTBETALINGER
 
-    override suspend fun hent(fnr: String, saksbehandlerId: String): GrunnlagsdelResultat {
-        val resultat = utbetalingClient.hentUtbetalingerForAktor(fnr)
+    override suspend fun hent(kontekst: GrunnlagsKontekst): GrunnlagsdelResultat {
+        val resultat = utbetalingClient.hentUtbetalingerForAktor(kontekst.fnr,kontekst.token)
         return GrunnlagsdelResultat(
             type = type,
             data = resultat.data,

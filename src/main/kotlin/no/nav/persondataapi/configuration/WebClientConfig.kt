@@ -18,4 +18,10 @@ class WebClientConfig {
             .baseUrl(tokenExchangeUrl)
             .defaultHeader("Content-Type", "application/json")
             .build()
+    @Bean
+    fun utbetalingWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl("https://sokos-utbetaldata.dev.intern.nav.no/utbetaldata/api/v2/hent-utbetalingsinformasjon/intern")
+            .defaultHeader("Content-Type", "application/json")
+            .build()
 }
