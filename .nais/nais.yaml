@@ -64,6 +64,8 @@ spec:
         - application: sokos-utbetaldata
           namespace: okonomi
           cluster: dev-fss
+      external:
+        - host: sokos-utbetaldata.dev.intern.nav.no
   env:
     - name: UTBETALING_SCOPE
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
