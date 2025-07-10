@@ -48,6 +48,7 @@ class UtbetalingClient(
             response
         }.fold(
             onSuccess = { utbetalinger ->
+                println("Utbetaling er ok..fått svar!")
                 UtbetalingResultat(
                     data = UtbetalingRespons(utbetalinger = utbetalinger),
                     statusCode = 200

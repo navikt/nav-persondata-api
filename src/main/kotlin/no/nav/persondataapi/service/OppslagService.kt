@@ -37,7 +37,7 @@ class OppslagService(
             ?: throw IllegalStateException("Fant ikke gyldig token")
 
         val kontekst = GrunnlagsKontekst(fnr, username, token)
-        
+
         val resultater = coroutineScope {
             providers
                 .filter { it.type in typer }
@@ -48,11 +48,12 @@ class OppslagService(
                 }
                 .awaitAll()
         }
+        println("Alle svar hentet $resultater")
 
         // Eksempel på hvordan du setter sammen full respons
         val utbetalinger = resultater
             .find { it.type == GrunnlagsType.UTBETALINGER }
-
+        println("returnerer svar fra OppslagService")
         return GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
