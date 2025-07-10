@@ -65,9 +65,9 @@ spec:
           namespace: okonomi
           cluster: dev-fss
       external:
-        - host: sokos-utbetaldata.dev.intern.nav.no
+        - host: sokos-utbetaldata.dev-fss-pub.nais.io
   env:
     - name: UTBETALING_SCOPE
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
     - name: UTBETALING_URL
-      value: https://sokos-utbetaldata.dev.intern.nav.no
+      value: https://sokos-utbetaldata.dev-fss-pub.nais.io
