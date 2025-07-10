@@ -60,6 +60,9 @@ spec:
           namespace: holmes
           cluster: dev-gcp
     outbound:
+      - application: sokos-utbetaldata
+        namespace: okonomi
+        cluster: dev-fss
   env:
     - name: UTBETALING_SCOPE
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
