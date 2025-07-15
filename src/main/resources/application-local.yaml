@@ -20,5 +20,3 @@ UTBETALING_URL : ""
 NAIS_TOKEN_ENDPOINT: http://127.0.0.1:3000/api/v1/token
 NAIS_TOKEN_INTROSPECTION_ENDPOINT : http://127.0.0.1:3000/api/v1/introspect
 NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:3000/api/v1/token/exchange
-pdl:
-  url: ""

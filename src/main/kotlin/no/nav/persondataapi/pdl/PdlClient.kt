@@ -30,8 +30,7 @@ class PdlClient(
         val query = HentPerson(
             HentPerson.Variables(
                 ident = ident,
-                bostedHistorikk = false,
-                statsborgerskapHistorikk = false
+                historikk = false,
             )
         )
         val response = client.execute(query) {
