@@ -1,8 +1,10 @@
 package no.nav.persondataapi.rest
 
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.pdl.PdlClient
 import no.nav.persondataapi.service.OppslagService
+import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
@@ -20,9 +22,9 @@ class PersonController(
     private val tokenService: TokenService,
     private val pdlClient: PdlClient
 ) {
-    @GetMapping("/pdl-token")
+    @GetMapping("/hentPerson")
     @Protected
-    fun pdlToken(@RequestHeader("fnr") fnr: String): String {
+    fun hentPerson(@RequestHeader("fnr") fnr: String): Person {
         return runBlocking {
             val context = tokenValidationContextHolder.getTokenValidationContext()
             val token = context.firstValidToken?.encodedToken
@@ -35,7 +37,24 @@ class PersonController(
             val res = pdlClient.hentPerson(fnr,newToken)
             println(res)
             println("Hentet nytt token: $newToken")
-            newToken
+            res!!.hentPerson!!
+        }
+    }
+    @GetMapping("/hentPerson2")
+    @Protected
+    fun hentPerson2(@RequestHeader("fnr") fnr: String): Person {
+        return runBlocking {
+            val context = tokenValidationContextHolder.getTokenValidationContext()
+            val token = context.firstValidToken?.encodedToken
+                ?: throw IllegalStateException("Fant ikke gyldig token")
+
+            val newToken = tokenService.exchangeToken(
+                token, SCOPE.PDL_SCOPE
+            )
+            val res = pdlClient.hentPerson(fnr,newToken)
+            println(res)
+            println("Hentet nytt token: $newToken")
+            res!!.hentPerson!!
         }
     }
 }
