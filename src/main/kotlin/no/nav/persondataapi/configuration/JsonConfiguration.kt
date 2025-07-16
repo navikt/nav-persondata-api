@@ -1,0 +1,23 @@
+package no.nav.persondataapi.configuration
+
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
+
+
+object JsonUtils {
+    val mapper: ObjectMapper = ObjectMapper()
+        .registerModule(KotlinModule.Builder().build())
+        .registerModule(JavaTimeModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+
+    inline fun <reified T> fromJson(json: String): T =
+        mapper.readValue(json)
+
+    fun toJson(obj: Any): JsonNode =
+        mapper.valueToTree(obj)
+}

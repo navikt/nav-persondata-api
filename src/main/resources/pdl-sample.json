@@ -1,0 +1,362 @@
+{
+  "falskIdentitet": null,
+  "bostedsadresse": [
+    {
+      "angittFlyttedato": "1957-12-27",
+      "coAdressenavn": null,
+      "gyldigFraOgMed": "1957-12-27T00:00",
+      "gyldigTilOgMed": null,
+      "vegadresse": {
+        "matrikkelId": "66410850",
+        "husbokstav": null,
+        "husnummer": "30",
+        "adressenavn": "Fjellmyr terrasse",
+        "bruksenhetsnummer": null,
+        "tilleggsnavn": null,
+        "postnummer": "5532",
+        "kommunenummer": "1106",
+        "bydelsnummer": null,
+        "koordinater": {
+          "x": 290409.0,
+          "y": 6591053.0,
+          "z": 0.0,
+          "kvalitet": null
+        }
+      },
+      "matrikkeladresse": null,
+      "ukjentBosted": null,
+      "utenlandskAdresse": null,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "1957-12-27T00:00",
+        "gyldighetstidspunkt": "1957-12-27T00:00",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "832c33af-5c5a-421b-9899-8b9114e12b1b",
+        "historisk": false
+      }
+    }
+  ],
+  "oppholdsadresse": [],
+  "deltBosted": [],
+  "forelderBarnRelasjon": [
+    {
+      "relatertPersonsIdent": "13499406708",
+      "relatertPersonsRolle": "BARN",
+      "minRolleForPerson": "MOR",
+      "relatertPersonUtenFolkeregisteridentifikator": null,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T12:24:41",
+        "gyldighetstidspunkt": "2025-06-16T12:24:41",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "f8c5fb82-afd6-4af6-9960-81ceff9dc05c",
+        "historisk": false
+      }
+    },
+    {
+      "relatertPersonsIdent": "10452550240",
+      "relatertPersonsRolle": "BARN",
+      "minRolleForPerson": "MOR",
+      "relatertPersonUtenFolkeregisteridentifikator": null,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T12:24:40",
+        "gyldighetstidspunkt": "2025-06-16T12:24:40",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:29",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "52972c6e-0abf-497f-b361-5b97a0452559",
+        "historisk": false
+      }
+    }
+  ],
+  "kontaktadresse": [],
+  "kontaktinformasjonForDoedsbo": [],
+  "utenlandskIdentifikasjonsnummer": [],
+  "adressebeskyttelse": [],
+  "foedested": [
+    {
+      "foedeland": "NOR",
+      "foedested": null,
+      "foedekommune": "1106",
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T12:24:40",
+        "gyldighetstidspunkt": "2025-06-16T12:24:40",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "a5959375-76d4-4023-a480-8dd9afd540af",
+        "historisk": false
+      }
+    }
+  ],
+  "foedselsdato": [
+    {
+      "foedselsdato": "1957-12-27",
+      "foedselsaar": 1957,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "1957-12-27T00:00",
+        "gyldighetstidspunkt": "1957-12-27T00:00",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "2260ecca-442d-43b9-89b5-ccf80f9a4c44",
+        "historisk": false
+      }
+    }
+  ],
+  "doedsfall": [],
+  "kjoenn": [
+    {
+      "kjoenn": "KVINNE",
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T11:25:39",
+        "gyldighetstidspunkt": "2025-06-16T11:25:39",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "abbf9c59-39ab-4a2f-a54f-92d4d8f585bc",
+        "historisk": false
+      }
+    }
+  ],
+  "navn": [
+    {
+      "fornavn": "STORARTET",
+      "mellomnavn": null,
+      "etternavn": "ALLIANSE",
+      "originaltNavn": null,
+      "gyldigFraOgMed": "1957-12-27",
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T12:25:39",
+        "gyldighetstidspunkt": "1957-12-27T00:00",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "5d5e7e47-422a-4c2c-952c-1a071a5689eb",
+        "historisk": false
+      }
+    }
+  ],
+  "folkeregisterpersonstatus": [
+    {
+      "status": "bosatt",
+      "forenkletStatus": "bosattEtterFolkeregisterloven",
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "1957-12-27T00:00",
+        "gyldighetstidspunkt": "1957-12-27T00:00",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "194f7dff-cf07-4c33-9f84-2bd96a816595",
+        "historisk": false
+      }
+    }
+  ],
+  "identitetsgrunnlag": [],
+  "tilrettelagtKommunikasjon": [],
+  "folkeregisteridentifikator": [
+    {
+      "identifikasjonsnummer": "27525728205",
+      "status": "I_BRUK",
+      "type": "FNR",
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "2025-06-16T12:25:39",
+        "gyldighetstidspunkt": "2025-06-16T12:25:39",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "b2402455-ca25-4f2d-abed-75b8a8757a6d",
+        "historisk": false
+      }
+    }
+  ],
+  "navspersonidentifikator": [],
+  "statsborgerskap": [
+    {
+      "land": "NOR",
+      "bekreftelsesdato": null,
+      "gyldigFraOgMed": null,
+      "gyldigTilOgMed": null,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": null,
+        "gyldighetstidspunkt": null,
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "b88bec78-aa1c-4d42-9eb5-2a78b865a7ac",
+        "historisk": false
+      }
+    }
+  ],
+  "sikkerhetstiltak": [],
+  "opphold": [],
+  "sivilstand": [
+    {
+      "type": "GIFT",
+      "gyldigFraOgMed": "1969-06-01",
+      "relatertVedSivilstand": "01425808377",
+      "bekreftelsesdato": null,
+      "folkeregistermetadata": {
+        "aarsak": null,
+        "ajourholdstidspunkt": "1969-06-01T00:00",
+        "gyldighetstidspunkt": "1969-06-01T00:00",
+        "kilde": "Dolly",
+        "opphoerstidspunkt": null,
+        "sekvens": null
+      },
+      "metadata": {
+        "endringer": [
+          {
+            "kilde": "Dolly",
+            "registrert": "2025-06-16T12:25:39",
+            "registrertAv": "Folkeregisteret",
+            "systemkilde": "FREG",
+            "type": "OPPRETT"
+          }
+        ],
+        "master": "FREG",
+        "opplysningsId": "de226c63-41dd-4e9c-abfe-5b42cf520d80",
+        "historisk": false
+      }
+    }
+  ],
+  "telefonnummer": [],
+  "innflyttingTilNorge": [],
+  "utflyttingFraNorge": [],
+  "vergemaalEllerFremtidsfullmakt": [],
+  "foreldreansvar": [],
+  "rettsligHandleevne": [],
+  "doedfoedtBarn": []
+}

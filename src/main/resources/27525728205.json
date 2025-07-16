@@ -1,0 +1,329 @@
+[
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "27525728205",
+      "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+    },
+    "utbetalingsmetode": "Betalingskort",
+    "utbetalingsstatus": "Utbetalt",
+    "posteringsdato": "2025-06-16",
+    "forfallsdato": "2025-06-16",
+    "utbetalingsdato": "2025-06-16",
+    "utbetalingNettobeloep": 42042,
+    "utbetalingsmelding": "010325 - 310525 100 %, Skatt %: 30,00, Grunnbeløpet har økt fra 1. mai 2025. De aller fleste vil få etterbetalt i, juni.",
+    "ytelseListe": [
+      {
+        "ytelsestype": "Alderspensjon",
+        "ytelsesperiode": {
+          "fom": "2025-03-01",
+          "tom": "2025-03-31"
+        },
+        "ytelseNettobeloep": 13796,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "27525728205",
+          "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+        },
+        "skattsum": -5912,
+        "trekksum": 0,
+        "ytelseskomponentersum": 19708,
+        "skattListe": [
+          {
+            "skattebeloep": -5912
+          }
+        ],
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "GRUNNPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 5774
+          },
+          {
+            "ytelseskomponenttype": "GARANTIPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 7858
+          },
+          {
+            "ytelseskomponenttype": "PENSJONSTILLEGG",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6076
+          }
+        ],
+        "bilagsnummer": "808310876"
+      },
+      {
+        "ytelsestype": "Alderspensjon",
+        "ytelsesperiode": {
+          "fom": "2025-04-01",
+          "tom": "2025-04-30"
+        },
+        "ytelseNettobeloep": 13796,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "27525728205",
+          "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+        },
+        "skattsum": -5912,
+        "trekksum": 0,
+        "ytelseskomponentersum": 19708,
+        "skattListe": [
+          {
+            "skattebeloep": -5912
+          }
+        ],
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "PENSJONSTILLEGG",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6076
+          },
+          {
+            "ytelseskomponenttype": "GRUNNPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 5774
+          },
+          {
+            "ytelseskomponenttype": "GARANTIPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 7858
+          }
+        ],
+        "bilagsnummer": "808310876"
+      },
+      {
+        "ytelsestype": "Alderspensjon",
+        "ytelsesperiode": {
+          "fom": "2025-05-01",
+          "tom": "2025-05-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "27525728205",
+          "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+        },
+        "skattsum": -6192,
+        "trekksum": 0,
+        "ytelseskomponentersum": 20642,
+        "skattListe": [
+          {
+            "skattebeloep": -6192
+          }
+        ],
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "PENSJONSTILLEGG",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6364
+          },
+          {
+            "ytelseskomponenttype": "GRUNNPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6048
+          },
+          {
+            "ytelseskomponenttype": "GARANTIPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 8230
+          }
+        ],
+        "bilagsnummer": "808310876"
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "27525728205",
+      "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+    },
+    "utbetalingsmetode": "Betalingskort",
+    "utbetalingsstatus": "Utbetalt",
+    "posteringsdato": "2025-06-16",
+    "forfallsdato": "2025-06-19",
+    "utbetalingsdato": "2025-06-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "010625 - 300625 100 %, Skatt %: 30,00, Grunnbeløpet har økt fra 1. mai 2025. De aller fleste vil få etterbetalt i, juni.",
+    "ytelseListe": [
+      {
+        "ytelsestype": "Alderspensjon",
+        "ytelsesperiode": {
+          "fom": "2025-06-01",
+          "tom": "2025-06-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "27525728205",
+          "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+        },
+        "skattsum": -6192,
+        "trekksum": 0,
+        "ytelseskomponentersum": 20642,
+        "skattListe": [
+          {
+            "skattebeloep": -6192
+          }
+        ],
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "GRUNNPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6048
+          },
+          {
+            "ytelseskomponenttype": "GARANTIPENSJON",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 8230
+          },
+          {
+            "ytelseskomponenttype": "PENSJONSTILLEGG",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 6364
+          }
+        ],
+        "bilagsnummer": "808310877"
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "27525728205",
+      "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+    },
+    "utbetalingsmetode": "Norsk bankkonto",
+    "utbetalingsstatus": "Utbetalt",
+    "posteringsdato": "2025-06-23",
+    "forfallsdato": "2025-06-30",
+    "utbetalingsdato": "2025-06-30",
+    "utbetalingNettobeloep": 1968,
+    "utbetaltTilKonto": {
+      "kontonummer": "51457751536",
+      "kontotype": "Norsk bankkonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2025-06-01",
+          "tom": "2025-06-30"
+        },
+        "ytelseNettobeloep": 1968,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "27525728205",
+          "navn": "TESTMOTTAKER æøåÆØÅ0006338749"
+        },
+        "skattsum": 0,
+        "trekksum": 0,
+        "ytelseskomponentersum": 1968,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Ordinær",
+            "satsbeloep": 0,
+            "satsantall": 0,
+            "ytelseskomponentbeloep": 1968
+          }
+        ],
+        "bilagsnummer": "809138045"
+      }
+    ]
+  }
+]
+Response headers
+connection: keep-alive
+content-type: application/json
+date: Wed,09 Jul 2025 14:59:01 GMT
+nav-call-id: 1234
+strict-transport-security: max-age=31536000; includeSubDomains
+transfer-encoding: chunked
+Responses
+Code	Description	Links
+200
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+{
+"posteringsdato": "2025-07-09",
+"utbetaltTil": {
+"aktoertype": "PERSON",
+"ident": "string",
+"navn": "string"
+},
+"utbetalingNettobeloep": 999.5,
+"utbetalingsmelding": "string",
+"utbetalingsdato": "2025-07-09",
+"forfallsdato": "2025-07-09",
+"utbetaltTilKonto": {
+"kontonummer": "string",
+"kontotype": "string"
+},
+"utbetalingsmetode": "string",
+"utbetalingsstatus": "string",
+"ytelseListe": [
+{
+"ytelsestype": "string",
+"ytelsesperiode": {
+"fom": "2025-07-09",
+"tom": "2025-07-09"
+},
+"ytelseskomponentListe": [
+{
+"ytelseskomponenttype": "string",
+"satsbeloep": 999,
+"satstype": "string",
+"satsantall": 2.5,
+"ytelseskomponentbeloep": 42
+}
+],
+"ytelseskomponentersum": 111.22,
+"trekkListe": [
+{
+"trekktype": "string",
+"trekkbeloep": 100,
+"kreditor": "string"
+}
+],
+"trekksum": 1000,
+"skattListe": [
+{
+"skattebeloep": 99.9
+}
+],
+"skattsum": 1000.5,
+"ytelseNettobeloep": 1999,
+"bilagsnummer": "string",
+"rettighetshaver": {
+"aktoertype": "PERSON",
+"ident": "string",
+"navn": "string"
+},
+"refundertForOrg": {
+"aktoertype": "PERSON",
+"ident": "string",
+"navn": "string"
+}
+}
+]
+}
+]
