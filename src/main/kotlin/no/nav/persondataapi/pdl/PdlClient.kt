@@ -61,8 +61,6 @@ class PdlClient(
         val oboToken = tokenService.exchangeToken(
             userToken, SCOPE.PDL_SCOPE
         )
-        println("OBO TOKEN RECEIVED -> $oboToken")
-
 
         val client = GraphQLWebClient(
             url = pdl_url,
@@ -80,13 +78,15 @@ class PdlClient(
             header(CustomHeaders.Tema, "KTR")
         }
         if (response.errors?.isNotEmpty() == true) {
+            var status = 500
+            if ("not_found".equals(response.errors!!.first().extensions?.get("code"))){
+              status = 404
+            }
             return PersonDataResultat(
                 data = null,
-                statusCode = 500,
+                statusCode = status,
                 errorMessage = response.errors?.get(0)?.message,
             )
-            // Du kan evt. logge eller kaste exception her
-
         }
         return PersonDataResultat(
             data = response.data!!.hentPerson,

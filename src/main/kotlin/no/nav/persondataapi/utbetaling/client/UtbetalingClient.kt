@@ -32,11 +32,6 @@ class UtbetalingClient(
                 token,
                 "api://dev-fss.okonomi.sokos-utbetaldata/.default"
             )
-            println("OBO TOKEN RECEIVED -> $oboToken")
-
-            val v: JsonNode = JsonUtils.toJson(requestBody)
-            println("SENDING REQUEST  ->")
-            println(v.toPrettyString())
             val response: List<Utbetaling> = webClient.post()
                 .header("Authorization","Bearer $oboToken")
                 .bodyValue(requestBody)
