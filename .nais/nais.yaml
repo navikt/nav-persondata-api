@@ -71,3 +71,8 @@ spec:
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
     - name: UTBETALING_URL
       value: https://sokos-utbetaldata.dev-fss-pub.nais.io
+
+    - name: PDL_SCOPE
+      value: api://dev-fss.pdl.pdl-api/.default
+    - name: PDL_URL
+      value: https://pdl-api.dev-fss-pub.nais.io/graphql

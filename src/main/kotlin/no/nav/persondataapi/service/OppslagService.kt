@@ -53,12 +53,15 @@ class OppslagService(
         // Eksempel på hvordan du setter sammen full respons
         val utbetalinger = resultater
             .find { it.type == GrunnlagsType.UTBETALINGER }
+        val personData = resultater
+            .find { it.type == GrunnlagsType.PERSONDATA }
         println("returnerer svar fra OppslagService")
         return GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
             saksbehandlerId = username,
-            utbetalingRespons = utbetalinger
+            utbetalingRespons = utbetalinger,
+            personDataRespons = personData
         )
     }
 }

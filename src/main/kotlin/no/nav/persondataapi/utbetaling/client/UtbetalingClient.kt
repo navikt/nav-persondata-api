@@ -17,7 +17,6 @@ class UtbetalingClient(
     private val tokenService: TokenService,
     @Qualifier("utbetalingWebClient")
     private val webClient: WebClient,
-    service: TokenService,
 ) {
 
     fun hentUtbetalingerForAktor(fnr: String,token:String): UtbetalingResultat {
@@ -28,7 +27,7 @@ class UtbetalingClient(
                 rolle = "RETTIGHETSHAVER",
                 periode = Periode(LocalDate.now().minusYears(3), LocalDate.now()),
                 periodetype = "UTBETALINGSPERIODE"
-                )
+            )
             val oboToken = tokenService.exchangeToken(
                 token,
                 "api://dev-fss.okonomi.sokos-utbetaldata/.default"
