@@ -23,3 +23,8 @@ PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io/graphql
 UTBETALING_SCOPE : api://dev-fss.okonomi.sokos-utbetaldata/.default
 UTBETALING_URL: https://sokos-utbetaldata.dev-fss-pub.nais.io
+
+INNTEKT_SCOPE : api://dev-fss.team-inntekt.ikomp-q2/.default
+INNTEKT_URL: https://ikomp-q2.dev-fss-pub.nais.io
+
+

@@ -1,5 +1,6 @@
 package no.nav.persondataapi.domain
 
+import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
@@ -17,6 +18,12 @@ data class UtbetalingRespons(val utbetalinger:List<Utbetaling>)
 
 data class UtbetalingResultat(
     val data: UtbetalingRespons?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
+
+data class InntektResultat(
+    val data: InntektshistorikkApiUt?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )

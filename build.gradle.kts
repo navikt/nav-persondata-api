@@ -9,9 +9,27 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("plugin.spring") version "1.9.22"
     id("com.expediagroup.graphql") version "9.0.0-alpha.8"
-
+    id("org.openapi.generator") version "7.0.1"
 
 }
+
+openApiGenerate {
+    inputSpec.set("src/main/resources/openapi/ikomp-inntektshistorikk-api-2.1.2-swagger.json")
+    generatorName.set("kotlin-spring")
+    apiPackage.set("no.nav.inntekt.generated.api")
+    modelPackage.set("no.nav.inntekt.generated.model")
+    configOptions.set(
+        mapOf(
+            "useSpringWebClient" to "true",
+            "interfaceOnly" to "true",
+            "library" to "spring-boot",  // tryggere enn spring-cloud for å unngå swagger
+            "useSwaggerAnnotations" to "false",
+            "useSpringBoot3" to "true"
+        )
+    )
+
+}
+
 graphql {
     client {
 
@@ -35,11 +53,13 @@ java {
     }
 }
 
-sourceSets["main"].kotlin.srcDir("build/generated/source/graphql/main")
+sourceSets["main"].kotlin.srcDirs(
+    "build/generated/source/graphql/main",
+    "build/generate-resources/main/src/main/kotlin")
 
 // Sørg for at generateJava kjører før build
 tasks.named("build") {
-    //dependsOn("generateJava")
+
 }
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "21"
@@ -56,10 +76,9 @@ tasks.withType<Test> {
 
 
 tasks.named("compileKotlin") {
-    dependsOn("graphqlGenerateClient")
+    dependsOn("graphqlGenerateClient","openApiGenerate")
 }
 dependencies {
-
     //jacson
     implementation(enforcedPlatform("com.fasterxml.jackson:jackson-bom:2.17.1"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
@@ -103,6 +122,9 @@ dependencies {
     implementation("com.expediagroup:graphql-kotlin-client-generator:${latestGraphQLKotlinVersion}")
     implementation("com.expediagroup:graphql-kotlin-client:${latestGraphQLKotlinVersion}")
     implementation("com.expediagroup:graphql-kotlin-spring-client:${latestGraphQLKotlinVersion}")
+
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.20")
+    implementation("io.swagger.core.v3:swagger-models:2.2.20")
 
 }
 configurations.all {
