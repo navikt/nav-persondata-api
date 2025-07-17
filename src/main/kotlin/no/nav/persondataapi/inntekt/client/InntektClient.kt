@@ -1,6 +1,6 @@
 package no.nav.persondataapi.inntekt.client
 
-import jakarta.servlet.Filter
+
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.domain.InntektResultat
@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.time.LocalDate
+import java.util.UUID
+
 
 @Component
 class InntektClient(
@@ -31,22 +32,36 @@ class InntektClient(
             val requestBody = InntektshistorikkApiInn(
                 personident = fnr,
                 filter= "NAVKontrollA-Inntekt",
-                formaal = "kontroll",
-                maanedFom = "2020-01-01",
-                maanedTom = "2025-01-01",
+                formaal = "NAVKontroll",
+                maanedFom = "2015-01",
+                maanedTom = "2025-12",
             )
             val oboToken = tokenService.exchangeToken(
                 token,
                 inntekt_scope
             )
-            val response: InntektshistorikkApiUt = webClient.post()
-                .header("Authorization","Bearer $oboToken")
+            val responseResult = webClient.post()
+                .uri("/rest/v2/inntektshistorikk")
+                .header("Authorization", "Bearer $oboToken")
+                .header("Nav-Call-Id", UUID.randomUUID().toString())
                 .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(object : ParameterizedTypeReference<InntektshistorikkApiUt>() {})
-                .block()!! // Bruk `awaitSingle()` hvis du er i coroutine-verden
+                .exchangeToMono { response ->
+                    val status = response.statusCode()
+                    val headers = response.headers().asHttpHeaders()
 
-            response
+                    println("HTTP status: $status")
+                    println("Headers: $headers")
+
+                    if (status.is2xxSuccessful) {
+                        response.bodyToMono(object : ParameterizedTypeReference<InntektshistorikkApiUt>() {})
+                    } else {
+                        response.bodyToMono(String::class.java).map { body ->
+                            println("Feilrespons: $body")
+                            throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
+                        }
+                    }
+                }.block()!!
+            responseResult
         }.fold(
             onSuccess = { inntekt ->
                 println("inntekt er ok..fått svar!")

@@ -28,7 +28,7 @@ class inntektController(
 ) {
     @GetMapping("/inntekt")
     @Protected
-    fun hentUtbetalinger(@RequestHeader("fnr") fnr: String): InntektResultat {
+    fun hentInnekter(@RequestHeader("fnr") fnr: String): InntektResultat {
         return runBlocking {
             val context = tokenValidationContextHolder.getTokenValidationContext()
             val token = context.firstValidToken?.encodedToken
