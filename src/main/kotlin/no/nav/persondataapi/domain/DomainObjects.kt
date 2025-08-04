@@ -4,6 +4,7 @@ import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
+import java.time.LocalDate
 import java.time.ZonedDateTime
 
 data class GrunnlagsData(
@@ -33,3 +34,6 @@ data class PersonDataResultat(
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
+
+data class KontrollPeriode(
+    val fom: LocalDate,val tom: LocalDate )

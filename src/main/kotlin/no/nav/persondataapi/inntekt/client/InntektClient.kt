@@ -4,6 +4,7 @@ package no.nav.persondataapi.inntekt.client
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.domain.InntektResultat
+import no.nav.persondataapi.domain.KontrollPeriode
 
 import no.nav.persondataapi.service.TokenService
 
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 
@@ -26,15 +29,17 @@ class InntektClient(
     private val inntekt_scope: String,
 
     ) {
-    fun hentInntekter(fnr: String, token:String): InntektResultat {
+    fun hentInntekter(fnr: String, token:String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
+        LocalDate.now())): InntektResultat {
         return runCatching {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
                 personident = fnr,
                 filter= "NAVKontrollA-Inntekt",
                 formaal = "NAVKontroll",
-                maanedFom = "2015-01",
-                maanedTom = "2025-12",
+                maanedFom = kontrollPeriode.fom.format(formatter),
+                maanedTom = kontrollPeriode.tom.format(formatter),
             )
             val oboToken = tokenService.exchangeToken(
                 token,
