@@ -69,7 +69,7 @@ spec:
           cluster: dev-fss
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
-        - host: pdl-api.dev-fss-pub.nais.io/graphql
+        - host: pdl-api.dev-fss-pub.nais.io
         - host: ikomp-q2.dev-fss-pub.nais.io
   env:
     - name: UTBETALING_SCOPE
