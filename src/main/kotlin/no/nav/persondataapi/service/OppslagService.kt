@@ -55,13 +55,16 @@ class OppslagService(
             .find { it.type == GrunnlagsType.UTBETALINGER }
         val personData = resultater
             .find { it.type == GrunnlagsType.PERSONDATA }
+        val inntektData = resultater
+            .find { it.type == GrunnlagsType.INNTEKT }
         println("returnerer svar fra OppslagService")
         return GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
             saksbehandlerId = username,
             utbetalingRespons = utbetalinger,
-            personDataRespons = personData
+            personDataRespons = personData,
+            inntektDataRespons = inntektData
         )
     }
 }

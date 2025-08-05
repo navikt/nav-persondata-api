@@ -12,7 +12,8 @@ data class GrunnlagsData(
     val ident:String,
     val saksbehandlerId:String,
     val utbetalingRespons: GrunnlagsdelResultat?,
-    val personDataRespons: GrunnlagsdelResultat?
+    val personDataRespons: GrunnlagsdelResultat?,
+    val inntektDataRespons: GrunnlagsdelResultat?
 )
 
 data class UtbetalingRespons(val utbetalinger:List<Utbetaling>)
