@@ -58,5 +58,5 @@ data class TokenResponse(
 )
 
 enum class SCOPE{
-    PDL_SCOPE,UTBETALING_SCOPE,
+    PDL_SCOPE,UTBETALING_SCOPE,TILGANGSMASKIN
 }

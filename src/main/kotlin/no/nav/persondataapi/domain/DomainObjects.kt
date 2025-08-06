@@ -24,8 +24,26 @@ data class UtbetalingResultat(
     val errorMessage: String? = null
 )
 
+data class TilgangMaskinResultat(
+    val type:String?,
+    val title:String?,
+    val status: Int,
+    val instance: String?,
+    val brukerIdent:String?,
+    val navIdent:String?,
+    val traceId:String?,
+    val begrunnelse:String?,
+    val kanOverstyres:Boolean?,
+)
+
+
 data class InntektResultat(
     val data: InntektshistorikkApiUt?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
+data class TilgangResultat(
+    val data: TilgangMaskinResultat?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )

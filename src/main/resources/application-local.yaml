@@ -16,15 +16,18 @@ no.nav.security.jwt:
     azuread:
       discoveryurl: "https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration"
       accepted_audience: "f99254b7-a630-48fe-a21a-21989eca6f4b"
-NAIS_TOKEN_ENDPOINT: http://127.0.0.1:3000/api/v1/token
-NAIS_TOKEN_INTROSPECTION_ENDPOINT : http://127.0.0.1:3000/api/v1/introspect
-NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:3000/api/v1/token/exchange
+NAIS_TOKEN_ENDPOINT: http://127.0.0.1:7164/api/v1/token
+NAIS_TOKEN_INTROSPECTION_ENDPOINT : http://127.0.0.1:7164/api/v1/introspect
+NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:7164/api/v1/token/exchange
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io/graphql
-UTBETALING_SCOPE : api://dev-fss.okonomi.sokos-utbetaldata/.default
+UTBETALING_SCOPE: api://dev-fss.okonomi.sokos-utbetaldata/.default
 UTBETALING_URL: https://sokos-utbetaldata.dev-fss-pub.nais.io
 
-INNTEKT_SCOPE : api://dev-fss.team-inntekt.ikomp-q2/.default
+INNTEKT_SCOPE: api://dev-fss.team-inntekt.ikomp-q2/.default
 INNTEKT_URL: https://ikomp-q2.dev-fss-pub.nais.io
+
+TILGANGSMASKIN_SCOPE: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
+TILGANGSMASKIN_URL: https://tilgangsmaskin.intern.dev.nav.no
 
 
