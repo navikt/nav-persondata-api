@@ -25,7 +25,7 @@ class TilgangsmaskinClient (
             return runCatching {
 
                 val oboToken = tokenService.exchangeToken(
-                    userToken, SCOPE.TILGANGSMASKIN
+                    userToken, SCOPE.TILGANGMASKIN_SCOPE
                 )
                 val responseResult = webClient.post()
                     .uri("/api/v1/komplett")
@@ -41,7 +41,11 @@ class TilgangsmaskinClient (
 
                         if (status.is2xxSuccessful) {
                             response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
-                        } else {
+                        }
+                        if (status.is4xxClientError){
+                            response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
+                        }
+                        else {
                             response.bodyToMono(String::class.java).map { body ->
                                 println("Feilrespons: $body")
                                 throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
