@@ -96,3 +96,9 @@ spec:
       value: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
     - name: TILGANGMASKIN_URL
       value: https://tilgangsmaskin.intern.dev.nav.no
+
+    - name: AAREG_SCOPE
+      value: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
+    - name: AAREG_URL
+      value: https://aareg-services.dev-fss-pub.nais.io/api
+
