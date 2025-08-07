@@ -1,0 +1,448 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "Inntektshistorikk API",
+    "description" : "Title",
+    "version" : "2.1.2"
+  },
+  "servers" : [ {
+    "url" : "https://app-q2.adeo.no/inntektskomponenten-ws"
+  } ],
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ],
+  "paths" : {
+    "/rest/v2/inntektshistorikk" : {
+      "post" : {
+        "tags" : [ "Inntektshistorikk" ],
+        "operationId" : "historiskInntekt",
+        "parameters" : [ {
+          "name" : "Nav-Call-Id",
+          "in" : "header",
+          "description" : "En ID som identifiserer kallkjeden som dette kallet er en del av.",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/InntektshistorikkApiInn"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InntektshistorikkApiUt"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "InntektshistorikkApiInn" : {
+        "type" : "object",
+        "properties" : {
+          "personident" : {
+            "type" : "string",
+            "description" : "fnr, dnr eller aktørid"
+          },
+          "filter" : {
+            "type" : "string"
+          },
+          "formaal" : {
+            "type" : "string"
+          },
+          "maanedFom" : {
+            "type" : "string",
+            "format" : "yyyy-mm",
+            "example" : "2024-01"
+          },
+          "maanedTom" : {
+            "type" : "string",
+            "format" : "yyyy-mm",
+            "example" : "2024-12"
+          }
+        },
+        "required" : [ "personident", "filter", "formaal", "maanedFom", "maanedTom" ]
+      },
+      "InntektshistorikkApiUt" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/HistorikkData"
+            }
+          }
+        }
+      },
+      "HistorikkData" : {
+        "type" : "object",
+        "properties" : {
+          "maaned" : {
+            "type" : "string"
+          },
+          "opplysningspliktig" : {
+            "type" : "string"
+          },
+          "underenhet" : {
+            "type" : "string"
+          },
+          "norskident" : {
+            "type" : "string"
+          },
+          "versjoner" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Inntektsinformasjon"
+            }
+          }
+        },
+        "required" : [ "maaned", "opplysningspliktig", "underenhet", "norskident" ]
+      },
+      "Inntektsinformasjon" : {
+        "type" : "object",
+        "properties" : {
+          "maaned" : {
+            "type" : "string"
+          },
+          "opplysningspliktig" : {
+            "type" : "string"
+          },
+          "underenhet" : {
+            "type" : "string"
+          },
+          "norskident" : {
+            "type" : "string"
+          },
+          "oppsummeringstidspunkt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "inntektListe" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Inntekt"
+            }
+          },
+          "forskuddstrekkListe" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Forskuddstrekk"
+            }
+          },
+          "avvikListe" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Avvik"
+            }
+          }
+        },
+        "required" : [ "maaned", "opplysningspliktig", "underenhet", "norskident", "oppsummeringstidspunkt" ]
+      },
+      "Inntekt" : {
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "beloep" : {
+            "type" : "number"
+          },
+          "fordel" : {
+            "type" : "string"
+          },
+          "beskrivelse" : {
+            "type" : "string"
+          },
+          "inngaarIGrunnlagForTrekk" : {
+            "type" : "boolean"
+          },
+          "utloeserArbeidsgiveravgift" : {
+            "type" : "boolean"
+          },
+          "skatteOgAvgiftsregel" : {
+            "type" : "string"
+          },
+          "opptjeningsperiodeFom" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "opptjeningsperiodeTom" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "tilleggsinformasjon" : {
+            "$ref" : "#/components/schemas/Tilleggsinformasjon"
+          },
+          "manuellVurdering" : {
+            "type" : "boolean"
+          }
+        },
+        "discriminator" : {
+          "propertyName" : "type"
+        },
+        "required" : [ "beloep", "fordel", "beskrivelse", "inngaarIGrunnlagForTrekk", "utloeserArbeidsgiveravgift" ]
+      },
+      "Loennsinntekt" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Inntekt"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "antall" : {
+              "type" : "number"
+            },
+            "skattemessigBosattLand" : {
+              "type" : "string"
+            },
+            "opptjeningsland" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      },
+      "Naeringsinntekt" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Inntekt"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "PensjonEllerTrygd" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Inntekt"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "YtelseFraOffentlige" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Inntekt"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "Forskuddstrekk" : {
+        "type" : "object",
+        "properties" : {
+          "beloep" : {
+            "type" : "number"
+          },
+          "beskrivelse" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "beloep" ]
+      },
+      "Tilleggsinformasjon" : {
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          }
+        },
+        "discriminator" : {
+          "propertyName" : "type"
+        }
+      },
+      "AldersUfoereEtterlatteAvtalefestetOgKrigspensjon" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "grunnpensjonsbeloep" : {
+              "type" : "number"
+            },
+            "tilleggspensjonsbeloep" : {
+              "type" : "number"
+            },
+            "ufoeregrad" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "pensjonsgrad" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "heravEtterlattepensjon" : {
+              "type" : "number"
+            },
+            "startdato" : {
+              "type" : "string",
+              "format" : "date"
+            },
+            "sluttdato" : {
+              "type" : "string",
+              "format" : "date"
+            }
+          }
+        } ]
+      },
+      "BonusFraForsvaret" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "aaretUtbetalingenGjelderFor" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        } ]
+      },
+      "Etterbetalingsperiode" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "startdato" : {
+              "type" : "string",
+              "format" : "date"
+            },
+            "sluttdato" : {
+              "type" : "string",
+              "format" : "date"
+            }
+          }
+        } ]
+      },
+      "LottOgPartInnenFiske" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "Nettoloennsordning" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "NorskKontinentalsokkel" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object"
+        } ]
+      },
+      "ReiseKostOgLosji" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "persontype" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      },
+      "SpesielleInntjeningsforhold" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Tilleggsinformasjon"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "kode" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      },
+      "Avvik" : {
+        "type" : "object",
+        "properties" : {
+          "kode" : {
+            "type" : "string"
+          },
+          "tekst" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Problem" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "type", "status", "title" ]
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "description" : "Legg inn STS eller AAD token, uten \"Bearer \" prefiks",
+        "name" : "bearerAuth",
+        "in" : "header",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}

@@ -5,5 +5,6 @@ enum class GrunnlagsType {
     FAMILIE,
     ARBEIDSFORHOLD,
     PERSONDATA,
+    INNTEKT,
     // Legg til flere etter behov
 }

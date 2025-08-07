@@ -64,8 +64,15 @@ spec:
         - application: sokos-utbetaldata
           namespace: okonomi
           cluster: dev-fss
+        - application: ikomp-q2
+          namespace: team-inntekt
+          cluster: dev-fss
+        - application: populasjonstilgangskontroll
+          namespace: tilgangsmaskin
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
+        - host: pdl-api.dev-fss-pub.nais.io
+        - host: ikomp-q2.dev-fss-pub.nais.io
   env:
     - name: UTBETALING_SCOPE
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
@@ -76,3 +83,13 @@ spec:
       value: api://dev-fss.pdl.pdl-api/.default
     - name: PDL_URL
       value: https://pdl-api.dev-fss-pub.nais.io/graphql
+
+    - name: INNTEKT_SCOPE
+      value: api://dev-fss.team-inntekt.ikomp-q2/.default
+    - name: INNTEKT_URL
+      value: https://ikomp-q2.dev-fss-pub.nais.io
+
+    - name: TILGANGMASKIN_SCOPE
+      value: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
+    - name: TILGANGMASKIN_URL
+      value: https://tilgangsmaskin.intern.dev.nav.no

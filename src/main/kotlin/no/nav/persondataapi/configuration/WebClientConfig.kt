@@ -14,6 +14,10 @@ class WebClientConfig {
     lateinit var tokenExchangeUrl: String
     @Value("\${UTBETALING_URL}")
     lateinit var utbetalingURL: String
+    @Value("\${INNTEKT_URL}")
+    lateinit var inntektURL: String
+    @Value("\${TILGANGMASKIN_URL}")
+    lateinit var tilgangmaskinURL: String
 
 
 
@@ -27,6 +31,28 @@ class WebClientConfig {
     fun utbetalingWebClient(builder: WebClient.Builder): WebClient =
         builder
             .baseUrl("$utbetalingURL/utbetaldata/api/v2/hent-utbetalingsinformasjon/intern")
+            //.defaultHeader("Content-Type", "application/json")
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .build()
+
+    @Bean
+    fun inntektWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl(inntektURL)
+            //.defaultHeader("Content-Type", "application/json")
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .build()
+
+    @Bean
+    fun tilgangWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl(tilgangmaskinURL)
             //.defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
