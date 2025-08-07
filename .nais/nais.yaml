@@ -69,6 +69,9 @@ spec:
           cluster: dev-fss
         - application: populasjonstilgangskontroll
           namespace: tilgangsmaskin
+        - application: aareg-services-nais
+          namespace: arbeidsforhold
+          cluster: dev-fss
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io

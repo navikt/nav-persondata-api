@@ -18,6 +18,8 @@ class WebClientConfig {
     lateinit var inntektURL: String
     @Value("\${TILGANGMASKIN_URL}")
     lateinit var tilgangmaskinURL: String
+    @Value("\${AAREG_URL}")
+    lateinit var aaregURL: String
 
 
 
@@ -53,6 +55,16 @@ class WebClientConfig {
     fun tilgangWebClient(builder: WebClient.Builder): WebClient =
         builder
             .baseUrl(tilgangmaskinURL)
+            //.defaultHeader("Content-Type", "application/json")
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .build()
+    @Bean
+    fun aaregWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl(aaregURL)
             //.defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)

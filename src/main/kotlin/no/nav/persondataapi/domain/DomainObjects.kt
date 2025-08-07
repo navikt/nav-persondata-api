@@ -42,6 +42,12 @@ data class InntektResultat(
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
+
+data class AaregResultat(
+    val data: Aa?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
 data class TilgangResultat(
     val data: TilgangMaskinResultat?,
     val statusCode: Int,               // f.eks. 200, 401, 500
