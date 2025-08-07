@@ -1,6 +1,7 @@
 package no.nav.persondataapi.domain
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.aareg.client.AaRegArbeidsforhold
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
@@ -44,7 +45,7 @@ data class InntektResultat(
 )
 
 data class AaregResultat(
-    val data: Aa?,
+    val data:  List<AaRegArbeidsforhold>?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
