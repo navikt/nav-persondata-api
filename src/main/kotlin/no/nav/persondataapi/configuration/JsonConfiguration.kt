@@ -1,5 +1,6 @@
 package no.nav.persondataapi.configuration
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -14,6 +15,7 @@ object JsonUtils {
         .registerModule(KotlinModule.Builder().build())
         .registerModule(JavaTimeModule())
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     inline fun <reified T> fromJson(json: String): T =
         mapper.readValue(json)

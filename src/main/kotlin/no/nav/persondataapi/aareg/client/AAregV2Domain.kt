@@ -88,7 +88,6 @@ data class Arbeidsforhold(
     val navUuid: String,
     val opprettet: LocalDateTime,
     val sistBekreftet: LocalDateTime,
-    val sistEndret: LocalDateTime,
     val bruksperiode: Bruksperiode,
     val sporingsinformasjon: Sporingsinformasjon?
 )
@@ -172,20 +171,21 @@ data class AaRegArbeidsavtale(
 )
 
 data class AaRegArbeidsforhold(
-    val ansettelsesperiode: AaRegAnsettelsesperiode,
+    val id :String,
+    val ansettelsesperiode: AaRegAnsettelsesperiode?,
     val antallTimerForTimeloennet: List<AaRegAntallTimerForTimeloennet>?,
     val arbeidsavtaler: List<AaRegArbeidsavtale>,
     val arbeidsforholdId: String?,
-    val arbeidsgiver: AaRegOpplysningspliktigArbeidsgiver,
-    val arbeidstaker: AaRegPerson,
+    val arbeidsgiver: AaRegOpplysningspliktigArbeidsgiver?,
+    val arbeidstaker: AaRegPerson?,
     val innrapportertEtterAOrdningen: Boolean,
     val navArbeidsforholdId: Int,
-    val opplysningspliktig: AaRegOpplysningspliktigArbeidsgiver,
+    val opplysningspliktig: AaRegOpplysningspliktigArbeidsgiver?,
     val permisjonPermitteringer: List<AaRegPermisjonPermittering>?,
-    val registrert: LocalDateTime,
+    val registrert: LocalDateTime?,
     val sistBekreftet: LocalDateTime?,
-    val sporingsinformasjon: AaRegSporingsinformasjon,
-    val type: String,
+    val sporingsinformasjon: AaRegSporingsinformasjon?,
+    val type: Kodeverksentitet?,
     val utenlandsopphold: List<AaRegUtenlandsopphold>?
 )
 

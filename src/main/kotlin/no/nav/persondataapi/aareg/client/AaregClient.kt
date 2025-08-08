@@ -1,31 +1,36 @@
 package no.nav.persondataapi.aareg.client
 
-import no.nav.inntekt.generated.model.InntektshistorikkApiInn
-import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.AaregResultat
-import no.nav.persondataapi.domain.InntektResultat
+
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.core.ParameterizedTypeReference
+
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.time.format.DateTimeFormatter
+
 import java.util.UUID
 
 @Component
 class AaregClient(
-                  private val tokenService: TokenService,
-                  @Qualifier("aaregWebClient")
-                  private val webClient: WebClient) {
+    private val tokenService: TokenService,
+    @Qualifier("aaregWebClient")
+    private val webClient: WebClient,
+) {
 
-    fun hentArbeidsForhold(fnr:String,token:String): AaregResultat {
+    // Jackson for parsing etter at vi har logget rå-body
+
+    private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
+
+    fun hentArbeidsForhold(fnr: String, token: String): AaregResultat {
         return runCatching {
+            val oboToken = tokenService.exchangeToken(token, SCOPE.AAREG_SCOPE)
 
-            val oboToken = tokenService.exchangeToken(
-                token, SCOPE.PDL_SCOPE
-            )
-            val responseResult = webClient.get()
+            val responsePair: Pair<Int, List<Arbeidsforhold>> = webClient.get()
                 .uri { uriBuilder ->
                     uriBuilder
                         .path("/v2/arbeidstaker/arbeidsforhold")
@@ -39,39 +44,46 @@ class AaregClient(
                 .header("Nav-Personident", fnr)
                 .exchangeToMono { response ->
                     val status = response.statusCode()
-                    val headers = response.headers().asHttpHeaders()
-
-                    println("HTTP status: $status")
-                    println("Headers: $headers")
-
-                    if (status.is2xxSuccessful) {
-                        response.bodyToMono(object : ParameterizedTypeReference<List<AaRegArbeidsforhold>>() {})
-                    } else {
-                        response.bodyToMono(String::class.java).map { body ->
-                            println("Feilrespons: $body")
-                            throw RuntimeException("Feil fra AaregAPI: HTTP $status – $body")
+                    // Les body som String (kan bare leses én gang), logg, og parse
+                    response.bodyToMono(String::class.java)
+                        .map { raw ->
+                            println("RAW body (${status.value()}): $raw") // 👈 nå ser du faktisk responsen
+                            if (status.is2xxSuccessful) {
+                                val parsed: List<Arbeidsforhold> =
+                                    JsonUtils.fromJson(raw)
+                                status.value() to parsed
+                            } else {
+                                throw HttpStatusException(
+                                    status.value(),
+                                    "Feil fra AaregAPI: HTTP $status – $raw"
+                                )
+                            }
                         }
-                    }
-                }.block()!!
-            responseResult
-        }.fold(
-            onSuccess = { resultat ->
-                println("inntekt er ok..fått svar!")
+                }
+                .block()!!
+
+            AaregResultat(
+                data = responsePair.second,
+                statusCode = responsePair.first,
+                errorMessage = ""
+            )
+        }.getOrElse { error ->
+            if (error is HttpStatusException) {
                 AaregResultat(
-                    data = resultat,
-                    statusCode = 200,
-                    ""
+                    data = null,
+                    statusCode = error.statusCode,
+                    errorMessage = error.message ?: "Feil fra Aareg"
                 )
-            },
-            onFailure = { error ->
-                println("Feil ved henting av utbetalinger")
-                error.printStackTrace()
-                AaregResultat (
+            } else {
+                AaregResultat(
                     data = null,
                     statusCode = 500,
-                    errorMessage = "Feil ved lesing: ${error.message}"
+                    errorMessage = "Teknisk feil: ${error.message}"
                 )
             }
-        )
+        }
     }
 }
+
+// Enkel custom exception for å bære HTTP-status
+class HttpStatusException(val statusCode: Int, override val message: String) : RuntimeException(message)
