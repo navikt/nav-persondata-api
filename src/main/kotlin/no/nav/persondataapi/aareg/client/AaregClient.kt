@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.AaregResultat
+import no.nav.persondataapi.ereg.client.EregClient
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService

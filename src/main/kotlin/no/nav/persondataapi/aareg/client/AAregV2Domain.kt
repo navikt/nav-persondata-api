@@ -89,7 +89,8 @@ data class Arbeidsforhold(
     val opprettet: LocalDateTime,
     val sistBekreftet: LocalDateTime,
     val bruksperiode: Bruksperiode,
-    val sporingsinformasjon: Sporingsinformasjon?
+    val sporingsinformasjon: Sporingsinformasjon?,
+    var organisasjoner : List<AaRegOrganisasjon> = emptyList()
 )
 
 data class Varsel(
@@ -269,3 +270,12 @@ data class AaRegUtenlandsopphold(
     val rapporteringsperiode: YearMonth,
     val sporingsinformasjon: AaRegSporingsinformasjon
 )
+
+fun List<Arbeidsforhold>.hentIdenter(): List<Ident> {
+    val identer = mutableListOf<Ident>()
+    forEach {
+        identer.addAll(it.arbeidssted.identer)
+        identer.addAll(it.opplysningspliktig.identer)
+    }
+    return identer
+}

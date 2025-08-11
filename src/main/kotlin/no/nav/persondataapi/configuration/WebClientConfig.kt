@@ -20,6 +20,8 @@ class WebClientConfig {
     lateinit var tilgangmaskinURL: String
     @Value("\${AAREG_URL}")
     lateinit var aaregURL: String
+    @Value("\${EREG_URL}")
+    lateinit var eregURL: String
 
 
 
@@ -66,6 +68,16 @@ class WebClientConfig {
         builder
             .baseUrl(aaregURL)
             //.defaultHeader("Content-Type", "application/json")
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .build()
+
+    @Bean
+    fun eregWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl(eregURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON

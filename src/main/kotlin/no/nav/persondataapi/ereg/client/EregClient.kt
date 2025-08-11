@@ -1,0 +1,62 @@
+package no.nav.persondataapi.ereg.client
+
+
+import com.fasterxml.jackson.core.type.TypeReference
+
+import no.nav.persondataapi.configuration.JsonUtils
+import no.nav.persondataapi.domain.AaregResultat
+import no.nav.persondataapi.domain.UtbetalingRespons
+import no.nav.persondataapi.domain.UtbetalingResultat
+import no.nav.persondataapi.utbetaling.client.Periode
+import no.nav.persondataapi.utbetaling.client.RequestBody
+import no.nav.persondataapi.utbetaling.dto.Utbetaling
+
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.core.ParameterizedTypeReference
+
+import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.client.WebClient
+
+@Component
+class EregClient(
+    @Qualifier("eregWebClient")
+    private val webClient: WebClient,
+) {
+
+    fun hentOrganisasjon(orgnummer: String): EregRespons {
+        return runCatching {
+
+            val response: EregRespons = webClient.get()
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path("/v2/organisasjon/$orgnummer")
+                        .queryParam("inkluderHistorikk", "false")
+                        .queryParam("inkluderHierarki", "false")
+                        .build()
+                }
+                .retrieve()
+                .bodyToMono(object : ParameterizedTypeReference<EregRespons>() {})
+                .block()!! // Bruk `awaitSingle()` hvis du er i coroutine-verden
+
+            response
+        }.fold(
+            onSuccess = { ereg ->
+                println("ereg er ok..fått svar!")
+                ereg
+            },
+            onFailure = { error ->
+                println("Feil ved henting av Ereg")
+                error.printStackTrace()
+                EregRespons(
+                    orgnummer,
+                    type = "",
+                    navn = null,
+                    organisasjonDetaljer = null,
+                    virksomhetDetaljer = null
+                )
+
+            }
+        )
+    }
+}
+
