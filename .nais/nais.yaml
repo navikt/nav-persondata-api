@@ -102,3 +102,8 @@ spec:
     - name: AAREG_URL
       value: https://aareg-services.dev-fss-pub.nais.io/api
 
+    - name: EREG_URL
+      value: https://ereg-services.dev.intern.nav.no/api
+
+
+
