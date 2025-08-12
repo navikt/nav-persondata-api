@@ -12,6 +12,8 @@ class WebClientConfig {
 
     @Value("\${NAIS_TOKEN_EXCHANGE_ENDPOINT}")
     lateinit var tokenExchangeUrl: String
+    @Value("\${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}")
+    lateinit var azureTokenEndpointUrl: String
     @Value("\${UTBETALING_URL}")
     lateinit var utbetalingURL: String
     @Value("\${INNTEKT_URL}")
@@ -29,6 +31,12 @@ class WebClientConfig {
     fun tokenWebClient(builder: WebClient.Builder): WebClient =
         builder
             .baseUrl(tokenExchangeUrl)
+            .defaultHeader("Content-Type", "application/json")
+            .build()
+    @Bean
+    fun azuretokenWebClient(builder: WebClient.Builder): WebClient =
+        builder
+            .baseUrl(azureTokenEndpointUrl)
             .defaultHeader("Content-Type", "application/json")
             .build()
     @Bean

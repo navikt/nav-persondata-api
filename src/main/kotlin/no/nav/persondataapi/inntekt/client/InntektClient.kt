@@ -5,6 +5,7 @@ import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.domain.InntektResultat
 import no.nav.persondataapi.domain.KontrollPeriode
+import no.nav.persondataapi.service.SCOPE
 
 import no.nav.persondataapi.service.TokenService
 
@@ -23,10 +24,7 @@ class InntektClient(
     private val tokenService: TokenService,
     @Qualifier("inntektWebClient")
     private val webClient: WebClient,
-    @Value("\${INNTEKT_URL}")
-    private val inntekt_url: String,
-    @Value("\${INNTEKT_SCOPE}")
-    private val inntekt_scope: String,
+
 
     ) {
     fun hentInntekter(fnr: String, token:String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
@@ -41,9 +39,7 @@ class InntektClient(
                 maanedFom = kontrollPeriode.fom.format(formatter),
                 maanedTom = kontrollPeriode.tom.format(formatter),
             )
-            val oboToken = tokenService.exchangeToken(
-                token,
-                inntekt_scope
+            val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE
             )
             val responseResult = webClient.post()
                 .uri("/rest/v2/inntektshistorikk")

@@ -36,8 +36,11 @@ class OppslagService(
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val issuer = context.issuers.first()
         val claims = context.getClaims(issuer)
-        val username = claims.getStringClaim("NAVident")
-
+        var username = claims.getStringClaim("NAVident")
+        if (username == null){
+            //Service user have been used!!
+            username = claims.getStringClaim("azp_name")
+        }
         println("Bruker $username gjorde oppslag på fnr: $fnr")
 
         val token = context.firstValidToken?.encodedToken

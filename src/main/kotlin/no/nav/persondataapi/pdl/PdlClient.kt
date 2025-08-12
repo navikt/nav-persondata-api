@@ -31,30 +31,6 @@ class PdlClient(
 
 ) {
 
-    suspend fun hentPerson(ident: String, oboToken: String): HentPerson.Result? {
-
-         val client = GraphQLWebClient(
-             url = pdl_url,
-             builder = WebClient.builder(),
-         )
-        val query = HentPerson(
-            HentPerson.Variables(
-                ident = ident,
-                historikk = false,
-            )
-        )
-        val response = client.execute(query) {
-            header("Authorization", "Bearer $oboToken")
-            header(CustomHeaders.Behandlingsnummer, "B634")
-            header(CustomHeaders.Tema, "KTR")
-        }
-        if (response.errors?.isNotEmpty() == true) {
-            // Du kan evt. logge eller kaste exception her
-            throw RuntimeException("GraphQL error: ${response.errors}")
-        }
-
-        return response.data
-    }
     suspend fun hentPersonv2(ident: String, userToken: String): PersonDataResultat {
 
 
@@ -81,6 +57,44 @@ class PdlClient(
             var status = 500
             if ("not_found".equals(response.errors!!.first().extensions?.get("code"))){
               status = 404
+            }
+            return PersonDataResultat(
+                data = null,
+                statusCode = status,
+                errorMessage = response.errors?.get(0)?.message,
+            )
+        }
+        return PersonDataResultat(
+            data = response.data!!.hentPerson,
+            statusCode = 200,
+            errorMessage = null,
+        )
+    }
+    suspend fun hentPersonv2(ident: String): PersonDataResultat {
+
+
+        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE
+        )
+
+        val client = GraphQLWebClient(
+            url = pdl_url,
+            builder = WebClient.builder(),
+        )
+        val query = HentPerson(
+            HentPerson.Variables(
+                ident = ident,
+                historikk = false,
+            )
+        )
+        val response = client.execute(query) {
+            header("Authorization", "Bearer $token")
+            header(CustomHeaders.Behandlingsnummer, "B634")
+            header(CustomHeaders.Tema, "KTR")
+        }
+        if (response.errors?.isNotEmpty() == true) {
+            var status = 500
+            if ("not_found".equals(response.errors!!.first().extensions?.get("code"))){
+                status = 404
             }
             return PersonDataResultat(
                 data = null,

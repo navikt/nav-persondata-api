@@ -29,7 +29,7 @@ class AaregClient(
 
     fun hentArbeidsForhold(fnr: String, token: String): AaregResultat {
         return runCatching {
-            val oboToken = tokenService.exchangeToken(token, SCOPE.AAREG_SCOPE)
+            val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)
 
             val responsePair: Pair<Int, List<Arbeidsforhold>> = webClient.get()
                 .uri { uriBuilder ->

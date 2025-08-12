@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.UtbetalingRespons
 import no.nav.persondataapi.domain.UtbetalingResultat
+import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
@@ -28,9 +29,8 @@ class UtbetalingClient(
                 periode = Periode(LocalDate.now().minusYears(3), LocalDate.now()),
                 periodetype = "UTBETALINGSPERIODE"
             )
-            val oboToken = tokenService.exchangeToken(
-                token,
-                "api://dev-fss.okonomi.sokos-utbetaldata/.default"
+            val oboToken = tokenService.getServiceToken(
+                SCOPE.UTBETALING_SCOPE
             )
             val response: List<Utbetaling> = webClient.post()
                 .header("Authorization","Bearer $oboToken")
