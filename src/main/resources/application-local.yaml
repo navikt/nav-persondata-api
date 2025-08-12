@@ -19,6 +19,7 @@ no.nav.security.jwt:
 NAIS_TOKEN_ENDPOINT: http://127.0.0.1:7164/api/v1/token
 NAIS_TOKEN_INTROSPECTION_ENDPOINT : http://127.0.0.1:7164/api/v1/introspect
 NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:7164/api/v1/token/exchange
+AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/oauth2/v2.0/token
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io/graphql
 UTBETALING_SCOPE: api://dev-fss.okonomi.sokos-utbetaldata/.default
@@ -36,4 +37,4 @@ AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
 
 EREG_URL: https://ereg-services.dev.intern.nav.no/api
 
-
+#DO NOT CHECK IN BELOW
