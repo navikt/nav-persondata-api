@@ -1,0 +1,85 @@
+{
+  "organisasjonsnummer": "896929119",
+  "type": "Virksomhet",
+  "navn": {
+    "sammensattnavn": "SAUEFABRIKK",
+    "navnelinje1": "SAUEFABRIKK",
+    "bruksperiode": {
+      "fom": "2023-09-14T10:19:02.968"
+    },
+    "gyldighetsperiode": {
+      "fom": "2023-09-14"
+    }
+  },
+  "organisasjonDetaljer": {
+    "registreringsdato": "2023-09-14T00:00:00",
+    "enhetstyper": [
+      {
+        "enhetstype": "BEDR",
+        "bruksperiode": {
+          "fom": "2023-09-14T10:19:02.963"
+        },
+        "gyldighetsperiode": {
+          "fom": "2023-09-14"
+        }
+      }
+    ],
+    "navn": [
+      {
+        "sammensattnavn": "SAUEFABRIKK",
+        "navnelinje1": "SAUEFABRIKK",
+        "bruksperiode": {
+          "fom": "2023-09-14T10:19:02.968"
+        },
+        "gyldighetsperiode": {
+          "fom": "2023-09-14"
+        }
+      }
+    ],
+    "forretningsadresser": [
+      {
+        "type": "Forretningsadresse",
+        "adresselinje1": "OPALV 75",
+        "postnummer": "5252",
+        "poststed": "SØREIDGREND",
+        "landkode": "NO",
+        "kommunenummer": "4601",
+        "bruksperiode": {
+          "fom": "2023-09-14T10:19:02.968"
+        },
+        "gyldighetsperiode": {
+          "fom": "2023-09-14"
+        }
+      }
+    ],
+    "postadresser": [
+      {
+        "type": "Postadresse",
+        "adresselinje1": "OPALV 75",
+        "postnummer": "5252",
+        "poststed": "SØREIDGREND",
+        "landkode": "NO",
+        "kommunenummer": "4601",
+        "bruksperiode": {
+          "fom": "2023-09-14T10:19:02.968"
+        },
+        "gyldighetsperiode": {
+          "fom": "2023-09-14"
+        }
+      }
+    ],
+    "navSpesifikkInformasjon": {
+      "erIA": false,
+      "bruksperiode": {
+        "fom": "1900-01-01T00:00:00"
+      },
+      "gyldighetsperiode": {
+        "fom": "1900-01-01"
+      }
+    },
+    "sistEndret": "2023-09-14"
+  },
+  "virksomhetDetaljer": {
+    "enhetstype": "BEDR"
+  }
+}

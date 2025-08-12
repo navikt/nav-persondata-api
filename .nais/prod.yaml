@@ -24,7 +24,7 @@ spec:
     application:
       enabled: true
       allowAllUsers: true
-      tenant: trygdeetaten.no
+      tenant: nav.no
       singlePageApplication: true
       claims:
         extra:
@@ -44,7 +44,7 @@ spec:
     initialDelay: 20
     timeout: 60
   ingresses:
-    - https://nav-persondata-api.intern.dev.nav.no
+    - https://nav-persondata-api.intern.nav.no
   replicas:
     min: 2
     max: 2
@@ -63,47 +63,47 @@ spec:
       rules:
         - application: sokos-utbetaldata
           namespace: okonomi
-          cluster: dev-fss
-        - application: ikomp-q2
+          cluster: prod-fss
+        - application: ikomp
           namespace: team-inntekt
-          cluster: dev-fss
+          cluster: prod-fss
         - application: populasjonstilgangskontroll
           namespace: tilgangsmaskin
         - application: aareg-services-nais
           namespace: arbeidsforhold
-          cluster: dev-fss
+          cluster: prod-fss
       external:
-        - host: sokos-utbetaldata.dev-fss-pub.nais.io
-        - host: pdl-api.dev-fss-pub.nais.io
-        - host: ikomp-q2.dev-fss-pub.nais.io
+        - host: sokos-utbetaldata.prod-fss-pub.nais.io
+        - host: pdl-api.prod-fss-pub.nais.io
+        - host: ikomp-prod-fss-pub.nais.io
   env:
     - name: UTBETALING_SCOPE
-      value: api://dev-fss.okonomi.sokos-utbetaldata/.default
+      value: api://prod-fss.okonomi.sokos-utbetaldata/.default
     - name: UTBETALING_URL
-      value: https://sokos-utbetaldata.dev-fss-pub.nais.io
+      value: https://sokos-utbetaldata.prod-fss-pub.nais.io
 
     - name: PDL_SCOPE
-      value: api://dev-fss.pdl.pdl-api/.default
+      value: api://prod-fss.pdl.pdl-api/.default
     - name: PDL_URL
-      value: https://pdl-api.dev-fss-pub.nais.io/graphql
+      value: https://pdl-api.prod-fss-pub.nais.io/graphql
 
     - name: INNTEKT_SCOPE
-      value: api://dev-fss.team-inntekt.ikomp-q2/.default
+      value: api://prod-fss.team-inntekt.ikomp-q2/.default
     - name: INNTEKT_URL
-      value: https://ikomp-q2.dev-fss-pub.nais.io
+      value: https://ikomp-prod-fss-pub.nais.io
 
     - name: TILGANGMASKIN_SCOPE
-      value: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
+      value: api://prod-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
     - name: TILGANGMASKIN_URL
-      value: https://tilgangsmaskin.intern.dev.nav.no
+      value: https://tilgangsmaskin.intern.nav.no
 
     - name: AAREG_SCOPE
-      value: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
+      value: api://prod-fss.arbeidsforhold.aareg-services-nais/.default
     - name: AAREG_URL
-      value: https://aareg-services.dev-fss-pub.nais.io/api
+      value: https://aareg-services.prod-fss-pub.nais.io/api
 
     - name: EREG_URL
-      value: https://ereg-services.dev.intern.nav.no/api
+      value: https://ereg-services.prod.intern.nav.no/api
 
 
 

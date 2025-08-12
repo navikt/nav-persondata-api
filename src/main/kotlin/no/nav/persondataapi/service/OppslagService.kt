@@ -3,9 +3,15 @@ package no.nav.persondataapi.service
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import no.nav.persondataapi.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.aareg.client.Identtype
+import no.nav.persondataapi.aareg.client.hentIdenter
+import no.nav.persondataapi.domain.AaregResultat
 import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.ereg.client.EregClient
+import no.nav.persondataapi.ereg.client.EregRespons
 
-import no.nav.persondataapi.domain.UtbetalingResultat
+
 import no.nav.persondataapi.service.dataproviders.GrunnlagsKontekst
 import no.nav.persondataapi.service.dataproviders.GrunnlagsProvider
 import no.nav.persondataapi.service.dataproviders.GrunnlagsType
@@ -18,7 +24,8 @@ import java.time.ZonedDateTime
 class OppslagService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val tokenService: TokenService,
-    private val providers: List<GrunnlagsProvider>  // injiseres automatisk av Spring
+    private val providers: List<GrunnlagsProvider> , // injiseres automatisk av Spring
+    private val eregClient: EregClient
 ) {
 
     suspend fun hentGrunnlagsData(
@@ -50,6 +57,7 @@ class OppslagService(
         }
         println("Alle svar hentet $resultater")
 
+        val organiasajoner = mutableMapOf<String,EregRespons>()
         // Eksempel på hvordan du setter sammen full respons
         val utbetalinger = resultater
             .find { it.type == GrunnlagsType.UTBETALINGER }
@@ -57,14 +65,37 @@ class OppslagService(
             .find { it.type == GrunnlagsType.PERSONDATA }
         val inntektData = resultater
             .find { it.type == GrunnlagsType.INNTEKT }
+        val aaRegData = resultater
+            .find { it.type == GrunnlagsType.ARBEIDSFORHOLD }
+        if (aaRegData != null && aaRegData.data !== null) {
+            val v = aaRegData.data as List<Arbeidsforhold>
+            var identer = v.hentIdenter()
+                .map { it.ident }
+
+            identer.forEach {
+                ident ->
+                try {
+                    val org = eregClient.hentOrganisasjon(ident)
+                    organiasajoner.put(ident,org)
+                }
+                catch (t:Exception){
+                    t.printStackTrace()
+                }
+
+            }
+
+        }
         println("returnerer svar fra OppslagService")
+
         return GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
             saksbehandlerId = username,
             utbetalingRespons = utbetalinger,
             personDataRespons = personData,
-            inntektDataRespons = inntektData
+            inntektDataRespons = inntektData,
+            aAaregDataRespons = aaRegData,
+            eregDataRespons = organiasajoner
         )
     }
 }

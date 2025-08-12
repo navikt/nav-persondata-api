@@ -1,11 +1,15 @@
 package no.nav.persondataapi.domain
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.aareg.client.AaRegArbeidsforhold
+import no.nav.persondataapi.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import java.time.LocalDate
 import java.time.ZonedDateTime
+import kotlin.collections.mutableMapOf
 
 data class GrunnlagsData(
     val utreksTidspunkt: ZonedDateTime = ZonedDateTime.now(),
@@ -13,7 +17,9 @@ data class GrunnlagsData(
     val saksbehandlerId:String,
     val utbetalingRespons: GrunnlagsdelResultat?,
     val personDataRespons: GrunnlagsdelResultat?,
-    val inntektDataRespons: GrunnlagsdelResultat?
+    val inntektDataRespons: GrunnlagsdelResultat?,
+    val aAaregDataRespons: GrunnlagsdelResultat?,
+    val eregDataRespons: Map<String,EregRespons> = emptyMap<String, EregRespons>()
 )
 
 data class UtbetalingRespons(val utbetalinger:List<Utbetaling>)
@@ -39,6 +45,12 @@ data class TilgangMaskinResultat(
 
 data class InntektResultat(
     val data: InntektshistorikkApiUt?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
+
+data class AaregResultat(
+    val data:  List<Arbeidsforhold>?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )

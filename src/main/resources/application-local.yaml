@@ -30,4 +30,10 @@ INNTEKT_URL: https://ikomp-q2.dev-fss-pub.nais.io
 TILGANGMASKIN_SCOPE: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
 TILGANGMASKIN_URL: https://tilgangsmaskin.intern.dev.nav.no
 
+AAREG_SCOPE: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
+AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
+
+
+EREG_URL: https://ereg-services.dev.intern.nav.no/api
+
 
