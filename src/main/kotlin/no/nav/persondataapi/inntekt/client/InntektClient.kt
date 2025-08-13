@@ -1,16 +1,13 @@
 package no.nav.persondataapi.inntekt.client
 
-
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.domain.InntektResultat
 import no.nav.persondataapi.domain.KontrollPeriode
 import no.nav.persondataapi.service.SCOPE
-
 import no.nav.persondataapi.service.TokenService
-
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -27,8 +24,13 @@ class InntektClient(
 
 
     ) {
+    private val log = LoggerFactory.getLogger(javaClass)
+    // Felles tags for denne klienten
+
+
     fun hentInntekter(fnr: String, token:String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
         LocalDate.now())): InntektResultat {
+
         return runCatching {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
@@ -39,8 +41,9 @@ class InntektClient(
                 maanedFom = kontrollPeriode.fom.format(formatter),
                 maanedTom = kontrollPeriode.tom.format(formatter),
             )
-            val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE
-            )
+            val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
+
+
             val responseResult = webClient.post()
                 .uri("/rest/v2/inntektshistorikk")
                 .header("Authorization", "Bearer $oboToken")
@@ -65,7 +68,8 @@ class InntektClient(
             responseResult
         }.fold(
             onSuccess = { inntekt ->
-                println("inntekt er ok..fått svar!")
+
+                log.info("inntekt er ok..fått svar!")
                 InntektResultat(
                     data = inntekt,
                     statusCode = 200,
@@ -73,8 +77,7 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                println("Feil ved henting av utbetalinger")
-                    error.printStackTrace()
+                log.error("Feil ved henting av utbetalinger",error)
                     InntektResultat (
                         data = null,
                         statusCode = 500,
@@ -83,4 +86,5 @@ class InntektClient(
             }
         )
     }
+
 }

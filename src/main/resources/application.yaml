@@ -7,7 +7,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, info
+        include: health, metrics, info, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.client.requests: true
+  tags:
+    application: nav-persondata-api
+    env: ${NAIS_CLUSTER_NAME:local}
   endpoint:
     health:
       show-details: always
