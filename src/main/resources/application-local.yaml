@@ -45,4 +45,5 @@ AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
 EREG_URL: https://ereg-services.dev.intern.nav.no/api
 
 #DO NOT CHECK IN BELOW
-
+AZURE_APP_CLIENT_SECRET: SJ78Q~bRCyQoxUSGFuKzedj4c-F3tsOo9onTqaiP
+AZURE_APP_CLIENT_ID: f99254b7-a630-48fe-a21a-21989eca6f4b

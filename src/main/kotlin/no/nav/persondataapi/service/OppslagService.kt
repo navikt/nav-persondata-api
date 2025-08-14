@@ -1,5 +1,6 @@
 package no.nav.persondataapi.service
 
+import io.micrometer.observation.annotation.Observed
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -16,17 +17,24 @@ import no.nav.persondataapi.service.dataproviders.GrunnlagsKontekst
 import no.nav.persondataapi.service.dataproviders.GrunnlagsProvider
 import no.nav.persondataapi.service.dataproviders.GrunnlagsType
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
+import org.slf4j.LoggerFactory
 
 import org.springframework.stereotype.Component
 import java.time.ZonedDateTime
 
 @Component
+@Observed(
+    name = "persondataapi.oppslagService",
+    contextualName = "hentGrunnlagsdata",
+    lowCardinalityKeyValues = ["component","service"]
+)
 class OppslagService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val tokenService: TokenService,
     private val providers: List<GrunnlagsProvider> , // injiseres automatisk av Spring
     private val eregClient: EregClient
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentGrunnlagsData(
         fnr: String,
@@ -58,7 +66,7 @@ class OppslagService(
                 }
                 .awaitAll()
         }
-        println("Alle svar hentet $resultater")
+        log.info("Alle svar hentet $resultater")
 
         val organiasajoner = mutableMapOf<String,EregRespons>()
         // Eksempel på hvordan du setter sammen full respons
