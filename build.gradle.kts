@@ -4,10 +4,10 @@ val latestGraphQLKotlinVersion = "9.0.0-alpha.8"
 
 
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "1.9.24"
     id("org.springframework.boot") version "3.2.7"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("plugin.spring") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.24"
     id("com.expediagroup.graphql") version "9.0.0-alpha.8"
     id("org.openapi.generator") version "7.0.1"
 
@@ -43,8 +43,6 @@ graphql {
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://repo.spring.io/milestone") }
-    maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 java {
@@ -80,6 +78,7 @@ tasks.named("compileKotlin") {
 }
 dependencies {
     //jacson
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.7"))
     implementation(enforcedPlatform("com.fasterxml.jackson:jackson-bom:2.17.1"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
     implementation("com.fasterxml.jackson.core:jackson-databind")
@@ -90,11 +89,21 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
+    // Tracing (Micrometer → OpenTelemetry)
+    implementation("io.micrometer:micrometer-tracing-bridge-otel")
+    runtimeOnly("io.opentelemetry:opentelemetry-exporter-otlp")
 
+    // Strukturerte JSON-logger (til stdout -> NAIS logger)
+    implementation("net.logstash.logback:logstash-logback-encoder:7.4")
+
+    implementation("io.projectreactor.netty:reactor-netty-http")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.8.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

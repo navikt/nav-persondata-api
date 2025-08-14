@@ -23,8 +23,9 @@ import org.springframework.web.reactive.function.client.WebClient
 @Service
 class PdlClient(
     private val tokenService: TokenService,
-    @Qualifier("utbetalingWebClient")
-    private val webClient: WebClient,
+    @Qualifier("pdlGraphQLClient")
+    private val client: GraphQLWebClient,
+
     @Value("\${PDL_URL}")
     private val pdl_url: String,
 
@@ -38,10 +39,6 @@ class PdlClient(
             userToken, SCOPE.PDL_SCOPE
         )
 
-        val client = GraphQLWebClient(
-            url = pdl_url,
-            builder = WebClient.builder(),
-        )
         val query = HentPerson(
             HentPerson.Variables(
                 ident = ident,

@@ -1,14 +1,26 @@
 package no.nav.persondataapi.configuration
 
+import com.expediagroup.graphql.client.spring.GraphQLWebClient
+import io.micrometer.observation.ObservationRegistry
+import io.netty.resolver.DefaultAddressResolverGroup
+import org.slf4j.MDC
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
-import org.springframework.web.context.request.RequestContextListener
+import org.springframework.http.client.reactive.ReactorClientHttpConnector
+import org.springframework.web.reactive.function.client.ClientRequest
+
+import org.springframework.web.reactive.function.client.ClientRequestObservationConvention
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
+import reactor.netty.http.client.HttpClient
+import java.util.UUID
 
 @Configuration
-class WebClientConfig {
+class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
     @Value("\${NAIS_TOKEN_EXCHANGE_ENDPOINT}")
     lateinit var tokenExchangeUrl: String
@@ -25,8 +37,6 @@ class WebClientConfig {
     @Value("\${EREG_URL}")
     lateinit var eregURL: String
 
-
-
     @Bean
     fun tokenWebClient(builder: WebClient.Builder): WebClient =
         builder
@@ -40,7 +50,12 @@ class WebClientConfig {
             .defaultHeader("Content-Type", "application/json")
             .build()
     @Bean
-    fun utbetalingWebClient(builder: WebClient.Builder): WebClient =
+    fun utbetalingWebClient(
+                    builder: WebClient.Builder,
+                    @Qualifier("utbetalingObservation")
+                    convention: ClientRequestObservationConvention,
+                    navCallIdHeaderFilter: ExchangeFilterFunction
+    ): WebClient =
         builder
             .baseUrl("$utbetalingURL/utbetaldata/api/v2/hent-utbetalingsinformasjon/intern")
             //.defaultHeader("Content-Type", "application/json")
@@ -48,21 +63,46 @@ class WebClientConfig {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
+            .clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(true,
+                        java.util.function.Function<String, String> { uri ->
+                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
+                            uri
+                        })
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
             .build()
 
     @Bean
-    fun inntektWebClient(builder: WebClient.Builder): WebClient =
+    fun inntektWebClient(builder: WebClient.Builder,
+                         @Qualifier("inntektObservation")
+                         convention: ClientRequestObservationConvention,
+                         navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
         builder
             .baseUrl(inntektURL)
-            //.defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
+            .clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(true,
+                        java.util.function.Function<String, String> { uri ->
+                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
+                            uri
+                        })
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
             .build()
 
     @Bean
-    fun tilgangWebClient(builder: WebClient.Builder): WebClient =
+    fun tilgangWebClient(builder: WebClient.Builder,
+                         navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
         builder
             .baseUrl(tilgangmaskinURL)
             //.defaultHeader("Content-Type", "application/json")
@@ -70,25 +110,90 @@ class WebClientConfig {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
+            .filter(navCallIdHeaderFilter)
             .build()
     @Bean
-    fun aaregWebClient(builder: WebClient.Builder): WebClient =
+    fun aaregWebClient(builder: WebClient.Builder,
+                       @Qualifier("aaregObservation")
+                       convention: ClientRequestObservationConvention,
+                       navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
         builder
             .baseUrl(aaregURL)
             //.defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
+            }.clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(true,
+                        java.util.function.Function<String, String> { uri ->
+                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
+                            uri
+                        })
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
             .build()
 
     @Bean
-    fun eregWebClient(builder: WebClient.Builder): WebClient =
+    fun eregWebClient(builder: WebClient.Builder,
+                      navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
         builder
             .baseUrl(eregURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
+            .filter(navCallIdHeaderFilter)
             .build()
+
+    @Bean
+    @Qualifier("pdlWebClient")
+    fun pdlWebClient(
+        base: WebClient.Builder,
+        @Qualifier("pdlObservation")
+        convention: ClientRequestObservationConvention,
+        navCallIdHeaderFilter: ExchangeFilterFunction
+    ): WebClient =
+        base.clone()
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(
+                        true,
+                        java.util.function.Function<String, String> { "/graphql" } // unngå høykardinal uri
+                    ).resolver(DefaultAddressResolverGroup.INSTANCE)
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    @Qualifier("pdlGraphQLClient")
+    fun pdlGraphQLClient(
+        @Qualifier("pdlWebClient") webClient: WebClient,
+        @Value("\${PDL_URL}") pdlUrl: String
+    ): GraphQLWebClient =
+        GraphQLWebClient(
+            url = pdlUrl,
+            builder = webClient.mutate() // arver connector + observation
+        )
+
+    @Bean
+    fun navCallIdHeaderFilter(): ExchangeFilterFunction =
+        ExchangeFilterFunction.ofRequestProcessor { req ->
+            Mono.deferContextual { ctx ->
+                val callId = ctx.getOrDefault(CallId.CTX_KEY, MDC.get(CallId.HEADER) ?: UUID.randomUUID().toString())
+                println("CallId: $callId")
+                val mutated = ClientRequest.from(req)
+                    .header(CallId.HEADER, callId)
+                    .build()
+                Mono.just(mutated)
+            }
+        }
 }
