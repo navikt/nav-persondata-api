@@ -51,7 +51,7 @@ data class Rapporteringsmaaneder(
 )
 
 data class Bruksperiode(
-    val fom: String, // LocalDateTime
+    val fom: String?, // LocalDateTime
     val tom: String?, // LocalDateTime
 )
 
@@ -141,7 +141,7 @@ data class Sporingsinformasjon(
     val endretKildereferanse: String
 )
 data class AaRegAnsettelsesperiode(
-    val bruksperiode: AaRegBruksperiode,
+    val bruksperiode: Bruksperiode,
     val periode: AaRegPeriode,
     val sporingsinformasjon: AaRegSporingsinformasjon,
     val varslingskode: String?
@@ -158,7 +158,7 @@ data class AaRegArbeidsavtale(
     val antallTimerPrUke: Double?,
     val arbeidstidsordning: String?,
     val beregnetAntallTimerPrUke: Double?,
-    val bruksperiode: AaRegBruksperiode,
+    val bruksperiode: Bruksperiode,
     val gyldighetsperiode: AaRegGyldighetsperiode,
     val sistLoennsendring: String?,
     val sistStillingsendring: String?,
@@ -193,11 +193,6 @@ data class AaRegArbeidsforhold(
 data class AaRegArbeidsgiverArbeidsforhold(
     val antall: Int,
     val arbeidsforhold: List<AaRegArbeidsforhold>
-)
-
-data class AaRegBruksperiode(
-    val fom: LocalDateTime,
-    val tom: LocalDateTime?
 )
 
 enum class AaRegOpplysningspliktigArbeidsgiverType {
