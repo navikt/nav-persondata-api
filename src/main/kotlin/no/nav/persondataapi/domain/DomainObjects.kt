@@ -18,7 +18,7 @@ data class GrunnlagsData(
     val utbetalingRespons: GrunnlagsdelResultat?,
     val personDataRespons: GrunnlagsdelResultat?,
     val inntektDataRespons: GrunnlagsdelResultat?,
-    val aAaregDataRespons: GrunnlagsdelResultat?,
+    var aAaregDataRespons: GrunnlagsdelResultat?,
     val eregDataRespons: Map<String,EregRespons> = emptyMap<String, EregRespons>()
 )
 
@@ -50,7 +50,7 @@ data class InntektResultat(
 )
 
 data class AaregResultat(
-    val data:  List<Arbeidsforhold>?,
+    val data:  List<Arbeidsforhold> = emptyList(),
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )

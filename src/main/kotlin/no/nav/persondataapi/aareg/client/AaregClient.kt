@@ -71,13 +71,13 @@ class AaregClient(
         }.getOrElse { error ->
             if (error is HttpStatusException) {
                 AaregResultat(
-                    data = null,
+                    data = emptyList(),
                     statusCode = error.statusCode,
                     errorMessage = error.message ?: "Feil fra Aareg"
                 )
             } else {
                 AaregResultat(
-                    data = null,
+                    data = emptyList(),
                     statusCode = 500,
                     errorMessage = "Teknisk feil: ${error.message}"
                 )
