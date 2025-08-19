@@ -10,13 +10,17 @@ data class OppslagBrukerRespons(
     val utrekkstidspunkt: LocalDateTime,
     val saksbehandlerIdent: String,
     val fodselsnr: String,
+    val personInformasjon: PersonInformasjon?,
+    val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
+    val ytelserOgStonaderInformasjon: ytelserOgStonaderInformasjon?,
+    val utbetalingInfo: UtbetalingInfo?
 )
 
 data class PersonInformasjon(
     val navn: String,
     val aktorId: String?,
     val adresse: String?,
-    val familemedllemmer : String
+    val familemedlemmer : Map<String,String> = emptyMap<String, String>()
 )
 
 

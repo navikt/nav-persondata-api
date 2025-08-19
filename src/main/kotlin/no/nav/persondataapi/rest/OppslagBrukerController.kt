@@ -2,7 +2,9 @@ package no.nav.persondataapi.rest
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
 import no.nav.persondataapi.service.OppslagService
+import no.nav.persondataapi.service.ResponsMappingService
 import no.nav.persondataapi.service.TokenService
 
 import no.nav.security.token.support.core.api.Protected
@@ -18,16 +20,17 @@ import org.springframework.web.bind.annotation.RestController
 class OppslagBrukerController(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val oppslagService: OppslagService,
-    private val tokenService: TokenService
+    private val tokenService: TokenService,
+    private val mappingService: ResponsMappingService
 ) {
 
     @GetMapping("/oppslag-bruker")
     @Protected
-    fun userInfo(@RequestHeader("fnr") fnr: String): GrunnlagsData {
+    fun userInfo(@RequestHeader("fnr") fnr: String): OppslagBrukerRespons {
         return runBlocking {
 
-
-            oppslagService.hentGrunnlagsData(fnr)
+            val grunnlag = oppslagService.hentGrunnlagsData(fnr)
+            mappingService.mapToMOppslagBrukerResponse(grunnlag)
         }
     }
     @GetMapping("/utbetaling-token")

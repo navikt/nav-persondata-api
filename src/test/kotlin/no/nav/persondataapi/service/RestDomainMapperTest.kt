@@ -5,6 +5,8 @@ import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.AaregResultat
 import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.rest.domain.PersonInformasjon
 
 import no.nav.persondataapi.service.dataproviders.GrunnlagsType
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
+import kotlin.test.assertNotNull
 
 
 class RestDomainMapperTest {
@@ -59,6 +62,35 @@ class RestDomainMapperTest {
         Assertions.assertTrue (arbeidsforhold.ansettelsesDetaljer.isNotEmpty())
         Assertions.assertEquals("TEST GATA 75, 5252 SØREIDGREND",arbeidsforhold.adresse)
         Assertions.assertEquals("SAUEFABRIKK",arbeidsforhold.arbeidsgiver)
+
+    }
+
+    @Test
+    fun kanOversettePdlTilPersonInformasjon(){
+
+
+
+
+        val pdlString = readJsonFromFile("testrespons/PdlResponsSample.json")
+        val pdlRespons: Person = JsonUtils.fromJson(pdlString)
+
+
+        val grunnlag = GrunnlagsData(
+            ident = "1234",
+            saksbehandlerId = "1234",
+            utbetalingRespons = null,
+            personDataRespons = GrunnlagsdelResultat(
+                type = GrunnlagsType.PERSONDATA,
+                data=pdlRespons,
+                status = 200),
+            inntektDataRespons = null,
+            aAaregDataRespons = null
+            )
+
+        val personInformasjon =  grunnlag.getPersonInformasjon()
+        Assertions.assertNotNull(personInformasjon)
+        Assertions.assertEquals("HANS JACOB ASLAKSRUD MELBY",personInformasjon.navn)
+        Assertions.assertEquals("Slalåmveien 62, 1350",personInformasjon.adresse)
 
     }
 
