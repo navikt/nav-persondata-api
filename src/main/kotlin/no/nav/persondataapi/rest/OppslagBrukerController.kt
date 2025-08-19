@@ -24,13 +24,22 @@ class OppslagBrukerController(
     private val mappingService: ResponsMappingService
 ) {
 
-    @GetMapping("/oppslag-bruker")
+    @GetMapping("/oppslag-bruker2")
     @Protected
     fun userInfo(@RequestHeader("fnr") fnr: String): OppslagBrukerRespons {
         return runBlocking {
 
             val grunnlag = oppslagService.hentGrunnlagsData(fnr)
             mappingService.mapToMOppslagBrukerResponse(grunnlag)
+        }
+    }
+    @GetMapping("/oppslag-bruker")
+    @Protected
+    fun userInfoAPI(@RequestHeader("fnr") fnr: String): GrunnlagsData {
+        return runBlocking {
+
+              oppslagService.hentGrunnlagsData(fnr)
+
         }
     }
     @GetMapping("/utbetaling-token")
