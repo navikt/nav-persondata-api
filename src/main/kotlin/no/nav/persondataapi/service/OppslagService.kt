@@ -5,10 +5,13 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
-import no.nav.persondataapi.aareg.client.Identtype
 import no.nav.persondataapi.aareg.client.hentIdenter
-import no.nav.persondataapi.domain.AaregResultat
+import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.domain.InntektDataResultat
+import no.nav.persondataapi.domain.PersonDataResultat
+import no.nav.persondataapi.domain.UtbetalingRespons
+import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.ereg.client.EregClient
 import no.nav.persondataapi.ereg.client.EregRespons
 
@@ -102,10 +105,10 @@ class OppslagService(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
             saksbehandlerId = username,
-            utbetalingRespons = utbetalinger,
-            personDataRespons = personData,
-            inntektDataRespons = inntektData,
-            aAaregDataRespons = aaRegData,
+            utbetalingRespons = utbetalinger?.data as UtbetalingResultat,
+            personDataRespons = personData?.data as PersonDataResultat,
+            inntektDataRespons = inntektData?.data as InntektDataResultat,
+            aAaregDataRespons = aaRegData?.data as AaregDataResultat,
             eregDataRespons = organiasajoner
         )
     }

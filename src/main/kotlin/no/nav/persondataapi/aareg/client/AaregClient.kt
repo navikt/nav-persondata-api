@@ -2,10 +2,8 @@ package no.nav.persondataapi.aareg.client
 
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.domain.AaregResultat
-import no.nav.persondataapi.ereg.client.EregClient
+import no.nav.persondataapi.domain.AaregDataResultat
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -27,7 +25,7 @@ class AaregClient(
 
     private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
 
-    fun hentArbeidsForhold(fnr: String, token: String): AaregResultat {
+    fun hentArbeidsForhold(fnr: String, token: String): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)
 
@@ -63,20 +61,20 @@ class AaregClient(
                 }
                 .block()!!
 
-            AaregResultat(
+            AaregDataResultat(
                 data = responsePair.second,
                 statusCode = responsePair.first,
                 errorMessage = ""
             )
         }.getOrElse { error ->
             if (error is HttpStatusException) {
-                AaregResultat(
+                AaregDataResultat(
                     data = emptyList(),
                     statusCode = error.statusCode,
                     errorMessage = error.message ?: "Feil fra Aareg"
                 )
             } else {
-                AaregResultat(
+                AaregDataResultat(
                     data = emptyList(),
                     statusCode = 500,
                     errorMessage = "Teknisk feil: ${error.message}"

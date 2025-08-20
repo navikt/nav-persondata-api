@@ -1,24 +1,23 @@
 package no.nav.persondataapi.domain
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
-import no.nav.persondataapi.aareg.client.AaRegArbeidsforhold
+
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import java.time.LocalDate
 import java.time.ZonedDateTime
-import kotlin.collections.mutableMapOf
+
 
 data class GrunnlagsData(
     val utreksTidspunkt: ZonedDateTime = ZonedDateTime.now(),
     val ident:String,
     val saksbehandlerId:String,
-    val utbetalingRespons: GrunnlagsdelResultat?,
-    val personDataRespons: GrunnlagsdelResultat?,
-    val inntektDataRespons: GrunnlagsdelResultat?,
-    var aAaregDataRespons: GrunnlagsdelResultat?,
+    val utbetalingRespons: UtbetalingResultat?,
+    val personDataRespons: PersonDataResultat?,
+    val inntektDataRespons: InntektDataResultat?,
+    var aAaregDataRespons: AaregDataResultat?,
     val eregDataRespons: Map<String,EregRespons> = emptyMap<String, EregRespons>()
 )
 
@@ -43,13 +42,13 @@ data class TilgangMaskinResultat(
 )
 
 
-data class InntektResultat(
+data class InntektDataResultat(
     val data: InntektshistorikkApiUt?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
 
-data class AaregResultat(
+data class AaregDataResultat(
     val data:  List<Arbeidsforhold> = emptyList(),
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null

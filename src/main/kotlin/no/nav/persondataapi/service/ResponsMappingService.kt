@@ -2,10 +2,9 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
-import no.nav.persondataapi.domain.AaregResultat
+import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.ereg.client.EregRespons
-import no.nav.persondataapi.generated.hentperson.Bostedsadresse
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.generated.hentperson.UtenlandskAdresse
 import no.nav.persondataapi.generated.hentperson.Vegadresse
@@ -15,7 +14,6 @@ import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domain.OpenPeriode
 import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
 import no.nav.persondataapi.rest.domain.PersonInformasjon
-import no.nav.persondataapi.rest.domain.ytelserOgStonaderInformasjon
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -49,9 +47,9 @@ fun GrunnlagsData.getArbeidsGiverInformasjon(): ArbeidsgiverInformasjon{
         )
     }
     else{
-        val aaregResultat: AaregResultat = this.aAaregDataRespons!!.data as AaregResultat
-        val lopendeArbeidsforhold = aaregResultat.data.filter { it.ansettelsesperiode.sluttdato == null }
-        val historiskeArbeidsforhold = aaregResultat.data.filter { it.ansettelsesperiode.sluttdato != null }
+        val aaregDataResultat = this.aAaregDataRespons!!.data
+        val lopendeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato == null }
+        val historiskeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato != null }
         /*
         * map løpende arbeidsforhold
         * */
@@ -82,6 +80,7 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
         )
     }
     else{
+
         val pdlResultat:Person  = this.personDataRespons!!.data as Person
         val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
         val foreldreansvar = pdlResultat.foreldreansvar.associate { Pair(it.ansvarssubjekt!!, "BARN") }

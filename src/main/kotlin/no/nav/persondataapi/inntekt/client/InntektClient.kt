@@ -2,7 +2,7 @@ package no.nav.persondataapi.inntekt.client
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
-import no.nav.persondataapi.domain.InntektResultat
+import no.nav.persondataapi.domain.InntektDataResultat
 import no.nav.persondataapi.domain.KontrollPeriode
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -29,7 +29,7 @@ class InntektClient(
 
 
     fun hentInntekter(fnr: String, token:String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
-        LocalDate.now())): InntektResultat {
+        LocalDate.now())): InntektDataResultat {
 
         return runCatching {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
@@ -70,7 +70,7 @@ class InntektClient(
             onSuccess = { inntekt ->
 
                 log.info("inntekt er ok..fått svar!")
-                InntektResultat(
+                InntektDataResultat(
                     data = inntekt,
                     statusCode = 200,
                     ""
@@ -78,7 +78,7 @@ class InntektClient(
             },
             onFailure = { error ->
                 log.error("Feil ved henting av utbetalinger",error)
-                    InntektResultat (
+                    InntektDataResultat (
                         data = null,
                         statusCode = 500,
                         errorMessage = "Feil ved lesing: ${error.message}"

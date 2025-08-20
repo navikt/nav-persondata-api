@@ -2,11 +2,11 @@ package no.nav.persondataapi.service
 
 
 import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.domain.AaregResultat
+import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.domain.PersonDataResultat
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.rest.domain.PersonInformasjon
 
 import no.nav.persondataapi.service.dataproviders.GrunnlagsType
 import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
-import kotlin.test.assertNotNull
 
 
 class RestDomainMapperTest {
@@ -34,18 +33,14 @@ class RestDomainMapperTest {
 
 
         val jsonString = readJsonFromFile("testrespons/aaregGrunnlagsdataResponsSample.json")
-        val aaregRespons: AaregResultat = JsonUtils.fromJson(jsonString)
+        val aaregRespons: AaregDataResultat = JsonUtils.fromJson(jsonString)
         val grunnlag = GrunnlagsData(
             ident = "1234",
             saksbehandlerId = "1234",
             utbetalingRespons = null,
             personDataRespons = null,
             inntektDataRespons = null,
-                aAaregDataRespons = GrunnlagsdelResultat(
-                    type = GrunnlagsType.ARBEIDSFORHOLD,
-                    data=aaregRespons,
-                    status = 200
-                ),
+                aAaregDataRespons = aaregRespons,
             eregDataRespons = mapOf(
                 Pair("986929150",eregRespons),
                 Pair("984886519",eregRespons2),
@@ -79,10 +74,8 @@ class RestDomainMapperTest {
             ident = "1234",
             saksbehandlerId = "1234",
             utbetalingRespons = null,
-            personDataRespons = GrunnlagsdelResultat(
-                type = GrunnlagsType.PERSONDATA,
-                data=pdlRespons,
-                status = 200),
+            personDataRespons = PersonDataResultat(
+                data = pdlRespons, statusCode = 200, errorMessage = null),
             inntektDataRespons = null,
             aAaregDataRespons = null
             )
@@ -91,6 +84,22 @@ class RestDomainMapperTest {
         Assertions.assertNotNull(personInformasjon)
         Assertions.assertEquals("HANS JACOB ASLAKSRUD MELBY",personInformasjon.navn)
         Assertions.assertEquals("Slalåmveien 62, 1350",personInformasjon.adresse)
+
+    }
+
+    @Test
+    fun kabOversettePersonGrunnlag(){
+
+
+
+
+
+        val pdlString = readJsonFromFile("testrespons/oppslagBrukerSampleRespons.json")
+        val grunnlag: GrunnlagsData = JsonUtils.fromJson(pdlString)
+
+
+
+        val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
 
     }
 
