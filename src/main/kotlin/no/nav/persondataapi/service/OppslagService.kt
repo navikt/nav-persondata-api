@@ -4,6 +4,7 @@ import io.micrometer.observation.annotation.Observed
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.hentIdenter
 import no.nav.persondataapi.domain.AaregDataResultat
@@ -14,11 +15,13 @@ import no.nav.persondataapi.domain.UtbetalingRespons
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.ereg.client.EregClient
 import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.generated.hentperson.Person
 
 
 import no.nav.persondataapi.service.dataproviders.GrunnlagsKontekst
 import no.nav.persondataapi.service.dataproviders.GrunnlagsProvider
 import no.nav.persondataapi.service.dataproviders.GrunnlagsType
+import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.LoggerFactory
 
@@ -100,8 +103,31 @@ class OppslagService(
 
         }
         println("returnerer svar fra OppslagService")
+        val utbetalingResultat = resultater.find { it.type == GrunnlagsType.UTBETALINGER }.let { utbetalingData -> UtbetalingResultat(utbetalingData?.data as UtbetalingRespons, utbetalingData?.status!!,utbetalingData.feilmelding) }
+        val personDataResultat = resultater.find { it.type == GrunnlagsType.PERSONDATA }.let { personData -> PersonDataResultat(personData?.data as Person, personData?.status!!,personData.feilmelding)}
+        val inntektDataResultat = resultater.find { it.type == GrunnlagsType.INNTEKT }.let { inntektData -> InntektDataResultat(inntektData?.data as InntektshistorikkApiUt, personData?.status!!,personData.feilmelding)}
+        val arbeidDataResultat = resultater.find { it.type == GrunnlagsType.ARBEIDSFORHOLD }.let { arbeidData -> AaregDataResultat(arbeidData?.data as List<Arbeidsforhold>, arbeidData?.status!!,arbeidData.feilmelding)}
 
-        return GrunnlagsData(
+
+
+
+        try {
+            val respons = GrunnlagsData(
+                utreksTidspunkt = ZonedDateTime.now(),
+                ident = fnr,
+                saksbehandlerId = username,
+                utbetalingRespons = utbetalingResultat,
+                personDataRespons = personDataResultat,
+                inntektDataRespons = inntektDataResultat,
+                aAaregDataRespons = arbeidDataResultat,
+                eregDataRespons = organiasajoner
+            )
+            return respons
+        }
+        catch (t:Exception){
+        t.printStackTrace()
+        }
+        val respons = GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
             ident = fnr,
             saksbehandlerId = username,
@@ -111,5 +137,6 @@ class OppslagService(
             aAaregDataRespons = aaRegData?.data as AaregDataResultat,
             eregDataRespons = organiasajoner
         )
+        return respons
     }
 }

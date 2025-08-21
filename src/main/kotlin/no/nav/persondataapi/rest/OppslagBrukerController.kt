@@ -38,7 +38,8 @@ class OppslagBrukerController(
     fun userInfoAPI(@RequestHeader("fnr") fnr: String): GrunnlagsData {
         return runBlocking {
 
-              oppslagService.hentGrunnlagsData(fnr)
+              val respons = oppslagService.hentGrunnlagsData(fnr)
+            respons
 
         }
     }
