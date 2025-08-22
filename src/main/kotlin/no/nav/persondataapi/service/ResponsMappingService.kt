@@ -2,7 +2,6 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
-import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
@@ -13,7 +12,10 @@ import no.nav.persondataapi.rest.domain.ArbeidsgiverData
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domain.OpenPeriode
 import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
+import no.nav.persondataapi.rest.domain.Periode
+import no.nav.persondataapi.rest.domain.PeriodeInformasjon
 import no.nav.persondataapi.rest.domain.PersonInformasjon
+import no.nav.persondataapi.rest.domain.Stonad
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -32,7 +34,8 @@ private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
             personInformasjon = grunnlagsData.getPersonInformasjon(),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsGiverInformasjon(),
             ytelserOgStonaderInformasjon=null,
-            utbetalingInfo = null
+            utbetalingInfo = null,
+            stonadOversikt = grunnlagsData.getStonadOversikt(),
         )
 
     }
@@ -84,7 +87,8 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
         val pdlResultat:Person  = this.personDataRespons!!.data as Person
         val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
         val foreldreansvar = pdlResultat.foreldreansvar.associate { Pair(it.ansvarssubjekt!!, "BARN") }
-        val ektefelle = pdlResultat.sivilstand.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
+
+        val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
         val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
         return PersonInformasjon(
             navn = pdlResultat.fulltNavn(),
@@ -92,6 +96,41 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
             adresse = pdlResultat.naavarendeBostedsAdresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle)
     }
+
+}
+
+fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
+    if (this.utbetalingRespons==null){
+        println("ingen utbetalingRespons")
+        return emptyList()
+    }
+    else{
+        val utbetalinger = this.utbetalingRespons!!.data!!.utbetalinger
+        val ytelser = utbetalinger.flatMap { it.ytelseListe.map { it.ytelsestype } }.distinct()
+        println("ytelser: ${ytelser.size}")
+        println(ytelser.toString())
+
+
+        val map: MutableMap<String,List<PeriodeInformasjon>> = mutableMapOf()
+        val stonadListe = mutableListOf<Stonad>()
+        ytelser.forEach {
+                ytelser ->
+                val ytelseListe = utbetalinger.flatMap { it.ytelseListe }.filter { it.ytelsestype==ytelser }
+                val demo = mutableListOf<PeriodeInformasjon>()
+                ytelseListe.forEach {ytelser ->
+                    val info = PeriodeInformasjon(
+                        periode = Periode(fom = ytelser.ytelsesperiode.fom, tom = ytelser.ytelsesperiode.tom),
+                        ytelser.ytelseNettobeloep,
+                        kilde= "SOKOS",
+                        info = ytelser.bilagsnummer
+                    )
+                    demo.add(info)
+                }
+                stonadListe.add(Stonad(stonadType = ytelser!!,demo))
+            }
+        return stonadListe
+    }
+
 
 }
 

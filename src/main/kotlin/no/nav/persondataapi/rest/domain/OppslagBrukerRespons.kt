@@ -2,6 +2,7 @@ package no.nav.persondataapi.rest.domain
 
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.ereg.client.Adresse
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
@@ -13,7 +14,8 @@ data class OppslagBrukerRespons(
     val personInformasjon: PersonInformasjon?,
     val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
     val ytelserOgStonaderInformasjon: ytelserOgStonaderInformasjon?,
-    val utbetalingInfo: UtbetalingInfo?
+    val utbetalingInfo: UtbetalingInfo?,
+    val stonadOversikt: List<Stonad> = emptyList()
 )
 
 data class PersonInformasjon(
@@ -60,7 +62,7 @@ data class Stonad(
 )
 data class PeriodeInformasjon(
     val periode: Periode,
-    val beløp: Int,
+    val beløp: BigDecimal,
     val kilde: String,
     val info: String?
 )

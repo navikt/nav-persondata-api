@@ -5,11 +5,10 @@ import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.domain.PersonDataResultat
+import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
 
-import no.nav.persondataapi.service.dataproviders.GrunnlagsType
-import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
@@ -88,6 +87,27 @@ class RestDomainMapperTest {
     }
 
     @Test
+    fun kanOversetteUtbealingUtbetalingInformasjon(){
+
+
+
+
+        val pdlString = readJsonFromFile("testrespons/utbetalingResponsSample.json")
+        val utbetalingRespons: UtbetalingResultat = JsonUtils.fromJson(pdlString)
+
+
+        val grunnlag = GrunnlagsData(
+            ident = "1234",
+            saksbehandlerId = "1234",
+            utbetalingRespons = utbetalingRespons,
+            personDataRespons = null,
+            inntektDataRespons = null,
+            aAaregDataRespons = null
+        )
+        grunnlag.getStonadOversikt()
+    }
+
+    @Test
     fun kabOversettePersonGrunnlag(){
 
 
@@ -106,6 +126,8 @@ class RestDomainMapperTest {
 
 
 }
+
+
 
 private fun readJsonFromFile(filename: String): String {
     val resource = ClassPathResource(filename)
