@@ -1,0 +1,786 @@
+{
+  "data": [
+    {
+      "id": "00163EDC07481EE4A5FC934103F7C519",
+      "type": {
+        "kode": "ordinaertArbeidsforhold",
+        "beskrivelse": "Ordinært arbeidsforhold"
+      },
+      "arbeidstaker": {
+        "identer": [
+          {
+            "type": "AKTORID",
+            "ident": "1000054885111",
+            "gjeldende": true
+          },
+          {
+            "type": "FOLKEREGISTERIDENT",
+            "ident": "21047541120",
+            "gjeldende": true
+          }
+        ]
+      },
+      "arbeidssted": {
+        "type": "Underenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "984886519",
+            "gjeldende": null
+          }
+        ]
+      },
+      "opplysningspliktig": {
+        "type": "Hovedenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "976967631",
+            "gjeldende": null
+          }
+        ]
+      },
+      "ansettelsesperiode": {
+        "startdato": "2013-01-02",
+        "sluttdato": "2015-09-30",
+        "sluttaarsak": null,
+        "varsling": null,
+        "sporingsinformasjon": null
+      },
+      "ansettelsesdetaljer": [
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130131",
+            "beskrivelse": "SYSTEM MANAGER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2014-02-01",
+          "sisteLoennsendring": "2015-04-01",
+          "rapporteringsmaaneder": {
+            "fra": "2015-04",
+            "til": null
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130131",
+            "beskrivelse": "SYSTEM MANAGER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2014-02-01",
+          "sisteLoennsendring": "2014-04-01",
+          "rapporteringsmaaneder": {
+            "fra": "2015-01",
+            "til": "2015-03"
+          },
+          "sporingsinformasjon": null
+        }
+      ],
+      "permisjoner": null,
+      "permitteringer": null,
+      "timerMedTimeloenn": null,
+      "utenlandsopphold": null,
+      "idHistorikk": null,
+      "varsler": null,
+      "rapporteringsordning": {
+        "kode": "A_ORDNINGEN",
+        "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+      },
+      "navArbeidsforholdId": 32349331,
+      "navVersjon": 694,
+      "navUuid": "1D37CB1F6CB656BAE0532A4D350A9798",
+      "opprettet": "2015-01-09T11:31:32.977",
+      "sistBekreftet": "2019-11-22T07:56:54",
+      "bruksperiode": {
+        "fom": "2015-01-09T11:33:56.505",
+        "tom": null
+      },
+      "sporingsinformasjon": null,
+      "organisasjoner": []
+    },
+    {
+      "id": "5",
+      "type": {
+        "kode": "ordinaertArbeidsforhold",
+        "beskrivelse": "Ordinært arbeidsforhold"
+      },
+      "arbeidstaker": {
+        "identer": [
+          {
+            "type": "AKTORID",
+            "ident": "1000054885111",
+            "gjeldende": true
+          },
+          {
+            "type": "FOLKEREGISTERIDENT",
+            "ident": "21047541120",
+            "gjeldende": true
+          }
+        ]
+      },
+      "arbeidssted": {
+        "type": "Underenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986929150",
+            "gjeldende": null
+          }
+        ]
+      },
+      "opplysningspliktig": {
+        "type": "Hovedenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986352325",
+            "gjeldende": null
+          }
+        ]
+      },
+      "ansettelsesperiode": {
+        "startdato": "2015-10-01",
+        "sluttdato": "2024-12-31",
+        "sluttaarsak": {
+          "kode": "endringIOrganisasjonsstrukturEllerByttetJobbInternt",
+          "beskrivelse": "Endring i organisasjonsstruktur eller byttet jobb internt"
+        },
+        "varsling": null,
+        "sporingsinformasjon": null
+      },
+      "ansettelsesdetaljer": [
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2022-07-01",
+          "sisteLoennsendring": "2024-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2024-07",
+            "til": null
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2015-10-01",
+          "rapporteringsmaaneder": {
+            "fra": "2015-04",
+            "til": "2016-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2016-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2016-07",
+            "til": "2017-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2017-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2017-07",
+            "til": "2018-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2018-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2018-07",
+            "til": "2018-12"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2018-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2019-01",
+            "til": "2019-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2019-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2019-07",
+            "til": "2020-11"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": null,
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2020-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2020-12",
+            "til": "2020-12"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2020-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2021-01",
+            "til": "2021-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2021-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2021-07",
+            "til": "2021-12"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2022-01-01",
+          "rapporteringsmaaneder": {
+            "fra": "2022-01",
+            "til": "2022-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2015-10-01",
+          "sisteLoennsendring": "2022-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2022-07",
+            "til": "2023-04"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2022-07-01",
+          "sisteLoennsendring": "2022-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2023-05",
+            "til": "2023-06"
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fast",
+            "beskrivelse": "Fast ansettelse"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2022-07-01",
+          "sisteLoennsendring": "2023-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2023-07",
+            "til": "2024-06"
+          },
+          "sporingsinformasjon": null
+        }
+      ],
+      "permisjoner": null,
+      "permitteringer": null,
+      "timerMedTimeloenn": [
+        {
+          "antall": 6.32,
+          "startdato": "2020-01-01",
+          "sluttdato": "2020-01-31",
+          "rapporteringsmaaneder": null,
+          "sporingsinformasjon": null
+        },
+        {
+          "antall": -23.69,
+          "startdato": "2024-01-01",
+          "sluttdato": "2024-02-29",
+          "rapporteringsmaaneder": null,
+          "sporingsinformasjon": null
+        }
+      ],
+      "utenlandsopphold": null,
+      "idHistorikk": [
+        {
+          "id": "V986929150R611L0001",
+          "bruksperiode": {
+            "fom": null,
+            "tom": null
+          }
+        },
+        {
+          "id": "5",
+          "bruksperiode": {
+            "fom": "2025-05-07T13:33:26.994459",
+            "tom": null
+          }
+        },
+        {
+          "id": "V986929150R611L0001",
+          "bruksperiode": {
+            "fom": "2025-05-07T13:33:26.994459",
+            "tom": null
+          }
+        }
+      ],
+      "varsler": null,
+      "rapporteringsordning": {
+        "kode": "A_ORDNINGEN",
+        "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+      },
+      "navArbeidsforholdId": 74123824,
+      "navVersjon": 0,
+      "navUuid": "62b9f842-3c6b-4834-aa25-a00a320c869e",
+      "opprettet": "2015-10-06T13:25:23.007",
+      "sistBekreftet": "2025-02-05T14:44:56.96",
+      "bruksperiode": {
+        "fom": "2025-05-07T13:33:26.994459",
+        "tom": null
+      },
+      "sporingsinformasjon": null,
+      "organisasjoner": []
+    },
+    {
+      "id": "5",
+      "type": {
+        "kode": "ordinaertArbeidsforhold",
+        "beskrivelse": "Ordinært arbeidsforhold"
+      },
+      "arbeidstaker": {
+        "identer": [
+          {
+            "type": "AKTORID",
+            "ident": "1000054885111",
+            "gjeldende": true
+          },
+          {
+            "type": "FOLKEREGISTERIDENT",
+            "ident": "21047541120",
+            "gjeldende": true
+          }
+        ]
+      },
+      "arbeidssted": {
+        "type": "Underenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986929150",
+            "gjeldende": null
+          }
+        ]
+      },
+      "opplysningspliktig": {
+        "type": "Hovedenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986352325",
+            "gjeldende": null
+          }
+        ]
+      },
+      "ansettelsesperiode": {
+        "startdato": "2025-03-01",
+        "sluttdato": "2025-06-30",
+        "sluttaarsak": {
+          "kode": "endringIOrganisasjonsstrukturEllerByttetJobbInternt",
+          "beskrivelse": "Endring i organisasjonsstruktur eller byttet jobb internt"
+        },
+        "varsling": null,
+        "sporingsinformasjon": null
+      },
+      "ansettelsesdetaljer": [
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fastAnsattUtleid",
+            "beskrivelse": "Fast ansettelse og utleid"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2025-03-01",
+          "sisteLoennsendring": "2025-03-01",
+          "rapporteringsmaaneder": {
+            "fra": "2025-03",
+            "til": null
+          },
+          "sporingsinformasjon": null
+        },
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fastAnsattUtleid",
+            "beskrivelse": "Fast ansettelse og utleid"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2025-01-01",
+          "sisteLoennsendring": "2025-01-01",
+          "rapporteringsmaaneder": {
+            "fra": "2025-01",
+            "til": "2025-02"
+          },
+          "sporingsinformasjon": null
+        }
+      ],
+      "permisjoner": null,
+      "permitteringer": null,
+      "timerMedTimeloenn": [
+        {
+          "antall": -40.0,
+          "startdato": "2025-03-01",
+          "sluttdato": "2025-04-30",
+          "rapporteringsmaaneder": null,
+          "sporingsinformasjon": null
+        }
+      ],
+      "utenlandsopphold": null,
+      "idHistorikk": [
+        {
+          "id": "5",
+          "bruksperiode": {
+            "fom": "2025-05-07T13:33:27.176174",
+            "tom": null
+          }
+        }
+      ],
+      "varsler": null,
+      "rapporteringsordning": {
+        "kode": "A_ORDNINGEN",
+        "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+      },
+      "navArbeidsforholdId": 74123825,
+      "navVersjon": 0,
+      "navUuid": "741dbd25-9319-401c-a473-83e83a1ab77d",
+      "opprettet": "2025-02-05T15:00:37.963",
+      "sistBekreftet": "2025-07-08T10:33:34.27",
+      "bruksperiode": {
+        "fom": "2025-05-07T13:33:27.176174",
+        "tom": null
+      },
+      "sporingsinformasjon": null,
+      "organisasjoner": []
+    },
+    {
+      "id": "6",
+      "type": {
+        "kode": "ordinaertArbeidsforhold",
+        "beskrivelse": "Ordinært arbeidsforhold"
+      },
+      "arbeidstaker": {
+        "identer": [
+          {
+            "type": "AKTORID",
+            "ident": "1000054885111",
+            "gjeldende": true
+          },
+          {
+            "type": "FOLKEREGISTERIDENT",
+            "ident": "21047541120",
+            "gjeldende": true
+          }
+        ]
+      },
+      "arbeidssted": {
+        "type": "Underenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986929150",
+            "gjeldende": null
+          }
+        ]
+      },
+      "opplysningspliktig": {
+        "type": "Hovedenhet",
+        "identer": [
+          {
+            "type": "ORGANISASJONSNUMMER",
+            "ident": "986352325",
+            "gjeldende": null
+          }
+        ]
+      },
+      "ansettelsesperiode": {
+        "startdato": "2025-07-01",
+        "sluttdato": null,
+        "sluttaarsak": null,
+        "varsling": null,
+        "sporingsinformasjon": null
+      },
+      "ansettelsesdetaljer": [
+        {
+          "type": "Ordinaer",
+          "arbeidstidsordning": {
+            "kode": "ikkeSkift",
+            "beskrivelse": "Ikke skift"
+          },
+          "ansettelsesform": {
+            "kode": "fastAnsattUtleid",
+            "beskrivelse": "Fast ansettelse og utleid"
+          },
+          "yrke": {
+            "kode": "2130109",
+            "beskrivelse": "SYSTEMUTVIKLER"
+          },
+          "antallTimerPrUke": 37.5,
+          "avtaltStillingsprosent": 100.0,
+          "sisteStillingsprosentendring": "2025-07-01",
+          "sisteLoennsendring": "2025-07-01",
+          "rapporteringsmaaneder": {
+            "fra": "2025-07",
+            "til": null
+          },
+          "sporingsinformasjon": null
+        }
+      ],
+      "permisjoner": null,
+      "permitteringer": null,
+      "timerMedTimeloenn": null,
+      "utenlandsopphold": null,
+      "idHistorikk": [
+        {
+          "id": "6",
+          "bruksperiode": {
+            "fom": "2025-08-05T10:31:17.92787",
+            "tom": null
+          }
+        }
+      ],
+      "varsler": null,
+      "rapporteringsordning": {
+        "kode": "A_ORDNINGEN",
+        "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+      },
+      "navArbeidsforholdId": 78088211,
+      "navVersjon": 0,
+      "navUuid": "684fe805-39f0-4244-b881-61f74c52b1d6",
+      "opprettet": "2025-08-05T10:31:17.935797",
+      "sistBekreftet": "2025-08-05T08:29:15.909",
+      "bruksperiode": {
+        "fom": "2025-08-05T10:31:17.92787",
+        "tom": null
+      },
+      "sporingsinformasjon": null,
+      "organisasjoner": []
+    }
+  ],
+  "statusCode": 200,
+  "errorMessage": ""
+}

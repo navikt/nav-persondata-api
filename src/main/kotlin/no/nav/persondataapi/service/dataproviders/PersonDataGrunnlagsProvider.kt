@@ -2,10 +2,7 @@ package no.nav.persondataapi.service.dataproviders
 
 
 import no.nav.persondataapi.pdl.PdlClient
-import no.nav.persondataapi.service.dataproviders.GrunnlagsProvider
-import no.nav.persondataapi.service.dataproviders.GrunnlagsType
-import no.nav.persondataapi.service.dataproviders.GrunnlagsdelResultat
-import no.nav.persondataapi.utbetaling.client.UtbetalingClient
+
 
 import org.springframework.stereotype.Component
 

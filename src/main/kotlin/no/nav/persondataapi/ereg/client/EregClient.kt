@@ -1,16 +1,6 @@
 package no.nav.persondataapi.ereg.client
 
 
-import com.fasterxml.jackson.core.type.TypeReference
-
-import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.domain.AaregResultat
-import no.nav.persondataapi.domain.UtbetalingRespons
-import no.nav.persondataapi.domain.UtbetalingResultat
-import no.nav.persondataapi.utbetaling.client.Periode
-import no.nav.persondataapi.utbetaling.client.RequestBody
-import no.nav.persondataapi.utbetaling.dto.Utbetaling
-
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 

@@ -1,9 +1,9 @@
 {
-  "organisasjonsnummer": "896929119",
+  "organisasjonsnummer": "984886519",
   "type": "Virksomhet",
   "navn": {
-    "sammensattnavn": "SAUEFABRIKK",
-    "navnelinje1": "SAUEFABRIKK",
+    "sammensattnavn": "KAST LANGT",
+    "navnelinje1": "KAST LANGT",
     "bruksperiode": {
       "fom": "2023-09-14T10:19:02.968"
     },
@@ -26,8 +26,8 @@
     ],
     "navn": [
       {
-        "sammensattnavn": "SAUEFABRIKK",
-        "navnelinje1": "SAUEFABRIKK",
+        "sammensattnavn": "KAST LANGT",
+        "navnelinje1": "KAST LANGT",
         "bruksperiode": {
           "fom": "2023-09-14T10:19:02.968"
         },
@@ -39,9 +39,9 @@
     "forretningsadresser": [
       {
         "type": "Forretningsadresse",
-        "adresselinje1": "TEST GATA 75",
-        "postnummer": "5252",
-        "poststed": "SØREIDGREND",
+        "adresselinje1": "LANGVEKKISTAN GATA 75",
+        "postnummer": "1350",
+        "poststed": "BEKKESTUA",
         "landkode": "NO",
         "kommunenummer": "4601",
         "bruksperiode": {
