@@ -104,7 +104,7 @@ class RestDomainMapperTest {
             inntektDataRespons = null,
             aAaregDataRespons = null
         )
-        grunnlag.getStonadOversikt()
+        println(JsonUtils.toJson(grunnlag.getStonadOversikt()))
     }
 
     @Test
@@ -120,7 +120,7 @@ class RestDomainMapperTest {
 
 
         val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
-
+        println(JsonUtils.toJson(res))
     }
 
 

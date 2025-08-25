@@ -24,7 +24,7 @@ class OppslagBrukerController(
     private val mappingService: ResponsMappingService
 ) {
 
-    @GetMapping("/oppslag-bruker2")
+    @GetMapping("/oppslag-bruker")
     @Protected
     fun userInfo(@RequestHeader("fnr") fnr: String): OppslagBrukerRespons {
         return runBlocking {
@@ -33,7 +33,7 @@ class OppslagBrukerController(
             mappingService.mapToMOppslagBrukerResponse(grunnlag)
         }
     }
-    @GetMapping("/oppslag-bruker")
+    @GetMapping("/oppslag-bruker-api")
     @Protected
     fun userInfoAPI(@RequestHeader("fnr") fnr: String): GrunnlagsData {
         return runBlocking {
@@ -41,22 +41,6 @@ class OppslagBrukerController(
               val respons = oppslagService.hentGrunnlagsData(fnr)
             respons
 
-        }
-    }
-    @GetMapping("/utbetaling-token")
-    @Protected
-    fun utbetalingToken(@RequestHeader("fnr") fnr: String): String {
-        return runBlocking {
-            val context = tokenValidationContextHolder.getTokenValidationContext()
-            val token = context.firstValidToken?.encodedToken
-                ?: throw IllegalStateException("Fant ikke gyldig token")
-
-            val newToken = tokenService.exchangeToken(
-                token,
-                "api://dev-fss.okonomi.sokos-utbetaldata/.default"
-            )
-            println("Hentet nytt token: $newToken")
-            newToken
         }
     }
 }
