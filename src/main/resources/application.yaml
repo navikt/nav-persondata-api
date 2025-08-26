@@ -3,6 +3,9 @@ application:
 server:
   port: 8080
 
+spring:
+  codec:
+    max-in-memory-size: 5MB
 management:
   endpoints:
     web:
