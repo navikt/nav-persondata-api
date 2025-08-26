@@ -1,0 +1,205 @@
+package no.nav.persondataapi.service
+
+import no.nav.persondataapi.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.aareg.client.Identtype
+import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.hentperson.UtenlandskAdresse
+import no.nav.persondataapi.generated.hentperson.Vegadresse
+import no.nav.persondataapi.rest.domain.AnsettelsesDetalj
+import no.nav.persondataapi.rest.domain.ArbeidsgiverData
+import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
+import no.nav.persondataapi.rest.domain.OpenPeriode
+import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
+import no.nav.persondataapi.rest.domain.Periode
+import no.nav.persondataapi.rest.domain.PeriodeInformasjon
+import no.nav.persondataapi.rest.domain.PersonInformasjon
+import no.nav.persondataapi.rest.domain.Stonad
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
+import java.time.LocalDateTime
+
+@Component
+class ResponsMappingService {
+
+private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+
+
+    fun mapToMOppslagBrukerResponse(grunnlagsData: GrunnlagsData): OppslagBrukerRespons {
+        return OppslagBrukerRespons(
+            utrekkstidspunkt = LocalDateTime.now(),
+            saksbehandlerIdent = "",
+            fodselsnr = "",
+            personInformasjon = grunnlagsData.getPersonInformasjon(),
+            arbeidsgiverInformasjon = grunnlagsData.getArbeidsGiverInformasjon(),
+            ytelserOgStonaderInformasjon=null,
+            utbetalingInfo = null,
+            stonadOversikt = grunnlagsData.getStonadOversikt(),
+        )
+
+    }
+
+}
+
+fun GrunnlagsData.getArbeidsGiverInformasjon(): ArbeidsgiverInformasjon{
+
+    if (this.aAaregDataRespons == null){
+        return ArbeidsgiverInformasjon(
+            emptyList(),emptyList()
+        )
+    }
+    else{
+        val aaregDataResultat = this.aAaregDataRespons!!.data
+        val lopendeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato == null }
+        val historiskeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato != null }
+        /*
+        * map løpende arbeidsforhold
+        * */
+        val lopende = lopendeArbeidsforhold.map { arbeidsforhold ->
+            mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold,this.eregDataRespons)
+        }
+        val historisk = historiskeArbeidsforhold.map { arbeidsforhold ->
+            mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold,this.eregDataRespons)
+        }
+        return ArbeidsgiverInformasjon(
+            lopende,historisk
+        )
+    }
+
+}
+
+
+
+fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
+
+    if (this.personDataRespons == null){
+        return PersonInformasjon(
+            navn = "",
+            aktorId = this.ident,
+            adresse = "",
+            familemedlemmer = emptyMap()
+
+        )
+    }
+    else{
+
+        val pdlResultat:Person  = this.personDataRespons!!.data as Person
+        val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
+        val foreldreansvar = pdlResultat.foreldreansvar.associate { Pair(it.ansvarssubjekt!!, "BARN") }
+
+        val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
+        val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
+        return PersonInformasjon(
+            navn = pdlResultat.fulltNavn(),
+            aktorId = this.ident,
+            adresse = pdlResultat.naavarendeBostedsAdresse(),
+            familemedlemmer = foreldreOgBarnOgEktefelle)
+    }
+
+}
+
+fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
+    if (this.utbetalingRespons==null){
+        println("ingen utbetalingRespons")
+        return emptyList()
+    }
+    else{
+        val utbetalinger = this.utbetalingRespons!!.data!!.utbetalinger
+        val ytelser = utbetalinger.flatMap { it.ytelseListe.map { it.ytelsestype } }.distinct()
+        println("ytelser: ${ytelser.size}")
+        println(ytelser.toString())
+
+
+        val map: MutableMap<String,List<PeriodeInformasjon>> = mutableMapOf()
+        val stonadListe = mutableListOf<Stonad>()
+        ytelser.forEach {
+                ytelser ->
+                val ytelseListe = utbetalinger.flatMap { it.ytelseListe }.filter { it.ytelsestype==ytelser }
+                val demo = mutableListOf<PeriodeInformasjon>()
+                ytelseListe.forEach {ytelser ->
+                    val info = PeriodeInformasjon(
+                        periode = Periode(fom = ytelser.ytelsesperiode.fom, tom = ytelser.ytelsesperiode.tom),
+                        ytelser.ytelseNettobeloep,
+                        kilde= "SOKOS",
+                        info = ytelser.bilagsnummer
+                    )
+                    demo.add(info)
+                }
+                stonadListe.add(Stonad(stonadType = ytelser!!,demo))
+            }
+        return stonadListe
+    }
+
+
+}
+
+fun mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold: Arbeidsforhold,eregDataRespons: Map<String,EregRespons>): ArbeidsgiverData {
+    val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidsSted()
+    return ArbeidsgiverData(eregDataRespons.orgNummerTilOrgNavn(orgnummer),
+        orgnummer,
+        eregDataRespons.orgnummerTilAdresse(orgnummer),
+        ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map
+        {
+                ansettelsesdetaljer -> AnsettelsesDetalj(
+            ansettelsesdetaljer.type,
+            ansettelsesdetaljer.avtaltStillingsprosent,
+            ansettelsesdetaljer.antallTimerPrUke,
+            OpenPeriode(ansettelsesdetaljer.rapporteringsmaaneder.fra,ansettelsesdetaljer.rapporteringsmaaneder.til)
+        ) },
+
+        )
+
+
+}
+fun Arbeidsforhold.hentOrgNummerTilArbeidsSted(): String {
+    val identOrgNummer  = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
+    if (identOrgNummer == null){
+        return "Ingen OrgNummer"
+    }
+    return identOrgNummer.ident
+}
+
+
+fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
+    this.get(orgnummer)?.let {
+       return  it.navn!!.sammensattnavn
+    }
+    return "INGEN NAVN"
+}
+
+fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
+    this[orgnummer]
+        ?.organisasjonDetaljer
+        ?.forretningsadresser
+        ?.firstOrNull { it.gyldighetsperiode.tom == null }
+        ?.let { "${it.adresselinje1}, ${it.postnummer} ${it.poststed}" }
+        ?: "INGEN ADRESSSE"
+
+fun Person.fulltNavn(): String {
+    val navn = this.navn.first()
+    return "${navn.fornavn} ${navn.mellomnavn} ${navn.etternavn}"
+}
+
+fun Person.naavarendeBostedsAdresse():String{
+    val adresse = this.bostedsadresse.first()
+    //har bruker utlands adresse
+    if (adresse.utenlandskAdresse!= null){
+        return adresse.utenlandskAdresse!!.fullAdresseString()
+    }
+    if (adresse.vegadresse!= null){
+        return adresse.vegadresse!!.fullAdresseString()
+    }
+
+    return "Ingen adresse registrert"
+}
+
+fun UtenlandskAdresse.fullAdresseString():String{
+    return "$this."
+}
+fun Vegadresse.fullAdresseString():String{
+    if (this.husbokstav!=null)
+        return "${this.adressenavn} ${this.husnummer}${this.husbokstav}, ${this.postnummer}"
+    else return "${this.adressenavn} ${this.husnummer}, ${this.postnummer}"
+}
+

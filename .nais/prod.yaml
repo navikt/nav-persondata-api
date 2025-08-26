@@ -90,7 +90,7 @@ spec:
     - name: INNTEKT_SCOPE
       value: api://prod-fss.team-inntekt.ikomp/.default
     - name: INNTEKT_URL
-      value: https://ikomp-prod-fss-pub.nais.io
+      value: https://ikomp.prod-fss-pub.nais.io
 
     - name: TILGANGMASKIN_SCOPE
       value: api://prod-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default

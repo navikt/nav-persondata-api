@@ -1,0 +1,531 @@
+{
+    "falskIdentitet": null,
+    "bostedsadresse": [
+      {
+        "angittFlyttedato": "2020-06-09",
+        "coAdressenavn": null,
+        "gyldigFraOgMed": "2020-06-09T00:00",
+        "gyldigTilOgMed": null,
+        "vegadresse": {
+          "matrikkelId": "72052134",
+          "husbokstav": null,
+          "husnummer": "62",
+          "adressenavn": "Slalåmveien",
+          "bruksenhetsnummer": "H0101",
+          "tilleggsnavn": null,
+          "postnummer": "1350",
+          "kommunenummer": "3201",
+          "bydelsnummer": null,
+          "koordinater": {
+            "x": 582440.4,
+            "y": 6647418.6,
+            "z": null,
+            "kvalitet": null
+          }
+        },
+        "matrikkeladresse": null,
+        "ukjentBosted": null,
+        "utenlandskAdresse": null,
+        "folkeregistermetadata": {
+          "aarsak": "Adresseoppdatering",
+          "ajourholdstidspunkt": "2025-01-31T15:52",
+          "gyldighetstidspunkt": "2020-06-09T00:00",
+          "kilde": "Matrikkelen",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "FREG",
+              "registrert": "2020-06-09T17:26:26",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            },
+            {
+              "kilde": "FREG",
+              "registrert": "2020-12-19T03:39:40",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            },
+            {
+              "kilde": "FREG",
+              "registrert": "2021-06-05T16:17:51",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            },
+            {
+              "kilde": "Matrikkelen",
+              "registrert": "2024-01-01T04:48:35",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            },
+            {
+              "kilde": "Matrikkelen",
+              "registrert": "2025-01-31T15:53:13",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            }
+          ],
+          "master": "FREG",
+          "opplysningsId": "cca60978-a289-4ed2-a660-a6f97f0ddc0f",
+          "historisk": false
+        }
+      }
+    ],
+    "oppholdsadresse": [],
+    "deltBosted": [],
+    "forelderBarnRelasjon": [
+      {
+        "relatertPersonsIdent": "21074335486",
+        "relatertPersonsRolle": "MOR",
+        "minRolleForPerson": "BARN",
+        "relatertPersonUtenFolkeregisteridentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2018-10-13T12:44:32",
+          "gyldighetstidspunkt": "1975-04-21T00:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-02-08T02:15:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "c02f596e-0671-4405-a0e6-46ca4546ee3d",
+          "historisk": false
+        }
+      },
+      {
+        "relatertPersonsIdent": "25041293341",
+        "relatertPersonsRolle": "BARN",
+        "minRolleForPerson": "FAR",
+        "relatertPersonUtenFolkeregisteridentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2018-10-13T10:43:15",
+          "gyldighetstidspunkt": "2012-04-25T00:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-02-08T02:15:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "f6c853ff-56b8-4cb3-ba93-aade2a27673b",
+          "historisk": false
+        }
+      },
+      {
+        "relatertPersonsIdent": "25124149706",
+        "relatertPersonsRolle": "FAR",
+        "minRolleForPerson": "BARN",
+        "relatertPersonUtenFolkeregisteridentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2018-10-13T12:44:32",
+          "gyldighetstidspunkt": "1975-04-21T00:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-02-08T02:15:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "29c5512a-30f1-4004-b96d-11d3262af585",
+          "historisk": false
+        }
+      },
+      {
+        "relatertPersonsIdent": "05070984956",
+        "relatertPersonsRolle": "BARN",
+        "minRolleForPerson": "FAR",
+        "relatertPersonUtenFolkeregisteridentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2018-10-13T10:43:15",
+          "gyldighetstidspunkt": "2009-07-05T00:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-02-08T02:15:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "e0c0001b-1ad5-4551-bfa9-3f2ca4f8ec81",
+          "historisk": false
+        }
+      }
+    ],
+    "kontaktadresse": [],
+    "kontaktinformasjonForDoedsbo": [],
+    "utenlandskIdentifikasjonsnummer": [],
+    "adressebeskyttelse": [],
+    "foedested": [
+      {
+        "foedeland": "NOR",
+        "foedested": null,
+        "foedekommune": "0219",
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2024-03-07T22:36:18",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "FREG",
+          "opplysningsId": "f938acc3-ceea-499b-81e7-facde28d645d",
+          "historisk": false
+        }
+      }
+    ],
+    "foedselsdato": [
+      {
+        "foedselsdato": "1975-04-21",
+        "foedselsaar": 1975,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2024-03-07T22:36:18",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "FREG",
+          "opplysningsId": "b09108ab-57f1-42d1-88b3-e2b0717caa30",
+          "historisk": false
+        }
+      }
+    ],
+    "doedsfall": [],
+    "kjoenn": [
+      {
+        "kjoenn": "MANN",
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2019-10-26T02:27:40",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "c452e8c3-d0b9-48ac-b290-08b4b1870aa3",
+          "historisk": false
+        }
+      }
+    ],
+    "navn": [
+      {
+        "fornavn": "HANS JACOB",
+        "mellomnavn": "ASLAKSRUD",
+        "etternavn": "MELBY",
+        "originaltNavn": null,
+        "gyldigFraOgMed": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": 1
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-05-29T23:26:26",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            },
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-12-05T05:43:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "41af8c01-b6ba-417a-bacd-ac6909789be3",
+          "historisk": false
+        }
+      }
+    ],
+    "folkeregisterpersonstatus": [
+      {
+        "status": "bosatt",
+        "forenkletStatus": "bosattEtterFolkeregisterloven",
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "1975-04-21T01:00",
+          "gyldighetstidspunkt": "1975-04-21T01:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2019-09-08T01:34:43",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            },
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2021-06-05T16:17:51",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            }
+          ],
+          "master": "FREG",
+          "opplysningsId": "e5bcffec-031d-45c6-b6d9-a7ef1d0265b1",
+          "historisk": false
+        }
+      }
+    ],
+    "identitetsgrunnlag": [],
+    "tilrettelagtKommunikasjon": [],
+    "folkeregisteridentifikator": [
+      {
+        "identifikasjonsnummer": "21047541120",
+        "status": "I_BRUK",
+        "type": "FNR",
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2019-06-25T16:39:48",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "b991bde5-867d-4d67-affa-b98847412d74",
+          "historisk": false
+        }
+      }
+    ],
+    "navspersonidentifikator": [],
+    "statsborgerskap": [
+      {
+        "land": "NOR",
+        "bekreftelsesdato": null,
+        "gyldigFraOgMed": null,
+        "gyldigTilOgMed": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": null,
+          "gyldighetstidspunkt": null,
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-05-29T23:26:26",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            },
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2021-10-22T20:00:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            }
+          ],
+          "master": "FREG",
+          "opplysningsId": "d15e8da2-20e7-4a07-b679-91dca48b5310",
+          "historisk": false
+        }
+      }
+    ],
+    "sikkerhetstiltak": [],
+    "opphold": [],
+    "sivilstand": [
+      {
+        "type": "GIFT",
+        "gyldigFraOgMed": "2008-06-07",
+        "relatertVedSivilstand": "29047428236",
+        "bekreftelsesdato": null,
+        "folkeregistermetadata": {
+          "aarsak": "Vigsel",
+          "ajourholdstidspunkt": "2008-08-11T14:18:28",
+          "gyldighetstidspunkt": "2008-06-07T00:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": 0
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-01-25T01:14:58",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            },
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-12-05T05:43:08",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "KORRIGER"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "7e5982cf-d56e-4402-acd4-e0a0d93f6031",
+          "historisk": false
+        }
+      }
+    ],
+    "telefonnummer": [],
+    "innflyttingTilNorge": [],
+    "utflyttingFraNorge": [],
+    "vergemaalEllerFremtidsfullmakt": [],
+    "foreldreansvar": [
+      {
+        "ansvar": "felles",
+        "ansvarlig": null,
+        "ansvarssubjekt": "05070984956",
+        "ansvarligUtenIdentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2009-07-20T12:11:40",
+          "gyldighetstidspunkt": "2009-07-05T02:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-04-04T14:35:46",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "471262bd-8859-414b-9c46-56b6e0eff93d",
+          "historisk": false
+        }
+      },
+      {
+        "ansvar": "felles",
+        "ansvarlig": null,
+        "ansvarssubjekt": "25041293341",
+        "ansvarligUtenIdentifikator": null,
+        "folkeregistermetadata": {
+          "aarsak": null,
+          "ajourholdstidspunkt": "2012-05-07T12:22:43",
+          "gyldighetstidspunkt": "2012-04-25T02:00",
+          "kilde": "KILDE_DSF",
+          "opphoerstidspunkt": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "endringer": [
+            {
+              "kilde": "KILDE_DSF",
+              "registrert": "2020-04-05T04:27:43",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "type": "OPPRETT"
+            }
+          ],
+          "master": "Freg",
+          "opplysningsId": "839ababd-c785-4fc7-83d6-5366ebafe160",
+          "historisk": false
+        }
+      }
+    ],
+    "rettsligHandleevne": [],
+    "doedfoedtBarn": []
+  }
