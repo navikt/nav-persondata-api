@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets
 class RestDomainMapperTest {
 
     @Test
-    fun test(){
+    fun oversetterArbeidsforhold() {
 
 
 
@@ -50,6 +50,7 @@ class RestDomainMapperTest {
         Assertions.assertTrue(frontEndGrunnlagsData.lopendeArbeidsforhold.isNotEmpty())
         Assertions.assertTrue(frontEndGrunnlagsData.historikk.isNotEmpty())
         val arbeidsforhold = frontEndGrunnlagsData.lopendeArbeidsforhold.first()
+        println(JsonUtils.toJson(frontEndGrunnlagsData))
         Assertions.assertNotNull(arbeidsforhold)
         Assertions.assertNotNull(arbeidsforhold.adresse)
         Assertions.assertNotNull(arbeidsforhold.arbeidsgiver)
