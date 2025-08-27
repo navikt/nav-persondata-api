@@ -108,7 +108,7 @@ data class Utenlandsopphold(
 
 data class TimerMedTimeloenn(
     val antall: Double,
-    val startdato: String,
+    val startdato: String?,
     val sluttdato: String?,
     val rapporteringsmaaneder: Rapporteringsmaaneder?,
     val sporingsinformasjon: Sporingsinformasjon?

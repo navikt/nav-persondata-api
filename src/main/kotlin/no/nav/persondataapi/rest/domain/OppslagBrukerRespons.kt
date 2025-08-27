@@ -1,7 +1,5 @@
 package no.nav.persondataapi.rest.domain
 
-import no.nav.persondataapi.aareg.client.Arbeidsforhold
-import no.nav.persondataapi.ereg.client.Adresse
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -13,8 +11,7 @@ data class OppslagBrukerRespons(
     val fodselsnr: String,
     val personInformasjon: PersonInformasjon?,
     val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
-    val ytelserOgStonaderInformasjon: ytelserOgStonaderInformasjon?,
-    val utbetalingInfo: UtbetalingInfo?,
+    val inntektInformasjon: InntektInformasjon?,
     val stonadOversikt: List<Stonad> = emptyList()
 )
 
@@ -25,6 +22,13 @@ data class PersonInformasjon(
     val familemedlemmer : Map<String,String> = emptyMap<String, String>()
 )
 
+
+data class InntektInformasjon(
+    val loennsinntekt : List<LoensDetaljer> = emptyList(),
+    val naringsInntekt : List<LoensDetaljer> = emptyList(),
+    val PensjonEllerTrygd : List<LoensDetaljer> = emptyList(),
+    val YtelseFraOffentlige : List<LoensDetaljer> = emptyList(),
+)
 
 data class ArbeidsgiverInformasjon(
     val lopendeArbeidsforhold : List<ArbeidsgiverData>,
@@ -100,7 +104,8 @@ data class LoensDetaljer(
     val arbeidsforhold:String,
     val stillingsprosent: String?,
     val lonnstype: String?,
-    val timer :Int?,
-    val belop: Int
+    val antall : BigDecimal? = null,
+    val belop: BigDecimal?,
+    val harFlereVersjoner:Boolean = false,
 
-)
+    )
