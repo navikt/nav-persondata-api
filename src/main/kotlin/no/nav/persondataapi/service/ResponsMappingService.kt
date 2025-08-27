@@ -1,5 +1,10 @@
 package no.nav.persondataapi.service
 
+import no.nav.inntekt.generated.model.HistorikkData
+import no.nav.inntekt.generated.model.Inntektsinformasjon
+import no.nav.inntekt.generated.model.Loennsinntekt
+import no.nav.inntekt.generated.model.Naeringsinntekt
+import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
 import no.nav.persondataapi.domain.GrunnlagsData
@@ -10,6 +15,8 @@ import no.nav.persondataapi.generated.hentperson.Vegadresse
 import no.nav.persondataapi.rest.domain.AnsettelsesDetalj
 import no.nav.persondataapi.rest.domain.ArbeidsgiverData
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
+import no.nav.persondataapi.rest.domain.InntektInformasjon
+import no.nav.persondataapi.rest.domain.LoensDetaljer
 import no.nav.persondataapi.rest.domain.OpenPeriode
 import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
 import no.nav.persondataapi.rest.domain.Periode
@@ -33,8 +40,7 @@ private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
             fodselsnr = "",
             personInformasjon = grunnlagsData.getPersonInformasjon(),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsGiverInformasjon(),
-            ytelserOgStonaderInformasjon=null,
-            utbetalingInfo = null,
+            inntektInformasjon = InntektInformasjon(loennsinntekt = grunnlagsData.getLoennsinntektOversikt()),
             stonadOversikt = grunnlagsData.getStonadOversikt(),
         )
 
@@ -111,12 +117,11 @@ fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
         println(ytelser.toString())
 
 
-        val map: MutableMap<String,List<PeriodeInformasjon>> = mutableMapOf()
         val stonadListe = mutableListOf<Stonad>()
         ytelser.forEach {
                 ytelser ->
                 val ytelseListe = utbetalinger.flatMap { it.ytelseListe }.filter { it.ytelsestype==ytelser }
-                val demo = mutableListOf<PeriodeInformasjon>()
+                val listOfPeriodeInformasjon = mutableListOf<PeriodeInformasjon>()
                 ytelseListe.forEach {ytelser ->
                     val info = PeriodeInformasjon(
                         periode = Periode(fom = ytelser.ytelsesperiode.fom, tom = ytelser.ytelsesperiode.tom),
@@ -124,9 +129,9 @@ fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
                         kilde= "SOKOS",
                         info = ytelser.bilagsnummer
                     )
-                    demo.add(info)
+                    listOfPeriodeInformasjon.add(info)
                 }
-                stonadListe.add(Stonad(stonadType = ytelser!!,demo))
+                stonadListe.add(Stonad(stonadType = ytelser!!,listOfPeriodeInformasjon))
             }
         return stonadListe
     }
@@ -168,6 +173,77 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
     return "INGEN NAVN"
 }
 
+fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
+    if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
+        return emptyList()
+    }
+    else {
+        val listeAvInntektHistorikk = inntektDataRespons.data.data?: emptyList()
+
+        val  ret: MutableList<LoensDetaljer> = mutableListOf()
+        listeAvInntektHistorikk.forEach { historikk ->
+            val harHistorikkPaaLoennsinntekt = historikk.historikkPaaNormalLoenn()
+            println(harHistorikkPaaLoennsinntekt)
+            val nyeste = historikk.versjoner.nyeste()
+            if (nyeste !=null && nyeste.inntektListe!=null){
+                val liste = nyeste.inntektListe ?: emptyList()
+                liste.filter { it is Loennsinntekt }.map { it as Loennsinntekt }.forEach { loenn ->
+                    ret.add(LoensDetaljer(
+                        arbeidsgiver = this.eregDataRespons.orgNummerTilOrgNavn(historikk.opplysningspliktig),
+                        periode = historikk.maaned,
+                        arbeidsforhold = "",
+                        stillingsprosent = "",
+                        lonnstype = loenn.beskrivelse,
+                        antall = loenn.antall,
+                        belop = loenn.beloep,
+                        harFlereVersjoner = harHistorikkPaaLoennsinntekt,
+                    ))
+                }
+            }
+
+
+        }
+
+        return ret
+        }
+    }
+
+fun GrunnlagsData.getNaringsInntektOversikt(): List<LoensDetaljer> {
+    if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
+        return emptyList()
+    }
+    else {
+        val listeAvInntektHistorikk = inntektDataRespons.data.data?: emptyList()
+
+        val  ret: MutableList<LoensDetaljer> = mutableListOf()
+        listeAvInntektHistorikk.forEach { historikk ->
+            val harHistorikkPaaLoennsinntekt = historikk.historikkPaaNormalLoenn()
+            println(harHistorikkPaaLoennsinntekt)
+            val nyeste = historikk.versjoner.nyeste()
+            if (nyeste !=null && nyeste.inntektListe!=null){
+                val liste = nyeste.inntektListe ?: emptyList()
+                liste.filter { it is Naeringsinntekt }.map { it as Naeringsinntekt }.forEach { loenn ->
+                    ret.add(LoensDetaljer(
+                        arbeidsgiver = this.eregDataRespons.orgNummerTilOrgNavn(historikk.opplysningspliktig),
+                        periode = historikk.maaned,
+                        arbeidsforhold = "",
+                        stillingsprosent = "",
+                        lonnstype = loenn.beskrivelse,
+                        antall = null,
+                        belop = loenn.beloep,
+                        harFlereVersjoner = harHistorikkPaaLoennsinntekt,
+                    ))
+                }
+            }
+
+
+        }
+
+        return ret
+    }
+}
+
+
 fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
     this[orgnummer]
         ?.organisasjonDetaljer
@@ -201,5 +277,33 @@ fun Vegadresse.fullAdresseString():String{
     if (this.husbokstav!=null)
         return "${this.adressenavn} ${this.husnummer}${this.husbokstav}, ${this.postnummer}"
     else return "${this.adressenavn} ${this.husnummer}, ${this.postnummer}"
+}
+
+
+
+
+fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon?{
+    return if (this==null || this.isEmpty() )
+    {
+        null
+    }
+    else{
+        this.minByOrNull { it.oppsummeringstidspunkt }!!
+    }
+}
+
+
+
+
+fun HistorikkData.historikkPaaNormalLoenn():Boolean{
+    val versjoner = this.versjoner?:emptyList()
+    var count = 0
+    versjoner.forEach {
+        intektInformasjon ->
+        val inntektListe = intektInformasjon.inntektListe?:emptyList()
+        val antall = inntektListe.filterNot { inntekt -> inntekt is YtelseFraOffentlige }.size
+        if (antall>0) count++
+    }
+    return count>1
 }
 

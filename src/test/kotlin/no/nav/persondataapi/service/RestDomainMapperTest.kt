@@ -4,6 +4,7 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.AaregDataResultat
 import no.nav.persondataapi.domain.GrunnlagsData
+import no.nav.persondataapi.domain.InntektDataResultat
 import no.nav.persondataapi.domain.PersonDataResultat
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.ereg.client.EregRespons
@@ -20,10 +21,6 @@ class RestDomainMapperTest {
 
     @Test
     fun oversetterArbeidsforhold() {
-
-
-
-
         val eregjsonString = readJsonFromFile("testrespons/EregResponsSample.json")
         val eregRespons: EregRespons = JsonUtils.fromJson(eregjsonString)
 
@@ -63,9 +60,6 @@ class RestDomainMapperTest {
     @Test
     fun kanOversettePdlTilPersonInformasjon(){
 
-
-
-
         val pdlString = readJsonFromFile("testrespons/PdlResponsSample.json")
         val pdlRespons: Person = JsonUtils.fromJson(pdlString)
 
@@ -90,9 +84,6 @@ class RestDomainMapperTest {
     @Test
     fun kanOversetteUtbealingUtbetalingInformasjon(){
 
-
-
-
         val pdlString = readJsonFromFile("testrespons/utbetalingResponsSample.json")
         val utbetalingRespons: UtbetalingResultat = JsonUtils.fromJson(pdlString)
 
@@ -105,23 +96,37 @@ class RestDomainMapperTest {
             inntektDataRespons = null,
             aAaregDataRespons = null
         )
-        println(JsonUtils.toJson(grunnlag.getStonadOversikt()))
+        val ytelser = grunnlag.getStonadOversikt()
+
+        Assertions.assertFalse(ytelser.isEmpty())
+
+
     }
 
     @Test
     fun kabOversettePersonGrunnlag(){
 
-
-
-
-
         val pdlString = readJsonFromFile("testrespons/oppslagBrukerSampleRespons.json")
         val grunnlag: GrunnlagsData = JsonUtils.fromJson(pdlString)
 
-
-
         val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
         println(JsonUtils.toJson(res))
+    }
+
+    @Test
+    fun KanOversetteInntekterGrunnlag(){
+
+        val pdlString = readJsonFromFile("testrespons/inntektGrunnlagsdataResponsSample.json")
+        val inntekt: InntektDataResultat = JsonUtils.fromJson(pdlString)
+        val grunnlag = GrunnlagsData(
+            ident = "1234",
+            saksbehandlerId = "1234",
+            utbetalingRespons = null,
+            personDataRespons = null,
+            inntektDataRespons = inntekt,
+            aAaregDataRespons = null
+        )
+        println(JsonUtils.toJson(grunnlag.getLoennsinntektOversikt()))
     }
 
 
