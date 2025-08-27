@@ -7193,16 +7193,16 @@
           "vegadresse": {
             "matrikkelId": "15494476",
             "husbokstav": null,
-            "husnummer": "214",
-            "adressenavn": "Ramstadveien",
+            "husnummer": "2001",
+            "adressenavn": "SMAL VEI",
             "bruksenhetsnummer": "H0101",
             "tilleggsnavn": null,
             "postnummer": "1480",
             "kommunenummer": "3232",
             "bydelsnummer": null,
             "koordinater": {
-              "x": 610565.0,
-              "y": 6653604.0,
+              "x": 999.0,
+              "y": 9999.0,
               "z": 0.0,
               "kvalitet": null
             }
@@ -7609,7 +7609,7 @@
       "telefonnummer": [
         {
           "landskode": "+47",
-          "nummer": "40475486",
+          "nummer": "00000000",
           "prioritet": 1,
           "metadata": {
             "endringer": [
@@ -28889,8 +28889,1615 @@
   },
   "eregDataRespons": {},
   "aaaregDataRespons": {
-    "data": [],
-    "statusCode": 500,
-    "errorMessage": "Teknisk feil: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class no.nav.persondataapi.aareg.client.TimerMedTimeloenn] value failed for JSON property startdato due to missing (therefore NULL) value for creator parameter startdato which is a non-nullable type\n at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 7440] (through reference chain: java.util.ArrayList[3]->no.nav.persondataapi.aareg.client.Arbeidsforhold[\"timerMedTimeloenn\"]->java.util.ArrayList[0]->no.nav.persondataapi.aareg.client.TimerMedTimeloenn[\"startdato\"])"
+    "data": [
+      {
+        "id": "123913192109000003962",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "913405447",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "913192109",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2017-01-01",
+          "sluttdato": "2021-12-31",
+          "sluttaarsak": {
+            "kode": "byttetLoenssystemEllerRegnskapsfoerer",
+            "beskrivelse": "Byttet lønnssystem eller regnskapsfører"
+          },
+          "varsling": null,
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "8321110",
+              "beskrivelse": "SJÅFØR KLASSE B"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 20.0,
+            "sisteStillingsprosentendring": "2019-01-01",
+            "sisteLoennsendring": "2017-02-01",
+            "rapporteringsmaaneder": {
+              "fra": "2021-01",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "8321110",
+              "beskrivelse": "SJÅFØR KLASSE B"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 20.0,
+            "sisteStillingsprosentendring": "2019-01-01",
+            "sisteLoennsendring": "2017-02-01",
+            "rapporteringsmaaneder": {
+              "fra": "2019-11",
+              "til": "2020-12"
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "8321110",
+              "beskrivelse": "SJÅFØR KLASSE B"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": "2017-02-01",
+            "sisteLoennsendring": "2017-02-01",
+            "rapporteringsmaaneder": {
+              "fra": "2018-01",
+              "til": "2019-10"
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "8321110",
+              "beskrivelse": "SJÅFØR KLASSE B"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": "2017-02-01",
+            "sisteLoennsendring": "2017-02-01",
+            "rapporteringsmaaneder": {
+              "fra": "2017-01",
+              "til": "2017-12"
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": null,
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": null,
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 41682437,
+        "navVersjon": 78,
+        "navUuid": "8d30a224-fe09-4c29-893e-60e9a3fb15cb",
+        "opprettet": "2017-02-15T15:47:33.337",
+        "sistBekreftet": "2022-02-11T10:52:07",
+        "bruksperiode": {
+          "fom": "2017-02-16T11:58:43.447",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "6",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "913405447",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "913192109",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2015-08-01",
+          "sluttdato": "2016-12-31",
+          "sluttaarsak": null,
+          "varsling": {
+            "kode": "IBARBG",
+            "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+          },
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "8321103",
+              "beskrivelse": "SJÅFØR (DROSJE)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": null,
+            "sisteLoennsendring": "2015-08-01",
+            "rapporteringsmaaneder": {
+              "fra": "2015-08",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": null,
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": [
+          {
+            "entitet": "Ansettelsesperiode",
+            "varsling": {
+              "kode": "IBARBG",
+              "beskrivelse": "Sluttdato satt av NAV. Arbeidsforholdet har ikke blitt bekreftet. Sluttdato er siste dato i kalendermåneden som arbeidsforholdet er bekreftet."
+            }
+          }
+        ],
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 37790774,
+        "navVersjon": 21,
+        "navUuid": "db4eb23d-a15f-4c57-8f6f-bf46c9073a20",
+        "opprettet": "2015-09-04T12:10:47.79",
+        "sistBekreftet": "2017-02-16T14:44:42",
+        "bruksperiode": {
+          "fom": "2015-09-04T12:10:58.07",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "7-20150401-1",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "914460433",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "914349621",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2015-04-01",
+          "sluttdato": "2016-10-31",
+          "sluttaarsak": null,
+          "varsling": {
+            "kode": "IBARBG",
+            "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+          },
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123108",
+              "beskrivelse": "BARTENDER"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 10.0,
+            "sisteStillingsprosentendring": null,
+            "sisteLoennsendring": "2015-04-01",
+            "rapporteringsmaaneder": {
+              "fra": "2016-02",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123108",
+              "beskrivelse": "BARTENDER"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 0.0,
+            "sisteStillingsprosentendring": null,
+            "sisteLoennsendring": "2015-04-01",
+            "rapporteringsmaaneder": {
+              "fra": "2015-06",
+              "til": "2016-01"
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": [
+          {
+            "antall": 9.0,
+            "startdato": "2015-05-01",
+            "sluttdato": "2015-05-31",
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 4.0,
+            "startdato": "2015-07-01",
+            "sluttdato": "2015-07-31",
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": [
+          {
+            "entitet": "Ansettelsesperiode",
+            "varsling": {
+              "kode": "IBARBG",
+              "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+            }
+          }
+        ],
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 47636151,
+        "navVersjon": 17,
+        "navUuid": "b8ab3ed3-0334-42c2-9ef2-25b45763a15a",
+        "opprettet": "2015-07-13T15:18:04.52",
+        "sistBekreftet": "2016-11-08T11:12:01",
+        "bruksperiode": {
+          "fom": "2019-06-26T16:26:35.859",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "A01--Altinn",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "914460433",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "914349621",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2015-04-01",
+          "sluttdato": "2015-06-30",
+          "sluttaarsak": null,
+          "varsling": {
+            "kode": "IBARBG",
+            "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+          },
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123108",
+              "beskrivelse": "BARTENDER"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 10.0,
+            "sisteStillingsprosentendring": "2015-04-01",
+            "sisteLoennsendring": "2015-04-01",
+            "rapporteringsmaaneder": {
+              "fra": "2015-05",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": [
+          {
+            "antall": 6.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": [
+          {
+            "entitet": "Ansettelsesperiode",
+            "varsling": {
+              "kode": "IBARBG",
+              "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+            }
+          }
+        ],
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 47636150,
+        "navVersjon": 2,
+        "navUuid": "ab16607e-f30b-45ac-a60d-cdc4f1495994",
+        "opprettet": "2015-06-15T17:07:17.917",
+        "sistBekreftet": "2015-07-13T15:18:04",
+        "bruksperiode": {
+          "fom": "2019-06-26T16:26:35.81",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "3-3",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "917799350",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "917724113",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2016-10-01",
+          "sluttdato": "2017-01-31",
+          "sluttaarsak": null,
+          "varsling": {
+            "kode": "IBARBG",
+            "beskrivelse": "Sluttdato satt av NAV. Arbeidsforholdet har ikke blitt bekreftet. Sluttdato er siste dato i kalendermåneden som arbeidsforholdet er bekreftet."
+          },
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "9133120",
+              "beskrivelse": "CAFEMEDARBEIDER (RYDDING)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": null,
+            "sisteLoennsendring": "2016-10-01",
+            "rapporteringsmaaneder": {
+              "fra": "2016-10",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": null,
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": [
+          {
+            "entitet": "Ansettelsesperiode",
+            "varsling": {
+              "kode": "IBARBG",
+              "beskrivelse": "Sluttdato satt av NAV. Arbeidsforholdet har ikke blitt bekreftet. Sluttdato er siste dato i kalendermåneden som arbeidsforholdet er bekreftet."
+            }
+          }
+        ],
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 41574246,
+        "navVersjon": 4,
+        "navUuid": "097617cd-418d-4281-b240-9b54209472d8",
+        "opprettet": "2017-02-03T11:27:11.89",
+        "sistBekreftet": "2017-02-03T11:31:32",
+        "bruksperiode": {
+          "fom": "2017-02-03T11:28:38.668",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "566918773614000004795",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "917799350",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "918773614",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2017-03-28",
+          "sluttdato": "2020-05-31",
+          "sluttaarsak": null,
+          "varsling": {
+            "kode": "IBARBG",
+            "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+          },
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123111",
+              "beskrivelse": "SERVITØR"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": "2017-03-28",
+            "sisteLoennsendring": "2017-03-28",
+            "rapporteringsmaaneder": {
+              "fra": "2018-01",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123111",
+              "beskrivelse": "SERVITØR"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 100.0,
+            "sisteStillingsprosentendring": "2017-03-28",
+            "sisteLoennsendring": "2017-03-28",
+            "rapporteringsmaaneder": {
+              "fra": "2017-03",
+              "til": "2017-12"
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": [
+          {
+            "antall": 84.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 103.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 74.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 72.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 72.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 58.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 50.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 33.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 77.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 19.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 3.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 45.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 86.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 79.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 129.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 92.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 50.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 5.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 137.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 107.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 100.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 114.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 86.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 51.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 88.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 13.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "utenlandsopphold": null,
+        "idHistorikk": null,
+        "varsler": [
+          {
+            "entitet": "Ansettelsesperiode",
+            "varsling": {
+              "kode": "IBARBG",
+              "beskrivelse": "Arbeidsgiver har ikke bekreftet arbeidsforholdet. NAV har satt sluttdato til siste dato i den kalendermåneden arbeidsgiveren sist bekreftet arbeidsforholdet."
+            }
+          }
+        ],
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 42263849,
+        "navVersjon": 41,
+        "navUuid": "83b53669-4b6c-4a18-a606-1524a4b2ce66",
+        "opprettet": "2017-05-18T21:19:14.57",
+        "sistBekreftet": "2020-06-08T18:28:00",
+        "bruksperiode": {
+          "fom": "2017-05-18T21:19:34.39",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "590924373296000003394",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "924391162",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "924373296",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2020-01-10",
+          "sluttdato": "2021-12-31",
+          "sluttaarsak": {
+            "kode": "byttetLoenssystemEllerRegnskapsfoerer",
+            "beskrivelse": "Byttet lønnssystem eller regnskapsfører"
+          },
+          "varsling": null,
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 10.0,
+            "avtaltStillingsprosent": 20.0,
+            "sisteStillingsprosentendring": "2020-01-10",
+            "sisteLoennsendring": "2020-01-10",
+            "rapporteringsmaaneder": {
+              "fra": "2021-01",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": null,
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 10.0,
+            "avtaltStillingsprosent": 20.0,
+            "sisteStillingsprosentendring": "2020-01-10",
+            "sisteLoennsendring": "2020-01-10",
+            "rapporteringsmaaneder": {
+              "fra": "2020-02",
+              "til": "2020-12"
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": [
+          {
+            "id": "00000100000308461",
+            "type": {
+              "kode": "permittering",
+              "beskrivelse": "Permittering"
+            },
+            "startdato": "2020-03-19",
+            "sluttdato": "2020-05-05",
+            "prosent": 100.0,
+            "varsling": null,
+            "idHistorikk": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "timerMedTimeloenn": [
+          {
+            "antall": 79.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 101.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 117.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 98.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 92.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 88.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 60.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 99.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 94.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 96.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 105.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 97.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "utenlandsopphold": null,
+        "idHistorikk": [
+          {
+            "id": "590924373296000003394",
+            "bruksperiode": {
+              "fom": "2025-05-02T15:47:20.067403",
+              "tom": null
+            }
+          }
+        ],
+        "varsler": null,
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 72566390,
+        "navVersjon": 0,
+        "navUuid": "4e529aa6-1755-48a6-899f-9bf3f6f306b1",
+        "opprettet": "2020-02-20T11:54:40.867",
+        "sistBekreftet": "2022-02-14T10:28:45.367",
+        "bruksperiode": {
+          "fom": "2025-05-02T15:47:20.067403",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      },
+      {
+        "id": "1",
+        "type": {
+          "kode": "ordinaertArbeidsforhold",
+          "beskrivelse": "Ordinært arbeidsforhold"
+        },
+        "arbeidstaker": {
+          "identer": [
+            {
+              "type": "AKTORID",
+              "ident": "1000049922714",
+              "gjeldende": true
+            },
+            {
+              "type": "FOLKEREGISTERIDENT",
+              "ident": "12345678901",
+              "gjeldende": true
+            }
+          ]
+        },
+        "arbeidssted": {
+          "type": "Underenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "924391162",
+              "gjeldende": null
+            }
+          ]
+        },
+        "opplysningspliktig": {
+          "type": "Hovedenhet",
+          "identer": [
+            {
+              "type": "ORGANISASJONSNUMMER",
+              "ident": "924373296",
+              "gjeldende": null
+            }
+          ]
+        },
+        "ansettelsesperiode": {
+          "startdato": "2022-01-01",
+          "sluttdato": null,
+          "sluttaarsak": null,
+          "varsling": null,
+          "sporingsinformasjon": null
+        },
+        "ansettelsesdetaljer": [
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 27.0,
+            "sisteStillingsprosentendring": "2022-01-01",
+            "sisteLoennsendring": "2025-02-01",
+            "rapporteringsmaaneder": {
+              "fra": "2025-01",
+              "til": null
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 27.0,
+            "sisteStillingsprosentendring": null,
+            "sisteLoennsendring": "2022-01-01",
+            "rapporteringsmaaneder": {
+              "fra": "2022-01",
+              "til": "2023-07"
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 27.0,
+            "sisteStillingsprosentendring": "2022-01-01",
+            "sisteLoennsendring": "2022-01-01",
+            "rapporteringsmaaneder": {
+              "fra": "2023-08",
+              "til": "2024-11"
+            },
+            "sporingsinformasjon": null
+          },
+          {
+            "type": "Ordinaer",
+            "arbeidstidsordning": {
+              "kode": "ikkeSkift",
+              "beskrivelse": "Ikke skift"
+            },
+            "ansettelsesform": {
+              "kode": "fast",
+              "beskrivelse": "Fast ansettelse"
+            },
+            "yrke": {
+              "kode": "5123117",
+              "beskrivelse": "RESTAURANTMEDARBEIDER (SERVITØR)"
+            },
+            "antallTimerPrUke": 37.5,
+            "avtaltStillingsprosent": 27.0,
+            "sisteStillingsprosentendring": "2022-01-01",
+            "sisteLoennsendring": "2024-12-01",
+            "rapporteringsmaaneder": {
+              "fra": "2024-12",
+              "til": "2024-12"
+            },
+            "sporingsinformasjon": null
+          }
+        ],
+        "permisjoner": null,
+        "permitteringer": null,
+        "timerMedTimeloenn": [
+          {
+            "antall": 57.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 69.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 76.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 109.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 118.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 154.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 120.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 90.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 125.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 103.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 100.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 90.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 177.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 193.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 164.45,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 231.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 191.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 150.15,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 117.45,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 135.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 117.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 104.3,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 180.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 41.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 91.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 113.5,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 99.3,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 176.45,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 64.3,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 57.95,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 86.4,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 101.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 100.3,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 81.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 104.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 85.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 90.2,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 79.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 98.3,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          },
+          {
+            "antall": 110.0,
+            "startdato": null,
+            "sluttdato": null,
+            "rapporteringsmaaneder": null,
+            "sporingsinformasjon": null
+          }
+        ],
+        "utenlandsopphold": null,
+        "idHistorikk": [
+          {
+            "id": "1",
+            "bruksperiode": {
+              "fom": "2025-05-02T15:47:20.116968",
+              "tom": null
+            }
+          }
+        ],
+        "varsler": null,
+        "rapporteringsordning": {
+          "kode": "A_ORDNINGEN",
+          "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+        },
+        "navArbeidsforholdId": 72566392,
+        "navVersjon": 0,
+        "navUuid": "c9a1bbc8-e2ff-4526-a142-eefeddb74585",
+        "opprettet": "2022-02-11T11:37:50.6",
+        "sistBekreftet": "2025-08-01T07:32:51.762",
+        "bruksperiode": {
+          "fom": "2025-05-02T15:47:20.116968",
+          "tom": null
+        },
+        "sporingsinformasjon": null,
+        "organisasjoner": []
+      }
+    ],
+    "statusCode": 200,
+    "errorMessage": ""
   }
 }
