@@ -104,7 +104,7 @@ class RestDomainMapperTest {
     }
 
     @Test
-    fun kabOversettePersonGrunnlag(){
+    fun kanOversettePersonGrunnlag(){
 
         val pdlString = readJsonFromFile("testrespons/oppslagBrukerSampleRespons.json")
         val grunnlag: GrunnlagsData = JsonUtils.fromJson(pdlString)
