@@ -93,14 +93,15 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
         val pdlResultat:Person  = this.personDataRespons!!.data as Person
         val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
         val foreldreansvar = pdlResultat.foreldreansvar.associate { Pair(it.ansvarssubjekt!!, "BARN") }
-
+        val statsborgerskap = pdlResultat.statsborgerskap.map { it.land }
         val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
         val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
         return PersonInformasjon(
             navn = pdlResultat.fulltNavn(),
             aktorId = this.ident,
             adresse = pdlResultat.naavarendeBostedsAdresse(),
-            familemedlemmer = foreldreOgBarnOgEktefelle)
+            familemedlemmer = foreldreOgBarnOgEktefelle,
+            statsborgerskap = statsborgerskap)
     }
 
 }

@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest.domain
 
+import no.nav.persondataapi.generated.hentperson.Statsborgerskap
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -19,7 +20,8 @@ data class PersonInformasjon(
     val navn: String,
     val aktorId: String?,
     val adresse: String?,
-    val familemedlemmer : Map<String,String> = emptyMap<String, String>()
+    val familemedlemmer : Map<String,String> = emptyMap<String, String>(),
+    val statsborgerskap: List<String> = emptyList(),
 )
 
 
