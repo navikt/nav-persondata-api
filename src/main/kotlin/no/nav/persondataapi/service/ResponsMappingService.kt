@@ -167,10 +167,14 @@ fun Arbeidsforhold.hentOrgNummerTilArbeidsSted(): String {
 
 
 fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
-    this.get(orgnummer)?.let {
-       return  it.navn!!.sammensattnavn
+    val organisasjon = this[orgnummer]
+    if (organisasjon == null){
+        return "${orgnummer} - Ukjent organisasjon"
     }
-    return "INGEN NAVN"
+    else {
+        return organisasjon.navn?.sammensattnavn ?: "${orgnummer} - Ukjent navn"
+    }
+
 }
 
 fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
