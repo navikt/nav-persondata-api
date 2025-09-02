@@ -78,6 +78,8 @@ class RestDomainMapperTest {
         Assertions.assertNotNull(personInformasjon)
         Assertions.assertEquals("HANS JACOB ASLAKSRUD MELBY",personInformasjon.navn)
         Assertions.assertEquals("Slalåmveien 62, 1350",personInformasjon.adresse)
+        Assertions.assertEquals("NOR",personInformasjon.statsborgerskap.first())
+
 
     }
 
