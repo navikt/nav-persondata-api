@@ -151,7 +151,8 @@ fun mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold: Arbeidsforhold,eregData
             ansettelsesdetaljer.type,
             ansettelsesdetaljer.avtaltStillingsprosent,
             ansettelsesdetaljer.antallTimerPrUke,
-            OpenPeriode(ansettelsesdetaljer.rapporteringsmaaneder.fra,ansettelsesdetaljer.rapporteringsmaaneder.til)
+            OpenPeriode(ansettelsesdetaljer.rapporteringsmaaneder.fra,ansettelsesdetaljer.rapporteringsmaaneder.til),
+                    ansettelsesdetaljer.yrke.beskrivelse
         ) },
 
         )
