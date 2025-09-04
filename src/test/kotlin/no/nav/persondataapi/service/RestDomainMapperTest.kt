@@ -54,6 +54,7 @@ class RestDomainMapperTest {
         Assertions.assertTrue (arbeidsforhold.ansettelsesDetaljer.isNotEmpty())
         Assertions.assertEquals("TEST GATA 75, 5252 SØREIDGREND",arbeidsforhold.adresse)
         Assertions.assertEquals("SAUEFABRIKK",arbeidsforhold.arbeidsgiver)
+        Assertions.assertNotNull(arbeidsforhold.ansettelsesDetaljer.first().yrke)
 
     }
 

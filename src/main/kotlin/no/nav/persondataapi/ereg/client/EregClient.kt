@@ -31,11 +31,9 @@ class EregClient(
             response
         }.fold(
             onSuccess = { ereg ->
-                println("ereg er ok..fått svar!")
                 ereg
             },
             onFailure = { error ->
-                println("Feil ved henting av Ereg")
                 error.printStackTrace()
                 EregRespons(
                     orgnummer,
