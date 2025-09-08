@@ -11,10 +11,22 @@ import java.nio.charset.StandardCharsets
 class EregParserResponsTest {
 
     @Test
-    fun kanLeseResponsFraSOKOSUtbetalingsAPI() {
+    fun kanLeseEregResponsFraProduksjon() {
 
 
         val jsonString = readJsonFromFile("testrespons/EregResponsSample2.json")
+        val eregRespons: EregRespons = JsonUtils.fromJson(jsonString)
+        Assertions.assertNotNull(eregRespons)
+        Assertions.assertNotNull(eregRespons.navn)
+
+
+        println(eregRespons)
+    }
+    @Test
+    fun kanLeseEregResponsFraDolly() {
+
+
+        val jsonString = readJsonFromFile("testrespons/EregResponsSample.json")
         val eregRespons: EregRespons = JsonUtils.fromJson(jsonString)
         Assertions.assertNotNull(eregRespons)
         Assertions.assertNotNull(eregRespons.navn)
