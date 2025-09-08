@@ -7,6 +7,7 @@ import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
@@ -19,6 +20,7 @@ class UtbetalingClient(
     @Qualifier("utbetalingWebClient")
     private val webClient: WebClient,
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
 
     fun hentUtbetalingerForAktor(fnr: String,token:String): UtbetalingResultat {
         return runCatching {
@@ -42,13 +44,14 @@ class UtbetalingClient(
             response
         }.fold(
             onSuccess = { utbetalinger ->
-                println("Utbetaling er ok..fått svar!")
+
                 UtbetalingResultat(
                     data = UtbetalingRespons(utbetalinger = utbetalinger),
                     statusCode = 200
                 )
             },
             onFailure = { error ->
+                log.error("Feil ved henting av utbetalinger", error)
                 if (error.message?.contains("ikke tilgang") == true || fnr == "00000000000") {
                     UtbetalingResultat(
                         data = null,
@@ -56,7 +59,7 @@ class UtbetalingClient(
                         errorMessage = "Ingen tilgang til utbetalinger for $fnr"
                     )
                 } else {
-                    error.printStackTrace()
+                    
                     UtbetalingResultat(
                         data = null,
                         statusCode = 500,

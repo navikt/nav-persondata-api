@@ -27,10 +27,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
+private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 @Component
 class ResponsMappingService {
 
-private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+
 
 
     fun mapToMOppslagBrukerResponse(grunnlagsData: GrunnlagsData): OppslagBrukerRespons {
@@ -108,14 +109,13 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
 
 fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
     if (this.utbetalingRespons==null){
-        println("ingen utbetalingRespons")
+        logger.warn("ingen utbetalingRespons for ${this.ident}")
         return emptyList()
     }
     else{
         val utbetalinger = this.utbetalingRespons!!.data!!.utbetalinger
         val ytelser = utbetalinger.flatMap { it.ytelseListe.map { it.ytelsestype } }.distinct()
-        println("ytelser: ${ytelser.size}")
-        println(ytelser.toString())
+
 
 
         val stonadListe = mutableListOf<Stonad>()
@@ -255,7 +255,7 @@ fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
         ?.organisasjonDetaljer
         ?.forretningsadresser
         ?.firstOrNull { it.gyldighetsperiode.tom == null }
-        ?.let { "${it.adresselinje1}, ${it.postnummer} ${it.poststed}" }
+        ?.let { "${it.adresselinje1}, ${it.postnummer}" }
         ?: "INGEN ADRESSSE"
 
 fun Person.fulltNavn(): String {
