@@ -189,7 +189,6 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         ExchangeFilterFunction.ofRequestProcessor { req ->
             Mono.deferContextual { ctx ->
                 val callId = ctx.getOrDefault(CallId.CTX_KEY, MDC.get(CallId.HEADER) ?: UUID.randomUUID().toString())
-                println("CallId: $callId")
                 val mutated = ClientRequest.from(req)
                     .header(CallId.HEADER, callId)
                     .build()

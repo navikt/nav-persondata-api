@@ -59,9 +59,9 @@ data class Adresse(
     val adresselinje2: String? = null,
     val adresselinje3: String? = null,
     val postnummer: String,
-    val poststed: String,
-    val landkode: String,
-    val kommunenummer: String,
+    val poststed: String? = null,
+    val landkode: String? = null,
+    val kommunenummer: String? = null,
     val bruksperiode: PeriodeTid,
     val gyldighetsperiode: PeriodeDato
 )

@@ -102,14 +102,11 @@ class OppslagService(
             }
 
         }
-        println("returnerer svar fra OppslagService")
+
         val utbetalingResultat = resultater.find { it.type == GrunnlagsType.UTBETALINGER }.let { utbetalingData -> UtbetalingResultat(utbetalingData?.data as UtbetalingRespons, utbetalingData?.status!!,utbetalingData.feilmelding) }
         val personDataResultat = resultater.find { it.type == GrunnlagsType.PERSONDATA }.let { personData -> PersonDataResultat(personData?.data as Person, personData?.status!!,personData.feilmelding)}
         val inntektDataResultat = resultater.find { it.type == GrunnlagsType.INNTEKT }.let { inntektData -> InntektDataResultat(inntektData?.data as InntektshistorikkApiUt, personData?.status!!,personData.feilmelding)}
         val arbeidDataResultat = resultater.find { it.type == GrunnlagsType.ARBEIDSFORHOLD }.let { arbeidData -> AaregDataResultat(arbeidData?.data as List<Arbeidsforhold>, arbeidData?.status!!,arbeidData.feilmelding)}
-
-
-
 
         try {
             val respons = GrunnlagsData(

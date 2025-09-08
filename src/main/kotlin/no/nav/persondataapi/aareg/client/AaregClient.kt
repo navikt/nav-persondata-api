@@ -46,7 +46,6 @@ class AaregClient(
                     // Les body som String (kan bare leses én gang), logg, og parse
                     response.bodyToMono(String::class.java)
                         .map { raw ->
-                            println("RAW body (${status.value()}): $raw") // 👈 nå ser du faktisk responsen
                             if (status.is2xxSuccessful) {
                                 val parsed: List<Arbeidsforhold> =
                                     JsonUtils.fromJson(raw)
