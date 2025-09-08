@@ -58,7 +58,7 @@ spec:
       rules:
         - application: oppslag-bruker-frontend
           namespace: holmes
-          cluster: dev-gcp
+          cluster: prod-gcp
     outbound:
       rules:
         - application: sokos-utbetaldata
