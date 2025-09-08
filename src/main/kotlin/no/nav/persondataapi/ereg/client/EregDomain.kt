@@ -1,8 +1,6 @@
 package no.nav.persondataapi.ereg.client
 
 import java.time.LocalDate
-
-
 import java.time.LocalDateTime
 
 data class EregRespons(
@@ -40,14 +38,25 @@ data class OrganisasjonDetaljer(
     val registreringsdato: LocalDateTime,
     val enhetstyper: List<EnhetstypeDetalj>,
     val navn: List<Navn>,
-    val forretningsadresser: List<Adresse>,
-    val postadresser: List<Adresse>,
+    val naeringer: List<Naering> = emptyList(),
+    val forretningsadresser: List<Adresse> = emptyList(),
+    val postadresser: List<Adresse>? = null,
+    val epostadresser: List<EpostAdresse> = emptyList(),
+    val internettadresser: List<InternettAdresse> = emptyList(),
+    val ansatte: List<Ansatte> = emptyList(),
     val navSpesifikkInformasjon: NavSpesifikkInformasjon,
     val sistEndret: LocalDate
 )
 
 data class EnhetstypeDetalj(
     val enhetstype: String,
+    val bruksperiode: PeriodeTid,
+    val gyldighetsperiode: PeriodeDato
+)
+
+data class Naering(
+    val naeringskode: String,
+    val hjelpeenhet: Boolean,
     val bruksperiode: PeriodeTid,
     val gyldighetsperiode: PeriodeDato
 )
@@ -66,6 +75,24 @@ data class Adresse(
     val gyldighetsperiode: PeriodeDato
 )
 
+data class EpostAdresse(
+    val adresse: String,
+    val bruksperiode: PeriodeTid,
+    val gyldighetsperiode: PeriodeDato
+)
+
+data class InternettAdresse(
+    val adresse: String,
+    val bruksperiode: PeriodeTid,
+    val gyldighetsperiode: PeriodeDato
+)
+
+data class Ansatte(
+    val antall: Int,
+    val bruksperiode: PeriodeTid,
+    val gyldighetsperiode: PeriodeDato
+)
+
 data class NavSpesifikkInformasjon(
     val erIA: Boolean,
     val bruksperiode: PeriodeTid,
@@ -73,5 +100,6 @@ data class NavSpesifikkInformasjon(
 )
 
 data class VirksomhetDetaljer(
-    val enhetstype: String
+    val enhetstype: String,
+    val oppstartsdato: LocalDate
 )

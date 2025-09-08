@@ -2,8 +2,10 @@ package no.nav.persondataapi.tilgangsmaskin.client
 
 import no.nav.persondataapi.domain.TilgangMaskinResultat
 import no.nav.persondataapi.domain.TilgangResultat
+import no.nav.persondataapi.service.ResponsMappingService
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
@@ -18,7 +20,9 @@ class TilgangsmaskinClient (
 
 
     ) {
-        fun sjekkTilgang(fnr: String, userToken: String
+    private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+
+    fun sjekkTilgang(fnr: String, userToken: String
             ): TilgangResultat {
             return runCatching {
 
@@ -41,15 +45,14 @@ class TilgangsmaskinClient (
                         }
                         else {
                             response.bodyToMono(String::class.java).map { body ->
-                                println("Feilrespons: $body")
-                                throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
+                                logger.error("Feilrespons: $body")
+                                throw RuntimeException("Feil fra Tilgang: HTTP $status – $body")
                             }
                         }
                     }.block()!!
                 responseResult
             }.fold(
                 onSuccess = { resultat ->
-                    println("inntekt er ok..fått svar!")
                     TilgangResultat(
                         data = resultat,
                         statusCode = 200,
@@ -57,7 +60,7 @@ class TilgangsmaskinClient (
                     )
                 },
                 onFailure = { error ->
-                    println("Feil ved sjekk av tilgang")
+                    logger.error("Feil ved sjekk av tilgang",error)
                     error.printStackTrace()
                     TilgangResultat (
                         data = null,

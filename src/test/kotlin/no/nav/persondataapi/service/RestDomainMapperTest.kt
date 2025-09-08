@@ -21,8 +21,7 @@ class RestDomainMapperTest {
 
     @Test
     fun oversetterArbeidsforhold() {
-        val eregjsonString = readJsonFromFile("testrespons/EregResponsSample.json")
-        val eregRespons: EregRespons = JsonUtils.fromJson(eregjsonString)
+
 
         val eregjsonString2 = readJsonFromFile("testrespons/EregResponsSample2.json")
         val eregRespons2: EregRespons = JsonUtils.fromJson(eregjsonString2)
@@ -38,7 +37,7 @@ class RestDomainMapperTest {
             inntektDataRespons = null,
                 aAaregDataRespons = aaregRespons,
             eregDataRespons = mapOf(
-                Pair("986929150",eregRespons),
+                Pair("986929150",eregRespons2),
                 Pair("984886519",eregRespons2),
 
             )
@@ -52,8 +51,8 @@ class RestDomainMapperTest {
         Assertions.assertNotNull(arbeidsforhold.adresse)
         Assertions.assertNotNull(arbeidsforhold.arbeidsgiver)
         Assertions.assertTrue (arbeidsforhold.ansettelsesDetaljer.isNotEmpty())
-        Assertions.assertEquals("TEST GATA 75, 5252 SØREIDGREND",arbeidsforhold.adresse)
-        Assertions.assertEquals("SAUEFABRIKK",arbeidsforhold.arbeidsgiver)
+        Assertions.assertEquals("Akersgata 35, 0158",arbeidsforhold.adresse)
+        Assertions.assertEquals("COMPUTAS AS",arbeidsforhold.arbeidsgiver)
 
     }
 

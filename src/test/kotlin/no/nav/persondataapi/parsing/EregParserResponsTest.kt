@@ -14,7 +14,7 @@ class EregParserResponsTest {
     fun kanLeseResponsFraSOKOSUtbetalingsAPI() {
 
 
-        val jsonString = readJsonFromFile("testrespons/EregResponsSample.json")
+        val jsonString = readJsonFromFile("testrespons/EregResponsSample2.json")
         val eregRespons: EregRespons = JsonUtils.fromJson(jsonString)
         Assertions.assertNotNull(eregRespons)
         Assertions.assertNotNull(eregRespons.navn)

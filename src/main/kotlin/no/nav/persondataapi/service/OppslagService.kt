@@ -55,7 +55,7 @@ class OppslagService(
             //Service user have been used!!
             username = claims.getStringClaim("azp_name")
         }
-        println("Bruker $username gjorde oppslag på fnr: $fnr")
+        log.info("Bruker $username gjorde oppslag på fnr: $fnr")
 
         val token = context.firstValidToken?.encodedToken
             ?: throw IllegalStateException("Fant ikke gyldig token")
@@ -72,7 +72,7 @@ class OppslagService(
                 }
                 .awaitAll()
         }
-        log.info("Alle svar hentet $resultater")
+        log.info("Alle data hentet for $fnr")
 
         val organiasajoner = mutableMapOf<String,EregRespons>()
         // Eksempel på hvordan du setter sammen full respons

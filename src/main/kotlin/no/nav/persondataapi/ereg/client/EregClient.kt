@@ -1,6 +1,8 @@
 package no.nav.persondataapi.ereg.client
 
 
+import no.nav.persondataapi.service.ResponsMappingService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 
@@ -12,6 +14,7 @@ class EregClient(
     @Qualifier("eregWebClient")
     private val webClient: WebClient,
 ) {
+    private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         return runCatching {
@@ -31,12 +34,12 @@ class EregClient(
             response
         }.fold(
             onSuccess = { ereg ->
-                println("ereg er ok..fått svar!")
+
                 ereg
             },
             onFailure = { error ->
-                println("Feil ved henting av Ereg")
-                error.printStackTrace()
+                logger.error("Teknisk feil Feil ved henting av Ereg")
+                logger.error(error.stackTraceToString())
                 EregRespons(
                     orgnummer,
                     type = "",

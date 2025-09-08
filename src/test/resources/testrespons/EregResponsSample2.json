@@ -1,70 +1,98 @@
 {
-  "organisasjonsnummer": "984886519",
+  "organisasjonsnummer": "986929150",
   "type": "Virksomhet",
   "navn": {
-    "sammensattnavn": "KAST LANGT",
-    "navnelinje1": "KAST LANGT",
+    "sammensattnavn": "COMPUTAS AS",
+    "navnelinje1": "COMPUTAS AS",
     "bruksperiode": {
-      "fom": "2023-09-14T10:19:02.968"
+      "fom": "2022-08-18T04:01:44.207"
     },
     "gyldighetsperiode": {
-      "fom": "2023-09-14"
+      "fom": "2022-08-17"
     }
   },
   "organisasjonDetaljer": {
-    "registreringsdato": "2023-09-14T00:00:00",
+    "registreringsdato": "2004-06-01T00:00:00",
     "enhetstyper": [
       {
         "enhetstype": "BEDR",
         "bruksperiode": {
-          "fom": "2023-09-14T10:19:02.963"
+          "fom": "2014-05-21T15:38:32.864"
         },
         "gyldighetsperiode": {
-          "fom": "2023-09-14"
+          "fom": "2004-06-01"
         }
       }
     ],
     "navn": [
       {
-        "sammensattnavn": "KAST LANGT",
-        "navnelinje1": "KAST LANGT",
+        "sammensattnavn": "COMPUTAS AS",
+        "navnelinje1": "COMPUTAS AS",
         "bruksperiode": {
-          "fom": "2023-09-14T10:19:02.968"
+          "fom": "2022-08-18T04:01:44.207"
         },
         "gyldighetsperiode": {
-          "fom": "2023-09-14"
+          "fom": "2022-08-17"
+        }
+      }
+    ],
+    "naeringer": [
+      {
+        "naeringskode": "62.100",
+        "hjelpeenhet": false,
+        "bruksperiode": {
+          "fom": "2025-09-03T07:33:53.707"
+        },
+        "gyldighetsperiode": {
+          "fom": "2008-01-01"
         }
       }
     ],
     "forretningsadresser": [
       {
         "type": "Forretningsadresse",
-        "adresselinje1": "LANGVEKKISTAN GATA 75",
-        "postnummer": "1350",
-        "poststed": "BEKKESTUA",
+        "adresselinje1": "Akersgata 35",
+        "postnummer": "0158",
         "landkode": "NO",
-        "kommunenummer": "4601",
+        "kommunenummer": "0301",
         "bruksperiode": {
-          "fom": "2023-09-14T10:19:02.968"
+          "fom": "2018-10-26T04:01:13.197"
         },
         "gyldighetsperiode": {
-          "fom": "2023-09-14"
+          "fom": "2018-10-25"
         }
       }
     ],
-    "postadresser": [
+    "epostadresser": [
       {
-        "type": "Postadresse",
-        "adresselinje1": "OPALV 75",
-        "postnummer": "5252",
-        "poststed": "SØREIDGREND",
-        "landkode": "NO",
-        "kommunenummer": "4601",
+        "adresse": "kontakt@computas.com",
         "bruksperiode": {
-          "fom": "2023-09-14T10:19:02.968"
+          "fom": "2014-05-21T21:28:47.468"
         },
         "gyldighetsperiode": {
-          "fom": "2023-09-14"
+          "fom": "2014-03-18"
+        }
+      }
+    ],
+    "internettadresser": [
+      {
+        "adresse": "computas.com",
+        "bruksperiode": {
+          "fom": "2025-04-11T04:00:43.729"
+        },
+        "gyldighetsperiode": {
+          "fom": "2025-04-10"
+        }
+      }
+    ],
+    "ansatte": [
+      {
+        "antall": 335,
+        "bruksperiode": {
+          "fom": "2025-08-19T00:21:37.018"
+        },
+        "gyldighetsperiode": {
+          "fom": "2025-08-11"
         }
       }
     ],
@@ -77,9 +105,10 @@
         "fom": "1900-01-01"
       }
     },
-    "sistEndret": "2023-09-14"
+    "sistEndret": "2025-09-01"
   },
   "virksomhetDetaljer": {
-    "enhetstype": "BEDR"
+    "enhetstype": "BEDR",
+    "oppstartsdato": "2004-06-01"
   }
 }
