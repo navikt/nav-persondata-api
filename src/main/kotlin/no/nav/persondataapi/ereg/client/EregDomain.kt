@@ -101,5 +101,5 @@ data class NavSpesifikkInformasjon(
 
 data class VirksomhetDetaljer(
     val enhetstype: String,
-    val oppstartsdato: LocalDate
+    val oppstartsdato: LocalDate? = null,
 )
