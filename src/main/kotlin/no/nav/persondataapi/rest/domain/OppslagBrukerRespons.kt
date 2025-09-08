@@ -51,6 +51,7 @@ data class AnsettelsesDetalj(
     val stillingsprosent: Double?,
     val antallTimerPrUke: Double?,
     val periode: OpenPeriode,
+    val yrke: String? = null
 )
 data class OpenPeriode(
     val fom: YearMonth,

@@ -19,6 +19,8 @@ management:
     application: nav-persondata-api
     env: ${NAIS_CLUSTER_NAME:local}
   endpoint:
+    prometheus:
+      enabled: true
     health:
       show-details: always
 no.nav.security.jwt:
