@@ -40,7 +40,7 @@ data class OrganisasjonDetaljer(
     val navn: List<Navn>,
     val naeringer: List<Naering> = emptyList(),
     val forretningsadresser: List<Adresse> = emptyList(),
-    val postadresser: List<Adresse>? = null,
+    val postadresser: List<Adresse> = emptyList(),
     val epostadresser: List<EpostAdresse> = emptyList(),
     val internettadresser: List<InternettAdresse> = emptyList(),
     val ansatte: List<Ansatte> = emptyList(),
