@@ -33,10 +33,6 @@ class TilgangsmaskinClient (
                     .exchangeToMono { response ->
                         val status = response.statusCode()
                         val headers = response.headers().asHttpHeaders()
-
-                        println("HTTP status: $status")
-                        println("Headers: $headers")
-
                         if (status.is2xxSuccessful) {
                             response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
                         }

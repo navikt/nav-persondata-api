@@ -51,16 +51,11 @@ class InntektClient(
                 .bodyValue(requestBody)
                 .exchangeToMono { response ->
                     val status = response.statusCode()
-                    val headers = response.headers().asHttpHeaders()
-
-                    println("HTTP status: $status")
-                    println("Headers: $headers")
-
                     if (status.is2xxSuccessful) {
                         response.bodyToMono(object : ParameterizedTypeReference<InntektshistorikkApiUt>() {})
                     } else {
                         response.bodyToMono(String::class.java).map { body ->
-                            println("Feilrespons: $body")
+
                             throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
                         }
                     }
