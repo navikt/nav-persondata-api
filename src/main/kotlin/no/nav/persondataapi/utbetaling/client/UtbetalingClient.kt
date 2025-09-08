@@ -49,7 +49,6 @@ class UtbetalingClient(
                 )
             },
             onFailure = { error ->
-                println("Feil ved henting av utbetalinger")
                 if (error.message?.contains("ikke tilgang") == true || fnr == "00000000000") {
                     UtbetalingResultat(
                         data = null,
