@@ -1,4 +1,4 @@
-package no.nav.persondataapi.pdl
+package no.nav.persondataapi.pdl.client
 
 
 

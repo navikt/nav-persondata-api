@@ -24,6 +24,7 @@ import no.nav.persondataapi.service.dataproviders.GrunnlagsType
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.LoggerFactory
+import org.slf4j.MarkerFactory
 
 import org.springframework.stereotype.Component
 import java.time.ZonedDateTime
@@ -36,11 +37,12 @@ import java.time.ZonedDateTime
 )
 class OppslagService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
-    private val tokenService: TokenService,
     private val providers: List<GrunnlagsProvider> , // injiseres automatisk av Spring
     private val eregClient: EregClient
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+    // Create a marker that your Logback configuration recognizes for "team-logs"
+    private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
 
     suspend fun hentGrunnlagsData(
         fnr: String,
@@ -72,7 +74,7 @@ class OppslagService(
                 }
                 .awaitAll()
         }
-        log.info("Alle data hentet for $fnr")
+        log.info(teamLogsMarker,"Alle data hentet for $fnr")
 
         val organiasajoner = mutableMapOf<String,EregRespons>()
         // Eksempel på hvordan du setter sammen full respons
@@ -96,7 +98,7 @@ class OppslagService(
                     organiasajoner.put(ident,org)
                 }
                 catch (t:Exception){
-                    t.printStackTrace()
+                    log.error("Feil ved henting av informasjon for organisasjon $ident",t)
                 }
 
             }
@@ -106,7 +108,7 @@ class OppslagService(
         val utbetalingResultat = resultater.find { it.type == GrunnlagsType.UTBETALINGER }.let { utbetalingData -> UtbetalingResultat(utbetalingData?.data as UtbetalingRespons, utbetalingData?.status!!,utbetalingData.feilmelding) }
         val personDataResultat = resultater.find { it.type == GrunnlagsType.PERSONDATA }.let { personData -> PersonDataResultat(personData?.data as Person, personData?.status!!,personData.feilmelding)}
         val inntektDataResultat = resultater.find { it.type == GrunnlagsType.INNTEKT }.let { inntektData -> InntektDataResultat(inntektData?.data as InntektshistorikkApiUt, personData?.status!!,personData.feilmelding)}
-        val arbeidDataResultat = resultater.find { it.type == GrunnlagsType.ARBEIDSFORHOLD }.let { arbeidData -> AaregDataResultat(arbeidData?.data as List<Arbeidsforhold>, arbeidData?.status!!,arbeidData.feilmelding)}
+        val arbeidDataResultat = resultater.find { it.type == GrunnlagsType.ARBEIDSFORHOLD }.let { arbeidData -> AaregDataResultat(arbeidData?.data as List<Arbeidsforhold>, arbeidData.status,arbeidData.feilmelding)}
 
         try {
             val respons = GrunnlagsData(
@@ -122,7 +124,7 @@ class OppslagService(
             return respons
         }
         catch (t:Exception){
-        t.printStackTrace()
+            log.error("Feil oppretting av respons objekt for $fnr",t)
         }
         val respons = GrunnlagsData(
             utreksTidspunkt = ZonedDateTime.now(),
