@@ -1,6 +1,5 @@
 package no.nav.persondataapi.rest.domain
 
-import no.nav.persondataapi.generated.hentperson.Statsborgerskap
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,14 +14,51 @@ data class OppslagBrukerRespons(
     val inntektInformasjon: InntektInformasjon?,
     val stonadOversikt: List<Stonad> = emptyList()
 )
-
+/**
+ * [navn] beholdes midlertidig for bakoverkompatibilitet.
+ * [navn_] bør brukes av nye konsumenter.
+ * Planlagt fjernet etter 2025-09.
+ */
 data class PersonInformasjon(
     val navn: String,
     val aktorId: String?,
     val adresse: String?,
     val familemedlemmer : Map<String,String> = emptyMap<String, String>(),
     val statsborgerskap: List<String> = emptyList(),
+    val navn_: Navn,
+    val adresse_: Bostedsadresse? =null,
+    val sivilstand: String? = null,
 )
+
+data class Navn(
+    val fornavn: String,
+    val mellomnavn: String?,
+    val etternavn: String,
+)
+
+data class Bostedsadresse(
+    val norskAdresse: NorskAdresse?,
+    val utenlandskAdresse: UtenlandskAdresse?
+)
+
+data class NorskAdresse(
+    val adressenavn: String?,
+    val husnummer: String?,
+    val husbokstav: String?,
+
+    val postnummer: String?,
+    val kommunenummer:String?,
+    val poststed: String?,
+)
+
+data class UtenlandskAdresse(
+     val adressenavnNummer: String?,
+     val bygningEtasjeLeilighet: String?,
+     val postboksNummerNavn: String?,
+     val postkode: String?,
+     val bySted: String?,
+     val regionDistriktOmraade: String?,
+     val landkode: String)
 
 
 data class InntektInformasjon(

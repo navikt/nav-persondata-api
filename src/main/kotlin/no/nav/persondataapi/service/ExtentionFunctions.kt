@@ -12,8 +12,10 @@ import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.generated.hentperson.UtenlandskAdresse
 import no.nav.persondataapi.generated.hentperson.Vegadresse
+import no.nav.persondataapi.rest.domain.NorskAdresse
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domain.LoensDetaljer
+import no.nav.persondataapi.rest.domain.Navn
 import no.nav.persondataapi.rest.domain.Periode
 import no.nav.persondataapi.rest.domain.PeriodeInformasjon
 import no.nav.persondataapi.rest.domain.PersonInformasjon
@@ -124,7 +126,20 @@ fun Person.fulltNavn(): String {
     return "${navn.fornavn} ${navn.mellomnavn} ${navn.etternavn}"
 }
 
-fun Person.naavarendeBostedsAdresse():String{
+fun Person.gjeldendeFornavn(): String {
+    val navn = this.navn.first()
+    return navn.fornavn
+}
+fun Person.gjeldendeMellomnavn(): String? {
+    val navn = this.navn.first()
+    return navn.mellomnavn
+}
+fun Person.gjeldendeEtternavn(): String {
+    val navn = this.navn.first()
+    return navn.etternavn
+}
+
+fun Person.naavarendeBostedsAdresseToString():String{
     val adresse = this.bostedsadresse.first()
     //har bruker utlands adresse
     if (adresse.utenlandskAdresse!= null){
@@ -135,6 +150,39 @@ fun Person.naavarendeBostedsAdresse():String{
     }
 
     return "Ingen adresse registrert"
+}
+
+fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsadresse{
+    val adresse = this.bostedsadresse.first()
+    //har bruker utlands adresse
+    var utlandAdresse: no.nav.persondataapi.rest.domain.UtenlandskAdresse? = null
+    var norskAdresse: no.nav.persondataapi.rest.domain.NorskAdresse? = null
+    if (adresse.utenlandskAdresse!= null){
+        utlandAdresse = no.nav.persondataapi.rest.domain.UtenlandskAdresse(
+            adresse.utenlandskAdresse.adressenavnNummer,
+            bygningEtasjeLeilighet = adresse.utenlandskAdresse.bygningEtasjeLeilighet,
+            postboksNummerNavn = null,
+            postkode = null,
+            bySted = null,
+            regionDistriktOmraade = null,
+            landkode = "null"
+        )
+    }
+    if (adresse.vegadresse!= null){
+        norskAdresse = no.nav.persondataapi.rest.domain.NorskAdresse(
+            adressenavn = adresse.vegadresse.adressenavn,
+            husnummer = adresse.vegadresse.husnummer,
+            husbokstav = adresse.vegadresse.husbokstav,
+            postnummer = adresse.vegadresse.postnummer,
+            kommunenummer = adresse.vegadresse.kommunenummer,
+            poststed = adresse.vegadresse.postnummer
+        )
+    }
+
+    return no.nav.persondataapi.rest.domain.Bostedsadresse(
+        norskAdresse = norskAdresse,
+        utenlandskAdresse = utlandAdresse
+    )
 }
 
 fun UtenlandskAdresse.fullAdresseString():String{
@@ -238,10 +286,10 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
     if (this.personDataRespons == null){
         return PersonInformasjon(
             navn = "",
+            navn_ = Navn("",null,""),
             aktorId = this.ident,
             adresse = "",
             familemedlemmer = emptyMap()
-
         )
     }
     else{
@@ -254,8 +302,14 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
         val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
         return PersonInformasjon(
             navn = pdlResultat.fulltNavn(),
+            navn_= Navn(
+                pdlResultat.gjeldendeFornavn(),
+                mellomnavn = pdlResultat.gjeldendeMellomnavn(),
+                etternavn = pdlResultat.gjeldendeEtternavn(),
+            ),
             aktorId = this.ident,
-            adresse = pdlResultat.naavarendeBostedsAdresse(),
+            adresse = pdlResultat.naavarendeBostedsAdresseToString(),
+            adresse_ = pdlResultat.naavarendeBostedsAdresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle,
             statsborgerskap = statsborgerskap)
     }
