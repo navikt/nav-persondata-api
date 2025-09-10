@@ -1,6 +1,7 @@
 
 import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.utbetaling.dto.Utbetaling
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
@@ -15,7 +16,7 @@ class UtbetalingResponsMapperTest {
         val jsonString = readJsonFromFile("27525728205.json")
         val utbetalinger: List<Utbetaling> = JsonUtils.fromJson(jsonString)
 
-        println(utbetalinger)
+        Assertions.assertNotNull(utbetalinger)
     }
 
     private fun readJsonFromFile(filename: String): String {

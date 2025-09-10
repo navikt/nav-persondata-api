@@ -78,41 +78,6 @@ fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
     }
 }
 
-fun GrunnlagsData.getNaringsInntektOversikt(): List<LoensDetaljer> {
-    if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
-        return emptyList()
-    }
-    else {
-        val listeAvInntektHistorikk = inntektDataRespons.data.data?: emptyList()
-
-        val  ret: MutableList<LoensDetaljer> = mutableListOf()
-        listeAvInntektHistorikk.forEach { historikk ->
-            val harHistorikkPaaLoennsinntekt = historikk.historikkPaaNormalLoenn()
-            println(harHistorikkPaaLoennsinntekt)
-            val nyeste = historikk.versjoner.nyeste()
-            if (nyeste !=null && nyeste.inntektListe!=null){
-                val liste = nyeste.inntektListe ?: emptyList()
-                liste.filter { it is Naeringsinntekt }.map { it as Naeringsinntekt }.forEach { loenn ->
-                    ret.add(LoensDetaljer(
-                        arbeidsgiver = this.eregDataRespons.orgNummerTilOrgNavn(historikk.opplysningspliktig),
-                        periode = historikk.maaned,
-                        arbeidsforhold = "",
-                        stillingsprosent = "",
-                        lonnstype = loenn.beskrivelse,
-                        antall = null,
-                        belop = loenn.beloep,
-                        harFlereVersjoner = harHistorikkPaaLoennsinntekt,
-                    ))
-                }
-            }
-
-
-        }
-
-        return ret
-    }
-}
-
 fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
     this[orgnummer]
         ?.organisasjonDetaljer
@@ -129,6 +94,11 @@ fun Person.fulltNavn(): String {
 fun Person.gjeldendeFornavn(): String {
     val navn = this.navn.first()
     return navn.fornavn
+}
+
+fun Person.gjeldendeSivilStand(): String {
+    val sivilstand = this.sivilstand.first()
+    return sivilstand.type.name
 }
 fun Person.gjeldendeMellomnavn(): String? {
     val navn = this.navn.first()
@@ -159,7 +129,7 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
     var norskAdresse: no.nav.persondataapi.rest.domain.NorskAdresse? = null
     if (adresse.utenlandskAdresse!= null){
         utlandAdresse = no.nav.persondataapi.rest.domain.UtenlandskAdresse(
-            adresse.utenlandskAdresse.adressenavnNummer,
+            adressenavnNummer = adresse.utenlandskAdresse.adressenavnNummer,
             bygningEtasjeLeilighet = adresse.utenlandskAdresse.bygningEtasjeLeilighet,
             postboksNummerNavn = null,
             postkode = null,
@@ -169,7 +139,7 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
         )
     }
     if (adresse.vegadresse!= null){
-        norskAdresse = no.nav.persondataapi.rest.domain.NorskAdresse(
+        norskAdresse = NorskAdresse(
             adressenavn = adresse.vegadresse.adressenavn,
             husnummer = adresse.vegadresse.husnummer,
             husbokstav = adresse.vegadresse.husbokstav,
@@ -311,7 +281,9 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
             adresse = pdlResultat.naavarendeBostedsAdresseToString(),
             adresse_ = pdlResultat.naavarendeBostedsAdresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle,
-            statsborgerskap = statsborgerskap)
+            statsborgerskap = statsborgerskap,
+            sivilstand = pdlResultat.gjeldendeSivilStand()
+        )
     }
 
 }
