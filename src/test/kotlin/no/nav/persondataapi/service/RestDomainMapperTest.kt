@@ -109,6 +109,12 @@ class RestDomainMapperTest {
 
         val pdlString = readJsonFromFile("testrespons/oppslagBrukerSampleRespons.json")
         val grunnlag: GrunnlagsData = JsonUtils.fromJson(pdlString)
+        val personData = grunnlag.getPersonInformasjon()
+        Assertions.assertNotNull(personData)
+        Assertions.assertNotNull(personData.navn_)
+        Assertions.assertEquals("ETT",personData.navn_.fornavn)
+        Assertions.assertEquals("NAVN",personData.navn_.etternavn)
+        Assertions.assertEquals("UGIFT",personData.sivilstand)
 
         val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
         println(JsonUtils.toJson(res))

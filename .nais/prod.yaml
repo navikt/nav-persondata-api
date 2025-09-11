@@ -72,6 +72,8 @@ spec:
         - application: aareg-services-nais
           namespace: arbeidsforhold
           cluster: prod-fss
+        - application: logging
+          namespace: nais-system
       external:
         - host: sokos-utbetaldata.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io

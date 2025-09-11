@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class OppslagBrukerController(
-    private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val oppslagService: OppslagService,
-    private val tokenService: TokenService,
     private val mappingService: ResponsMappingService
 ) {
 

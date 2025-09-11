@@ -1,7 +1,7 @@
 package no.nav.persondataapi.service.dataproviders
 
 
-import no.nav.persondataapi.pdl.PdlClient
+import no.nav.persondataapi.pdl.client.PdlClient
 
 
 import org.springframework.stereotype.Component

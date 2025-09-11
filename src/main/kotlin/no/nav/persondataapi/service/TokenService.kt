@@ -59,9 +59,9 @@ class TokenService (
             val clientSecret = environment["AZURE_APP_CLIENT_SECRET"]
             val response = azuretokenWebClient.post()
                 .body(
-                    BodyInserters.fromFormData("client_id", clientId)
-                        .with("scope", target)
-                        .with("client_secret", clientSecret)
+                    BodyInserters.fromFormData("client_id", clientId!!)
+                        .with("scope", target!!)
+                        .with("client_secret", clientSecret!!)
                         .with("grant_type", "client_credentials"))
 
                 .retrieve()
