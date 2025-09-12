@@ -41,6 +41,20 @@ class OppslagBrukerController(
             mappingService.mapToMOppslagBrukerResponse(grunnlag)
         }
     }
+    @GetMapping("/oppslag-bruker")
+    @Protected
+    fun userInfoGet(@RequestHeader("fnr")fnr: String): OppslagBrukerRespons {
+
+        if (!requestValidor.simpleDnrDnrValidation(fnr)){
+            throw InvalidFnrException("Fødselsnummeret '${fnr}' er ikke gyldig")
+        }
+
+        return runBlocking {
+
+            val grunnlag = oppslagService.hentGrunnlagsData(fnr)
+            mappingService.mapToMOppslagBrukerResponse(grunnlag)
+        }
+    }
     @GetMapping("/oppslag-bruker-api")
     @Protected
     fun userInfoAPI(@RequestHeader("fnr") fnr: String): GrunnlagsData {
