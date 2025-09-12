@@ -74,6 +74,8 @@ spec:
           cluster: dev-fss
         - application: logging
           namespace: nais-system
+        - application: kodeverk-api
+          namespace: team-rocket
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
