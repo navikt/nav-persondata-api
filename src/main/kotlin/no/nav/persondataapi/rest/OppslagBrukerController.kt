@@ -31,11 +31,9 @@ class OppslagBrukerController(
     @PostMapping("/oppslag-bruker")
     @Protected
     fun userInfo(@RequestBody dto: OppslagBrukerRequest): OppslagBrukerRespons {
-
         if (!requestValidor.simpleDnrDnrValidation(dto.fnr)){
             throw InvalidFnrException("Fødselsnummeret '${dto.fnr}' er ikke gyldig")
         }
-
         return runBlocking {
 
             val grunnlag = oppslagService.hentGrunnlagsData(dto.fnr)
