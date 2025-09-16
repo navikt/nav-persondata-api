@@ -72,13 +72,13 @@ class RestDomainMapperTest {
             inntektDataRespons = null,
             aAaregDataRespons = null
             )
-
+        
         val personInformasjon =  grunnlag.getPersonInformasjon()
         Assertions.assertNotNull(personInformasjon)
         Assertions.assertEquals("HANS JACOB",personInformasjon.navn.fornavn)
         Assertions.assertEquals("ASLAKSRUD",personInformasjon.navn.mellomnavn)
         Assertions.assertEquals("MELBY",personInformasjon.navn.etternavn)
-        Assertions.assertEquals("Slalåmveien 62, 1350",personInformasjon.adresse?.norskAdresse?.adressenavn)
+        Assertions.assertEquals("Slalåmveien",personInformasjon.adresse?.norskAdresse?.adressenavn)
         Assertions.assertEquals("62",personInformasjon.adresse?.norskAdresse?.husnummer)
         Assertions.assertEquals("1350",personInformasjon.adresse?.norskAdresse?.postnummer)
         Assertions.assertEquals("NOR",personInformasjon.statsborgerskap.first())
