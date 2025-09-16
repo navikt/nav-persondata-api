@@ -12,7 +12,7 @@ data class OppslagBrukerRespons(
     val personInformasjon: PersonInformasjon?,
     val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
     val inntektInformasjon: InntektInformasjon?,
-    val stonadOversikt: List<Stonad> = emptyList()
+    val stønader: List<Stonad> = emptyList()
 )
 /**
  * [navn] beholdes midlertidig for bakoverkompatibilitet.

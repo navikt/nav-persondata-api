@@ -24,7 +24,7 @@ class ResponsMappingService {
             personInformasjon = grunnlagsData.getPersonInformasjon(),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsGiverInformasjon(),
             inntektInformasjon = InntektInformasjon(loennsinntekt = grunnlagsData.getLoennsinntektOversikt()),
-            stonadOversikt = grunnlagsData.getStonadOversikt(),
+            stønader = grunnlagsData.getStonadOversikt(),
         )
 
     }
