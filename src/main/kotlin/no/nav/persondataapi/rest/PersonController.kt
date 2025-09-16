@@ -8,6 +8,7 @@ import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
@@ -17,35 +18,19 @@ class PersonController(
     private val pdlClient: PdlClient,
     private val tilgangsmaskinClient: TilgangsmaskinClient
 ) {
-    @GetMapping("/persondata")
+    @PostMapping("/personsoek")
     @Protected
-    fun hentPerson(@RequestHeader("fnr") fnr: String): PersonDataResultat {
-        return runBlocking {
-            val context = tokenValidationContextHolder.getTokenValidationContext()
-            val token = context.firstValidToken?.encodedToken
-                ?: throw IllegalStateException("Fant ikke gyldig token")
-            val res = pdlClient.hentPersonv2(fnr)
-            res
-        }
-    }
-    @PostMapping("/person-søk")
-    @Protected
-    fun søkPerson(@RequestHeader("fnr") fnr: String): PersonDataResultat {
+    fun finnBruker(@RequestBody dto: FinnBrukerRequest): PersonDataResultat {
+
+        println("Received ${dto.fnr}")
         return runBlocking {
             val context = tokenValidationContextHolder.getTokenValidationContext()
             val token = context.firstValidToken?.encodedToken
                 ?: throw IllegalStateException("Fant ikke gyldig token")
 
-            val res = pdlClient.hentPersonv2(fnr)
+            val res = pdlClient.hentPersonv2(dto.fnr)
             res
         }
     }
-    @GetMapping("/me")
-    @Protected
-    fun me(): String {
-        return runBlocking {
-            val context = tokenValidationContextHolder.getTokenValidationContext()
-            context.firstValidToken!!.encodedToken
-        }
-    }
 }
+data class FinnBrukerRequest(val fnr: String)

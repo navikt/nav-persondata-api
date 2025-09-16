@@ -16,6 +16,7 @@ import no.nav.security.token.support.core.context.TokenValidationContextHolder
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
@@ -29,7 +30,7 @@ class OppslagBrukerController(
 
     @PostMapping("/oppslag-bruker")
     @Protected
-    fun userInfo(dto: OppslagBrukerRequest): OppslagBrukerRespons {
+    fun userInfo(@RequestBody dto: OppslagBrukerRequest): OppslagBrukerRespons {
 
         if (!requestValidor.simpleDnrDnrValidation(dto.fnr)){
             throw InvalidFnrException("Fødselsnummeret '${dto.fnr}' er ikke gyldig")
