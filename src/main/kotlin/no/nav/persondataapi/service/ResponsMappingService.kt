@@ -23,7 +23,7 @@ class ResponsMappingService {
             fødselsnummer = grunnlagsData.ident,
             personInformasjon = grunnlagsData.getPersonInformasjon(),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsGiverInformasjon(),
-            inntektInformasjon = InntektInformasjon(loennsinntekt = grunnlagsData.getLoennsinntektOversikt()),
+            inntektInformasjon = InntektInformasjon(lønnsinntekt = grunnlagsData.getLoennsinntektOversikt()),
             stønader = grunnlagsData.getStonadOversikt(),
         )
 

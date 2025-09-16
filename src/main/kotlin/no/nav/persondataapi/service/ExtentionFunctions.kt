@@ -63,9 +63,9 @@ fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
                         periode = historikk.maaned,
                         arbeidsforhold = "",
                         stillingsprosent = "",
-                        lonnstype = loenn.beskrivelse,
+                        lønnstype = loenn.beskrivelse,
                         antall = loenn.antall,
-                        belop = loenn.beloep,
+                        beløp = loenn.beloep,
                         harFlereVersjoner = harHistorikkPaaLoennsinntekt,
                     ))
                 }
