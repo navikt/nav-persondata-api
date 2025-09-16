@@ -14,19 +14,13 @@ data class OppslagBrukerRespons(
     val inntektInformasjon: InntektInformasjon?,
     val stønader: List<Stonad> = emptyList()
 )
-/**
- * [navn] beholdes midlertidig for bakoverkompatibilitet.
- * [navn_] bør brukes av nye konsumenter.
- * Planlagt fjernet etter 2025-09.
- */
+
 data class PersonInformasjon(
-    val navn: String,
-    val aktorId: String?,
-    val adresse: String?,
+    val aktørId: String?,
     val familemedlemmer : Map<String,String> = emptyMap<String, String>(),
     val statsborgerskap: List<String> = emptyList(),
-    val navn_: Navn,
-    val adresse_: Bostedsadresse? =null,
+    val navn: Navn,
+    val adresse: Bostedsadresse? =null,
     val sivilstand: String? = null,
 )
 
@@ -52,13 +46,14 @@ data class NorskAdresse(
 )
 
 data class UtenlandskAdresse(
-     val adressenavnNummer: String?,
-     val bygningEtasjeLeilighet: String?,
-     val postboksNummerNavn: String?,
-     val postkode: String?,
-     val bySted: String?,
-     val regionDistriktOmraade: String?,
-     val landkode: String)
+    val adressenavnNummer: String?,
+    val bygningEtasjeLeilighet: String?,
+    val postboksNummerNavn: String?,
+    val postkode: String?,
+    val bySted: String?,
+    val regionDistriktOmråde: String?,
+    val landkode: String
+)
 
 
 data class InntektInformasjon(
