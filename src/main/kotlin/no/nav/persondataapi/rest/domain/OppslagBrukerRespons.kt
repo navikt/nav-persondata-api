@@ -8,7 +8,7 @@ import java.time.YearMonth
 data class OppslagBrukerRespons(
     val utrekkstidspunkt: LocalDateTime,
     val saksbehandlerIdent: String,
-    val fodselsnr: String,
+    val fødselsnummer: String,
     val personInformasjon: PersonInformasjon?,
     val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
     val inntektInformasjon: InntektInformasjon?,
@@ -96,9 +96,6 @@ data class OpenPeriode(
 /*
 * YTELSER_OG_STONADER
 * */
-data class ytelserOgStonaderInformasjon(
-    val stonader:List<Stonad>
-)
 data class Stonad(
     val stonadType: String,
     val perioder : List<PeriodeInformasjon>
@@ -130,13 +127,8 @@ data class UtbetalingInfo(
 
 
 /*
-* Lønn fra A-Meldinge
+* Lønn fra A-Meldingen
 * */
-
-data class LoensInformasjon(
-    val lønnsInformasjon: List<LoensDetaljer>,
-)
-
 data class LoensDetaljer(
     val arbeidsgiver: String?,
     val periode:String,
