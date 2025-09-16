@@ -64,7 +64,7 @@ data class InntektInformasjon(
 )
 
 data class ArbeidsgiverInformasjon(
-    val lopendeArbeidsforhold : List<ArbeidsgiverData>,
+    val løpendeArbeidsforhold : List<ArbeidsgiverData>,
     val historikk:List<ArbeidsgiverData>
 )
 
