@@ -8,25 +8,19 @@ import java.time.YearMonth
 data class OppslagBrukerRespons(
     val utrekkstidspunkt: LocalDateTime,
     val saksbehandlerIdent: String,
-    val fodselsnr: String,
+    val fødselsnummer: String,
     val personInformasjon: PersonInformasjon?,
     val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
     val inntektInformasjon: InntektInformasjon?,
-    val stonadOversikt: List<Stonad> = emptyList()
+    val stønader: List<Stonad> = emptyList()
 )
-/**
- * [navn] beholdes midlertidig for bakoverkompatibilitet.
- * [navn_] bør brukes av nye konsumenter.
- * Planlagt fjernet etter 2025-09.
- */
+
 data class PersonInformasjon(
-    val navn: String,
-    val aktorId: String?,
-    val adresse: String?,
+    val aktørId: String?,
     val familemedlemmer : Map<String,String> = emptyMap<String, String>(),
     val statsborgerskap: List<String> = emptyList(),
-    val navn_: Navn,
-    val adresse_: Bostedsadresse? =null,
+    val navn: Navn,
+    val adresse: Bostedsadresse? =null,
     val sivilstand: String? = null,
 )
 
@@ -52,24 +46,25 @@ data class NorskAdresse(
 )
 
 data class UtenlandskAdresse(
-     val adressenavnNummer: String?,
-     val bygningEtasjeLeilighet: String?,
-     val postboksNummerNavn: String?,
-     val postkode: String?,
-     val bySted: String?,
-     val regionDistriktOmraade: String?,
-     val landkode: String)
+    val adressenavnNummer: String?,
+    val bygningEtasjeLeilighet: String?,
+    val postboksNummerNavn: String?,
+    val postkode: String?,
+    val bySted: String?,
+    val regionDistriktOmråde: String?,
+    val landkode: String
+)
 
 
 data class InntektInformasjon(
-    val loennsinntekt : List<LoensDetaljer> = emptyList(),
-    val naringsInntekt : List<LoensDetaljer> = emptyList(),
-    val PensjonEllerTrygd : List<LoensDetaljer> = emptyList(),
-    val YtelseFraOffentlige : List<LoensDetaljer> = emptyList(),
+    val lønnsinntekt : List<LoensDetaljer> = emptyList(),
+    val næringsinntekt : List<LoensDetaljer> = emptyList(),
+    val pensjonEllerTrygd : List<LoensDetaljer> = emptyList(),
+    val ytelseFraOffentlige : List<LoensDetaljer> = emptyList(),
 )
 
 data class ArbeidsgiverInformasjon(
-    val lopendeArbeidsforhold : List<ArbeidsgiverData>,
+    val løpendeArbeidsforhold : List<ArbeidsgiverData>,
     val historikk:List<ArbeidsgiverData>
 )
 
@@ -96,9 +91,6 @@ data class OpenPeriode(
 /*
 * YTELSER_OG_STONADER
 * */
-data class ytelserOgStonaderInformasjon(
-    val stonader:List<Stonad>
-)
 data class Stonad(
     val stonadType: String,
     val perioder : List<PeriodeInformasjon>
@@ -130,21 +122,16 @@ data class UtbetalingInfo(
 
 
 /*
-* Lønn fra A-Meldinge
+* Lønn fra A-Meldingen
 * */
-
-data class LoensInformasjon(
-    val lønnsInformasjon: List<LoensDetaljer>,
-)
-
 data class LoensDetaljer(
     val arbeidsgiver: String?,
     val periode:String,
     val arbeidsforhold:String,
     val stillingsprosent: String?,
-    val lonnstype: String?,
+    val lønnstype: String?,
     val antall : BigDecimal? = null,
-    val belop: BigDecimal?,
+    val beløp: BigDecimal?,
     val harFlereVersjoner:Boolean = false,
 
     )

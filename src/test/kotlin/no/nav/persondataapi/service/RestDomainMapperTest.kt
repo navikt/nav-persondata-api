@@ -43,9 +43,9 @@ class RestDomainMapperTest {
             )
         )
         val frontEndGrunnlagsData = grunnlag.getArbeidsGiverInformasjon()
-        Assertions.assertTrue(frontEndGrunnlagsData.lopendeArbeidsforhold.isNotEmpty())
+        Assertions.assertTrue(frontEndGrunnlagsData.løpendeArbeidsforhold.isNotEmpty())
         Assertions.assertTrue(frontEndGrunnlagsData.historikk.isNotEmpty())
-        val arbeidsforhold = frontEndGrunnlagsData.lopendeArbeidsforhold.first()
+        val arbeidsforhold = frontEndGrunnlagsData.løpendeArbeidsforhold.first()
         println(JsonUtils.toJson(frontEndGrunnlagsData))
         Assertions.assertNotNull(arbeidsforhold)
         Assertions.assertNotNull(arbeidsforhold.adresse)
@@ -72,14 +72,16 @@ class RestDomainMapperTest {
             inntektDataRespons = null,
             aAaregDataRespons = null
             )
-
+        
         val personInformasjon =  grunnlag.getPersonInformasjon()
         Assertions.assertNotNull(personInformasjon)
-        Assertions.assertEquals("HANS JACOB ASLAKSRUD MELBY",personInformasjon.navn)
-        Assertions.assertEquals("Slalåmveien 62, 1350",personInformasjon.adresse)
+        Assertions.assertEquals("HANS JACOB",personInformasjon.navn.fornavn)
+        Assertions.assertEquals("ASLAKSRUD",personInformasjon.navn.mellomnavn)
+        Assertions.assertEquals("MELBY",personInformasjon.navn.etternavn)
+        Assertions.assertEquals("Slalåmveien",personInformasjon.adresse?.norskAdresse?.adressenavn)
+        Assertions.assertEquals("62",personInformasjon.adresse?.norskAdresse?.husnummer)
+        Assertions.assertEquals("1350",personInformasjon.adresse?.norskAdresse?.postnummer)
         Assertions.assertEquals("NOR",personInformasjon.statsborgerskap.first())
-
-
     }
 
     @Test
@@ -100,8 +102,6 @@ class RestDomainMapperTest {
         val ytelser = grunnlag.getStonadOversikt()
 
         Assertions.assertFalse(ytelser.isEmpty())
-
-
     }
 
     @Test
@@ -111,9 +111,9 @@ class RestDomainMapperTest {
         val grunnlag: GrunnlagsData = JsonUtils.fromJson(pdlString)
         val personData = grunnlag.getPersonInformasjon()
         Assertions.assertNotNull(personData)
-        Assertions.assertNotNull(personData.navn_)
-        Assertions.assertEquals("ETT",personData.navn_.fornavn)
-        Assertions.assertEquals("NAVN",personData.navn_.etternavn)
+        Assertions.assertNotNull(personData.navn)
+        Assertions.assertEquals("ETT",personData.navn.fornavn)
+        Assertions.assertEquals("NAVN",personData.navn.etternavn)
         Assertions.assertEquals("UGIFT",personData.sivilstand)
 
         val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
@@ -135,9 +135,6 @@ class RestDomainMapperTest {
         )
         println(JsonUtils.toJson(grunnlag.getLoennsinntektOversikt()))
     }
-
-
-
 }
 
 

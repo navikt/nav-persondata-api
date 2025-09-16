@@ -3,7 +3,6 @@ package no.nav.persondataapi.service
 import no.nav.inntekt.generated.model.HistorikkData
 import no.nav.inntekt.generated.model.Inntektsinformasjon
 import no.nav.inntekt.generated.model.Loennsinntekt
-import no.nav.inntekt.generated.model.Naeringsinntekt
 import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
@@ -14,6 +13,7 @@ import no.nav.persondataapi.generated.hentperson.UtenlandskAdresse
 import no.nav.persondataapi.generated.hentperson.Vegadresse
 import no.nav.persondataapi.rest.domain.NorskAdresse
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
+import no.nav.persondataapi.rest.domain.Bostedsadresse
 import no.nav.persondataapi.rest.domain.LoensDetaljer
 import no.nav.persondataapi.rest.domain.Navn
 import no.nav.persondataapi.rest.domain.Periode
@@ -63,9 +63,9 @@ fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
                         periode = historikk.maaned,
                         arbeidsforhold = "",
                         stillingsprosent = "",
-                        lonnstype = loenn.beskrivelse,
+                        lønnstype = loenn.beskrivelse,
                         antall = loenn.antall,
-                        belop = loenn.beloep,
+                        beløp = loenn.beloep,
                         harFlereVersjoner = harHistorikkPaaLoennsinntekt,
                     ))
                 }
@@ -134,7 +134,7 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
             postboksNummerNavn = null,
             postkode = null,
             bySted = null,
-            regionDistriktOmraade = null,
+            regionDistriktOmråde = null,
             landkode = "null"
         )
     }
@@ -255,10 +255,9 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
 
     if (this.personDataRespons == null){
         return PersonInformasjon(
-            navn = "",
-            navn_ = Navn("",null,""),
-            aktorId = this.ident,
-            adresse = "",
+            navn = Navn("",null,""),
+            aktørId = this.ident,
+            adresse = Bostedsadresse(null, null),
             familemedlemmer = emptyMap()
         )
     }
@@ -271,15 +270,13 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
         val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
         val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
         return PersonInformasjon(
-            navn = pdlResultat.fulltNavn(),
-            navn_= Navn(
+            navn = Navn(
                 pdlResultat.gjeldendeFornavn(),
                 mellomnavn = pdlResultat.gjeldendeMellomnavn(),
                 etternavn = pdlResultat.gjeldendeEtternavn(),
             ),
-            aktorId = this.ident,
-            adresse = pdlResultat.naavarendeBostedsAdresseToString(),
-            adresse_ = pdlResultat.naavarendeBostedsAdresse(),
+            aktørId = this.ident,
+            adresse = pdlResultat.naavarendeBostedsAdresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle,
             statsborgerskap = statsborgerskap,
             sivilstand = pdlResultat.gjeldendeSivilStand()
