@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 import java.util.UUID
 
 @Component
@@ -34,13 +35,28 @@ class TilgangsmaskinClient (
                     .header("Authorization", "Bearer $oboToken")
                     .header("Nav-Call-Id", UUID.randomUUID().toString())
                     .bodyValue(fnr)
-                    .exchangeToMono { response ->
+                    .exchangeToMono {
+                        response ->
                         val status = response.statusCode()
                         val headers = response.headers().asHttpHeaders()
-                        if (status.is2xxSuccessful) {
+                        if (status.value() == 204) {
+                            Mono.just(TilgangMaskinResultat(
+                                type = null,
+                                title = null,
+                                status = 204,
+                                instance = null,
+                                brukerIdent = fnr,
+                                navIdent = null,
+                                traceId = null,
+                                begrunnelse = null,
+                                kanOverstyres = true
+
+                            ))
+                        }
+                        else if (status.is2xxSuccessful) {
                             response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
                         }
-                        if (status.is4xxClientError){
+                        else if (status.is4xxClientError){
                             response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
                         }
                         else {
