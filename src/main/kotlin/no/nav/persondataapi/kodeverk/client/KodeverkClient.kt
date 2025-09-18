@@ -34,7 +34,7 @@ class KodeverkClient(
 
         log.info("Hentet landkoder (${response.betydninger.keys.size} stk)")
         return response.betydninger.entries.mapNotNull { (kode, betydninger) ->
-            val beskrivelse = betydninger.firstOrNull()?.beskrivelser?.get(Språk.NB)?.tekst
+            val beskrivelse = betydninger.firstOrNull()?.beskrivelser?.values?.firstOrNull()?.tekst
             if (beskrivelse != null) {
                 Landkode(kode, beskrivelse)
             } else {
@@ -52,14 +52,10 @@ data class KodeverkResponse(
 data class KodeverkBetydning(
     val gyldigFra: String,
     val gyldigTil: String,
-    val beskrivelser: Map<Språk, KodeverkBeskrivelse>
+    val beskrivelser: Map<String, KodeverkBeskrivelse>
 )
 
 data class KodeverkBeskrivelse(
     val term: String,
     val tekst: String
 )
-
-enum class Språk(val kode: String) {
-    NB("nb"),
-}

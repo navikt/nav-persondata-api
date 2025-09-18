@@ -6,13 +6,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class KodeverkService(
-    private val kodeverkClient: KodeverkClient
+    val kodeverkClient: KodeverkClient
 ) {
-    private val landkoder: List<Landkode> = kodeverkClient.hentLandkoder()
+    fun mapLandkodeTilLandnavn(landkode: String?): String? =
+        kodeverkClient.hentLandkoder().find { landkode == it.landkode }?.land ?: "Ukjent"
 
-    fun mapLandkodeTilLandnavn(landkode: String?): String? {
-        return landkode?.let {
-            landkoder.find { landkode == it.landkode }?.land ?: "Ukjent"
-        }
-    }
 }

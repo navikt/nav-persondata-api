@@ -23,7 +23,7 @@ class ResponsMappingService(
             utrekkstidspunkt = LocalDateTime.now(),
             saksbehandlerIdent = grunnlagsData.saksbehandlerId,
             fødselsnummer = grunnlagsData.ident,
-            personInformasjon = grunnlagsData.getPersonInformasjon().also { berikMedKodeverkData(it) },
+            personInformasjon = berikMedKodeverkData(grunnlagsData.getPersonInformasjon()),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsgiverInformasjon(),
             inntektInformasjon = InntektInformasjon(lønnsinntekt = grunnlagsData.getLoennsinntektOversikt()),
             stønader = grunnlagsData.getStonadOversikt(),
