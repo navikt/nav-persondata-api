@@ -3,13 +3,14 @@ package no.nav.persondataapi.rest
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.domain.PersonDataResultat
 import no.nav.persondataapi.pdl.client.PdlClient
-import no.nav.persondataapi.tilgangsmaskin.client.TilgangsmaskinClient
+import no.nav.persondataapi.service.TilgangsmaskinClient
+
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
-import org.springframework.web.bind.annotation.GetMapping
+
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
+
 import org.springframework.web.bind.annotation.RestController
 
 @RestController

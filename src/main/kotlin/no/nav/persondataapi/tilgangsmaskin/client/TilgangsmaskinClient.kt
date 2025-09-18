@@ -4,6 +4,7 @@ import no.nav.persondataapi.domain.TilgangMaskinResultat
 import no.nav.persondataapi.domain.TilgangResultat
 import no.nav.persondataapi.service.ResponsMappingService
 import no.nav.persondataapi.service.SCOPE
+import no.nav.persondataapi.service.TilgangsmaskinClient
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -14,16 +15,16 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 @Component
-class TilgangsmaskinClient (
+class TilgangsmaskinClientImpl (
     private val tokenService: TokenService,
     @Qualifier("tilgangWebClient")
     private val webClient: WebClient,
 
 
-    ) {
+    ): TilgangsmaskinClient {
     private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 
-    fun sjekkTilgang(fnr: String, userToken: String
+    override fun sjekkTilgang(fnr: String, userToken: String
             ): TilgangResultat {
             return runCatching {
 
