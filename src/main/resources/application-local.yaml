@@ -43,8 +43,9 @@ TILGANGMASKIN_URL: https://tilgangsmaskin.intern.dev.nav.no
 AAREG_SCOPE: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
 AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
 
-
 EREG_URL: https://ereg-services.dev.intern.nav.no/api
 
-#DO NOT CHECK IN BELOW
+KODEVERK_URL: https://kodeverk-api.nav.no
+KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 
+# DO NOT CHECK IN BELOW

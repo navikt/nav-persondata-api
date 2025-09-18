@@ -110,5 +110,7 @@ spec:
     - name: EREG_URL
       value: https://ereg-services.dev-fss-pub.nais.io/api
 
-
-
+    - name: KODEVERK_URL
+      value: https://kodeverk-api.nav.no
+    - name: KODEVERK_SCOPE
+      value: api://dev-gcp.team-rocket.kodeverk-api/.default

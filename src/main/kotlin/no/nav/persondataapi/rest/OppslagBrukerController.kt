@@ -30,7 +30,7 @@ class OppslagBrukerController(
         return runBlocking {
 
             val grunnlag = oppslagService.hentGrunnlagsData(dto.fnr)
-            mappingService.mapToMOppslagBrukerResponse(grunnlag)
+            mappingService.mapToOppslagBrukerResponse(grunnlag)
         }
     }
 

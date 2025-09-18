@@ -2,7 +2,6 @@ package no.nav.persondataapi.tilgangsmaskin.client
 
 import no.nav.persondataapi.domain.TilgangMaskinResultat
 import no.nav.persondataapi.domain.TilgangResultat
-import no.nav.persondataapi.service.ResponsMappingService
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
@@ -21,7 +20,7 @@ class TilgangsmaskinClient (
 
 
     ) {
-    private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun sjekkTilgang(fnr: String, userToken: String
             ): TilgangResultat {
