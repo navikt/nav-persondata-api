@@ -226,7 +226,7 @@ fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
 
 }
 
-fun GrunnlagsData.getArbeidsGiverInformasjon(): ArbeidsgiverInformasjon{
+fun GrunnlagsData.getArbeidsgiverInformasjon(): ArbeidsgiverInformasjon{
 
     if (this.aAaregDataRespons == null){
         return ArbeidsgiverInformasjon(
@@ -253,7 +253,7 @@ fun GrunnlagsData.getArbeidsGiverInformasjon(): ArbeidsgiverInformasjon{
 
 }
 
-fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
+fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon {
 
     if (this.personDataRespons == null){
         return PersonInformasjon(

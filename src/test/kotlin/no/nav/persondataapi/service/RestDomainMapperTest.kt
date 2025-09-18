@@ -42,7 +42,7 @@ class RestDomainMapperTest {
 
             )
         )
-        val frontEndGrunnlagsData = grunnlag.getArbeidsGiverInformasjon()
+        val frontEndGrunnlagsData = grunnlag.getArbeidsgiverInformasjon()
         Assertions.assertTrue(frontEndGrunnlagsData.løpendeArbeidsforhold.isNotEmpty())
         Assertions.assertTrue(frontEndGrunnlagsData.historikk.isNotEmpty())
         val arbeidsforhold = frontEndGrunnlagsData.løpendeArbeidsforhold.first()
@@ -117,7 +117,7 @@ class RestDomainMapperTest {
         Assertions.assertEquals("NAVN",personData.navn.etternavn)
         Assertions.assertEquals("UGIFT",personData.sivilstand)
 
-        val res = ResponsMappingService().mapToMOppslagBrukerResponse(grunnlag)
+        val res = ResponsMappingService().mapToOppslagBrukerResponse(grunnlag)
         println(JsonUtils.toJson(res))
     }
 
