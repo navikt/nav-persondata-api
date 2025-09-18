@@ -1,9 +1,12 @@
-name: Build & Deploy
+name: Deploy til dev
 permissions:
   contents: "read"
   id-token: "write"
   packages: "write"
-on: [ pull_request ]
+on:
+  push:
+      branches: [ main ]
+  workflow_dispatch:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
@@ -32,7 +35,7 @@ jobs:
     outputs:
       image: ${{ steps.docker-push.outputs.image }}
   deploypreprod:
-    name: Deploy to Preprod
+    name: Deploy to dev
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
