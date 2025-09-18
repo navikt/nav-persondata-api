@@ -67,6 +67,17 @@ class ClientMetricsConfig {
         }
 
     @Bean
+    @Qualifier("kodeverkObservation")
+    fun kodeverkObservationConvention(): ClientRequestObservationConvention =
+        object : DefaultClientRequestObservationConvention() {
+            override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
+                return super.getLowCardinalityKeyValues(ctx)
+                    .and(KeyValue.of("system", "kodeverk"))
+                    .and(KeyValue.of("operation", "hent-kodeverk"))
+            }
+        }
+
+    @Bean
     fun metricsCommonTags(): MeterRegistryCustomizer<MeterRegistry> =
         MeterRegistryCustomizer { registry ->
             registry.config().commonTags(

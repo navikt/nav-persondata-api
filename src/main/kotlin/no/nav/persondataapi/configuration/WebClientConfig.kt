@@ -36,6 +36,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     lateinit var aaregURL: String
     @Value("\${EREG_URL}")
     lateinit var eregURL: String
+    @Value("\${KODEVERK_URL}")
+    lateinit var kodeverkURL: String
 
     @Bean
     fun tokenWebClient(builder: WebClient.Builder): WebClient =
@@ -183,6 +185,30 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             url = pdlUrl,
             builder = webClient.mutate() // arver connector + observation
         )
+
+    @Bean
+    fun kodeverkWebClient(builder: WebClient.Builder,
+                          @Qualifier("kodeverkObservation")
+                          convention: ClientRequestObservationConvention,
+                          navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
+        builder
+            .baseUrl(kodeverkURL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(true,
+                        java.util.function.Function<String, String> { uri ->
+                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
+                            uri
+                        })
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
+            .build()
 
     @Bean
     fun navCallIdHeaderFilter(): ExchangeFilterFunction =
