@@ -135,3 +135,5 @@ data class LoensDetaljer(
     val harFlereVersjoner:Boolean = false,
 
     )
+
+class InvalidFnrException(message: String) : RuntimeException(message)

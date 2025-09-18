@@ -78,6 +78,7 @@ spec:
         - host: sokos-utbetaldata.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
         - host: ikomp-prod-fss-pub.nais.io
+        - host: tilgangsmaskin.intern.nav.no
   env:
     - name: UTBETALING_SCOPE
       value: api://prod-fss.okonomi.sokos-utbetaldata/.default
