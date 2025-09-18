@@ -1,7 +1,6 @@
 package no.nav.persondataapi.ereg.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.persondataapi.service.ResponsMappingService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
@@ -13,7 +12,7 @@ class EregClient(
     private val webClient: WebClient,
     private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
 ) {
-    private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         val rawJson: String = try {

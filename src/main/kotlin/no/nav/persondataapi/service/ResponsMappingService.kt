@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
-private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+
 @Component
 class ResponsMappingService(
     private val kodeverkService: KodeverkService
 ) {
-
     fun mapToOppslagBrukerResponse(grunnlagsData: GrunnlagsData): OppslagBrukerRespons {
         return OppslagBrukerRespons(
             utrekkstidspunkt = LocalDateTime.now(),

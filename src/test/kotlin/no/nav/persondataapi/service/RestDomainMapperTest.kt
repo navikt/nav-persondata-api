@@ -12,6 +12,7 @@ import no.nav.persondataapi.generated.hentperson.Person
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
@@ -117,7 +118,7 @@ class RestDomainMapperTest {
         Assertions.assertEquals("NAVN",personData.navn.etternavn)
         Assertions.assertEquals("UGIFT",personData.sivilstand)
 
-        val res = ResponsMappingService().mapToOppslagBrukerResponse(grunnlag)
+        val res = ResponsMappingService(mock()).mapToOppslagBrukerResponse(grunnlag)
         println(JsonUtils.toJson(res))
     }
 

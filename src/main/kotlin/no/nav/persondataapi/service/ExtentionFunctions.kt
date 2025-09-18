@@ -20,11 +20,8 @@ import no.nav.persondataapi.rest.domain.Periode
 import no.nav.persondataapi.rest.domain.PeriodeInformasjon
 import no.nav.persondataapi.rest.domain.PersonInformasjon
 import no.nav.persondataapi.rest.domain.Stonad
-import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.Period
-
-private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidsSted(): String {
     val identOrgNummer  = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
@@ -111,28 +108,18 @@ fun Person.gjeldendeEtternavn(): String {
     return navn.etternavn
 }
 
-fun Person.naavarendeBostedsAdresseToString():String{
+fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsadresse {
     val adresse = this.bostedsadresse.first()
-    //har bruker utlands adresse
-    if (adresse.utenlandskAdresse!= null){
-        return adresse.utenlandskAdresse!!.fullAdresseString()
-    }
-    if (adresse.vegadresse!= null){
-        return adresse.vegadresse!!.fullAdresseString()
-    }
+    val utenlandskAdresse = adresse.utenlandskAdresse
+    val vegadresse = adresse.vegadresse
 
-    return "Ingen adresse registrert"
-}
-
-fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsadresse{
-    val adresse = this.bostedsadresse.first()
-    //har bruker utlands adresse
     var utlandAdresse: no.nav.persondataapi.rest.domain.UtenlandskAdresse? = null
-    var norskAdresse: no.nav.persondataapi.rest.domain.NorskAdresse? = null
-    if (adresse.utenlandskAdresse!= null){
+    var norskAdresse: NorskAdresse? = null
+
+    if (utenlandskAdresse != null) {
         utlandAdresse = no.nav.persondataapi.rest.domain.UtenlandskAdresse(
-            adressenavnNummer = adresse.utenlandskAdresse.adressenavnNummer,
-            bygningEtasjeLeilighet = adresse.utenlandskAdresse.bygningEtasjeLeilighet,
+            adressenavnNummer = utenlandskAdresse.adressenavnNummer,
+            bygningEtasjeLeilighet = utenlandskAdresse.bygningEtasjeLeilighet,
             postboksNummerNavn = null,
             postkode = null,
             bySted = null,
@@ -140,14 +127,14 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
             landkode = "null"
         )
     }
-    if (adresse.vegadresse!= null){
+    if (vegadresse != null) {
         norskAdresse = NorskAdresse(
-            adressenavn = adresse.vegadresse.adressenavn,
-            husnummer = adresse.vegadresse.husnummer,
-            husbokstav = adresse.vegadresse.husbokstav,
-            postnummer = adresse.vegadresse.postnummer,
-            kommunenummer = adresse.vegadresse.kommunenummer,
-            poststed = adresse.vegadresse.postnummer
+            adressenavn = vegadresse.adressenavn,
+            husnummer = vegadresse.husnummer,
+            husbokstav = vegadresse.husbokstav,
+            postnummer = vegadresse.postnummer,
+            kommunenummer = vegadresse.kommunenummer,
+            poststed = vegadresse.postnummer
         )
     }
 
@@ -195,7 +182,6 @@ fun HistorikkData.historikkPaaNormalLoenn():Boolean{
 
 fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
     if (this.utbetalingRespons==null){
-        logger.warn("ingen utbetalingRespons for ${this.ident}")
         return emptyList()
     }
     else{
