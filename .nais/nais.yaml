@@ -28,8 +28,8 @@ spec:
       singlePageApplication: true
       claims:
         groups:
-          - id: b734a20d-63e3-4b44-bb77-87f7f0b7f48a # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
-          - id: 222dedb1-a80d-48c9-b8d3-1e8149be9063 # 0000-GA-kontroll-Oppslag-Bruker-Basic
+          - id: "b734a20d-63e3-4b44-bb77-87f7f0b7f48a" # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
+          - id: "222dedb1-a80d-48c9-b8d3-1e8149be9063" # 0000-GA-kontroll-Oppslag-Bruker-Basic
 
         extra:
           - "NAVident"
