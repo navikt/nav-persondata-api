@@ -82,6 +82,7 @@ class RestDomainMapperTest {
         Assertions.assertEquals("62",personInformasjon.adresse?.norskAdresse?.husnummer)
         Assertions.assertEquals("1350",personInformasjon.adresse?.norskAdresse?.postnummer)
         Assertions.assertEquals("NOR",personInformasjon.statsborgerskap.first())
+        Assertions.assertTrue(personInformasjon.alder >= 50)
     }
 
     @Test
