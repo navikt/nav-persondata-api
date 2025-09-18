@@ -27,6 +27,10 @@ spec:
       tenant: trygdeetaten.no
       singlePageApplication: true
       claims:
+        groups:
+          - id: b734a20d-63e3-4b44-bb77-87f7f0b7f48a # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
+          - id: 222dedb1-a80d-48c9-b8d3-1e8149be9063 # 0000-GA-kontroll-Oppslag-Bruker-Basic
+
         extra:
           - "NAVident"
           - "azp_name"
@@ -80,6 +84,12 @@ spec:
         - host: ikomp-q2.dev-fss-pub.nais.io
         - host: tilgangsmaskin.intern.dev.nav.no
   env:
+    - name: GRUPPER
+      value: |
+        [
+        { "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
+        { "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
+        ]
     - name: UTBETALING_SCOPE
       value: api://dev-fss.okonomi.sokos-utbetaldata/.default
     - name: UTBETALING_URL
