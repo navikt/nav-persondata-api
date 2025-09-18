@@ -22,6 +22,7 @@ data class PersonInformasjon(
     val navn: Navn,
     val adresse: Bostedsadresse? =null,
     val sivilstand: String? = null,
+    val alder: Int,
 )
 
 data class Navn(

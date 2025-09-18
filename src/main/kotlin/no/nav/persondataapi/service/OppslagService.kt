@@ -38,7 +38,7 @@ import java.time.ZonedDateTime
 class OppslagService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val providers: List<GrunnlagsProvider> , // injiseres automatisk av Spring
-    private val eregClient: EregClient
+    private val eregClient: EregClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     // Create a marker that your Logback configuration recognizes for "team-logs"
@@ -86,6 +86,7 @@ class OppslagService(
             .find { it.type == GrunnlagsType.INNTEKT }
         val aaRegData = resultater
             .find { it.type == GrunnlagsType.ARBEIDSFORHOLD }
+
         if (aaRegData != null && aaRegData.data !== null) {
             val v = aaRegData.data as List<Arbeidsforhold>
             var identer = v.hentIdenter()
