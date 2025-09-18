@@ -22,6 +22,7 @@ import no.nav.persondataapi.rest.domain.PersonInformasjon
 import no.nav.persondataapi.rest.domain.Stonad
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
+import java.time.Period
 
 private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 
@@ -282,7 +283,7 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
             familemedlemmer = foreldreOgBarnOgEktefelle,
             statsborgerskap = statsborgerskap,
             sivilstand = pdlResultat.gjeldendeSivilStand(),
-            alder = pdlResultat.foedselsdato.first().foedselsdato?.let { java.time.Period.between(LocalDate.parse(it)   , java.time.LocalDate.now()).years } ?: -1,
+            alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
         )
     }
 
