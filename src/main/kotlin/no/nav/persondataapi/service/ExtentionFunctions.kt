@@ -21,6 +21,8 @@ import no.nav.persondataapi.rest.domain.PeriodeInformasjon
 import no.nav.persondataapi.rest.domain.PersonInformasjon
 import no.nav.persondataapi.rest.domain.Stonad
 import org.slf4j.LoggerFactory
+import java.time.LocalDate
+import java.time.Period
 
 private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
 
@@ -258,7 +260,8 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
             navn = Navn("",null,""),
             aktørId = this.ident,
             adresse = Bostedsadresse(null, null),
-            familemedlemmer = emptyMap()
+            familemedlemmer = emptyMap(),
+            alder = -1
         )
     }
     else{
@@ -279,7 +282,8 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon{
             adresse = pdlResultat.naavarendeBostedsAdresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle,
             statsborgerskap = statsborgerskap,
-            sivilstand = pdlResultat.gjeldendeSivilStand()
+            sivilstand = pdlResultat.gjeldendeSivilStand(),
+            alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
         )
     }
 
