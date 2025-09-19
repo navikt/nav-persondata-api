@@ -9,8 +9,6 @@ import no.nav.persondataapi.aareg.client.Identtype
 import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.generated.hentperson.UtenlandskAdresse
-import no.nav.persondataapi.generated.hentperson.Vegadresse
 import no.nav.persondataapi.rest.domain.NorskAdresse
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domain.Bostedsadresse
@@ -42,7 +40,7 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
 
 }
 
-fun GrunnlagsData.getLoennsinntektOversikt(): List<LoensDetaljer> {
+fun GrunnlagsData.getLønnsinntektOversikt(): List<LoensDetaljer> {
     if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
         return emptyList()
     }
@@ -108,7 +106,7 @@ fun Person.gjeldendeEtternavn(): String {
     return navn.etternavn
 }
 
-fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsadresse {
+fun Person.nåværendeBostedsadresse(): no.nav.persondataapi.rest.domain.Bostedsadresse {
     val adresse = this.bostedsadresse.first()
     val utenlandskAdresse = adresse.utenlandskAdresse
     val vegadresse = adresse.vegadresse
@@ -120,11 +118,11 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
         utlandAdresse = no.nav.persondataapi.rest.domain.UtenlandskAdresse(
             adressenavnNummer = utenlandskAdresse.adressenavnNummer,
             bygningEtasjeLeilighet = utenlandskAdresse.bygningEtasjeLeilighet,
-            postboksNummerNavn = null,
-            postkode = null,
-            bySted = null,
-            regionDistriktOmråde = null,
-            landkode = "null"
+            postboksNummerNavn = utenlandskAdresse.postboksNummerNavn,
+            postkode = utenlandskAdresse.postkode,
+            bySted = utenlandskAdresse.bySted,
+            regionDistriktOmråde = utenlandskAdresse.regionDistriktOmraade,
+            landkode = utenlandskAdresse.landkode
         )
     }
     if (vegadresse != null) {
@@ -144,18 +142,8 @@ fun Person.naavarendeBostedsAdresse(): no.nav.persondataapi.rest.domain.Bostedsa
     )
 }
 
-fun UtenlandskAdresse.fullAdresseString():String{
-    return "$this."
-}
-fun Vegadresse.fullAdresseString():String{
-    if (this.husbokstav!=null)
-        return "${this.adressenavn} ${this.husnummer}${this.husbokstav}, ${this.postnummer}"
-    else return "${this.adressenavn} ${this.husnummer}, ${this.postnummer}"
-}
-
-
-fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon?{
-    return if (this==null || this.isEmpty() )
+fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
+    return if (this == null || this.isEmpty() )
     {
         null
     }
@@ -265,7 +253,7 @@ fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon {
                 etternavn = pdlResultat.gjeldendeEtternavn(),
             ),
             aktørId = this.ident,
-            adresse = pdlResultat.naavarendeBostedsAdresse(),
+            adresse = pdlResultat.nåværendeBostedsadresse(),
             familemedlemmer = foreldreOgBarnOgEktefelle,
             statsborgerskap = statsborgerskap,
             sivilstand = pdlResultat.gjeldendeSivilStand(),

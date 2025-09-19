@@ -9,7 +9,6 @@ import no.nav.persondataapi.rest.domain.InntektInformasjon
 import no.nav.persondataapi.rest.domain.OpenPeriode
 import no.nav.persondataapi.rest.domain.OppslagBrukerRespons
 import no.nav.persondataapi.rest.domain.PersonInformasjon
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -25,7 +24,7 @@ class ResponsMappingService(
             fødselsnummer = grunnlagsData.ident,
             personInformasjon = berikMedKodeverkData(grunnlagsData.getPersonInformasjon()),
             arbeidsgiverInformasjon = grunnlagsData.getArbeidsgiverInformasjon(),
-            inntektInformasjon = InntektInformasjon(lønnsinntekt = grunnlagsData.getLoennsinntektOversikt()),
+            inntektInformasjon = InntektInformasjon(lønnsinntekt = grunnlagsData.getLønnsinntektOversikt()),
             stønader = grunnlagsData.getStonadOversikt(),
         )
     }
@@ -37,7 +36,6 @@ class ResponsMappingService(
                     adresse?.copy(
                         utenlandskAdresse = adresse.utenlandskAdresse?.copy(
                             landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode)
-                                ?: "Ukjent"
                         )
                     )
                 }

@@ -135,7 +135,7 @@ class RestDomainMapperTest {
             inntektDataRespons = inntekt,
             aAaregDataRespons = null
         )
-        println(JsonUtils.toJson(grunnlag.getLoennsinntektOversikt()))
+        println(JsonUtils.toJson(grunnlag.getLønnsinntektOversikt()))
     }
 }
 
