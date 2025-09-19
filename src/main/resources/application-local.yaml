@@ -45,6 +45,12 @@ AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
 
 EREG_URL: https://ereg-services.dev.intern.nav.no/api
 
+GRUPPER: |
+      [
+    { "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
+    { "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
+      ]
+
 KODEVERK_URL: https://kodeverk-api.nav.no
 KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 

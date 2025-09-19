@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
+import reactor.core.publisher.Mono
 
 @Component
 class KodeverkClient(
@@ -19,29 +20,34 @@ class KodeverkClient(
 
     @Cacheable("landkoder")
     fun hentLandkoder(): List<Landkode> {
-        val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE);
-        val response = webClient.get()
+        val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
+
+        return webClient.get()
             .uri("/api/v1/kodeverk/Landkoder/koder/betydninger?spraak=nb")
             .header("Authorization", "Bearer $token")
             .retrieve()
             .bodyToMono<KodeverkResponse>()
-            .block()
-
-        if (response == null) {
-            log.error("Kunne ikke hente landkoder fra kodeverk");
-            return emptyList()
-        }
-
-        log.info("Hentet landkoder (${response.betydninger.keys.size} stk)")
-        return response.betydninger.entries.mapNotNull { (kode, betydninger) ->
-            val beskrivelse = betydninger.firstOrNull()?.beskrivelser?.values?.firstOrNull()?.tekst
-            if (beskrivelse != null) {
-                Landkode(kode, beskrivelse)
-            } else {
-                null
+            .doOnError { ex ->
+                log.error("Feil ved henting av landkoder fra kodeverk", ex)
             }
-        }
+            .onErrorResume { _ ->
+                // Returner en tom respons dersom noe feiler
+                Mono.just(KodeverkResponse(emptyMap()))
+            }
+            .block() // fortsatt blocking
+            ?.let { response ->
+                log.info("Hentet landkoder (${response.betydninger.keys.size} stk)")
+                response.betydninger.entries.mapNotNull { (kode, betydninger) ->
+                    betydninger.firstOrNull()
+                        ?.beskrivelser
+                        ?.values
+                        ?.firstOrNull()
+                        ?.tekst
+                        ?.let { Landkode(kode, it) }
+                }
+            } ?: emptyList()
     }
+
 
 }
 

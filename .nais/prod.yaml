@@ -82,6 +82,12 @@ spec:
         - host: ikomp-prod-fss-pub.nais.io
         - host: tilgangsmaskin.intern.nav.no
   env:
+    - name : GRUPPER
+      value: |
+        [
+        {"id": "dec3ee50-b683-4644-9507-520e8f054ac2", "name": "UTVIDET_TILGANG"},
+        {"id": "a2f8d350-1234-4f77-9407-8a42c0f8f111", "name": "STANDARD_TILGANG"}
+        ]
     - name: UTBETALING_SCOPE
       value: api://prod-fss.okonomi.sokos-utbetaldata/.default
     - name: UTBETALING_URL
@@ -111,6 +117,6 @@ spec:
       value: https://ereg-services.prod-fss-pub.nais.io/api
 
     - name: KODEVERK_URL
-      value: https://kodeverk-api.nav.no
+      value: http://kodeverk-api.team-rocket.svc.cluster.local
     - name: KODEVERK_SCOPE
       value: api://prod-gcp.team-rocket.kodeverk-api/.default
