@@ -12,7 +12,7 @@ class TilgangService(
     private val grupper: Grupper)
 {
     fun harUtvidetTilgang(groups: List<String>): Boolean {
-        val utvidetTilgangId = grupper.finnRolleId("0000-GA-kontroll-Oppslag-Bruker-Utvidet")
+        val utvidetTilgangId = grupper.finnRolleId(AdGrupper.UTVIDET_TILGANG.azureGruoup)
         return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
     }
 
@@ -36,6 +36,16 @@ interface TilgangsmaskinClient {
 * dette er i praksis en funksjon som overstyrer at du
 * har lov til å se aktuell person ut fra kode fra tilgangmaskin
 * https://confluence.adeo.no/spaces/TM/pages/628888614/Intro+til+Tilgangsmaskinen
+*
+* Basic bruker skal ikke ha adgang til AVVIST_STRENGT_FORTROLIG_ADRESSE
+* Basic bruker skal ikke ha adgang til AVVIST_STRENGT_FORTROLIG_UTLAND
+* Basic bruker har tilgang til :
+*   - AVVIST_FORTROLIG_ADRESSE
+*   - AVVIST_SKJERMING
+*   - AVVIST_HABILITET
+*   - AVVIST_VERGE
+*   - AVVIST_MANGLENDE_DATA
+*
 * */
 fun TilgangMaskinResultat.harTilgangMedBasicAdgang():Boolean{
          when(this.title){
@@ -43,9 +53,9 @@ fun TilgangMaskinResultat.harTilgangMedBasicAdgang():Boolean{
              "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false
              "AVVIST_FORTROLIG_ADRESSE" -> return true
              "AVVIST_SKJERMING" -> return true   //Egen Ansatt,
-             "AVVIST_HABILITET" -> return false   //Egne data,Egen familie,Verge
-             "AVVIST_VERGE" -> return false         //verge
-             "AVVIST_MANGLENDE_DATA" -> return false    //Mangler data
+             "AVVIST_HABILITET" -> return true   //Egne data,Egen familie,Verge
+             "AVVIST_VERGE" -> return true         //verge
+             "AVVIST_MANGLENDE_DATA" -> return true    //Mangler data
          }
     return false
     }
@@ -66,4 +76,8 @@ fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean):Boolean{
     return false
 }
 
+enum class AdGrupper(val azureGruoup: String) {
+    UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
+    BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic")
+}
 

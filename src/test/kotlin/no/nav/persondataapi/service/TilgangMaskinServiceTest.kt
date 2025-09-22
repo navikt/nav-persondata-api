@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class TilgangMaskinServiceTest {
-    val strengt_fortrolig  = "AVVIST_STRENGT_FORTROLIG_ADRESSE"
-    val strengt_fortrolig_utland =  "AVVIST_STRENGT_FORTROLIG_UTLAND"
-    val fortrolig_adresse =  "AVVIST_FORTROLIG_ADRESSE"
-    val egen_ansatt =  "AVVIST_SKJERMING"
-    val egne_data ="AVVIST_HABILITET"
+    val strengtFortrolig  = "AVVIST_STRENGT_FORTROLIG_ADRESSE"
+    val strengtFortroligUtland =  "AVVIST_STRENGT_FORTROLIG_UTLAND"
+    val fortroligAdresse =  "AVVIST_FORTROLIG_ADRESSE"
+    val egenAnsatt =  "AVVIST_SKJERMING"
+    val egneData ="AVVIST_HABILITET"
     val verge = "AVVIST_VERGE"
-    val manglende_data = "AVVIST_MANGLENDE_DATA"
+    val manglendeData = "AVVIST_MANGLENDE_DATA"
 
     @Test
     fun `Basic adgang skal ikke  ha tilgang til strengt fortrolig`() {
          val client = TilgangsMaskinMockClient()
-        client.title=strengt_fortrolig
+        client.title=strengtFortrolig
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
         Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
@@ -26,7 +26,7 @@ class TilgangMaskinServiceTest {
     @Test
     fun `Basic adgang skal ha tilgang til  fortrolig`() {
         val client = TilgangsMaskinMockClient()
-        client.title=fortrolig_adresse
+        client.title=fortroligAdresse
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
         Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
@@ -34,7 +34,7 @@ class TilgangMaskinServiceTest {
     @Test
     fun `Basic adgang skal ha tilgang til  egen_ansatt`() {
         val client = TilgangsMaskinMockClient()
-        client.title=egen_ansatt
+        client.title=egenAnsatt
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
         Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
@@ -42,10 +42,10 @@ class TilgangMaskinServiceTest {
     @Test
     fun `Basic adgang skal ikke ha tilgang til  egne_data`() {
         val client = TilgangsMaskinMockClient()
-        client.title=egne_data
+        client.title=egneData
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
     }
     @Test
     fun `Basic adgang skal  ha tilgang til  verge`() {
@@ -53,12 +53,12 @@ class TilgangMaskinServiceTest {
         client.title=verge
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
     }
     @Test
     fun `Basic adgang skal ikke ha tilgang til  strengt fortrolig_utland`() {
         val client = TilgangsMaskinMockClient()
-        client.title=strengt_fortrolig_utland
+        client.title=strengtFortroligUtland
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
         Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
@@ -66,10 +66,10 @@ class TilgangMaskinServiceTest {
     @Test
     fun `Basic adgang skal ha tilgang til  manglende data`() {
         val client = TilgangsMaskinMockClient()
-        client.title=manglende_data
+        client.title=manglendeData
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
     }
 }
 

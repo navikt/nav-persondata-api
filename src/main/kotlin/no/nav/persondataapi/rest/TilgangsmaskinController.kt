@@ -36,13 +36,4 @@ class TilgangsmaskinController(
         }
     }
 
-    @GetMapping("/me")
-    @Protected
-    fun me(): ResponseEntity<List<String>> = runBlocking {
-        val context = tokenValidationContextHolder.getTokenValidationContext()
-        val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
-
-        val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
-        ResponseEntity.ok(groups)
-    }
 }
