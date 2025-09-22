@@ -127,7 +127,7 @@ data class PermisjonPermittering(
 
 data class IdHistorikk(
     val id: String,
-    val bruksperiode: Bruksperiode
+    val bruksperiode: Bruksperiode?
 )
 
 data class Sporingsinformasjon(
