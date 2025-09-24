@@ -77,12 +77,4 @@ class ClientMetricsConfig {
             }
         }
 
-    @Bean
-    fun metricsCommonTags(): MeterRegistryCustomizer<MeterRegistry> =
-        MeterRegistryCustomizer { registry ->
-            registry.config().commonTags(
-                "app", "persondataapi",
-                "team", "holmes"
-            )
-        }
 }
