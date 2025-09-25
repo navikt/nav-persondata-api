@@ -40,7 +40,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
             }
 
-            val pdlResultat  = resultat.data as Person
+            val pdlResultat  = resultat.data!!
             val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
             val statsborgerskap = pdlResultat.statsborgerskap.map { it.land }
             val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
