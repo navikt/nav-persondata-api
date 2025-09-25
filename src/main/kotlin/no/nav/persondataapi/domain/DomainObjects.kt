@@ -61,7 +61,7 @@ data class TilgangResultat(
 
 data class PersonDataResultat(
     val data: Person?,
-    val statusCode: Int?,               // f.eks. 200, 401, 500
+    val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
 
