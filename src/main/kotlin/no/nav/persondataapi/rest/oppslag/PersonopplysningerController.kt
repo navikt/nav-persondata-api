@@ -5,6 +5,7 @@ import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domain.Navn
 import no.nav.persondataapi.rest.domain.PersonInformasjon
+import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.gjeldendeEtternavn
 import no.nav.persondataapi.service.gjeldendeFornavn
 import no.nav.persondataapi.service.gjeldendeMellomnavn
@@ -21,11 +22,14 @@ import java.time.Period
 
 
 @Controller("/oppslag")
-class PersonopplysningerController(val pdlClient: PdlClient) {
+class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService) {
     @Protected
     @PostMapping("/personopplysninger")
     fun hentPersonopplysninger(@RequestBody dto: PersonopplysningerRequestDto): ResponseEntity<PersonopplysningerResponseDto> {
         return runBlocking {
+            if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
+                ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
+            }
             val resultat = pdlClient.hentPersonv2(dto.ident)
 
             if (resultat.statusCode == 404 || resultat.data == null) {
