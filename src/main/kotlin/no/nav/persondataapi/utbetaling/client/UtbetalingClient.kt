@@ -22,7 +22,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun hentUtbetalingerForAktor(fnr: String,token:String): UtbetalingResultat {
+    fun hentUtbetalingerForAktor(fnr: String): UtbetalingResultat {
         return runCatching {
 
             val requestBody = RequestBody(
@@ -68,14 +68,6 @@ class UtbetalingClient(
                 }
             }
         )
-    }
-
-    private inline fun <reified T> readJsonFileToDto(filename: String): T {
-        val json = object {}.javaClass.classLoader.getResource(filename)
-            ?.readText(Charsets.UTF_8)
-            ?: throw IllegalArgumentException("Finner ikke fil: $filename")
-
-        return JsonUtils.fromJson(json)
     }
 }
 data class RequestBody(

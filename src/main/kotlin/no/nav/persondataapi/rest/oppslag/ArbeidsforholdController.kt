@@ -16,26 +16,26 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
 @Controller("/oppslag")
-class PersonopplysningerController(val aaregClient: AaregClient, val eregClient: EregClient, val brukertilgangService: BrukertilgangService) {
+class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: EregClient, val brukertilgangService: BrukertilgangService) {
     @Protected
     @PostMapping("/arbeidsforhold")
-    fun hentArbeidsforhold(@RequestBody dto: ArbeidsforholdRequestDto): ResponseEntity<ArbeidsforholdResponseDto> {
+    fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
-                ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"), HttpStatus.FORBIDDEN)
+                ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val aaregRespons = aaregClient.hentArbeidsForhold(dto.ident)
 
             when (aaregRespons.statusCode) {
-                404 -> ResponseEntity(PersonopplysningerResponseDto(error = "Person ikke funnet"), HttpStatus.NOT_FOUND)
-                403 -> ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"), HttpStatus.FORBIDDEN)
+                404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
+                403 -> ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
 
             val alleArbeidsforhold = aaregRespons.data
 
             if (alleArbeidsforhold.isEmpty()) {
                 ResponseEntity.ok(
-                    ArbeidsforholdResponseDto(
+                    OppslagResponseDto(
                         data = ArbeidsgiverInformasjon(
                             løpendeArbeidsforhold = emptyList(), historikk = emptyList()
                         )
@@ -59,7 +59,7 @@ class PersonopplysningerController(val aaregClient: AaregClient, val eregClient:
 
 
             ResponseEntity.ok(
-                ArbeidsforholdResponseDto(
+                OppslagResponseDto(
                     data = ArbeidsgiverInformasjon(
                         løpendeArbeidsforhold, historiskeArbeidsforhold
                     )
@@ -69,9 +69,3 @@ class PersonopplysningerController(val aaregClient: AaregClient, val eregClient:
         }
     }
 }
-
-data class ArbeidsforholdRequestDto(val ident: String)
-data class ArbeidsforholdResponseDto(
-    val error: String? = null,
-    val data: ArbeidsgiverInformasjon,
-)

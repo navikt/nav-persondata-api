@@ -24,16 +24,16 @@ class InntektController(
 ) {
     @Protected
     @PostMapping("/inntekt")
-    fun hentInntekter(@RequestBody dto: InntektRequestDto): ResponseEntity<InntektResponseDto> {
+    fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
-                ResponseEntity(InntektResponseDto(error = "Ingen tilgang"), HttpStatus.FORBIDDEN)
+                ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val inntektResponse = inntektClient.hentInntekter(dto.ident)
 
             when (inntektResponse.statusCode) {
-                404 -> ResponseEntity(InntektResponseDto(error = "Person ikke funnet"), HttpStatus.NOT_FOUND)
-                403 -> ResponseEntity(InntektResponseDto(error = "Ingen tilgang"), HttpStatus.FORBIDDEN)
+                404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
+                403 -> ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
 
             val lønnsinntekt = inntektResponse.data?.data
@@ -60,7 +60,7 @@ class InntektController(
                 }
 
             ResponseEntity.ok(
-                InntektResponseDto(
+                OppslagResponseDto(
                     data = InntektInformasjon(lønnsinntekt = lønnsinntekt)
                 )
             )
@@ -68,9 +68,3 @@ class InntektController(
         }
     }
 }
-
-data class InntektRequestDto(val ident: String)
-data class InntektResponseDto(
-    val error: String? = null,
-    val data: InntektInformasjon? = null,
-)

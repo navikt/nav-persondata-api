@@ -11,18 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class inntektController(
-    private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val inntektClient: InntektClient
 ) {
     @GetMapping("/inntekt")
     @Protected
     fun hentInnekter(@RequestHeader("fnr") fnr: String): InntektDataResultat {
         return runBlocking {
-            val context = tokenValidationContextHolder.getTokenValidationContext()
-            val token = context.firstValidToken?.encodedToken
-                ?: throw IllegalStateException("Fant ikke gyldig token")
-            val res = inntektClient.hentInntekter(fnr,token)
-            res
+            inntektClient.hentInntekter(fnr)
         }
     }
 }

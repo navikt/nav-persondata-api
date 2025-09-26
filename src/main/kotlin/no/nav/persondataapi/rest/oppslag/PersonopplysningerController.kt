@@ -25,16 +25,16 @@ import java.time.Period
 class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService) {
     @Protected
     @PostMapping("/personopplysninger")
-    fun hentPersonopplysninger(@RequestBody dto: PersonopplysningerRequestDto): ResponseEntity<PersonopplysningerResponseDto> {
+    fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
-                ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
+                ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
             val resultat = pdlClient.hentPersonv2(dto.ident)
 
             when (resultat.statusCode) {
-                404 -> ResponseEntity(PersonopplysningerResponseDto(error = "Person ikke funnet"),HttpStatus.NOT_FOUND)
-                403 -> ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
+                404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)
+                403 -> ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
 
             val pdlResultat  = resultat.data!!
@@ -57,13 +57,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
             )
 
-            ResponseEntity(PersonopplysningerResponseDto(data = personopplysninger), HttpStatus.OK)
+            ResponseEntity(OppslagResponseDto(data = personopplysninger), HttpStatus.OK)
         }
     }
 }
-
-data class PersonopplysningerRequestDto(val ident: String)
-data class PersonopplysningerResponseDto(
-    val error: String? = null,
-    val data: PersonInformasjon? = null
-)
