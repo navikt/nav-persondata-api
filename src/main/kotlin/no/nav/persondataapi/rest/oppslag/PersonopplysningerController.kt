@@ -58,7 +58,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
             )
 
-            ResponseEntity(OppslagResponseDto(data = personopplysninger), HttpStatus.OK)
+            ResponseEntity.ok(OppslagResponseDto(data = personopplysninger))
         }
     }
 }
