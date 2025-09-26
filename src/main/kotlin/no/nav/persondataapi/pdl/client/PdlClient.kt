@@ -68,10 +68,7 @@ class PdlClient(
         )
     }
     suspend fun hentPersonv2(ident: String): PersonDataResultat {
-
-
-        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE
-        )
+        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
         val client = GraphQLWebClient(
             url = pdl_url,
@@ -106,4 +103,3 @@ class PdlClient(
         )
     }
 }
-

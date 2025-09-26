@@ -1,7 +1,6 @@
 package no.nav.persondataapi.service
 
 import no.nav.inntekt.generated.model.HistorikkData
-import no.nav.inntekt.generated.model.Inntekt
 import no.nav.inntekt.generated.model.Inntektsinformasjon
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.inntekt.generated.model.YtelseFraOffentlige
@@ -22,7 +21,7 @@ class ExtentionFunctionTests {
             norskident = "12345678901",
             versjoner = emptyList(),
         )
-        Assertions.assertFalse(historikkData.historikkPaaNormalLoenn())
+        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
     }
     @Test
     fun kunYtelseFraOffentligeSkalIkkeTelleIHistorikken() {
@@ -72,7 +71,7 @@ class ExtentionFunctionTests {
 
             ),
         )
-        Assertions.assertFalse(historikkData.historikkPaaNormalLoenn())
+        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
     }
 
     @Test
@@ -123,7 +122,7 @@ class ExtentionFunctionTests {
 
             ),
         )
-        Assertions.assertFalse(historikkData.historikkPaaNormalLoenn())
+        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
     }
 
     @Test
@@ -174,7 +173,7 @@ class ExtentionFunctionTests {
 
             ),
         )
-        Assertions.assertTrue(historikkData.historikkPaaNormalLoenn())
+        Assertions.assertTrue(historikkData.harHistorikkPåNormallønn())
     }
 
 }

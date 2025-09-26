@@ -3,6 +3,7 @@ package no.nav.persondataapi.ereg.client
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -14,6 +15,7 @@ class EregClient(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
+    @Cacheable("organisasjon")
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         val rawJson: String = try {
             webClient.get()

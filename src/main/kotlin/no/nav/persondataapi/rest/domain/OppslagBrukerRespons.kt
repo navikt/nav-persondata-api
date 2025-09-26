@@ -58,10 +58,10 @@ data class UtenlandskAdresse(
 
 
 data class InntektInformasjon(
-    val lønnsinntekt : List<LoensDetaljer> = emptyList(),
-    val næringsinntekt : List<LoensDetaljer> = emptyList(),
-    val pensjonEllerTrygd : List<LoensDetaljer> = emptyList(),
-    val ytelseFraOffentlige : List<LoensDetaljer> = emptyList(),
+    val lønnsinntekt : List<Lønnsdetaljer> = emptyList(),
+    val næringsinntekt : List<Lønnsdetaljer> = emptyList(),
+    val pensjonEllerTrygd : List<Lønnsdetaljer> = emptyList(),
+    val ytelseFraOffentlige : List<Lønnsdetaljer> = emptyList(),
 )
 
 data class ArbeidsgiverInformasjon(
@@ -125,7 +125,7 @@ data class UtbetalingInfo(
 /*
 * Lønn fra A-Meldingen
 * */
-data class LoensDetaljer(
+data class Lønnsdetaljer(
     val arbeidsgiver: String?,
     val periode:String,
     val arbeidsforhold:String,
