@@ -26,7 +26,7 @@ class StønadController(
             if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val utbetalingResponse = utbetalingClient.hentUtbetalingerForAktor(dto.ident)
+            val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(dto.ident)
 
             when (utbetalingResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)

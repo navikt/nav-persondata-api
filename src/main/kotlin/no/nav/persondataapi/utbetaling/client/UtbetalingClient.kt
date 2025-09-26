@@ -1,6 +1,4 @@
 package    no.nav.persondataapi.utbetaling.client
-import com.fasterxml.jackson.databind.JsonNode
-import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.UtbetalingRespons
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.service.SCOPE
@@ -22,7 +20,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun hentUtbetalingerForAktor(fnr: String): UtbetalingResultat {
+    fun hentUtbetalingerForBruker(fnr: String): UtbetalingResultat {
         return runCatching {
 
             val requestBody = RequestBody(

@@ -4,7 +4,6 @@ import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.utbetaling.client.UtbetalingClient
 import no.nav.security.token.support.core.api.Protected
-import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
@@ -17,7 +16,7 @@ class UtbetalingController(
     @Protected
     fun hentUtbetalinger(@RequestHeader("fnr") fnr: String): UtbetalingResultat {
         return runBlocking {
-            utbetalingClient.hentUtbetalingerForAktor(fnr)
+            utbetalingClient.hentUtbetalingerForBruker(fnr)
         }
     }
 }
