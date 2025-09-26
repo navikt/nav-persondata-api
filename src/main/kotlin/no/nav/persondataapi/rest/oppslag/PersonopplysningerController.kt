@@ -32,12 +32,9 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
             }
             val resultat = pdlClient.hentPersonv2(dto.ident)
 
-            if (resultat.statusCode == 404 || resultat.data == null) {
-               ResponseEntity(PersonopplysningerResponseDto(error = "Person ikke funnet"),HttpStatus.NOT_FOUND)
-            }
-
-            if (resultat.statusCode == 403) {
-               ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
+            when (resultat.statusCode) {
+                404 -> ResponseEntity(PersonopplysningerResponseDto(error = "Person ikke funnet"),HttpStatus.NOT_FOUND)
+                403 -> ResponseEntity(PersonopplysningerResponseDto(error = "Ingen tilgang"),HttpStatus.FORBIDDEN)
             }
 
             val pdlResultat  = resultat.data!!

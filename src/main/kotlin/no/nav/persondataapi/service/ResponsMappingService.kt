@@ -47,8 +47,8 @@ class ResponsMappingService(
 
 
 
-fun mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold: Arbeidsforhold,eregDataRespons: Map<String,EregRespons>): ArbeidsgiverData {
-    val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidsSted()
+fun mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold: Arbeidsforhold, eregDataRespons: Map<String,EregRespons>): ArbeidsgiverData {
+    val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidssted()
     return ArbeidsgiverData(eregDataRespons.orgNummerTilOrgNavn(orgnummer),
         orgnummer,
         eregDataRespons.orgnummerTilAdresse(orgnummer),

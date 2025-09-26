@@ -14,7 +14,7 @@ class AAregGrunnlagsProvider(val aaregClient: AaregClient) : GrunnlagsProvider {
     override val type = GrunnlagsType.ARBEIDSFORHOLD
 
     override suspend fun hent(kontekst: GrunnlagsKontekst): GrunnlagsdelResultat {
-        val resultat = aaregClient.hentArbeidsForhold(kontekst.fnr,kontekst.token)
+        val resultat = aaregClient.hentArbeidsForhold(kontekst.fnr)
         return GrunnlagsdelResultat(
             type = type,
             data = resultat.data,

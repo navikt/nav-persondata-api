@@ -21,7 +21,7 @@ import no.nav.persondataapi.rest.domain.Stonad
 import java.time.LocalDate
 import java.time.Period
 
-fun Arbeidsforhold.hentOrgNummerTilArbeidsSted(): String {
+fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {
     val identOrgNummer  = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
     if (identOrgNummer == null){
         return "Ingen OrgNummer"
@@ -215,10 +215,10 @@ fun GrunnlagsData.getArbeidsgiverInformasjon(): ArbeidsgiverInformasjon{
         * map løpende arbeidsforhold
         * */
         val lopende = lopendeArbeidsforhold.map { arbeidsforhold ->
-            mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold,this.eregDataRespons)
+            mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold,this.eregDataRespons)
         }
         val historisk = historiskeArbeidsforhold.map { arbeidsforhold ->
-            mapArbeidsforholdTilArbeidsGiverData(arbeidsforhold,this.eregDataRespons)
+            mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold,this.eregDataRespons)
         }
         return ArbeidsgiverInformasjon(
             lopende,historisk
