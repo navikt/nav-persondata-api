@@ -25,7 +25,7 @@ class AaregClient(
 
     private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
 
-    fun hentArbeidsForhold(fnr: String): AaregDataResultat {
+    fun hentArbeidsforhold(fnr: String): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)
 

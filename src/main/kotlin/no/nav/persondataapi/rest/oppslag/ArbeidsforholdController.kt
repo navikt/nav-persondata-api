@@ -24,7 +24,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
             if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val aaregRespons = aaregClient.hentArbeidsForhold(dto.ident)
+            val aaregRespons = aaregClient.hentArbeidsforhold(dto.ident)
 
             when (aaregRespons.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
