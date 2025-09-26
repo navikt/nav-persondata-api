@@ -16,11 +16,10 @@ class BrukertilgangService(
 
         val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
 
-        return if (tilgangService.harUtvidetTilgang(groups)) {
-            true
-        } else {
-            val status = tilgangService.sjekkTilgang(ident, token.encodedToken)
-            return status == 200
+        if (tilgangService.harUtvidetTilgang(groups)) {
+            return true
         }
+        val status = tilgangService.sjekkTilgang(ident, token.encodedToken)
+        return status == 200
     }
 }
