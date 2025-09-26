@@ -28,7 +28,7 @@ class InntektClient(
     // Felles tags for denne klienten
 
 
-    fun hentInntekter(fnr: String, token:String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
+    fun hentInntekter(fnr: String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
         LocalDate.now())): InntektDataResultat {
 
         return runCatching {

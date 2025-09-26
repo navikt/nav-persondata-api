@@ -12,7 +12,7 @@ import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.rest.domain.NorskAdresse
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domain.Bostedsadresse
-import no.nav.persondataapi.rest.domain.LoensDetaljer
+import no.nav.persondataapi.rest.domain.Lønnsdetaljer
 import no.nav.persondataapi.rest.domain.Navn
 import no.nav.persondataapi.rest.domain.Periode
 import no.nav.persondataapi.rest.domain.PeriodeInformasjon
@@ -40,22 +40,20 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
 
 }
 
-fun GrunnlagsData.getLønnsinntektOversikt(): List<LoensDetaljer> {
+fun GrunnlagsData.getLønnsinntektOversikt(): List<Lønnsdetaljer> {
     if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
         return emptyList()
     }
     else {
         val listeAvInntektHistorikk = inntektDataRespons.data.data?: emptyList()
 
-        val  ret: MutableList<LoensDetaljer> = mutableListOf()
+        val  ret: MutableList<Lønnsdetaljer> = mutableListOf()
         listeAvInntektHistorikk.forEach { historikk ->
-            val harHistorikkPaaLoennsinntekt = historikk.historikkPaaNormalLoenn()
-            println(harHistorikkPaaLoennsinntekt)
+            val harHistorikkPaaLoennsinntekt = historikk.harHistorikkPåNormallønn()
             val nyeste = historikk.versjoner.nyeste()
-            if (nyeste !=null && nyeste.inntektListe!=null){
-                val liste = nyeste.inntektListe ?: emptyList()
-                liste.filter { it is Loennsinntekt }.map { it as Loennsinntekt }.forEach { loenn ->
-                    ret.add(LoensDetaljer(
+            if (nyeste?.inntektListe != null) {
+                nyeste.inntektListe.filter { it is Loennsinntekt }.map { it as Loennsinntekt }.forEach { loenn ->
+                    ret.add(Lønnsdetaljer(
                         arbeidsgiver = this.eregDataRespons.orgNummerTilOrgNavn(historikk.opplysningspliktig),
                         periode = historikk.maaned,
                         arbeidsforhold = "",
@@ -155,16 +153,17 @@ fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
 
 
 
-fun HistorikkData.historikkPaaNormalLoenn():Boolean{
+fun HistorikkData.harHistorikkPåNormallønn() : Boolean {
     val versjoner = this.versjoner?:emptyList()
     var count = 0
+
     versjoner.forEach {
-            intektInformasjon ->
-        val inntektListe = intektInformasjon.inntektListe?:emptyList()
+            inntektInformasjon ->
+        val inntektListe = inntektInformasjon.inntektListe ?: emptyList()
         val antall = inntektListe.filterNot { inntekt -> inntekt is YtelseFraOffentlige }.size
-        if (antall>0) count++
+        if (antall > 0) count++
     }
-    return count>1
+    return count > 1
 }
 
 
