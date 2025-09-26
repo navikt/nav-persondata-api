@@ -35,6 +35,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
             when (resultat.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)
                 403 -> ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
+                500 -> ResponseEntity(OppslagResponseDto(error = "Feil i baksystem", data = null), HttpStatus.BAD_GATEWAY)
             }
 
             val pdlResultat  = resultat.data!!
