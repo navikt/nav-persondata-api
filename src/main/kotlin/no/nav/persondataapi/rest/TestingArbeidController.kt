@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ArbeidController(
+class TestingArbeidController(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val aaregClient: AaregClient
 ) {

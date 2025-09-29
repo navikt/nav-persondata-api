@@ -12,15 +12,17 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import kotlin.collections.emptyList
 
-@Controller("/oppslag")
+@Controller
+@RequestMapping("/oppslag/stønad")
 class StønadController(
     val utbetalingClient: UtbetalingClient,
     val brukertilgangService: BrukertilgangService
 ) {
     @Protected
-    @PostMapping("/stønad")
+    @PostMapping
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {

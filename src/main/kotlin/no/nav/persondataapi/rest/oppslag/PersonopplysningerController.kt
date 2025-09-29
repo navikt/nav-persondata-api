@@ -17,14 +17,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import java.time.LocalDate
 import java.time.Period
 
 
-@Controller("/oppslag")
+@Controller
+@RequestMapping("/oppslag/personopplysninger")
 class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService, val kodeverkService: KodeverkService) {
     @Protected
-    @PostMapping("/personopplysninger")
+    @PostMapping
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {

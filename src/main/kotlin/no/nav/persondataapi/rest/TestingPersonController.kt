@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class PersonController(
+class TestingPersonController(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val pdlClient: PdlClient,
     private val tilgangsmaskinClient: TilgangsmaskinClient

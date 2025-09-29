@@ -15,15 +15,17 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 
-@Controller("/oppslag")
+@Controller
+@RequestMapping("/oppslag/inntekt")
 class InntektController(
     val inntektClient: InntektClient,
     val eregClient: EregClient,
     val brukertilgangService: BrukertilgangService
 ) {
     @Protected
-    @PostMapping("/inntekt")
+    @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
