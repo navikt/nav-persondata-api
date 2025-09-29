@@ -15,9 +15,7 @@ class PersonbrukerController(
 ) {
     @PostMapping
     fun hentStatusPåBrukeroppslag(@RequestBody dto: OppslagRequestDto): ResponseEntity<Void> {
-        return runBlocking {
-            val status  = brukertilgangService.hentStatusPåBruker(dto.ident)
-            ResponseEntity.status(status).build();
-        }
+        val status = brukertilgangService.hentStatusPåBruker(dto.ident)
+        return ResponseEntity.status(status).build()
     }
 }
