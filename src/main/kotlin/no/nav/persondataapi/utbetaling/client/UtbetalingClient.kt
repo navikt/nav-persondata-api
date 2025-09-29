@@ -1,6 +1,4 @@
 package    no.nav.persondataapi.utbetaling.client
-import com.fasterxml.jackson.databind.JsonNode
-import no.nav.persondataapi.configuration.JsonUtils
 import no.nav.persondataapi.domain.UtbetalingRespons
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.service.SCOPE
@@ -22,7 +20,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun hentUtbetalingerForAktor(fnr: String,token:String): UtbetalingResultat {
+    fun hentUtbetalingerForBruker(fnr: String): UtbetalingResultat {
         return runCatching {
 
             val requestBody = RequestBody(
@@ -68,14 +66,6 @@ class UtbetalingClient(
                 }
             }
         )
-    }
-
-    private inline fun <reified T> readJsonFileToDto(filename: String): T {
-        val json = object {}.javaClass.classLoader.getResource(filename)
-            ?.readText(Charsets.UTF_8)
-            ?: throw IllegalArgumentException("Finner ikke fil: $filename")
-
-        return JsonUtils.fromJson(json)
     }
 }
 data class RequestBody(

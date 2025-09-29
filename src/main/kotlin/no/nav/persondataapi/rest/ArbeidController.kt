@@ -21,7 +21,7 @@ class ArbeidController(
             val context = tokenValidationContextHolder.getTokenValidationContext()
             val token = context.firstValidToken?.encodedToken
                 ?: throw IllegalStateException("Fant ikke gyldig token")
-            val res = aaregClient.hentArbeidsForhold(fnr,token)
+            val res = aaregClient.hentArbeidsforhold(fnr)
             res
         }
     }

@@ -8,7 +8,7 @@ class InntektGrunnlagProvider(val inntektClient: InntektClient) : GrunnlagsProvi
     override val type = GrunnlagsType.INNTEKT
     override suspend fun hent(kontekst: GrunnlagsKontekst): GrunnlagsdelResultat
     {
-        val resultat = inntektClient.hentInntekter(kontekst.fnr,kontekst.token)
+        val resultat = inntektClient.hentInntekter(kontekst.fnr)
         return GrunnlagsdelResultat(
             type = type,
             data = resultat.data,
