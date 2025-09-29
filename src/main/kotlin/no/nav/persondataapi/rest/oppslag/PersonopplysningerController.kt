@@ -27,7 +27,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
     @PostMapping("/personopplysninger")
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
             val resultat = pdlClient.hentPersonv2(dto.ident)

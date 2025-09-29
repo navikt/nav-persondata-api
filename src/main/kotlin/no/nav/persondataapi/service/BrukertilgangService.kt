@@ -8,7 +8,7 @@ class BrukertilgangService(
     val tokenValidationContextHolder: TokenValidationContextHolder,
     val tilgangService: TilgangService,
 ) {
-    fun harBrukerTilgangTilIdent(ident: String): Boolean {
+    fun harSaksbehandlerTilgangTilPersonIdent(ident: String): Boolean {
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 

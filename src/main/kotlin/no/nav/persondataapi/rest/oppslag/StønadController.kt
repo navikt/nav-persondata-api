@@ -23,7 +23,7 @@ class StønadController(
     @PostMapping("/stønad")
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
         return runBlocking {
-            if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(dto.ident)

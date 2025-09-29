@@ -26,7 +26,7 @@ class InntektController(
     @PostMapping("/inntekt")
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val inntektResponse = inntektClient.hentInntekter(dto.ident)

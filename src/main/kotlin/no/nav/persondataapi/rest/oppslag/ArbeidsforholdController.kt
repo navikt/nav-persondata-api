@@ -21,7 +21,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
     @PostMapping("/arbeidsforhold")
     fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harBrukerTilgangTilIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val aaregRespons = aaregClient.hentArbeidsforhold(dto.ident)
