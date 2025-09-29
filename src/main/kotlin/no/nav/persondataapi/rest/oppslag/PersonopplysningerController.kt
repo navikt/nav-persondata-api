@@ -1,11 +1,11 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domain.Navn
 import no.nav.persondataapi.rest.domain.PersonInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
+import no.nav.persondataapi.service.KodeverkService
 import no.nav.persondataapi.service.gjeldendeEtternavn
 import no.nav.persondataapi.service.gjeldendeFornavn
 import no.nav.persondataapi.service.gjeldendeMellomnavn
@@ -22,7 +22,7 @@ import java.time.Period
 
 
 @Controller("/oppslag")
-class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService) {
+class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService, val kodeverkService: KodeverkService) {
     @Protected
     @PostMapping("/personopplysninger")
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
@@ -57,8 +57,22 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 sivilstand = pdlResultat.gjeldendeSivilStand(),
                 alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
             )
+            val beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
 
-            ResponseEntity.ok(OppslagResponseDto(data = personopplysninger))
+            ResponseEntity.ok(OppslagResponseDto(data = beriketPersonopplysninger))
         }
+    }
+    private fun berikMedKodeverkData(input: PersonInformasjon): PersonInformasjon {
+        return input.copy(
+            statsborgerskap = input.statsborgerskap.map { kodeverkService.mapLandkodeTilLandnavn(it) ?: "Ukjent" },
+            adresse = input.adresse.let { adresse ->
+                adresse?.copy(
+                    utenlandskAdresse = adresse.utenlandskAdresse?.copy(
+                        landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode)
+                    )
+                )
+            }
+
+        )
     }
 }

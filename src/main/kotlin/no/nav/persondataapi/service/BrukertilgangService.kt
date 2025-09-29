@@ -1,8 +1,6 @@
 package no.nav.persondataapi.service
 
-import no.nav.security.token.support.core.context.TokenValidationContext
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
