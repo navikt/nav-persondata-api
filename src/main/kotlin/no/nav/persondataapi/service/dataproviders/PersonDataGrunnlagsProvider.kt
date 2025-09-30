@@ -11,7 +11,7 @@ class PersonDataGrunnlagsProvider(val pdlClient: PdlClient) : GrunnlagsProvider 
     override val type = GrunnlagsType.PERSONDATA
 
     override suspend fun hent(kontekst: GrunnlagsKontekst): GrunnlagsdelResultat {
-        val resultat = pdlClient.hentPersonv2(kontekst.fnr)
+        val resultat = pdlClient.hentPerson(kontekst.fnr)
 
         return GrunnlagsdelResultat(
             type = type,

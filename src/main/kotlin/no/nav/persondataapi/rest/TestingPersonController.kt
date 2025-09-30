@@ -29,7 +29,7 @@ class TestingPersonController(
             val token = context.firstValidToken?.encodedToken
                 ?: throw IllegalStateException("Fant ikke gyldig token")
 
-            val res = pdlClient.hentPersonv2(dto.fnr)
+            val res = pdlClient.hentPerson(dto.fnr)
             res
         }
     }
