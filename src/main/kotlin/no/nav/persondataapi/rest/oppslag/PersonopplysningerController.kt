@@ -32,7 +32,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
-            val resultat = pdlClient.hentPersonv2(dto.ident)
+            val resultat = pdlClient.hentPerson(dto.ident)
 
             when (resultat.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)
@@ -40,7 +40,10 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 500 -> ResponseEntity(OppslagResponseDto(error = "Feil i baksystem", data = null), HttpStatus.BAD_GATEWAY)
             }
 
-            val pdlResultat  = resultat.data!!
+            val pdlResultat  = resultat.data ?:
+                return@runBlocking ResponseEntity(OppslagResponseDto(data = null, error = "Person ikke funnet"),
+                    HttpStatus.NOT_FOUND)
+
             val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
             val statsborgerskap = pdlResultat.statsborgerskap.map { it.land }
             val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
