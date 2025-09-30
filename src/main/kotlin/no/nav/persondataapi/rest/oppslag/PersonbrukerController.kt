@@ -1,7 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
-import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.service.BrukertilgangService
+import no.nav.security.token.support.core.api.Protected
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -15,6 +15,7 @@ class PersonbrukerController(
     val brukertilgangService: BrukertilgangService,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+    @Protected
     @PostMapping
     fun hentStatusPåBrukeroppslag(@RequestBody dto: OppslagRequestDto): ResponseEntity<Void> {
         val status = brukertilgangService.hentStatusPåBruker(dto.ident)

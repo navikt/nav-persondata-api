@@ -39,7 +39,6 @@ class TilgangsmaskinClientImpl (
                     .exchangeToMono {
                         response ->
                         val status = response.statusCode()
-                        val headers = response.headers().asHttpHeaders()
                         if (status.value() == 204) {
                             Mono.just(TilgangMaskinResultat(
                                 type = null,
