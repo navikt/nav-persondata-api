@@ -21,14 +21,21 @@ class StønadController(
     val utbetalingClient: UtbetalingClient,
     val brukertilgangService: BrukertilgangService
 ) {
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
+
     @Protected
     @PostMapping
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
         return runBlocking {
+            val anonymisertIdent = dto.ident.take(6) + "*****"
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
+            val startTid = System.currentTimeMillis()
             val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(dto.ident)
+            val bruktTid = System.currentTimeMillis() - startTid
+            logger.info("Hentet stønader for $anonymisertIdent på $bruktTid ms, fikk status ${utbetalingResponse.statusCode}")
 
             when (utbetalingResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -37,6 +44,7 @@ class StønadController(
             }
 
             if (utbetalingResponse.data?.utbetalinger.isNullOrEmpty()) {
+                logger.info("Fant ingen stønader for $anonymisertIdent")
                 ResponseEntity.ok(OppslagResponseDto(data = emptyList<Stonad>()))
             }
 
@@ -59,6 +67,7 @@ class StønadController(
                         Stonad(stonadType = type!!, perioder)
                     }
                     .toList()
+            logger.info("Fant ${stønader.size} stønad(er) for $anonymisertIdent")
             ResponseEntity.ok(
                 OppslagResponseDto(
                     data = stønader

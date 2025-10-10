@@ -19,14 +19,21 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("/oppslag/arbeidsforhold")
 class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: EregClient, val brukertilgangService: BrukertilgangService) {
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
     fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
+            val anonymisertIdent = dto.ident.take(6) + "*****"
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
+            val startTid = System.currentTimeMillis()
             val aaregRespons = aaregClient.hentArbeidsforhold(dto.ident)
+            val bruktTid = System.currentTimeMillis() - startTid
+
+            logger.info("Hentet arbeidsforhold for $anonymisertIdent på $bruktTid ms, status ${aaregRespons.statusCode}")
 
             when (aaregRespons.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -37,6 +44,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
             val alleArbeidsforhold = aaregRespons.data
 
             if (alleArbeidsforhold.isEmpty()) {
+                logger.info("Fant ingen arbeidsforhold for $anonymisertIdent")
                 ResponseEntity.ok(
                     OppslagResponseDto(
                         data = ArbeidsgiverInformasjon(
@@ -60,6 +68,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
                 mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold, unikeOrganisasjonsnumre)
             }
 
+            logger.info("Fant ${løpendeArbeidsforhold.size} løpende og ${historiskeArbeidsforhold.size} historiske arbeidsforhold for $anonymisertIdent")
 
             ResponseEntity.ok(
                 OppslagResponseDto(

@@ -24,14 +24,21 @@ class InntektController(
     val eregClient: EregClient,
     val brukertilgangService: BrukertilgangService
 ) {
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
+        val anonymisertIdent = dto.ident.take(6) + "*****"
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
+            val startTid = System.currentTimeMillis()
             val inntektResponse = inntektClient.hentInntekter(dto.ident)
+            val bruktTid = System.currentTimeMillis() - startTid
+
+            logger.info("Hentet inntekter for $anonymisertIdent på $bruktTid ms, status ${inntektResponse.statusCode}")
 
             when (inntektResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -61,6 +68,8 @@ class InntektController(
                         }
                         .orEmpty()
                 }
+
+            logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $anonymisertIdent")
 
             ResponseEntity.ok(
                 OppslagResponseDto(
