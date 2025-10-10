@@ -2,75 +2,29 @@ package no.nav.persondataapi.service
 
 import no.nav.inntekt.generated.model.HistorikkData
 import no.nav.inntekt.generated.model.Inntektsinformasjon
-import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
-import no.nav.persondataapi.domain.GrunnlagsData
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.rest.domain.NorskAdresse
-import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
-import no.nav.persondataapi.rest.domain.Bostedsadresse
-import no.nav.persondataapi.rest.domain.Lønnsdetaljer
-import no.nav.persondataapi.rest.domain.Navn
-import no.nav.persondataapi.rest.domain.Periode
-import no.nav.persondataapi.rest.domain.PeriodeInformasjon
-import no.nav.persondataapi.rest.domain.PersonInformasjon
-import no.nav.persondataapi.rest.domain.Stonad
-import java.time.LocalDate
-import java.time.Period
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {
-    val identOrgNummer  = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
-    if (identOrgNummer == null){
+    val identOrgNummer = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
+    if (identOrgNummer == null) {
         return "Ingen OrgNummer"
     }
     return identOrgNummer.ident
 }
 
-fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer:String): String {
+fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer: String): String {
     val organisasjon = this[orgnummer]
-    if (organisasjon == null){
-        return "${orgnummer} - Ukjent organisasjon"
+    return if (organisasjon == null) {
+        "$orgnummer - Ukjent organisasjon"
+    } else {
+        organisasjon.navn?.sammensattnavn ?: "${orgnummer} - Ukjent navn"
     }
-    else {
-        return organisasjon.navn?.sammensattnavn ?: "${orgnummer} - Ukjent navn"
-    }
 
-}
-
-fun GrunnlagsData.getLønnsinntektOversikt(): List<Lønnsdetaljer> {
-    if (this.inntektDataRespons==null || this.inntektDataRespons.data==null){
-        return emptyList()
-    }
-    else {
-        val listeAvInntektHistorikk = inntektDataRespons.data.data?: emptyList()
-
-        val  ret: MutableList<Lønnsdetaljer> = mutableListOf()
-        listeAvInntektHistorikk.forEach { historikk ->
-            val harHistorikkPaaLoennsinntekt = historikk.harHistorikkPåNormallønn()
-            val nyeste = historikk.versjoner.nyeste()
-            if (nyeste?.inntektListe != null) {
-                nyeste.inntektListe.filter { it is Loennsinntekt }.map { it as Loennsinntekt }.forEach { loenn ->
-                    ret.add(Lønnsdetaljer(
-                        arbeidsgiver = this.eregDataRespons.orgNummerTilOrgNavn(historikk.opplysningspliktig),
-                        periode = historikk.maaned,
-                        arbeidsforhold = "",
-                        stillingsprosent = "",
-                        lønnstype = loenn.beskrivelse,
-                        antall = loenn.antall,
-                        beløp = loenn.beloep,
-                        harFlereVersjoner = harHistorikkPaaLoennsinntekt,
-                    ))
-                }
-            }
-
-
-        }
-
-        return ret
-    }
 }
 
 fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
@@ -81,11 +35,6 @@ fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
         ?.let { "${it.adresselinje1}, ${it.postnummer}" }
         ?: "INGEN ADRESSSE"
 
-fun Person.fulltNavn(): String {
-    val navn = this.navn.first()
-    return "${navn.fornavn} ${navn.mellomnavn} ${navn.etternavn}"
-}
-
 fun Person.gjeldendeFornavn(): String {
     val navn = this.navn.first()
     return navn.fornavn
@@ -95,10 +44,12 @@ fun Person.gjeldendeSivilStand(): String {
     val sivilstand = this.sivilstand.first()
     return sivilstand.type.name
 }
+
 fun Person.gjeldendeMellomnavn(): String? {
     val navn = this.navn.first()
     return navn.mellomnavn
 }
+
 fun Person.gjeldendeEtternavn(): String {
     val navn = this.navn.first()
     return navn.etternavn
@@ -141,123 +92,22 @@ fun Person.nåværendeBostedsadresse(): no.nav.persondataapi.rest.domain.Bosteds
 }
 
 fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
-    return if (this == null || this.isEmpty() )
-    {
+    return if (this == null || this.isEmpty()) {
         null
-    }
-    else{
+    } else {
         this.minByOrNull { it.oppsummeringstidspunkt }!!
     }
 }
 
 
-
-
-fun HistorikkData.harHistorikkPåNormallønn() : Boolean {
-    val versjoner = this.versjoner?:emptyList()
+fun HistorikkData.harHistorikkPåNormallønn(): Boolean {
+    val versjoner = this.versjoner ?: emptyList()
     var count = 0
 
-    versjoner.forEach {
-            inntektInformasjon ->
+    versjoner.forEach { inntektInformasjon ->
         val inntektListe = inntektInformasjon.inntektListe ?: emptyList()
         val antall = inntektListe.filterNot { inntekt -> inntekt is YtelseFraOffentlige }.size
         if (antall > 0) count++
     }
     return count > 1
-}
-
-
-fun GrunnlagsData.getStonadOversikt(): List<Stonad> {
-    if (this.utbetalingRespons==null){
-        return emptyList()
-    }
-    else{
-        val utbetalinger = this.utbetalingRespons!!.data!!.utbetalinger
-        val ytelser = utbetalinger.flatMap { it.ytelseListe.map { it.ytelsestype } }.distinct()
-
-
-
-        val stonadListe = mutableListOf<Stonad>()
-        ytelser.forEach {
-                ytelser ->
-            val ytelseListe = utbetalinger.flatMap { it.ytelseListe }.filter { it.ytelsestype==ytelser }
-            val listOfPeriodeInformasjon = mutableListOf<PeriodeInformasjon>()
-            ytelseListe.forEach {ytelser ->
-                val info = PeriodeInformasjon(
-                    periode = Periode(fom = ytelser.ytelsesperiode.fom, tom = ytelser.ytelsesperiode.tom),
-                    ytelser.ytelseNettobeloep,
-                    kilde= "SOKOS",
-                    info = ytelser.bilagsnummer
-                )
-                listOfPeriodeInformasjon.add(info)
-            }
-            stonadListe.add(Stonad(stonadType = ytelser!!,listOfPeriodeInformasjon))
-        }
-        return stonadListe
-    }
-
-
-}
-
-fun GrunnlagsData.getArbeidsgiverInformasjon(): ArbeidsgiverInformasjon{
-
-    if (this.aAaregDataRespons == null){
-        return ArbeidsgiverInformasjon(
-            emptyList(),emptyList()
-        )
-    }
-    else{
-        val aaregDataResultat = this.aAaregDataRespons!!.data
-        val lopendeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato == null }
-        val historiskeArbeidsforhold = aaregDataResultat.filter { it.ansettelsesperiode.sluttdato != null }
-        /*
-        * map løpende arbeidsforhold
-        * */
-        val lopende = lopendeArbeidsforhold.map { arbeidsforhold ->
-            mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold,this.eregDataRespons)
-        }
-        val historisk = historiskeArbeidsforhold.map { arbeidsforhold ->
-            mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold,this.eregDataRespons)
-        }
-        return ArbeidsgiverInformasjon(
-            lopende,historisk
-        )
-    }
-
-}
-
-fun GrunnlagsData.getPersonInformasjon(): PersonInformasjon {
-
-    if (this.personDataRespons == null){
-        return PersonInformasjon(
-            navn = Navn("",null,""),
-            aktørId = this.ident,
-            adresse = Bostedsadresse(null, null),
-            familemedlemmer = emptyMap(),
-            alder = -1
-        )
-    }
-    else{
-
-        val pdlResultat:Person  = this.personDataRespons!!.data as Person
-        val foreldreOgBarn = pdlResultat.forelderBarnRelasjon.associate { Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name) }
-        val foreldreansvar = pdlResultat.foreldreansvar.associate { Pair(it.ansvarssubjekt!!, "BARN") }
-        val statsborgerskap = pdlResultat.statsborgerskap.map { it.land }
-        val ektefelle = pdlResultat.sivilstand.filter { it.relatertVedSivilstand!=null }.associate { Pair(it.relatertVedSivilstand!!,it.type.name)}
-        val foreldreOgBarnOgEktefelle: Map<String, String> = foreldreOgBarn + ektefelle
-        return PersonInformasjon(
-            navn = Navn(
-                pdlResultat.gjeldendeFornavn(),
-                mellomnavn = pdlResultat.gjeldendeMellomnavn(),
-                etternavn = pdlResultat.gjeldendeEtternavn(),
-            ),
-            aktørId = this.ident,
-            adresse = pdlResultat.nåværendeBostedsadresse(),
-            familemedlemmer = foreldreOgBarnOgEktefelle,
-            statsborgerskap = statsborgerskap,
-            sivilstand = pdlResultat.gjeldendeSivilStand(),
-            alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
-        )
-    }
-
 }

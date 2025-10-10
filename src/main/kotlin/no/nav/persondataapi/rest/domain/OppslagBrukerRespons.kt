@@ -2,18 +2,8 @@ package no.nav.persondataapi.rest.domain
 
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.YearMonth
 
-data class OppslagBrukerRespons(
-    val utrekkstidspunkt: LocalDateTime,
-    val saksbehandlerIdent: String,
-    val fødselsnummer: String,
-    val personInformasjon: PersonInformasjon?,
-    val arbeidsgiverInformasjon: ArbeidsgiverInformasjon?,
-    val inntektInformasjon: InntektInformasjon?,
-    val stønader: List<Stonad> = emptyList()
-)
 
 data class PersonInformasjon(
     val aktørId: String?,
@@ -76,8 +66,6 @@ data class ArbeidsgiverData(
     val ansettelsesDetaljer:List<AnsettelsesDetalj>,
 )
 
-
-
 data class AnsettelsesDetalj(
     val type: String,
     val stillingsprosent: Double?,
@@ -90,7 +78,7 @@ data class OpenPeriode(
     val tom: YearMonth?,
 )
 /*
-* YTELSER_OG_STONADER
+* Ytelser og stønader
 * */
 data class Stonad(
     val stonadType: String,
@@ -106,19 +94,6 @@ data class PeriodeInformasjon(
 data class Periode(
     val fom: LocalDate,
     val tom: LocalDate,
-)
-
-/*
-* Utbealinger
-* */
-
-data class UtbetakingInformasjon(
-    val utbetalinger: List<UtbetalingInfo>
-)
-data class UtbetalingInfo(
-    val dato: LocalDate,
-    val belop: Int,
-    val beskrivelse: String
 )
 
 

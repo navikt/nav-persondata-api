@@ -19,7 +19,7 @@ class TestingArbeidController(
     fun hentIArbeid(@RequestHeader("fnr") fnr: String): AaregDataResultat {
         return runBlocking {
             val context = tokenValidationContextHolder.getTokenValidationContext()
-            val token = context.firstValidToken?.encodedToken
+            context.firstValidToken?.encodedToken
                 ?: throw IllegalStateException("Fant ikke gyldig token")
             val res = aaregClient.hentArbeidsforhold(fnr)
             res

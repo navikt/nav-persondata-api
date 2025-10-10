@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 class TestingPersonController(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val pdlClient: PdlClient,
-    private val tilgangsmaskinClient: TilgangsmaskinClient
 ) {
     @PostMapping("/personsoek")
     @Protected
@@ -26,11 +25,10 @@ class TestingPersonController(
         println("Received ${dto.fnr}")
         return runBlocking {
             val context = tokenValidationContextHolder.getTokenValidationContext()
-            val token = context.firstValidToken?.encodedToken
+            context.firstValidToken?.encodedToken
                 ?: throw IllegalStateException("Fant ikke gyldig token")
 
-            val res = pdlClient.hentPerson(dto.fnr)
-            res
+            pdlClient.hentPerson(dto.fnr)
         }
     }
 }
