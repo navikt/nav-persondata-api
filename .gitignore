@@ -30,3 +30,5 @@ replay_pid*
 /.idea/
 /.gradle/
 /.idea/
+
+src/main/resources/.env.local.properties

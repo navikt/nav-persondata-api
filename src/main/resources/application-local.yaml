@@ -3,6 +3,8 @@ application:
 server:
   port: 8080
 spring:
+  config:
+    import: "optional:file:./.env.local.properties"
   codec:
     max-in-memory-size: 5MB
 management:
