@@ -25,16 +25,15 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
     @PostMapping
     fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
-            val anonymisertIdent = dto.ident.take(6) + "*****"
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente stønader for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val (aaregRespons, tid) = measureTimedValue {
-                aaregClient.hentArbeidsforhold(dto.ident)
+                aaregClient.hentArbeidsforhold(dto.ident.value)
             }
 
-            logger.info("Hentet arbeidsforhold for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${aaregRespons.statusCode}")
+            logger.info("Hentet arbeidsforhold for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${aaregRespons.statusCode}")
 
             when (aaregRespons.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -45,7 +44,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
             val alleArbeidsforhold = aaregRespons.data
 
             if (alleArbeidsforhold.isEmpty()) {
-                logger.info("Fant ingen arbeidsforhold for $anonymisertIdent")
+                logger.info("Fant ingen arbeidsforhold for ${dto.ident}")
                 ResponseEntity.ok(
                     OppslagResponseDto(
                         data = ArbeidsgiverInformasjon(
@@ -69,7 +68,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
                 mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold, unikeOrganisasjonsnumre)
             }
 
-            logger.info("Fant ${løpendeArbeidsforhold.size} løpende og ${historiskeArbeidsforhold.size} historiske arbeidsforhold for $anonymisertIdent")
+            logger.info("Fant ${løpendeArbeidsforhold.size} løpende og ${historiskeArbeidsforhold.size} historiske arbeidsforhold for ${dto.ident}")
 
             ResponseEntity.ok(
                 OppslagResponseDto(

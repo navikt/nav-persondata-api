@@ -29,17 +29,16 @@ class InntektController(
     @Protected
     @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
-        val anonymisertIdent = dto.ident.take(6) + "*****"
         return runBlocking {
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $anonymisertIdent")
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente inntekter for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val (inntektResponse, tid) = measureTimedValue {
-                inntektClient.hentInntekter(dto.ident)
+                inntektClient.hentInntekter(dto.ident.value)
             }
 
-            logger.info("Hentet inntekter for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${inntektResponse.statusCode}")
+            logger.info("Hentet inntekter for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${inntektResponse.statusCode}")
 
             when (inntektResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -70,7 +69,7 @@ class InntektController(
                         .orEmpty()
                 }
 
-            logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $anonymisertIdent")
+            logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for ${dto.ident}")
 
             ResponseEntity.ok(
                 OppslagResponseDto(

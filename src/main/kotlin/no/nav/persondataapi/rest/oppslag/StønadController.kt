@@ -27,15 +27,14 @@ class StønadController(
     @PostMapping
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
         return runBlocking {
-            val anonymisertIdent = dto.ident.take(6) + "*****"
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente stønader for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val (utbetalingResponse, tid) = measureTimedValue {
-                utbetalingClient.hentUtbetalingerForBruker(dto.ident)
+                utbetalingClient.hentUtbetalingerForBruker(dto.ident.value)
             }
-            logger.info("Hentet stønader for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, fikk status ${utbetalingResponse.statusCode}")
+            logger.info("Hentet stønader for ${dto.ident} på ${tid.inWholeMilliseconds} ms, fikk status ${utbetalingResponse.statusCode}")
 
             when (utbetalingResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -44,7 +43,7 @@ class StønadController(
             }
 
             if (utbetalingResponse.data?.utbetalinger.isNullOrEmpty()) {
-                logger.info("Fant ingen stønader for $anonymisertIdent")
+                logger.info("Fant ingen stønader for ${dto.ident}")
                 ResponseEntity.ok(OppslagResponseDto(data = emptyList<Stonad>()))
             }
 
@@ -67,7 +66,7 @@ class StønadController(
                         Stonad(stonadType = type!!, perioder)
                     }
                     .toList()
-            logger.info("Fant ${stønader.size} stønad(er) for $anonymisertIdent")
+            logger.info("Fant ${stønader.size} stønad(er) for ${dto.ident}")
             ResponseEntity.ok(
                 OppslagResponseDto(
                     data = stønader

@@ -18,7 +18,7 @@ class PersonbrukerController(
     @Protected
     @PostMapping
     fun hentStatusPåBrukeroppslag(@RequestBody dto: OppslagRequestDto): ResponseEntity<Void> {
-        val status = brukertilgangService.hentStatusPåBruker(dto.ident)
+        val status = brukertilgangService.hentStatusPåBruker(dto.ident.value)
         log.info("Hentet status for bruker ${dto.ident}: $status")
         return ResponseEntity.status(status).build()
     }

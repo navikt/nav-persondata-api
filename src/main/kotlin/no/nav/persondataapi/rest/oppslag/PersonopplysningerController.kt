@@ -33,17 +33,16 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
     @PostMapping
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
-            val anonymisertIdent = dto.ident.take(6) + "*****"
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for $anonymisertIdent")
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
 
             val (resultat, tid) = measureTimedValue {
-                pdlClient.hentPerson(dto.ident)
+                pdlClient.hentPerson(dto.ident.value)
             }
 
-            logger.info("Hentet personopplysninger for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${resultat.statusCode}")
+            logger.info("Hentet personopplysninger for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${resultat.statusCode}")
 
             when (resultat.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)
@@ -66,7 +65,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                     mellomnavn = pdlResultat.gjeldendeMellomnavn(),
                     etternavn = pdlResultat.gjeldendeEtternavn(),
                 ),
-                aktørId = dto.ident,
+                aktørId = dto.ident.value,
                 adresse = pdlResultat.nåværendeBostedsadresse(),
                 familemedlemmer = familiemedlemmer,
                 statsborgerskap = statsborgerskap,
@@ -74,8 +73,6 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 alder = pdlResultat.foedselsdato.first().foedselsdato?.let { Period.between(LocalDate.parse(it), LocalDate.now()).years } ?: -1,
             )
             val beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
-
-            logger.info("Hentet personopplysninger for $anonymisertIdent, alder ${personopplysninger.alder} år")
 
             ResponseEntity.ok(OppslagResponseDto(data = beriketPersonopplysninger))
         }
