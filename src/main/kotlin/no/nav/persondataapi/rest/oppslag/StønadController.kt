@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import kotlin.collections.emptyList
+import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/stønad")
@@ -21,14 +21,20 @@ class StønadController(
     val utbetalingClient: UtbetalingClient,
     val brukertilgangService: BrukertilgangService
 ) {
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
+
     @Protected
     @PostMapping
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
         return runBlocking {
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente stønader for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(dto.ident)
+            val (utbetalingResponse, tid) = measureTimedValue {
+                utbetalingClient.hentUtbetalingerForBruker(dto.ident.value)
+            }
+            logger.info("Hentet stønader for ${dto.ident} på ${tid.inWholeMilliseconds} ms, fikk status ${utbetalingResponse.statusCode}")
 
             when (utbetalingResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -37,6 +43,7 @@ class StønadController(
             }
 
             if (utbetalingResponse.data?.utbetalinger.isNullOrEmpty()) {
+                logger.info("Fant ingen stønader for ${dto.ident}")
                 ResponseEntity.ok(OppslagResponseDto(data = emptyList<Stonad>()))
             }
 
@@ -59,6 +66,7 @@ class StønadController(
                         Stonad(stonadType = type!!, perioder)
                     }
                     .toList()
+            logger.info("Fant ${stønader.size} stønad(er) for ${dto.ident}")
             ResponseEntity.ok(
                 OppslagResponseDto(
                     data = stønader

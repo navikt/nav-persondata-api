@@ -63,8 +63,6 @@ class InntektClient(
             responseResult
         }.fold(
             onSuccess = { inntekt ->
-
-                log.info("inntekt er ok..fått svar!")
                 InntektDataResultat(
                     data = inntekt,
                     statusCode = 200,
@@ -72,7 +70,7 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger",error)
+                log.error("Feil ved henting av utbetalinger", error)
                     InntektDataResultat (
                         data = null,
                         statusCode = 500,

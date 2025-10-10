@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/inntekt")
@@ -24,14 +25,20 @@ class InntektController(
     val eregClient: EregClient,
     val brukertilgangService: BrukertilgangService
 ) {
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente inntekter for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val inntektResponse = inntektClient.hentInntekter(dto.ident)
+            val (inntektResponse, tid) = measureTimedValue {
+                inntektClient.hentInntekter(dto.ident.value)
+            }
+
+            logger.info("Hentet inntekter for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${inntektResponse.statusCode}")
 
             when (inntektResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
@@ -61,6 +68,8 @@ class InntektController(
                         }
                         .orEmpty()
                 }
+
+            logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for ${dto.ident}")
 
             ResponseEntity.ok(
                 OppslagResponseDto(

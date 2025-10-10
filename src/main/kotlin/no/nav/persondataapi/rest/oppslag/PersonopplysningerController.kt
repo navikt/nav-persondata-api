@@ -20,19 +20,29 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import java.time.LocalDate
 import java.time.Period
+import kotlin.time.measureTimedValue
 
 
 @Controller
 @RequestMapping("/oppslag/personopplysninger")
 class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangService: BrukertilgangService, val kodeverkService: KodeverkService) {
+
+    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
+
     @Protected
     @PostMapping
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident)) {
+            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
+                logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
-            val resultat = pdlClient.hentPerson(dto.ident)
+
+            val (resultat, tid) = measureTimedValue {
+                pdlClient.hentPerson(dto.ident.value)
+            }
+
+            logger.info("Hentet personopplysninger for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${resultat.statusCode}")
 
             when (resultat.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)
@@ -55,7 +65,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                     mellomnavn = pdlResultat.gjeldendeMellomnavn(),
                     etternavn = pdlResultat.gjeldendeEtternavn(),
                 ),
-                aktørId = dto.ident,
+                aktørId = dto.ident.value,
                 adresse = pdlResultat.nåværendeBostedsadresse(),
                 familemedlemmer = familiemedlemmer,
                 statsborgerskap = statsborgerskap,
