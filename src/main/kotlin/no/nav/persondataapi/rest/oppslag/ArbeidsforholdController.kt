@@ -26,7 +26,7 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
     fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente stønader for ${dto.ident}")
+                logger.info("Saksbehandler har ikke tilgang til å hente arbeidsforhold for ${dto.ident}")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
             val (aaregRespons, tid) = measureTimedValue {
