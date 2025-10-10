@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import kotlin.collections.emptyList
+import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/stønad")
@@ -32,10 +32,10 @@ class StønadController(
                 logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val startTid = System.currentTimeMillis()
-            val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(dto.ident)
-            val bruktTid = System.currentTimeMillis() - startTid
-            logger.info("Hentet stønader for $anonymisertIdent på $bruktTid ms, fikk status ${utbetalingResponse.statusCode}")
+            val (utbetalingResponse, tid) = measureTimedValue {
+                utbetalingClient.hentUtbetalingerForBruker(dto.ident)
+            }
+            logger.info("Hentet stønader for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, fikk status ${utbetalingResponse.statusCode}")
 
             when (utbetalingResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)

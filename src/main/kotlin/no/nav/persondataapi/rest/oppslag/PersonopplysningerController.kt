@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import java.time.LocalDate
 import java.time.Period
+import kotlin.time.measureTimedValue
 
 
 @Controller
@@ -37,11 +38,12 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
                 logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null),HttpStatus.FORBIDDEN)
             }
-            val startTid = System.currentTimeMillis()
-            val resultat = pdlClient.hentPerson(dto.ident)
-            val bruktTid = System.currentTimeMillis() - startTid
 
-            logger.info("Hentet personopplysninger for $anonymisertIdent på $bruktTid ms, status ${resultat.statusCode}")
+            val (resultat, tid) = measureTimedValue {
+                pdlClient.hentPerson(dto.ident)
+            }
+
+            logger.info("Hentet personopplysninger for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${resultat.statusCode}")
 
             when (resultat.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null),HttpStatus.NOT_FOUND)

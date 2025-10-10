@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/inntekt")
@@ -34,11 +35,11 @@ class InntektController(
                 logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val startTid = System.currentTimeMillis()
-            val inntektResponse = inntektClient.hentInntekter(dto.ident)
-            val bruktTid = System.currentTimeMillis() - startTid
+            val (inntektResponse, tid) = measureTimedValue {
+                inntektClient.hentInntekter(dto.ident)
+            }
 
-            logger.info("Hentet inntekter for $anonymisertIdent på $bruktTid ms, status ${inntektResponse.statusCode}")
+            logger.info("Hentet inntekter for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${inntektResponse.statusCode}")
 
             when (inntektResponse.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)

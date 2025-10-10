@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/arbeidsforhold")
@@ -29,11 +30,11 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
                 logger.info("Saksbehandler har ikke tilgang til å hente stønader for $anonymisertIdent")
                 ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
             }
-            val startTid = System.currentTimeMillis()
-            val aaregRespons = aaregClient.hentArbeidsforhold(dto.ident)
-            val bruktTid = System.currentTimeMillis() - startTid
+            val (aaregRespons, tid) = measureTimedValue {
+                aaregClient.hentArbeidsforhold(dto.ident)
+            }
 
-            logger.info("Hentet arbeidsforhold for $anonymisertIdent på $bruktTid ms, status ${aaregRespons.statusCode}")
+            logger.info("Hentet arbeidsforhold for $anonymisertIdent på ${tid.inWholeMilliseconds} ms, status ${aaregRespons.statusCode}")
 
             when (aaregRespons.statusCode) {
                 404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
