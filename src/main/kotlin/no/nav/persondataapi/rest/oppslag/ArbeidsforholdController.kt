@@ -1,13 +1,16 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.aareg.client.AaregClient
-import no.nav.persondataapi.aareg.client.hentIdenter
-import no.nav.persondataapi.ereg.client.EregClient
-import no.nav.persondataapi.ereg.client.EregRespons
-import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
+import no.nav.persondataapi.integrasjon.aareg.client.AaregClient
+import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
+import no.nav.persondataapi.integrasjon.ereg.client.EregClient
+import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
+import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
-import no.nav.persondataapi.service.mapArbeidsforholdTilArbeidsgiverData
+import no.nav.persondataapi.service.hentOrgNummerTilArbeidssted
+import no.nav.persondataapi.service.orgNummerTilOrgNavn
+import no.nav.persondataapi.service.orgnummerTilAdresse
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -79,5 +82,30 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
             )
 
         }
+    }
+
+    private fun mapArbeidsforholdTilArbeidsgiverData(
+        arbeidsforhold: Arbeidsforhold,
+        eregDataRespons: Map<String, EregRespons>
+    ): ArbeidsgiverInformasjon.ArbeidsgiverData {
+        val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidssted()
+        return ArbeidsgiverInformasjon.ArbeidsgiverData(
+            eregDataRespons.orgNummerTilOrgNavn(orgnummer),
+            orgnummer,
+            eregDataRespons.orgnummerTilAdresse(orgnummer),
+            ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map
+            { ansettelsesdetaljer ->
+                ArbeidsgiverInformasjon.AnsettelsesDetalj(
+                    ansettelsesdetaljer.type,
+                    ansettelsesdetaljer.avtaltStillingsprosent,
+                    ansettelsesdetaljer.antallTimerPrUke,
+                    ArbeidsgiverInformasjon.ÅpenPeriode(
+                        ansettelsesdetaljer.rapporteringsmaaneder.fra,
+                        ansettelsesdetaljer.rapporteringsmaaneder.til
+                    ),
+                    ansettelsesdetaljer.yrke.beskrivelse
+                )
+            },
+        )
     }
 }

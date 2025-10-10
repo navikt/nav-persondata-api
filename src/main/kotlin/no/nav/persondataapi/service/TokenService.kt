@@ -1,19 +1,14 @@
 package no.nav.persondataapi.service
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import kotlinx.coroutines.reactive.awaitSingle
-import no.nav.persondataapi.configuration.JsonUtils
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.env.Environment
 import org.springframework.core.env.get
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.BodyInserters
-
 import org.springframework.web.reactive.function.client.WebClient
 
-    @Component
+@Component
 class TokenService (
         @Qualifier("tokenWebClient")
         private val tokenWebClient: WebClient,

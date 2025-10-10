@@ -1,16 +1,16 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.domain.Grupper
-import no.nav.persondataapi.domain.TilgangMaskinResultat
-import no.nav.persondataapi.domain.TilgangResultat
+import no.nav.persondataapi.domene.Grupper
+import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangMaskinResultat
+import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangResultat
 
 import org.springframework.stereotype.Component
 
 @Component
 class TilgangService(
     private val tilgangsmaskinClient: TilgangsmaskinClient,
-    private val grupper: Grupper)
-{
+    private val grupper: Grupper
+) {
     fun harUtvidetTilgang(groups: List<String>): Boolean {
         val utvidetTilgangId = grupper.finnRolleId(AdGrupper.UTVIDET_TILGANG.azureGruoup)
         return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
@@ -28,10 +28,11 @@ class TilgangService(
     }
 
 }
+
 interface TilgangsmaskinClient {
     fun sjekkTilgang(fnr: String, userToken: String): TilgangResultat
 }
-     
+
 /*
 * dette er i praksis en funksjon som overstyrer at du
 * har lov til å se aktuell person ut fra kode fra tilgangmaskin
@@ -47,24 +48,24 @@ interface TilgangsmaskinClient {
 *   - AVVIST_MANGLENDE_DATA
 *
 * */
-fun TilgangMaskinResultat.harTilgangMedBasicAdgang():Boolean{
-         when(this.title){
-             "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false
-             "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false
-             "AVVIST_FORTROLIG_ADRESSE" -> return true
-             "AVVIST_SKJERMING" -> return true   //Egen Ansatt,
-             "AVVIST_HABILITET" -> return true   //Egne data,Egen familie,Verge
-             "AVVIST_VERGE" -> return true         //verge
-             "AVVIST_MANGLENDE_DATA" -> return true    //Mangler data
-         }
-    return false
+fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
+    when (this.title) {
+        "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false
+        "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false
+        "AVVIST_FORTROLIG_ADRESSE" -> return true
+        "AVVIST_SKJERMING" -> return true   //Egen Ansatt,
+        "AVVIST_HABILITET" -> return true   //Egne data,Egen familie,Verge
+        "AVVIST_VERGE" -> return true         //verge
+        "AVVIST_MANGLENDE_DATA" -> return true    //Mangler data
     }
+    return false
+}
 
 /*
 * Funksjon som vurderer hvorvidt geolokasjon skal maskeres før det vises til saksbehandler
 * */
-fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean):Boolean{
-    when(this.title){
+fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean): Boolean {
+    when (this.title) {
         "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
         "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return !harUtvidetTilgang  //utvidet adgang skal ikke maskere
         "AVVIST_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
@@ -80,4 +81,3 @@ enum class AdGrupper(val azureGruoup: String) {
     UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
     BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic")
 }
-

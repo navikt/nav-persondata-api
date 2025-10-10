@@ -2,10 +2,9 @@ package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
 import no.nav.inntekt.generated.model.Loennsinntekt
-import no.nav.persondataapi.ereg.client.EregClient
-import no.nav.persondataapi.inntekt.client.InntektClient
-import no.nav.persondataapi.rest.domain.InntektInformasjon
-import no.nav.persondataapi.rest.domain.Lønnsdetaljer
+import no.nav.persondataapi.integrasjon.ereg.client.EregClient
+import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
+import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.harHistorikkPåNormallønn
 import no.nav.persondataapi.service.nyeste
@@ -55,7 +54,7 @@ class InntektController(
                         ?.inntektListe
                         ?.filterIsInstance<Loennsinntekt>()
                         ?.map { loenn ->
-                            Lønnsdetaljer(
+                            InntektInformasjon.Lønnsdetaljer(
                                 arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
                                 periode = historikk.maaned,
                                 arbeidsforhold = "",

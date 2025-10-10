@@ -1,9 +1,8 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.pdl.client.PdlClient
-import no.nav.persondataapi.rest.domain.Navn
-import no.nav.persondataapi.rest.domain.PersonInformasjon
+import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.KodeverkService
 import no.nav.persondataapi.service.gjeldendeEtternavn
@@ -60,7 +59,7 @@ class PersonopplysningerController(val pdlClient: PdlClient, val brukertilgangSe
             val familiemedlemmer = foreldreOgBarn + ektefelle
 
             val personopplysninger = PersonInformasjon(
-                navn = Navn(
+                navn = PersonInformasjon.Navn(
                     pdlResultat.gjeldendeFornavn(),
                     mellomnavn = pdlResultat.gjeldendeMellomnavn(),
                     etternavn = pdlResultat.gjeldendeEtternavn(),
