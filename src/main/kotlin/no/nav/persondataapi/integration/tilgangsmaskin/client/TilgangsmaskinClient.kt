@@ -1,4 +1,4 @@
-package no.nav.persondataapi.tilgangsmaskin.client
+package no.nav.persondataapi.integration.tilgangsmaskin.client
 
 import no.nav.persondataapi.domain.TilgangMaskinResultat
 import no.nav.persondataapi.domain.TilgangResultat

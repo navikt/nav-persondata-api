@@ -1,4 +1,4 @@
-package no.nav.persondataapi.aareg.client
+package no.nav.persondataapi.integration.aareg.client
 
 
 import com.fasterxml.jackson.core.type.TypeReference

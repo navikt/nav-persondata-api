@@ -1,4 +1,4 @@
-package no.nav.persondataapi.ereg.client
+package no.nav.persondataapi.integration.ereg.client
 
 import java.time.LocalDate
 import java.time.LocalDateTime

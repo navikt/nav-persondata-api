@@ -1,6 +1,6 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.kodeverk.client.KodeverkClient
+import no.nav.persondataapi.integration.kodeverk.client.KodeverkClient
 import org.springframework.stereotype.Component
 
 @Component

@@ -2,15 +2,11 @@ package no.nav.persondataapi.domain
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
 
-import no.nav.persondataapi.aareg.client.Arbeidsforhold
-import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.utbetaling.dto.Utbetaling
 import java.time.LocalDate
-import java.time.ZonedDateTime
 
 
-data class UtbetalingRespons(val utbetalinger:List<Utbetaling>)
+data class UtbetalingRespons(val utbetalinger:List<no.nav.persondataapi.integration.utbetaling.dto.Utbetaling>)
 
 data class UtbetalingResultat(
     val data: UtbetalingRespons?,
@@ -38,7 +34,7 @@ data class InntektDataResultat(
 )
 
 data class AaregDataResultat(
-    val data:  List<Arbeidsforhold> = emptyList(),
+    val data:  List<no.nav.persondataapi.integration.aareg.client.Arbeidsforhold> = emptyList(),
     val statusCode: Int?,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )

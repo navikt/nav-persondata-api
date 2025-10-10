@@ -1,11 +1,11 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.aareg.client.AaregClient
-import no.nav.persondataapi.aareg.client.Arbeidsforhold
-import no.nav.persondataapi.aareg.client.hentIdenter
-import no.nav.persondataapi.ereg.client.EregClient
-import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.integration.aareg.client.AaregClient
+import no.nav.persondataapi.integration.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.integration.aareg.client.hentIdenter
+import no.nav.persondataapi.integration.ereg.client.EregClient
+import no.nav.persondataapi.integration.ereg.client.EregRespons
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.hentOrgNummerTilArbeidssted

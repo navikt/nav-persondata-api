@@ -3,7 +3,7 @@ package no.nav.persondataapi.rest.oppslag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.rest.domain.Stønad
 import no.nav.persondataapi.service.BrukertilgangService
-import no.nav.persondataapi.utbetaling.client.UtbetalingClient
+import no.nav.persondataapi.integration.utbetaling.client.UtbetalingClient
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

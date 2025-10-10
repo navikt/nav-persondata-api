@@ -1,4 +1,4 @@
-package no.nav.persondataapi.inntekt.client
+package no.nav.persondataapi.integration.inntekt.client
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt

@@ -1,4 +1,4 @@
-package no.nav.persondataapi.kodeverk.client
+package no.nav.persondataapi.integration.kodeverk.client
 
 data class Landkode(
     val landkode: String,

@@ -1,4 +1,4 @@
-package no.nav.persondataapi.kodeverk.client
+package no.nav.persondataapi.integration.kodeverk.client
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService

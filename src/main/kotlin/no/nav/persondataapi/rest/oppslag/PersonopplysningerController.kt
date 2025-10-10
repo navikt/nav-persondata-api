@@ -1,7 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.pdl.client.PdlClient
+import no.nav.persondataapi.integration.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domain.PersonInformasjon
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.KodeverkService

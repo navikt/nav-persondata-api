@@ -1,4 +1,4 @@
-package no.nav.persondataapi.ereg.client
+package no.nav.persondataapi.integration.ereg.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory

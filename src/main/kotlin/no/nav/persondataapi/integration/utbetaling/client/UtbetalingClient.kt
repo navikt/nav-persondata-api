@@ -1,10 +1,10 @@
-package    no.nav.persondataapi.utbetaling.client
+package no.nav.persondataapi.integration.utbetaling.client
 import no.nav.persondataapi.domain.UtbetalingRespons
 import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
-import no.nav.persondataapi.utbetaling.dto.Utbetaling
+import no.nav.persondataapi.integration.utbetaling.dto.Utbetaling
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference

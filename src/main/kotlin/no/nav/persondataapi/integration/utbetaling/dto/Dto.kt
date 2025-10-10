@@ -1,4 +1,4 @@
-package no.nav.persondataapi.utbetaling.dto
+package no.nav.persondataapi.integration.utbetaling.dto
 
 import java.math.BigDecimal
 import java.time.LocalDate

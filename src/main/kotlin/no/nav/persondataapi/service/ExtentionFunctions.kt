@@ -3,9 +3,9 @@ package no.nav.persondataapi.service
 import no.nav.inntekt.generated.model.HistorikkData
 import no.nav.inntekt.generated.model.Inntektsinformasjon
 import no.nav.inntekt.generated.model.YtelseFraOffentlige
-import no.nav.persondataapi.aareg.client.Arbeidsforhold
-import no.nav.persondataapi.aareg.client.Identtype
-import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.integration.aareg.client.Arbeidsforhold
+import no.nav.persondataapi.integration.aareg.client.Identtype
+import no.nav.persondataapi.integration.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.rest.domain.PersonInformasjon
 

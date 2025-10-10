@@ -1,20 +1,11 @@
 package no.nav.persondataapi.parsing
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.ereg.client.EregRespons
+import no.nav.persondataapi.integration.ereg.client.EregRespons
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
-import org.w3c.dom.Node
-import java.math.BigDecimal
 import java.nio.charset.StandardCharsets
 
 class EregParserResponsTest {

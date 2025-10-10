@@ -1,6 +1,6 @@
 
 import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.utbetaling.dto.Utbetaling
+import no.nav.persondataapi.integration.utbetaling.dto.Utbetaling
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
