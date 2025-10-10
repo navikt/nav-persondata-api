@@ -10,17 +10,6 @@ import java.time.LocalDate
 import java.time.ZonedDateTime
 
 
-data class GrunnlagsData(
-    val utreksTidspunkt: ZonedDateTime = ZonedDateTime.now(),
-    val ident:String,
-    val saksbehandlerId:String,
-    val utbetalingRespons: UtbetalingResultat?,
-    val personDataRespons: PersonDataResultat?,
-    val inntektDataRespons: InntektDataResultat?,
-    var aAaregDataRespons: AaregDataResultat?,
-    val eregDataRespons: Map<String,EregRespons> = emptyMap<String, EregRespons>()
-)
-
 data class UtbetalingRespons(val utbetalinger:List<Utbetaling>)
 
 data class UtbetalingResultat(
