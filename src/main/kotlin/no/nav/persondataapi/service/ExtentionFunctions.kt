@@ -7,7 +7,7 @@ import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.Identtype
 import no.nav.persondataapi.ereg.client.EregRespons
 import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.rest.domain.NorskAdresse
+import no.nav.persondataapi.rest.domain.PersonInformasjon
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {
     val identOrgNummer = this.arbeidssted.identer.firstOrNull() { it.type == Identtype.ORGANISASJONSNUMMER }
@@ -55,16 +55,16 @@ fun Person.gjeldendeEtternavn(): String {
     return navn.etternavn
 }
 
-fun Person.nåværendeBostedsadresse(): no.nav.persondataapi.rest.domain.Bostedsadresse {
+fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
     val adresse = this.bostedsadresse.first()
     val utenlandskAdresse = adresse.utenlandskAdresse
     val vegadresse = adresse.vegadresse
 
-    var utlandAdresse: no.nav.persondataapi.rest.domain.UtenlandskAdresse? = null
-    var norskAdresse: NorskAdresse? = null
+    var utlandAdresse: PersonInformasjon.UtenlandskAdresse? = null
+    var norskAdresse: PersonInformasjon.NorskAdresse? = null
 
     if (utenlandskAdresse != null) {
-        utlandAdresse = no.nav.persondataapi.rest.domain.UtenlandskAdresse(
+        utlandAdresse = PersonInformasjon.UtenlandskAdresse(
             adressenavnNummer = utenlandskAdresse.adressenavnNummer,
             bygningEtasjeLeilighet = utenlandskAdresse.bygningEtasjeLeilighet,
             postboksNummerNavn = utenlandskAdresse.postboksNummerNavn,
@@ -75,7 +75,7 @@ fun Person.nåværendeBostedsadresse(): no.nav.persondataapi.rest.domain.Bosteds
         )
     }
     if (vegadresse != null) {
-        norskAdresse = NorskAdresse(
+        norskAdresse = PersonInformasjon.NorskAdresse(
             adressenavn = vegadresse.adressenavn,
             husnummer = vegadresse.husnummer,
             husbokstav = vegadresse.husbokstav,
@@ -85,7 +85,7 @@ fun Person.nåværendeBostedsadresse(): no.nav.persondataapi.rest.domain.Bosteds
         )
     }
 
-    return no.nav.persondataapi.rest.domain.Bostedsadresse(
+    return PersonInformasjon.Bostedsadresse(
         norskAdresse = norskAdresse,
         utenlandskAdresse = utlandAdresse
     )

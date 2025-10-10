@@ -2,7 +2,6 @@ package no.nav.persondataapi.tilgangsmaskin.client
 
 import no.nav.persondataapi.domain.TilgangMaskinResultat
 import no.nav.persondataapi.domain.TilgangResultat
-import no.nav.persondataapi.service.ResponsMappingService
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TilgangsmaskinClient
 import no.nav.persondataapi.service.TokenService
@@ -12,7 +11,7 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import java.util.UUID
+import java.util.*
 
 @Component
 class TilgangsmaskinClientImpl (
@@ -22,7 +21,7 @@ class TilgangsmaskinClientImpl (
 
 
     ): TilgangsmaskinClient {
-    private val logger = LoggerFactory.getLogger(ResponsMappingService::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     override fun sjekkTilgang(fnr: String, userToken: String
             ): TilgangResultat {

@@ -1,9 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.rest.domain.Periode
-import no.nav.persondataapi.rest.domain.PeriodeInformasjon
-import no.nav.persondataapi.rest.domain.Stonad
+import no.nav.persondataapi.rest.domain.Stønad
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.utbetaling.client.UtbetalingClient
 import no.nav.security.token.support.core.api.Protected
@@ -25,7 +23,7 @@ class StønadController(
 
     @Protected
     @PostMapping
-    fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stonad>>> {
+    fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stønad>>> {
         return runBlocking {
             if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
                 logger.info("Saksbehandler har ikke tilgang til å hente stønader for ${dto.ident}")
@@ -44,11 +42,11 @@ class StønadController(
 
             if (utbetalingResponse.data?.utbetalinger.isNullOrEmpty()) {
                 logger.info("Fant ingen stønader for ${dto.ident}")
-                ResponseEntity.ok(OppslagResponseDto(data = emptyList<Stonad>()))
+                ResponseEntity.ok(OppslagResponseDto(data = emptyList<Stønad>()))
             }
 
             val utbetalinger = utbetalingResponse.data?.utbetalinger.orEmpty()
-            val stønader: List<Stonad> =
+            val stønader: List<Stønad> =
                 utbetalinger
                     .asSequence()
                     .flatMap { it.ytelseListe.asSequence() }
@@ -56,14 +54,14 @@ class StønadController(
                     .groupBy { it.ytelsestype }
                     .map { (type, liste) ->
                         val perioder = liste.map { y ->
-                            PeriodeInformasjon(
-                                periode = Periode(fom = y.ytelsesperiode.fom, tom = y.ytelsesperiode.tom),
+                            Stønad.PeriodeInformasjon(
+                                periode = Stønad.Periode(fom = y.ytelsesperiode.fom, tom = y.ytelsesperiode.tom),
                                 beløp = y.ytelseNettobeloep,
                                 kilde = "SOKOS",
                                 info = y.bilagsnummer
                             )
                         }
-                        Stonad(stonadType = type!!, perioder)
+                        Stønad(stonadType = type!!, perioder)
                     }
                     .toList()
             logger.info("Fant ${stønader.size} stønad(er) for ${dto.ident}")

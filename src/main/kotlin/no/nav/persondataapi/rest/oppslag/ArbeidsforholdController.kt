@@ -6,10 +6,7 @@ import no.nav.persondataapi.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.aareg.client.hentIdenter
 import no.nav.persondataapi.ereg.client.EregClient
 import no.nav.persondataapi.ereg.client.EregRespons
-import no.nav.persondataapi.rest.domain.AnsettelsesDetalj
-import no.nav.persondataapi.rest.domain.ArbeidsgiverData
 import no.nav.persondataapi.rest.domain.ArbeidsgiverInformasjon
-import no.nav.persondataapi.rest.domain.OpenPeriode
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.hentOrgNummerTilArbeidssted
 import no.nav.persondataapi.service.orgNummerTilOrgNavn
@@ -90,19 +87,19 @@ class ArbeidsforholdController(val aaregClient: AaregClient, val eregClient: Ere
     private fun mapArbeidsforholdTilArbeidsgiverData(
         arbeidsforhold: Arbeidsforhold,
         eregDataRespons: Map<String, EregRespons>
-    ): ArbeidsgiverData {
+    ): ArbeidsgiverInformasjon.ArbeidsgiverData {
         val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidssted()
-        return ArbeidsgiverData(
+        return ArbeidsgiverInformasjon.ArbeidsgiverData(
             eregDataRespons.orgNummerTilOrgNavn(orgnummer),
             orgnummer,
             eregDataRespons.orgnummerTilAdresse(orgnummer),
             ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map
             { ansettelsesdetaljer ->
-                AnsettelsesDetalj(
+                ArbeidsgiverInformasjon.AnsettelsesDetalj(
                     ansettelsesdetaljer.type,
                     ansettelsesdetaljer.avtaltStillingsprosent,
                     ansettelsesdetaljer.antallTimerPrUke,
-                    OpenPeriode(
+                    ArbeidsgiverInformasjon.ÅpenPeriode(
                         ansettelsesdetaljer.rapporteringsmaaneder.fra,
                         ansettelsesdetaljer.rapporteringsmaaneder.til
                     ),
