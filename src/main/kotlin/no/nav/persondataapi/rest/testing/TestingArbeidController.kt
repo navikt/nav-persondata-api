@@ -1,4 +1,4 @@
-package no.nav.persondataapi.rest
+package no.nav.persondataapi.rest.testing
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.aareg.client.AaregClient

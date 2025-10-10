@@ -1,4 +1,4 @@
-package no.nav.persondataapi.rest
+package no.nav.persondataapi.rest.testing
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.domain.UtbetalingResultat
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UtbetalingController(
+class TestingUtbetalingController(
     private val utbetalingClient: UtbetalingClient
 ) {
     @GetMapping("/utbetalinger")

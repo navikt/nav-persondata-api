@@ -1,9 +1,8 @@
-package no.nav.persondataapi.rest
+package no.nav.persondataapi.rest.testing
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.domain.PersonDataResultat
 import no.nav.persondataapi.pdl.client.PdlClient
-import no.nav.persondataapi.service.TilgangsmaskinClient
 
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
