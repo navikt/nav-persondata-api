@@ -1,6 +1,4 @@
 package no.nav.persondataapi.integration.utbetaling.client
-import no.nav.persondataapi.domain.UtbetalingRespons
-import no.nav.persondataapi.domain.UtbetalingResultat
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
@@ -68,6 +66,15 @@ class UtbetalingClient(
         )
     }
 }
+
+data class UtbetalingRespons(val utbetalinger: List<no.nav.persondataapi.integration.utbetaling.dto.Utbetaling>)
+
+data class UtbetalingResultat(
+    val data: UtbetalingRespons?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
+
 data class RequestBody(
     val ident: String,
     val rolle: String,

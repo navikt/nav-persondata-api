@@ -1,8 +1,8 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.domain.Grupper
-import no.nav.persondataapi.domain.TilgangMaskinResultat
-import no.nav.persondataapi.domain.TilgangResultat
+import no.nav.persondataapi.integration.tilgangsmaskin.client.TilgangMaskinResultat
+import no.nav.persondataapi.integration.tilgangsmaskin.client.TilgangResultat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

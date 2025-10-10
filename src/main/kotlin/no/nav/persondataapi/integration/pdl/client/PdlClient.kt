@@ -3,8 +3,8 @@ package no.nav.persondataapi.integration.pdl.client
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import no.nav.persondataapi.common.extensions.CustomHeaders
-import no.nav.persondataapi.domain.PersonDataResultat
 import no.nav.persondataapi.generated.HentPerson
+import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.springframework.beans.factory.annotation.Value
@@ -54,3 +54,9 @@ class PdlClient(
         )
     }
 }
+
+data class PersonDataResultat(
+    val data: Person?,
+    val statusCode: Int,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)

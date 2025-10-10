@@ -1,7 +1,5 @@
 package no.nav.persondataapi.integration.tilgangsmaskin.client
 
-import no.nav.persondataapi.domain.TilgangMaskinResultat
-import no.nav.persondataapi.domain.TilgangResultat
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TilgangsmaskinClient
 import no.nav.persondataapi.service.TokenService
@@ -86,3 +84,21 @@ class TilgangsmaskinClientImpl (
             )
         }
     }
+
+data class TilgangMaskinResultat(
+    val type: String?,
+    val title: String?,
+    val status: Int,
+    val instance: String?,
+    val brukerIdent: String?,
+    val navIdent: String?,
+    val traceId: String?,
+    val begrunnelse: String?,
+    val kanOverstyres: Boolean?,
+)
+
+data class TilgangResultat(
+    val data: TilgangMaskinResultat?,
+    val statusCode: Int?,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)

@@ -3,7 +3,6 @@ package no.nav.persondataapi.integration.aareg.client
 
 import com.fasterxml.jackson.core.type.TypeReference
 import no.nav.persondataapi.configuration.JsonUtils
-import no.nav.persondataapi.domain.AaregDataResultat
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -82,6 +81,12 @@ class AaregClient(
         }
     }
 }
+
+data class AaregDataResultat(
+    val data: List<Arbeidsforhold> = emptyList(),
+    val statusCode: Int?,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
 
 // Enkel custom exception for å bære HTTP-status
 class HttpStatusException(val statusCode: Int, override val message: String) : RuntimeException(message)

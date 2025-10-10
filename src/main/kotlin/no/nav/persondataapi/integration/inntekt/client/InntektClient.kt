@@ -2,8 +2,6 @@ package no.nav.persondataapi.integration.inntekt.client
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
-import no.nav.persondataapi.domain.InntektDataResultat
-import no.nav.persondataapi.domain.KontrollPeriode
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
@@ -21,22 +19,23 @@ class InntektClient(
     private val tokenService: TokenService,
     @Qualifier("inntektWebClient")
     private val webClient: WebClient,
-
-
-    ) {
+) {
     private val log = LoggerFactory.getLogger(javaClass)
-    // Felles tags for denne klienten
 
 
-    fun hentInntekter(fnr: String, kontrollPeriode: KontrollPeriode = KontrollPeriode(LocalDate.now().minusYears(5),
-        LocalDate.now())): InntektDataResultat {
+    fun hentInntekter(
+        fnr: String, kontrollPeriode: KontrollPeriode = KontrollPeriode(
+            LocalDate.now().minusYears(5),
+            LocalDate.now()
+        )
+    ): InntektDataResultat {
 
         return runCatching {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
                 personident = fnr,
-                filter= "NAVKontrollA-Inntekt",
+                filter = "NAVKontrollA-Inntekt",
                 formaal = "NAVKontroll",
                 maanedFom = kontrollPeriode.fom.format(formatter),
                 maanedTom = kontrollPeriode.tom.format(formatter),
@@ -71,13 +70,22 @@ class InntektClient(
             },
             onFailure = { error ->
                 log.error("Feil ved henting av utbetalinger", error)
-                    InntektDataResultat (
-                        data = null,
-                        statusCode = 500,
-                        errorMessage = "Feil ved lesing: ${error.message}"
-                    )
+                InntektDataResultat(
+                    data = null,
+                    statusCode = 500,
+                    errorMessage = "Feil ved lesing: ${error.message}"
+                )
             }
         )
     }
-
 }
+
+data class InntektDataResultat(
+    val data: InntektshistorikkApiUt?,
+    val statusCode: Int?,               // f.eks. 200, 401, 500
+    val errorMessage: String? = null
+)
+
+data class KontrollPeriode(
+    val fom: LocalDate, val tom: LocalDate
+)
