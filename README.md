@@ -2,7 +2,18 @@
 API for uthenting av persondata for Borger eller innbygger i Norge med Nav tilknytning.
 
 ## Komme i gang
-Bruker gradle wrapper, så bare klon og kjør `./gradlew build`
+
+### Bygging og testing
+Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
+
+### Henting av secrets
+
+Før du starter applikasjonen, må du hente ned noen secrets fra Kubernetes. Det kan du gjøre med å kjøre kommandoen `./get-secrets.sh`. De blir lagret i filen `src/main/resources/.env.local.properties`, som ignoreres av git.
+For å få dette til å fungere må du ha `gcloud` installert, og logge på med `gcloud auth login`. 
+
+### Lokal kjøring
+
+Når du har hentet secrets, kan du starte appen med å starte Application.kt-filen via IntelliJ med profilen "local". Alternativt kan du starte den med `./gradlew bootRun --args='--spring.profiles.active=local'`
 
 ## Deployment
 
