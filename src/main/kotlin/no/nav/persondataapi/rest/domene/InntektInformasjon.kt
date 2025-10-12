@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest.domene
 
+import no.nav.persondataapi.rest.oppslag.Maskert
 import java.math.BigDecimal
 
 data class InntektInformasjon(
@@ -9,6 +10,7 @@ data class InntektInformasjon(
     val ytelseFraOffentlige : List<Lønnsdetaljer> = emptyList(),
 ) {
     data class Lønnsdetaljer(
+        @Maskert
         val arbeidsgiver: String?,
         val periode:String,
         val arbeidsforhold:String,
