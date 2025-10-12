@@ -1,14 +1,13 @@
 package no.nav.persondataapi.rest.oppslag
 
 /**
- * Annotation for marking fields that should be masked/anonymized under certain conditions.
+ * Annotasjon for å markere felt som skal maskeres i gitte situasjoner.
  *
- * When applied to a String field, the field's value will be replaced with the specified
- * masked value if the masking precondition is met.
+ * Når denne annotasjonen legges til et String-felt, så sier vi at vi vil maskere verdien av feltet.
  *
- * @property maskertVerdi The value to use when masking this field. Defaults to "*******".
+ * @property maskertVerdi Verdien som skal brukes når feltet maskeres. Standard er "*******".
  *
- * Example usage:
+ * @example
  * ```
  * data class Person(
  *     @Maskert
