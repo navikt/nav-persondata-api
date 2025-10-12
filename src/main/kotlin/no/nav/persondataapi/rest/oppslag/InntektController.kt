@@ -1,13 +1,9 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
-import no.nav.inntekt.generated.model.Loennsinntekt
-import no.nav.persondataapi.integrasjon.ereg.client.EregClient
-import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.rest.domene.InntektInformasjon
-import no.nav.persondataapi.service.BrukertilgangService
-import no.nav.persondataapi.service.harHistorikkPåNormallønn
-import no.nav.persondataapi.service.nyeste
+import no.nav.persondataapi.service.InntektResultat
+import no.nav.persondataapi.service.InntektService
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,67 +11,41 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import kotlin.time.measureTimedValue
 
 @Controller
 @RequestMapping("/oppslag/inntekt")
 class InntektController(
-    val inntektClient: InntektClient,
-    val eregClient: EregClient,
-    val brukertilgangService: BrukertilgangService
+    private val inntektService: InntektService
 ) {
-    private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
-            if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(dto.ident.value)) {
-                logger.info("Saksbehandler har ikke tilgang til å hente inntekter for ${dto.ident}")
-                ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
-            }
-            val (inntektResponse, tid) = measureTimedValue {
-                inntektClient.hentInntekter(dto.ident.value)
-            }
+            val resultat = inntektService.hentInntekterForPerson(dto.ident.value)
 
-            logger.info("Hentet inntekter for ${dto.ident} på ${tid.inWholeMilliseconds} ms, status ${inntektResponse.statusCode}")
-
-            when (inntektResponse.statusCode) {
-                404 -> ResponseEntity(OppslagResponseDto(error = "Person ikke funnet", data = null), HttpStatus.NOT_FOUND)
-                403 -> ResponseEntity(OppslagResponseDto(error = "Ingen tilgang", data = null), HttpStatus.FORBIDDEN)
-                500 -> ResponseEntity(OppslagResponseDto(error = "Feil i baksystem", data = null), HttpStatus.BAD_GATEWAY)
-            }
-
-            val lønnsinntekt = inntektResponse.data?.data
-                .orEmpty()
-                .flatMap { historikk ->
-                    val arbeidsgiver = eregClient.hentOrganisasjon(historikk.opplysningspliktig)
-
-                    historikk.versjoner.nyeste()
-                        ?.inntektListe
-                        ?.filterIsInstance<Loennsinntekt>()
-                        ?.map { loenn ->
-                            InntektInformasjon.Lønnsdetaljer(
-                                arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
-                                periode = historikk.maaned,
-                                arbeidsforhold = "",
-                                stillingsprosent = "",
-                                lønnstype = loenn.beskrivelse,
-                                antall = loenn.antall,
-                                beløp = loenn.beloep,
-                                harFlereVersjoner = historikk.harHistorikkPåNormallønn()
-                            )
-                        }
-                        .orEmpty()
+            when (resultat) {
+                is InntektResultat.Success -> {
+                    ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
                 }
-
-            logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for ${dto.ident}")
-
-            ResponseEntity.ok(
-                OppslagResponseDto(
-                    data = InntektInformasjon(lønnsinntekt = lønnsinntekt)
-                )
-            )
-
+                is InntektResultat.IngenTilgang -> {
+                    ResponseEntity(
+                        OppslagResponseDto(error = "Ingen tilgang", data = null),
+                        HttpStatus.FORBIDDEN
+                    )
+                }
+                is InntektResultat.PersonIkkeFunnet -> {
+                    ResponseEntity(
+                        OppslagResponseDto(error = "Person ikke funnet", data = null),
+                        HttpStatus.NOT_FOUND
+                    )
+                }
+                is InntektResultat.FeilIBaksystem -> {
+                    ResponseEntity(
+                        OppslagResponseDto(error = "Feil i baksystem", data = null),
+                        HttpStatus.BAD_GATEWAY
+                    )
+                }
+            }
         }
     }
 }
