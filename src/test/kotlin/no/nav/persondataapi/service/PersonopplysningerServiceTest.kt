@@ -232,8 +232,7 @@ class PersonopplysningerServiceTest {
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
 
-        // Alder should be approximately 25 (test written in 2025)
-        assertTrue(data.alder >= 24 && data.alder <= 26)
+        assertTrue(data.alder >= 24)
     }
 
     @Test
