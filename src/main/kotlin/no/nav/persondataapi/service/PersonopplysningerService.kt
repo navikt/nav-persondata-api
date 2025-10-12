@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonInformasjon
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -16,11 +17,6 @@ class PersonopplysningerService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentPersonopplysningerForPerson(personIdent: String): PersonopplysningerResultat {
-        // Sjekk tilgang først
-        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for $personIdent")
-            return PersonopplysningerResultat.IngenTilgang
-        }
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
@@ -64,9 +60,14 @@ class PersonopplysningerService(
         )
 
         // Berik med kodeverkdata
-        val beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
+        var beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
 
         logger.info("Hentet og mappet personopplysninger for $personIdent")
+
+        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for $personIdent. Maskerer responsen")
+            beriketPersonopplysninger = maskerObjekt(beriketPersonopplysninger)
+        }
 
         return PersonopplysningerResultat.Success(beriketPersonopplysninger)
     }

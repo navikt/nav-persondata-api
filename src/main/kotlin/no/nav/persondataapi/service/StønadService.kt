@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.utbetaling.client.UtbetalingClient
 import no.nav.persondataapi.rest.domene.Stønad
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -13,12 +14,6 @@ class StønadService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentStønaderForPerson(personIdent: String): StønadResultat {
-        // Sjekk tilgang først
-        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info("Saksbehandler har ikke tilgang til å hente stønader for $personIdent")
-            return StønadResultat.IngenTilgang
-        }
-
         // Hent utbetalinger fra UtbetalingClient
         val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(personIdent)
         logger.info("Hentet stønader for $personIdent, status ${utbetalingResponse.statusCode}")
@@ -39,7 +34,7 @@ class StønadService(
 
         // Mappe utbetalinger til stønader
         val utbetalinger = utbetalingResponse.data?.utbetalinger.orEmpty()
-        val stønader: List<Stønad> = utbetalinger
+        var stønader: List<Stønad> = utbetalinger
             .asSequence()
             .flatMap { it.ytelseListe.asSequence() }
             .filter { it.ytelsestype != null }
@@ -61,6 +56,11 @@ class StønadService(
             .toList()
 
         logger.info("Fant ${stønader.size} stønad(er) for $personIdent")
+
+        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            logger.info("Saksbehandler har ikke tilgang til å hente stønader for $personIdent. Maskerer responsen")
+            stønader = maskerObjekt(stønader)
+        }
 
         return StønadResultat.Success(stønader)
     }
