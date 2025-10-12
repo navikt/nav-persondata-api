@@ -29,17 +29,31 @@ import java.time.YearMonth
 class ArbeidsforholdServiceTest {
 
     @Test
-    fun `skal returnere IngenTilgang når saksbehandler ikke har tilgang`() = runBlocking {
+    fun `skal maskere data når saksbehandler ikke har tilgang`() = runBlocking {
         val brukertilgangService = mockk<BrukertilgangService>()
         val aaregClient = mockk<AaregClient>()
         val eregClient = mockk<EregClient>()
 
+        val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)
+
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { aaregClient.hentArbeidsforhold(any()) } returns AaregDataResultat(
+            data = listOf(arbeidsforhold),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
         val resultat = service.hentArbeidsforholdForPerson("12345678901")
 
-        assertTrue(resultat is ArbeidsforholdResultat.IngenTilgang)
+        assertTrue(resultat is ArbeidsforholdResultat.Success)
+        val data = (resultat as ArbeidsforholdResultat.Success).data
+        // Data skal være maskert - listene finnes men @Maskert-felter er erstattet med *******
+        assertEquals(1, data.løpendeArbeidsforhold.size)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
     }
 
     @Test

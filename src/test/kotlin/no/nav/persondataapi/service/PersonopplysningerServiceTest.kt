@@ -24,17 +24,42 @@ import org.junit.jupiter.api.Test
 class PersonopplysningerServiceTest {
 
     @Test
-    fun `skal returnere IngenTilgang når saksbehandler ikke har tilgang`() = runBlocking {
+    fun `skal maskere data når saksbehandler ikke har tilgang`() = runBlocking {
         val brukertilgangService = mockk<BrukertilgangService>()
         val pdlClient = mockk<PdlClient>()
         val kodeverkService = mockk<KodeverkService>()
 
+        val person = lagPerson(
+            fornavn = "Ola",
+            mellomnavn = "Nordmann",
+            etternavn = "Testesen",
+            foedselsdato = "2000-01-01",
+            statsborgerskap = listOf("NOR"),
+            forelderBarnRelasjon = listOf(
+                lagForelderBarnRelasjon("11111111111", ForelderBarnRelasjonRolle.BARN)
+            ),
+            sivilstand = listOf(
+                lagSivilstand("22222222222", Sivilstandstype.GIFT)
+            )
+        )
+
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
+            data = person,
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson("12345678901")
 
-        assertTrue(resultat is PersonopplysningerResultat.IngenTilgang)
+        assertTrue(resultat is PersonopplysningerResultat.Success)
+        val data = (resultat as PersonopplysningerResultat.Success).data
+        // Data skal være maskert - @Maskert-felter er erstattet med *******
+        assertEquals("*******", data.navn.fornavn)
+        assertEquals("*******", data.navn.mellomnavn)
+        assertEquals("*******", data.navn.etternavn)
     }
 
     @Test

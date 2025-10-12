@@ -19,16 +19,36 @@ import java.time.LocalDate
 class StønadServiceTest {
 
     @Test
-    fun `skal returnere IngenTilgang når saksbehandler ikke har tilgang`() {
+    fun `skal maskere data når saksbehandler ikke har tilgang`() {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
+        val ytelse = lagYtelse(
+            ytelsestype = "Dagpenger",
+            beløp = BigDecimal("10000"),
+            fom = LocalDate.of(2024, 1, 1),
+            tom = LocalDate.of(2024, 1, 31),
+            bilagsnummer = "12345"
+        )
+
+        val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse))
+
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+            statusCode = 200,
+            errorMessage = null
+        )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
         val resultat = service.hentStønaderForPerson("12345678901")
 
-        assertTrue(resultat is StønadResultat.IngenTilgang)
+        assertTrue(resultat is StønadResultat.Success)
+        val data = (resultat as StønadResultat.Success).data
+        // Data skal være maskert - listen finnes, men Stønad har ingen @Maskert-felter
+        // så data vil være uendret (Stønad har ingen sensitive felter som skal maskeres)
+        assertEquals(1, data.size)
+        assertEquals("Dagpenger", data[0].stonadType)
     }
 
     @Test
