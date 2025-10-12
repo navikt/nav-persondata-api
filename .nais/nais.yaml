@@ -63,6 +63,9 @@ spec:
         - application: oppslag-bruker-frontend
           namespace: holmes
           cluster: dev-gcp
+        - application: azure-token-generator
+          namespace: nais
+          cluster: dev-gcp
     outbound:
       rules:
         - application: sokos-utbetaldata
