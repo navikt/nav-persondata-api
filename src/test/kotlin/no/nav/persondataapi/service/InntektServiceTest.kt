@@ -25,17 +25,39 @@ import java.time.OffsetDateTime
 class InntektServiceTest {
 
     @Test
-    fun `skal returnere IngenTilgang når saksbehandler ikke har tilgang`() = runBlocking {
+    fun `skal maskere data når saksbehandler ikke har tilgang`() = runBlocking {
         val brukertilgangService = mockk<BrukertilgangService>()
         val inntektClient = mockk<InntektClient>()
         val eregClient = mockk<EregClient>()
 
+        val lønnsinntekt = lagLønnsinntekt(
+            beskrivelse = "Fastlønn",
+            beloep = BigDecimal("50000"),
+            antall = BigDecimal("1")
+        )
+
+        val historikk = lagHistorikkData(
+            opplysningspliktig = "999888777",
+            maaned = "2024-01",
+            inntektListe = listOf(lønnsinntekt)
+        )
+
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { inntektClient.hentInntekter(any(), any()) } returns InntektDataResultat(
+            data = InntektshistorikkApiUt(data = listOf(historikk)),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
         val resultat = service.hentInntekterForPerson("12345678901")
 
-        assertTrue(resultat is InntektResultat.IngenTilgang)
+        assertTrue(resultat is InntektResultat.Success)
+        val data = (resultat as InntektResultat.Success).data
+        // Data skal være maskert - listen finnes men @Maskert-felter er erstattet med *******
+        assertEquals(1, data.lønnsinntekt.size)
+        assertEquals("*******", data.lønnsinntekt[0].arbeidsgiver)
     }
 
     @Test

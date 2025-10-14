@@ -25,6 +25,10 @@ For deployment til produksjon, lag en [ny release](https://github.com/navikt/nav
 
 ---
 
+## Kode delvis generert med kunstig intelligens
+
+Dette repoet inneholder kode som er generert med kunstig intelligens. All kode blir gjennomgått av teamet før det merges.
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller repositoryet kan stilles som issues her på GitHub

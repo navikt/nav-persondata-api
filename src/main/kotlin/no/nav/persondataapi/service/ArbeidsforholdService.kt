@@ -6,6 +6,7 @@ import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -18,12 +19,6 @@ class ArbeidsforholdService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentArbeidsforholdForPerson(personIdent: String): ArbeidsforholdResultat {
-        // Sjekk tilgang først
-        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info("Saksbehandler har ikke tilgang til å hente arbeidsforhold for $personIdent")
-            return ArbeidsforholdResultat.IngenTilgang
-        }
-
         // Hent arbeidsforhold fra Aareg
         val aaregRespons = aaregClient.hentArbeidsforhold(personIdent)
         logger.info("Hentet arbeidsforhold for $personIdent, status ${aaregRespons.statusCode}")
@@ -71,12 +66,17 @@ class ArbeidsforholdService(
 
         logger.info("Fant ${løpendeArbeidsforhold.size} løpende og ${historiskeArbeidsforhold.size} historiske arbeidsforhold for $personIdent")
 
-        return ArbeidsforholdResultat.Success(
-            ArbeidsgiverInformasjon(
-                løpendeArbeidsforhold = løpendeArbeidsforhold,
-                historikk = historiskeArbeidsforhold
-            )
+        var respons = ArbeidsgiverInformasjon(
+            løpendeArbeidsforhold = løpendeArbeidsforhold,
+            historikk = historiskeArbeidsforhold
         )
+
+        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            logger.info("Saksbehandler har ikke tilgang til å hente arbeidsforhold for $personIdent. Maskerer responsen")
+            respons = maskerObjekt(respons)
+        }
+
+        return ArbeidsforholdResultat.Success(respons)
     }
 
     private fun mapArbeidsforholdTilArbeidsgiverData(

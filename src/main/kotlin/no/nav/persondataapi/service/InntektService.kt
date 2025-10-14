@@ -4,6 +4,7 @@ import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.rest.domene.InntektInformasjon
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -16,12 +17,6 @@ class InntektService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentInntekterForPerson(personIdent: String): InntektResultat {
-        // Sjekk tilgang først
-        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $personIdent")
-            return InntektResultat.IngenTilgang
-        }
-
         // Hent inntekter fra InntektClient
         val inntektResponse = inntektClient.hentInntekter(personIdent)
         logger.info("Hentet inntekter for $personIdent, status ${inntektResponse.statusCode}")
@@ -60,9 +55,14 @@ class InntektService(
 
         logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $personIdent")
 
-        return InntektResultat.Success(
-            InntektInformasjon(lønnsinntekt = lønnsinntekt)
-        )
+        var respons = InntektInformasjon(lønnsinntekt = lønnsinntekt)
+
+        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $personIdent. Maskerer responsen")
+           respons = maskerObjekt(respons)
+        }
+
+        return InntektResultat.Success(respons)
     }
 }
 
