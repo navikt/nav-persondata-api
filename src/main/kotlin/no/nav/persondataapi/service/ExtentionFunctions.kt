@@ -36,27 +36,27 @@ fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
         ?: "INGEN ADRESSSE"
 
 fun Person.gjeldendeFornavn(): String {
-    val navn = this.navn.first()
+    val navn = this.navn.firstOrNull() ?: return ""
     return navn.fornavn
 }
 
 fun Person.gjeldendeSivilStand(): String {
-    val sivilstand = this.sivilstand.first()
+    val sivilstand = this.sivilstand.firstOrNull() ?: return "UKJENT"
     return sivilstand.type.name
 }
 
 fun Person.gjeldendeMellomnavn(): String? {
-    val navn = this.navn.first()
+    val navn = this.navn.firstOrNull() ?: return null
     return navn.mellomnavn
 }
 
 fun Person.gjeldendeEtternavn(): String {
-    val navn = this.navn.first()
+    val navn = this.navn.firstOrNull() ?: return ""
     return navn.etternavn
 }
 
 fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
-    val adresse = this.bostedsadresse.first()
+    val adresse = this.bostedsadresse.firstOrNull() ?: return null
     val utenlandskAdresse = adresse.utenlandskAdresse
     val vegadresse = adresse.vegadresse
 
