@@ -69,6 +69,7 @@ fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean): Boolean {
         "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
         "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return !harUtvidetTilgang  //utvidet adgang skal ikke maskere
         "AVVIST_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
+        "AVVIST_FORTROLIG_ADRESSE" -> return false
         "AVVIST_SKJERMING" -> return false   //Egen Ansatt,
         "AVVIST_HABILITET" -> return false   //Egne data,Egen familie,Verge
         "AVVIST_VERGE" -> return false         //verge
@@ -81,3 +82,4 @@ enum class AdGrupper(val azureGruoup: String) {
     UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
     BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic")
 }
+

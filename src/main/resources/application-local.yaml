@@ -4,7 +4,7 @@ server:
   port: 8080
 spring:
   config:
-    import: "optional:file:./.env.local.properties"
+    import: "file:./src/main/resources/.env.local.properties"
   codec:
     max-in-memory-size: 5MB
 management:
@@ -56,5 +56,3 @@ GRUPPER: |
 
 KODEVERK_URL: https://kodeverk-api.nav.no
 KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
-
-# DO NOT CHECK IN BELOW
