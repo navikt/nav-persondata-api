@@ -40,12 +40,7 @@ interface TilgangsmaskinClient {
 *
 * Basic bruker skal ikke ha adgang til AVVIST_STRENGT_FORTROLIG_ADRESSE
 * Basic bruker skal ikke ha adgang til AVVIST_STRENGT_FORTROLIG_UTLAND
-* Basic bruker har tilgang til :
-*   - AVVIST_FORTROLIG_ADRESSE
-*   - AVVIST_SKJERMING
-*   - AVVIST_HABILITET
-*   - AVVIST_VERGE
-*   - AVVIST_MANGLENDE_DATA
+* Basic bruker har tilgang til : INGEN!
 *
 * */
 fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
