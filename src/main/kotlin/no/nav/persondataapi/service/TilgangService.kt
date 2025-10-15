@@ -52,23 +52,7 @@ fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
     when (this.title) {
         "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false
         "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false
-        "AVVIST_FORTROLIG_ADRESSE" -> return true
-        "AVVIST_SKJERMING" -> return true   //Egen Ansatt,
-        "AVVIST_HABILITET" -> return true   //Egne data,Egen familie,Verge
-        "AVVIST_VERGE" -> return true         //verge
-        "AVVIST_MANGLENDE_DATA" -> return true    //Mangler data
-    }
-    return false
-}
-
-/*
-* Funksjon som vurderer hvorvidt geolokasjon skal maskeres før det vises til saksbehandler
-* */
-fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean): Boolean {
-    when (this.title) {
-        "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
-        "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return !harUtvidetTilgang  //utvidet adgang skal ikke maskere
-        "AVVIST_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
+        "AVVIST_FORTROLIG_ADRESSE" -> return false
         "AVVIST_SKJERMING" -> return false   //Egen Ansatt,
         "AVVIST_HABILITET" -> return false   //Egne data,Egen familie,Verge
         "AVVIST_VERGE" -> return false         //verge
@@ -76,7 +60,6 @@ fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean): Boolean {
     }
     return false
 }
-
 enum class AdGrupper(val azureGruoup: String) {
     UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
     BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic")
