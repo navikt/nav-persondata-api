@@ -21,18 +21,18 @@ class TilgangsmaskinClientImpl (
     ): TilgangsmaskinClient {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    override fun sjekkTilgang(fnr: String, userToken: String
+    override fun sjekkTilgang(personIdent: String, saksbehandlerToken: String
             ): TilgangResultat {
             return runCatching {
 
                 val oboToken = tokenService.exchangeToken(
-                    userToken, SCOPE.TILGANGMASKIN_SCOPE
+                    saksbehandlerToken, SCOPE.TILGANGMASKIN_SCOPE
                 )
                 val responseResult = webClient.post()
                     .uri("/api/v1/komplett")
                     .header("Authorization", "Bearer $oboToken")
                     .header("Nav-Call-Id", UUID.randomUUID().toString())
-                    .bodyValue(fnr)
+                    .bodyValue(personIdent)
                     .exchangeToMono {
                         response ->
                         val status = response.statusCode()
@@ -42,12 +42,11 @@ class TilgangsmaskinClientImpl (
                                 title = null,
                                 status = 204,
                                 instance = null,
-                                brukerIdent = fnr,
+                                brukerIdent = personIdent,
                                 navIdent = null,
                                 traceId = null,
                                 begrunnelse = null,
                                 kanOverstyres = true
-
                             ))
                         }
                         else if (status.is2xxSuccessful) {
@@ -66,6 +65,7 @@ class TilgangsmaskinClientImpl (
                 responseResult
             }.fold(
                 onSuccess = { resultat ->
+                    logger.info("Tilgangskontroll OK", resultat)
                     TilgangResultat(
                         data = resultat,
                         statusCode = 200,

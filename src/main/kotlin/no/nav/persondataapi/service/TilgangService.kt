@@ -3,6 +3,7 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.domene.Grupper
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangMaskinResultat
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangResultat
+import org.slf4j.LoggerFactory
 
 import org.springframework.stereotype.Component
 
@@ -16,9 +17,11 @@ class TilgangService(
         return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
     }
 
-    fun sjekkTilgang(fnr: String, userToken: String): Int {
-        val resultat = tilgangsmaskinClient.sjekkTilgang(fnr, userToken)
+    fun sjekkTilgang(brukerIdent: String, saksbehandlerToken: String): Int {
+        val resultat = tilgangsmaskinClient.sjekkTilgang(brukerIdent, saksbehandlerToken)
         val data = resultat.data
+
+
 
         return when {
             data?.status == 204 -> 200
@@ -30,7 +33,7 @@ class TilgangService(
 }
 
 interface TilgangsmaskinClient {
-    fun sjekkTilgang(fnr: String, userToken: String): TilgangResultat
+    fun sjekkTilgang(personIdent: String, saksbehandlerToken: String): TilgangResultat
 }
 
 /*
@@ -82,4 +85,3 @@ enum class AdGrupper(val azureGruoup: String) {
     UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
     BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic")
 }
-
