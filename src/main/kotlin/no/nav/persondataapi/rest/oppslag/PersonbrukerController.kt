@@ -26,7 +26,7 @@ class PersonbrukerController(
         val saksbehandlerIdent = token!!.jwtTokenClaims.get("NAVident").toString()
         logger.info("Saksbehandler $saksbehandlerIdent slår opp person ${dto.ident}")
 
-        val status = brukertilgangService.hentStatusPåBruker(dto.ident.value)
+        val status = brukertilgangService.hentStatusPåBruker(dto.ident)
         if (status == 404) {
             logger.info("Fant ikke bruker ${dto.ident}")
             return ResponseEntity.notFound().build()

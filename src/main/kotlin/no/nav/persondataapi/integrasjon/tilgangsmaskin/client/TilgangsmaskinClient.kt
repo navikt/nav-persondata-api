@@ -1,5 +1,6 @@
 package no.nav.persondataapi.integrasjon.tilgangsmaskin.client
 
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TilgangsmaskinClient
 import no.nav.persondataapi.service.TokenService
@@ -21,7 +22,7 @@ class TilgangsmaskinClientImpl (
     ): TilgangsmaskinClient {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    override fun sjekkTilgang(personIdent: String, saksbehandlerToken: String
+    override fun sjekkTilgang(personIdent: PersonIdent, saksbehandlerToken: String
             ): TilgangResultat {
             return runCatching {
 
@@ -32,7 +33,7 @@ class TilgangsmaskinClientImpl (
                     .uri("/api/v1/komplett")
                     .header("Authorization", "Bearer $oboToken")
                     .header("Nav-Call-Id", UUID.randomUUID().toString())
-                    .bodyValue(personIdent)
+                    .bodyValue(personIdent.value)
                     .exchangeToMono {
                         response ->
                         val status = response.statusCode()
@@ -42,7 +43,7 @@ class TilgangsmaskinClientImpl (
                                 title = null,
                                 status = 204,
                                 instance = null,
-                                brukerIdent = personIdent,
+                                brukerIdent = personIdent.value,
                                 navIdent = null,
                                 traceId = null,
                                 begrunnelse = null,
@@ -62,7 +63,7 @@ class TilgangsmaskinClientImpl (
                 responseResult
             }.fold(
                 onSuccess = { resultat ->
-                    logger.info("Tilgangskontroll OK: ${resultat.title} ${resultat.status} ${resultat.type} ${resultat.begrunnelse}")
+                    logger.debug("Tilgangskontroll: ${resultat.title} ${resultat.status} ${resultat.type} ${resultat.begrunnelse}")
                     TilgangResultat(
                         data = resultat,
                         statusCode = 200,

@@ -1,6 +1,7 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.utbetaling.client.UtbetalingClient
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.Stønad
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
@@ -13,7 +14,7 @@ class StønadService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun hentStønaderForPerson(personIdent: String): StønadResultat {
+    fun hentStønaderForPerson(personIdent: PersonIdent): StønadResultat {
         // Hent utbetalinger fra UtbetalingClient
         val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(personIdent)
         logger.info("Hentet stønader for $personIdent, status ${utbetalingResponse.statusCode}")

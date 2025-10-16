@@ -10,6 +10,7 @@ import no.nav.persondataapi.integrasjon.utbetaling.dto.Aktoertype
 import no.nav.persondataapi.integrasjon.utbetaling.dto.Periode
 import no.nav.persondataapi.integrasjon.utbetaling.dto.Utbetaling
 import no.nav.persondataapi.integrasjon.utbetaling.dto.Ytelse
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -41,7 +42,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -64,7 +65,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.PersonIkkeFunnet)
     }
@@ -82,7 +83,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.IngenTilgang)
     }
@@ -100,7 +101,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.IngenTilgang)
     }
@@ -118,7 +119,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.FeilIBaksystem)
     }
@@ -136,7 +137,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.FeilIBaksystem)
     }
@@ -154,7 +155,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -184,7 +185,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -225,7 +226,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -263,7 +264,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -301,7 +302,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data
@@ -340,7 +341,7 @@ class StønadServiceTest {
         )
 
         val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson("12345678901")
+        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is StønadResultat.Success)
         val data = (resultat as StønadResultat.Success).data

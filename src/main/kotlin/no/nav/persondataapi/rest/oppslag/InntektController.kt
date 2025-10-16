@@ -21,7 +21,7 @@ class InntektController(
     @PostMapping
     fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
-            val resultat = inntektService.hentInntekterForPerson(dto.ident.value)
+            val resultat = inntektService.hentInntekterForPerson(dto.ident)
 
             when (resultat) {
                 is InntektResultat.Success -> {

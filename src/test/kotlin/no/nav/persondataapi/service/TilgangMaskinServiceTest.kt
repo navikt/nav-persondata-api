@@ -3,6 +3,7 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.domene.Grupper
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangMaskinResultat
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangResultat
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -21,55 +22,55 @@ class TilgangMaskinServiceTest {
         client.title=strengtFortrolig
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(403,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ha tilgang til  fortrolig`() {
+    fun `Basic adgang skal ha tilgang til fortrolig`() {
         val client = TilgangsMaskinMockClient()
         client.title=fortroligAdresse
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ha tilgang til  egen_ansatt`() {
+    fun `Basic adgang skal ha tilgang til egen_ansatt`() {
         val client = TilgangsMaskinMockClient()
         client.title=egenAnsatt
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ikke ha tilgang til  egne_data`() {
+    fun `Basic adgang skal ikke ha tilgang til egne_data`() {
         val client = TilgangsMaskinMockClient()
         client.title=egneData
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal  ha tilgang til  verge`() {
+    fun `Basic adgang skal  ha tilgang til verge`() {
         val client = TilgangsMaskinMockClient()
         client.title=verge
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ikke ha tilgang til  strengt fortrolig_utland`() {
+    fun `Basic adgang skal ikke ha tilgang til strengt fortrolig_utland`() {
         val client = TilgangsMaskinMockClient()
         client.title=strengtFortroligUtland
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(403,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(403,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ha tilgang til  manglende data`() {
+    fun `Basic adgang skal ha tilgang til manglende data`() {
         val client = TilgangsMaskinMockClient()
         client.title=manglendeData
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang("12345","2222"))
+        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
 }
 
@@ -78,7 +79,7 @@ class TilgangsMaskinMockClient: TilgangsmaskinClient
 {
     var title = ""
     override fun sjekkTilgang(
-        personIdent: String,
+        personIdent: PersonIdent,
         saksbehandlerToken: String
     ): TilgangResultat {
         return TilgangResultat(

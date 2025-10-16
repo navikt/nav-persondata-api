@@ -1,6 +1,7 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
@@ -16,7 +17,7 @@ class PersonopplysningerService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    suspend fun hentPersonopplysningerForPerson(personIdent: String): PersonopplysningerResultat {
+    suspend fun hentPersonopplysningerForPerson(personIdent: PersonIdent): PersonopplysningerResultat {
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
@@ -49,7 +50,7 @@ class PersonopplysningerService(
                 mellomnavn = pdlData.gjeldendeMellomnavn(),
                 etternavn = pdlData.gjeldendeEtternavn(),
             ),
-            aktørId = personIdent,
+            aktørId = personIdent.value,
             adresse = pdlData.nåværendeBostedsadresse(),
             familemedlemmer = familiemedlemmer,
             statsborgerskap = statsborgerskap,

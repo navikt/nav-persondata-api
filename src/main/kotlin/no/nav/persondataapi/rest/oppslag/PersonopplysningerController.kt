@@ -21,7 +21,7 @@ class PersonopplysningerController(
     @PostMapping
     fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
-            val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident.value)
+            val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident)
 
             when (resultat) {
                 is PersonopplysningerResultat.Success -> {

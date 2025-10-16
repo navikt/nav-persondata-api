@@ -19,6 +19,7 @@ import no.nav.persondataapi.integrasjon.aareg.client.Opplysningspliktig
 import no.nav.persondataapi.integrasjon.aareg.client.Rapporteringsmaaneder
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -45,7 +46,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -70,7 +71,7 @@ class ArbeidsforholdServiceTest {
         )
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.PersonIkkeFunnet)
     }
@@ -89,7 +90,7 @@ class ArbeidsforholdServiceTest {
         )
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.IngenTilgang)
     }
@@ -108,7 +109,7 @@ class ArbeidsforholdServiceTest {
         )
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.FeilIBaksystem)
     }
@@ -127,7 +128,7 @@ class ArbeidsforholdServiceTest {
         )
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.FeilIBaksystem)
     }
@@ -146,7 +147,7 @@ class ArbeidsforholdServiceTest {
         )
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -172,7 +173,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -199,7 +200,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon("999888777") } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -226,7 +227,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -260,7 +261,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -292,7 +293,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data
@@ -319,7 +320,7 @@ class ArbeidsforholdServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
-        val resultat = service.hentArbeidsforholdForPerson("12345678901")
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is ArbeidsforholdResultat.Success)
         val data = (resultat as ArbeidsforholdResultat.Success).data

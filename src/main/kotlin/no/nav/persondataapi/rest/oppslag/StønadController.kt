@@ -19,7 +19,7 @@ class StønadController(
     @Protected
     @PostMapping
     fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stønad>>> {
-        val resultat = stønadService.hentStønaderForPerson(dto.ident.value)
+        val resultat = stønadService.hentStønaderForPerson(dto.ident)
 
         return when (resultat) {
             is StønadResultat.Success -> {

@@ -3,6 +3,7 @@ import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
 import no.nav.persondataapi.integrasjon.utbetaling.dto.Utbetaling
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
@@ -18,11 +19,11 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun hentUtbetalingerForBruker(fnr: String): UtbetalingResultat {
+    fun hentUtbetalingerForBruker(personIdent: PersonIdent): UtbetalingResultat {
         return runCatching {
 
             val requestBody = RequestBody(
-                ident = fnr,
+                ident = personIdent.value,
                 rolle = "RETTIGHETSHAVER",
                 periode = Periode(LocalDate.now().minusYears(3), LocalDate.now()),
                 periodetype = "UTBETALINGSPERIODE"
@@ -48,14 +49,13 @@ class UtbetalingClient(
             },
             onFailure = { error ->
                 log.error("Feil ved henting av utbetalinger", error)
-                if (error.message?.contains("ikke tilgang") == true || fnr == "00000000000") {
+                if (error.message?.contains("ikke tilgang") == true) {
                     UtbetalingResultat(
                         data = null,
                         statusCode = 401,
-                        errorMessage = "Ingen tilgang til utbetalinger for $fnr"
+                        errorMessage = "Ingen tilgang til utbetalinger for $personIdent"
                     )
                 } else {
-                    
                     UtbetalingResultat(
                         data = null,
                         statusCode = 500,
