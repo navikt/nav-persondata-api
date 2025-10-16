@@ -17,6 +17,11 @@ class PersonopplysningerService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
+    suspend fun finnesPerson(personIdent: PersonIdent): Boolean {
+        val response = pdlClient.hentPerson(personIdent)
+        return response.statusCode != 404
+    }
+
     suspend fun hentPersonopplysningerForPerson(personIdent: PersonIdent): PersonopplysningerResultat {
 
         // Hent person fra PDL
