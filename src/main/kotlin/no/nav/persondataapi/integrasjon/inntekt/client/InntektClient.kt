@@ -7,6 +7,7 @@ import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -24,6 +25,7 @@ class InntektClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
 
+    @Cacheable(value = ["inntekt-historikk"], key = "#personIdent.value + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom")
     fun hentInntekter(
         personIdent: PersonIdent,
         kontrollPeriode: KontrollPeriode = KontrollPeriode(

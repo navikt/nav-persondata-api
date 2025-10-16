@@ -6,6 +6,7 @@ import no.nav.persondataapi.integrasjon.utbetaling.dto.Utbetaling
 import no.nav.persondataapi.rest.domene.PersonIdent
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -19,6 +20,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
+    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent.value")
     fun hentUtbetalingerForBruker(personIdent: PersonIdent): UtbetalingResultat {
         return runCatching {
 

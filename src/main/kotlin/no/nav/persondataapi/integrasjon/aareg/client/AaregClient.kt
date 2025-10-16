@@ -8,7 +8,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.springframework.beans.factory.annotation.Qualifier
-
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -25,6 +25,7 @@ class AaregClient(
 
     private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
 
+    @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent.value")
     fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)

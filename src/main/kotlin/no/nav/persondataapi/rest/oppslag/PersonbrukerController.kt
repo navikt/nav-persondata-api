@@ -38,10 +38,11 @@ class PersonbrukerController(
         return runBlocking {
             if (!personopplysningerService.finnesPerson(dto.ident)) {
                 logger.info("Fant ikke bruker ${dto.ident}")
-                ResponseEntity.notFound().build<Void>()
+                ResponseEntity.notFound().build()
+            } else {
+                logger.info("Fant bruker ${dto.ident}")
+                ResponseEntity.ok().build();
             }
-            logger.info("Fant bruker ${dto.ident}")
-            ResponseEntity.ok().build();
         }
     }
 }

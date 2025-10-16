@@ -6,6 +6,29 @@ server:
 spring:
   codec:
     max-in-memory-size: 5MB
+
+cache:
+  default-expiration: 1h
+  maximum-size: 1000
+  caches:
+    pdl-person:
+      expiration: 1h
+      maximum-size: 1000
+    aareg-arbeidsforhold:
+      expiration: 1h
+      maximum-size: 1000
+    ereg-organisasjon:
+      expiration: 1h
+      maximum-size: 2000
+    inntekt-historikk:
+      expiration: 1h
+      maximum-size: 1000
+    utbetaling-bruker:
+      expiration: 1h
+      maximum-size: 1000
+    kodeverk-landkoder:
+      expiration: 1h
+      maximum-size: 100
 management:
   endpoints:
     web:

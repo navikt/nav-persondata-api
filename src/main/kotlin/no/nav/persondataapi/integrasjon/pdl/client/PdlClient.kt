@@ -8,6 +8,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -18,6 +19,7 @@ class PdlClient(
     @Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
+    @Cacheable(value = ["pdl-person"], key = "#personIdent.value")
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
