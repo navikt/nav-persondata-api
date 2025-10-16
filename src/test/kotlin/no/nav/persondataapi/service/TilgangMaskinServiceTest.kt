@@ -78,8 +78,8 @@ class TilgangsMaskinMockClient: TilgangsmaskinClient
 {
     var title = ""
     override fun sjekkTilgang(
-        fnr: String,
-        userToken: String
+        personIdent: String,
+        saksbehandlerToken: String
     ): TilgangResultat {
         return TilgangResultat(
             TilgangMaskinResultat(
