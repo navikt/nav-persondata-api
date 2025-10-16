@@ -49,10 +49,7 @@ class TilgangsmaskinClientImpl (
                                 kanOverstyres = true
                             ))
                         }
-                        else if (status.is2xxSuccessful) {
-                            response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
-                        }
-                        else if (status.is4xxClientError){
+                        else if (status.is2xxSuccessful || status.is4xxClientError) {
                             response.bodyToMono(object : ParameterizedTypeReference<TilgangMaskinResultat>() {})
                         }
                         else {
@@ -65,7 +62,7 @@ class TilgangsmaskinClientImpl (
                 responseResult
             }.fold(
                 onSuccess = { resultat ->
-                    logger.info("Tilgangskontroll OK", resultat)
+                    logger.info("Tilgangskontroll OK: ${resultat.title} ${resultat.status} ${resultat.type} ${resultat.begrunnelse}")
                     TilgangResultat(
                         data = resultat,
                         statusCode = 200,
