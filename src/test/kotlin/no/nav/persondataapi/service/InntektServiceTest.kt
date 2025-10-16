@@ -14,6 +14,7 @@ import no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato
 import no.nav.persondataapi.integrasjon.ereg.client.PeriodeTid
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektDataResultat
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -51,7 +52,7 @@ class InntektServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data
@@ -74,7 +75,7 @@ class InntektServiceTest {
         )
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.PersonIkkeFunnet)
     }
@@ -93,7 +94,7 @@ class InntektServiceTest {
         )
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.IngenTilgang)
     }
@@ -112,7 +113,7 @@ class InntektServiceTest {
         )
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.FeilIBaksystem)
     }
@@ -131,7 +132,7 @@ class InntektServiceTest {
         )
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.FeilIBaksystem)
     }
@@ -150,7 +151,7 @@ class InntektServiceTest {
         )
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data
@@ -184,7 +185,7 @@ class InntektServiceTest {
         every { eregClient.hentOrganisasjon("999888777") } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data
@@ -223,7 +224,7 @@ class InntektServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data
@@ -271,7 +272,7 @@ class InntektServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data
@@ -318,7 +319,7 @@ class InntektServiceTest {
         every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
 
         val service = InntektService(inntektClient, eregClient, brukertilgangService)
-        val resultat = service.hentInntekterForPerson("12345678901")
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is InntektResultat.Success)
         val data = (resultat as InntektResultat.Success).data

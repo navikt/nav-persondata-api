@@ -3,6 +3,7 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.domene.Grupper
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangMaskinResultat
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangResultat
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.slf4j.LoggerFactory
 
 import org.springframework.stereotype.Component
@@ -17,7 +18,7 @@ class TilgangService(
         return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
     }
 
-    fun sjekkTilgang(brukerIdent: String, saksbehandlerToken: String): Int {
+    fun sjekkTilgang(brukerIdent: PersonIdent, saksbehandlerToken: String): Int {
         val resultat = tilgangsmaskinClient.sjekkTilgang(brukerIdent, saksbehandlerToken)
         val data = resultat.data
 
@@ -31,7 +32,7 @@ class TilgangService(
 }
 
 interface TilgangsmaskinClient {
-    fun sjekkTilgang(personIdent: String, saksbehandlerToken: String): TilgangResultat
+    fun sjekkTilgang(personIdent: PersonIdent, saksbehandlerToken: String): TilgangResultat
 }
 
 /*

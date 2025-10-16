@@ -4,6 +4,7 @@ package no.nav.persondataapi.integrasjon.pdl.client
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import no.nav.persondataapi.generated.HentPerson
 import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.springframework.beans.factory.annotation.Value
@@ -17,7 +18,7 @@ class PdlClient(
     @Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
-    suspend fun hentPerson(ident: String): PersonDataResultat {
+    suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
         val client = GraphQLWebClient(
@@ -26,14 +27,14 @@ class PdlClient(
         )
         val query = HentPerson(
             HentPerson.Variables(
-                ident = ident,
+                ident = personIdent.value,
                 historikk = false,
             )
         )
         val response = client.execute(query) {
             header("Authorization", "Bearer $token")
-            header(CustomHeaders.Behandlingsnummer, "B634")
-            header(CustomHeaders.Tema, "KTR")
+            header(Behandlingsnummer, "B634")
+            header(Tema, "KTR")
         }
         if (response.errors?.isNotEmpty() == true) {
             var status = 500

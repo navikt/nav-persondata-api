@@ -15,6 +15,7 @@ import no.nav.persondataapi.generated.hentperson.Sivilstand
 import no.nav.persondataapi.generated.hentperson.Statsborgerskap
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.pdl.client.PersonDataResultat
+import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
@@ -52,7 +53,7 @@ class PersonopplysningerServiceTest {
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -76,7 +77,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.PersonIkkeFunnet)
     }
@@ -95,7 +96,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.IngenTilgang)
     }
@@ -114,7 +115,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.FeilIBaksystem)
     }
@@ -133,7 +134,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.FeilIBaksystem)
     }
@@ -152,7 +153,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.PersonIkkeFunnet)
     }
@@ -186,7 +187,7 @@ class PersonopplysningerServiceTest {
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -222,7 +223,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -252,7 +253,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -284,7 +285,7 @@ class PersonopplysningerServiceTest {
         every { kodeverkService.mapLandkodeTilLandnavn("DNK") } returns "Danmark"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -317,7 +318,7 @@ class PersonopplysningerServiceTest {
         every { kodeverkService.mapLandkodeTilLandnavn("XXX") } returns "Ukjent"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data
@@ -349,7 +350,7 @@ class PersonopplysningerServiceTest {
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
-        val resultat = service.hentPersonopplysningerForPerson("12345678901")
+        val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
         val data = (resultat as PersonopplysningerResultat.Success).data

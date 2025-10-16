@@ -6,6 +6,7 @@ import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -18,7 +19,7 @@ class ArbeidsforholdService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    suspend fun hentArbeidsforholdForPerson(personIdent: String): ArbeidsforholdResultat {
+    suspend fun hentArbeidsforholdForPerson(personIdent: PersonIdent): ArbeidsforholdResultat {
         // Hent arbeidsforhold fra Aareg
         val aaregRespons = aaregClient.hentArbeidsforhold(personIdent)
         logger.info("Hentet arbeidsforhold for $personIdent, status ${aaregRespons.statusCode}")

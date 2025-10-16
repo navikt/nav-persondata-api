@@ -3,6 +3,7 @@ package no.nav.persondataapi.integrasjon.aareg.client
 
 import com.fasterxml.jackson.core.type.TypeReference
 import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.rest.domene.PersonIdent
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -24,7 +25,7 @@ class AaregClient(
 
     private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
 
-    fun hentArbeidsforhold(fnr: String): AaregDataResultat {
+    fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)
 
@@ -39,7 +40,7 @@ class AaregClient(
                 }
                 .header("Authorization", "Bearer $oboToken")
                 .header("Nav-Call-Id", UUID.randomUUID().toString())
-                .header("Nav-Personident", fnr)
+                .header("Nav-Personident", personIdent.value)
                 .exchangeToMono { response ->
                     val status = response.statusCode()
                     // Les body som String (kan bare leses én gang), logg, og parse

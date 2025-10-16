@@ -14,24 +14,8 @@ class TokenService (
         private val tokenWebClient: WebClient,
         @Qualifier("azuretokenWebClient")
         private val azuretokenWebClient: WebClient,
-        private val objectMapper: ObjectMapper,
         private val environment: Environment
     ) {
-        fun exchangeToken(userToken: String, target: String): String {
-        val requestBody = mapOf(
-            "identity_provider" to "azuread",
-            "target" to target,
-            "user_token" to userToken
-        )
-        val response = tokenWebClient.post()
-            .bodyValue(requestBody)
-            .retrieve()
-            .bodyToMono(TokenResponse::class.java)
-            .block() // Bruk `awaitSingle()` hvis du er i `suspend`-verden
-
-        return response?.access_token
-            ?: throw IllegalStateException("Access token mangler i token-respons")
-    }
         fun exchangeToken(userToken: String, scope: SCOPE): String {
             val target = environment[scope.toString()]
             val requestBody = mapOf(

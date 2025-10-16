@@ -2,6 +2,7 @@ package no.nav.persondataapi.integrasjon.inntekt.client
 
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
@@ -24,7 +25,8 @@ class InntektClient(
 
 
     fun hentInntekter(
-        fnr: String, kontrollPeriode: KontrollPeriode = KontrollPeriode(
+        personIdent: PersonIdent,
+        kontrollPeriode: KontrollPeriode = KontrollPeriode(
             LocalDate.now().minusYears(5),
             LocalDate.now()
         )
@@ -34,7 +36,7 @@ class InntektClient(
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
-                personident = fnr,
+                personident = personIdent.value,
                 filter = "NAVKontrollA-Inntekt",
                 formaal = "NAVKontroll",
                 maanedFom = kontrollPeriode.fom.format(formatter),
@@ -54,7 +56,6 @@ class InntektClient(
                         response.bodyToMono(object : ParameterizedTypeReference<InntektshistorikkApiUt>() {})
                     } else {
                         response.bodyToMono(String::class.java).map { body ->
-
                             throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
                         }
                     }
