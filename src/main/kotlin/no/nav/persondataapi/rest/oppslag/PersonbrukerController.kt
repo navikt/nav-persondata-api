@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping
 class PersonbrukerController(
     val brukertilgangService: BrukertilgangService,
 ) {
-    private val log = LoggerFactory.getLogger(javaClass)
+    private val logger = LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
     fun hentStatusPåBrukeroppslag(@RequestBody dto: OppslagRequestDto): ResponseEntity<Void> {
         val status = brukertilgangService.hentStatusPåBruker(dto.ident.value)
-        log.info("Hentet status for bruker ${dto.ident}: $status")
-        return ResponseEntity.status(status).build()
+        if (status == 404) {
+            logger.info("Fant ikke bruker ${dto.ident}")
+            return ResponseEntity.notFound().build()
+        }
+        logger.info("Fant bruker ${dto.ident}")
+        return ResponseEntity.ok().build();
     }
 }
