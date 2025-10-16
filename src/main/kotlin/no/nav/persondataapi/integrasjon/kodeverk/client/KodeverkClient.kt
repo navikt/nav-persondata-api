@@ -18,7 +18,7 @@ class KodeverkClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable("landkoder")
+    @Cacheable(value = ["kodeverk-landkoder"])
     fun hentLandkoder(): List<Landkode> {
         val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
 
