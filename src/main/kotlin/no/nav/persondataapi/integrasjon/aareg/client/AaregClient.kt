@@ -25,7 +25,7 @@ class AaregClient(
 
     private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
 
-    @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent.value")
+    @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent")
     fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)

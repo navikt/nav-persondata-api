@@ -19,7 +19,7 @@ class PdlClient(
     @Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
-    @Cacheable(value = ["pdl-person"], key = "#personIdent.value")
+    @Cacheable(value = ["pdl-person"], key = "#personIdent")
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 

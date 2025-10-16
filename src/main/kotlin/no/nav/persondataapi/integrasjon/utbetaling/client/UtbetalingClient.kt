@@ -20,7 +20,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent.value")
+    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent")
     fun hentUtbetalingerForBruker(personIdent: PersonIdent): UtbetalingResultat {
         return runCatching {
 

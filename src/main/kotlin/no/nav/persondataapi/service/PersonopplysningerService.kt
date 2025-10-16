@@ -5,6 +5,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
+import org.springframework.cache.CacheManager
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -13,7 +14,8 @@ import java.time.Period
 class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
-    private val kodeverkService: KodeverkService
+    private val kodeverkService: KodeverkService,
+    private val cacheManager: CacheManager
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 

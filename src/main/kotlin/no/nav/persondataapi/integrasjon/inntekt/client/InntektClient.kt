@@ -25,7 +25,7 @@ class InntektClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
 
-    @Cacheable(value = ["inntekt-historikk"], key = "#personIdent.value + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom")
+    @Cacheable(value = ["inntekt-historikk"], key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom")
     fun hentInntekter(
         personIdent: PersonIdent,
         kontrollPeriode: KontrollPeriode = KontrollPeriode(
@@ -33,7 +33,6 @@ class InntektClient(
             LocalDate.now()
         )
     ): InntektDataResultat {
-
         return runCatching {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
