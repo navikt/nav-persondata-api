@@ -21,8 +21,6 @@ class TilgangService(
         val resultat = tilgangsmaskinClient.sjekkTilgang(brukerIdent, saksbehandlerToken)
         val data = resultat.data
 
-
-
         return when {
             data?.status == 204 -> 200
             data?.harTilgangMedBasicAdgang() == true -> 200
@@ -53,30 +51,15 @@ interface TilgangsmaskinClient {
 * */
 fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
     when (this.title) {
-        "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false
-        "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false
-        "AVVIST_FORTROLIG_ADRESSE" -> return true
-        "AVVIST_SKJERMING" -> return true   //Egen Ansatt,
-        "AVVIST_HABILITET" -> return true   //Egne data,Egen familie,Verge
-        "AVVIST_VERGE" -> return true         //verge
-        "AVVIST_MANGLENDE_DATA" -> return true    //Mangler data
-    }
-    return false
-}
-
-/*
-* Funksjon som vurderer hvorvidt geolokasjon skal maskeres før det vises til saksbehandler
-* */
-fun TilgangMaskinResultat.skalMaskere(harUtvidetTilgang: Boolean): Boolean {
-    when (this.title) {
-        "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
-        "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return !harUtvidetTilgang  //utvidet adgang skal ikke maskere
-        "AVVIST_FORTROLIG_ADRESSE" -> return !harUtvidetTilgang //utvidet adgang skal ikke maskere
-        "AVVIST_FORTROLIG_ADRESSE" -> return false
-        "AVVIST_SKJERMING" -> return false   //Egen Ansatt,
-        "AVVIST_HABILITET" -> return false   //Egne data,Egen familie,Verge
-        "AVVIST_VERGE" -> return false         //verge
-        "AVVIST_MANGLENDE_DATA" -> return false    //Mangler data
+        "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false  // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse.
+        "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false   // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse i utlandet.
+        "AVVIST_FORTROLIG_ADRESSE" -> return true           // Saksbehandler har tilgang til brukere med fortrolig adresse.
+        "AVVIST_GEOGRAFISK" -> return false                 // Saksbehandler har ikke tilgang til brukerens geografiske område eller enhet.
+        "AVVIST_AVDOED" -> return false                     // Saksbehandler har ikke tilgang til brukere som har vært død i mer enn X måneder.
+        "AVVIST_SKJERMING" -> return true                   // Saksbehandler har tilgang til Nav-ansatte og andre skjermede brukere.
+        "AVVIST_HABILITET" -> return true                   // Saksbehandler har tilgang til data om seg selv eller sine nærstående.
+        "AVVIST_VERGE" -> return true                       // Saksbehandler har tilgang om man er registrert som brukerens verge.
+        "AVVIST_MANGLENDE_DATA" -> return true              // Om baksystemer kræsjer, anta at man har tilgang
     }
     return false
 }
