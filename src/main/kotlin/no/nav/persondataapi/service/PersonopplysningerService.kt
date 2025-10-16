@@ -15,7 +15,6 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
-    private val cacheManager: CacheManager
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
