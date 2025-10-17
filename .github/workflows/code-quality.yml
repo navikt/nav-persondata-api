@@ -1,0 +1,27 @@
+name: Bygg pull request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  bygg:
+    name: Bygg prosjekt
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v4
+
+      - name: Sett opp Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Gjør Gradle kjørbar
+        run: chmod +x ./gradlew
+
+      - name: Kjør bygg
+        run: ./gradlew build
