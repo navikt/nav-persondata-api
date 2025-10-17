@@ -120,3 +120,8 @@ spec:
       value: http://kodeverk-api.team-rocket.svc.cluster.local
     - name: KODEVERK_SCOPE
       value: api://prod-gcp.team-rocket.kodeverk-api/.default
+
+    - name: MODIA_CONTEXT_HOLDER_URL
+      value: http://modiacontextholder.team-rocket.svc.cluster.local/api
+    - name: MODIA_CONTEXT_HOLDER_SCOPE
+      value: api://prod-gcp.team-rocket.modiacontextholder/.default
