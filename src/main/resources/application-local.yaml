@@ -56,3 +56,6 @@ GRUPPER: |
 
 KODEVERK_URL: https://kodeverk-api.nav.no
 KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
+
+MODIA_CONTEXT_HOLDER_URL: https://modiacontextholder.intern.dev.nav.no
+MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.default
