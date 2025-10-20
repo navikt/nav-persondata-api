@@ -131,7 +131,7 @@ spec:
       value: api://dev-gcp.team-rocket.kodeverk-api/.default
 
     - name: MODIA_CONTEXT_HOLDER_URL
-      value: http://modiacontextholder.team-rocket.svc.cluster.local/api
+      value: http://modiacontextholder
 
     - name: MODIA_CONTEXT_HOLDER_SCOPE
-      value: api://dev-gcp.team-rocket.modiacontextholder/.default
+      value: api://dev-gcp.personoversikt.modiacontextholder/.default
