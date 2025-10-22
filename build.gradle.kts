@@ -6,7 +6,7 @@ val latestGraphQLKotlinVersion = "9.0.0-alpha.8"
 plugins {
     kotlin("jvm") version "1.9.24"
     id("org.springframework.boot") version "3.2.7"
-    id("io.spring.dependency-management") version "1.1.4"
+    id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.spring") version "1.9.24"
     id("com.expediagroup.graphql") version "9.0.0-alpha.8"
     id("org.openapi.generator") version "7.0.1"
