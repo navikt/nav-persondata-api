@@ -3,6 +3,7 @@ package no.nav.persondataapi.rest.oppslag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
+import no.nav.persondataapi.service.AuditService
 import no.nav.persondataapi.service.BrukertilgangService
 import no.nav.persondataapi.service.PersonopplysningerService
 import no.nav.security.token.support.core.api.Protected
@@ -21,6 +22,7 @@ class PersonbrukerController(
     val brukertilgangService: BrukertilgangService,
     val personopplysningerService: PersonopplysningerService,
     val tokenValidationContextHolder: TokenValidationContextHolder,
+    val auditService: AuditService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
     @Protected
@@ -41,6 +43,7 @@ class PersonbrukerController(
                 ResponseEntity.notFound().build()
             } else {
                 logger.info("Fant bruker ${dto.ident}")
+                auditService.auditLookupGranted(dto.ident,saksbehandlerIdent)
                 ResponseEntity.ok().build();
             }
         }
