@@ -1,6 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.integrasjon.modiacontextholder.client.ModiaContextHolderClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.AuditService
@@ -23,6 +24,7 @@ class PersonbrukerController(
     val personopplysningerService: PersonopplysningerService,
     val tokenValidationContextHolder: TokenValidationContextHolder,
     val auditService: AuditService
+    val modiaContextHolderClient: ModiaContextHolderClient
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
     @Protected
@@ -44,6 +46,11 @@ class PersonbrukerController(
             } else {
                 logger.info("Fant bruker ${dto.ident}")
                 auditService.auditLookupGranted(dto.ident,saksbehandlerIdent)
+                try {
+                    modiaContextHolderClient.settModiakontekst(dto.ident)
+                } catch (e: Exception) {
+                    logger.error("Feil ved oppdatering av modiakontekst for bruker ${dto.ident}", e)
+                }
                 ResponseEntity.ok().build();
             }
         }
