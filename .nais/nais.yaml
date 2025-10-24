@@ -83,6 +83,8 @@ spec:
           namespace: nais-system
         - application: kodeverk-api
           namespace: team-rocket
+        - application: modiacontextholder
+          namespace: team-rocket
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
@@ -127,3 +129,9 @@ spec:
       value: http://kodeverk-api.team-rocket.svc.cluster.local
     - name: KODEVERK_SCOPE
       value: api://dev-gcp.team-rocket.kodeverk-api/.default
+
+    - name: MODIA_CONTEXT_HOLDER_URL
+      value: http://modiacontextholder
+
+    - name: MODIA_CONTEXT_HOLDER_SCOPE
+      value: api://dev-gcp.personoversikt.modiacontextholder/.default
