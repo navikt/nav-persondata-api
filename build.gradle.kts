@@ -10,8 +10,9 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
     id("com.expediagroup.graphql") version "9.0.0-alpha.8"
     id("org.openapi.generator") version "7.0.1"
-
 }
+
+
 
 openApiGenerate {
     inputSpec.set("src/main/resources/openapi/ikomp-inntektshistorikk-api-2.1.2-swagger.json")
@@ -100,6 +101,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
