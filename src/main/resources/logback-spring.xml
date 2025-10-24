@@ -13,6 +13,15 @@
             <OnMismatch>DENY</OnMismatch>
         </filter>
     </appender>
+    <!-- Sporbarhetslog -->
+    <appender name="AuditLogger" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>audit.nais:6514</destination>
+        <writeBufferSize>128000</writeBufferSize>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${HOSTNAME} ${NAIS_APP_NAME}: %msg%n</pattern>
+        </encoder>
+    </appender>
+
 
     <appender name="default-json" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
@@ -29,6 +38,11 @@
         <appender-ref ref="default-json" />
         <appender-ref ref="team-logs" />
     </root>
+
+    <!-- Only audit logs goes to AuditLogger (naudit) -->
+    <logger name="audit" level="info">
+        <appender-ref ref="AuditLogger" />
+    </logger>
 
     <logger name="team-logs-logger" level="INFO" additivity="false">
         <appender-ref ref="team-logs" />
