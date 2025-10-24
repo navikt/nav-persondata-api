@@ -111,7 +111,7 @@ dependencies {
     }
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("io.mockk:mockk:1.14.6")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("io.micrometer:micrometer-registry-prometheus")
 
