@@ -10,9 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class TokenService (
-        @Qualifier("tokenWebClient")
+        @param:Qualifier("tokenWebClient")
         private val tokenWebClient: WebClient,
-        @Qualifier("azuretokenWebClient")
+        @param:Qualifier("azuretokenWebClient")
         private val azuretokenWebClient: WebClient,
         private val environment: Environment
     ) {

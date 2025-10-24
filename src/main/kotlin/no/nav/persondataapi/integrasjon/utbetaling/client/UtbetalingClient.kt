@@ -15,7 +15,7 @@ import java.time.LocalDate
 @Component
 class UtbetalingClient(
     private val tokenService: TokenService,
-    @Qualifier("utbetalingWebClient")
+    @param:Qualifier("utbetalingWebClient")
     private val webClient: WebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
