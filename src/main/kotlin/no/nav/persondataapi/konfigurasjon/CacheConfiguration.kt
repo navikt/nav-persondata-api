@@ -5,6 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.cache.CacheManager
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.caffeine.CaffeineCacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,6 +20,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext
 import java.time.Duration
 
 @Configuration
+@EnableCaching
 class CacheConfiguration {
 
     private val logger = LoggerFactory.getLogger(CacheConfiguration::class.java)
@@ -83,28 +85,14 @@ class CacheConfiguration {
         val environment = System.getenv()
 
         if (valkeyProperties.host.isNullOrBlank()) {
-            valkeyProperties.host = environment["VALKEY_HOST"]
-                ?: environment.entries.firstOrNull { it.key.startsWith("VALKEY_") && it.key.endsWith("_HOST") }?.value
+            valkeyProperties.host = environment.entries.firstOrNull {  it.key.startsWith("VALKEY_HOST_") }?.value
         }
 
         if (valkeyProperties.password.isNullOrBlank()) {
-            valkeyProperties.password = environment["VALKEY_PASSWORD"]
-                ?: environment.entries.firstOrNull { it.key.startsWith("VALKEY_") && it.key.endsWith("_PASSWORD") }?.value
+            valkeyProperties.password = environment.entries.firstOrNull {  it.key.startsWith("VALKEY_PASSWORD_") }?.value
         }
 
-        if (environment.any { it.key == "VALKEY_PORT" || (it.key.startsWith("VALKEY_") && it.key.endsWith("_PORT")) }) {
-            val portValue = environment["VALKEY_PORT"]
-                ?: environment.entries.firstOrNull { it.key.startsWith("VALKEY_") && it.key.endsWith("_PORT") }?.value
-            portValue?.toIntOrNull()?.let { valkeyProperties.port = it }
-        }
-
-        if (environment.any { it.key == "VALKEY_SSL_ENABLED" || (it.key.startsWith("VALKEY_") && it.key.endsWith("_SSL")) }) {
-            val sslValue = environment["VALKEY_SSL_ENABLED"]
-                ?: environment.entries.firstOrNull { it.key.startsWith("VALKEY_") && it.key.endsWith("_SSL") }?.value
-            if (!sslValue.isNullOrBlank()) {
-                valkeyProperties.sslEnabled = sslValue.equals("true", ignoreCase = true) || sslValue == "1"
-            }
-        }
+        valkeyProperties.port = environment.entries.firstOrNull {  it.key.startsWith("VALKEY_PORT_") }?.value?.toIntOrNull() ?: valkeyProperties.port
 
         return valkeyProperties
     }
