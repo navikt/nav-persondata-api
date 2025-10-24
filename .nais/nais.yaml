@@ -19,7 +19,9 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
-
+  valkey:
+    - instance: nav-persondata-api
+      access: readwrite
   azure:
     application:
       enabled: true
