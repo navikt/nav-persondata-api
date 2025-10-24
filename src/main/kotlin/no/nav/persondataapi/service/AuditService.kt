@@ -1,56 +1,44 @@
 package no.nav.persondataapi.service
 
 // Loggers
+import no.nav.persondataapi.application
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.AuditLogger.Operation
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.time.Clock
 import java.time.Instant
-import java.time.ZonedDateTime.now
 
-private const val application = "oppslag-bruker"
 @Service
 class AuditService (val auditLogger: AuditLogger)
 {
 
+    val logger = LoggerFactory.getLogger(javaClass)
     val audit = LoggerFactory.getLogger("audit")
     var clock = Clock.systemDefaultZone()
     fun auditLookupGranted(ident: PersonIdent,saksbehandlerIdent: String) {
 
-        val msg = auditLogger.createCefMessage(
-            application = application,
-            saksbehandlerIdent = saksbehandlerIdent,
-            fnr = ident.value,
-            operation = Operation.READ,
-            requestPath = "/oppslag/personbruker",
-            permit = AuditLogger.Permit.PERMIT,
-            endMillis = Instant.now(clock).toEpochMilli()
-            )
-        MDC.put("team", "team holmes");
-        audit.info(msg)
-        MDC.clear();
+        val msg: String
+        try {
+            msg = auditLogger.createCefMessage(
+                       application = application,
+                       saksbehandlerIdent = saksbehandlerIdent,
+                       fnr = ident.value,
+                       operation = Operation.READ,
+                       requestPath = "/oppslag/personbruker",
+                       permit = AuditLogger.Permit.PERMIT,
+                       endMillis = Instant.now(clock).toEpochMilli()
+                       )
+            MDC.put("team", "team holmes")
+            audit.info(msg)
+            MDC.clear()
+        } catch (e: Exception) {
+            logger.error(e.message, e)
+        }
+
     }
-    fun auditLookupDenied(ident: PersonIdent,saksbehandlerIdent: String) {
-
-        val msg = AuditLogger().createCefMessage(
-            application = application,
-            saksbehandlerIdent = saksbehandlerIdent,
-            fnr = ident.value,
-            operation = Operation.READ,
-            requestPath = "/oppslag/personbruker",
-            permit = AuditLogger.Permit.DENY,
-            endMillis = Instant.now(clock).toEpochMilli()
-
-        )
-        MDC.put("team", "team holmes");
-        audit.info(msg)
-        MDC.clear();
-    }
-
-
 
 }
 @Component
