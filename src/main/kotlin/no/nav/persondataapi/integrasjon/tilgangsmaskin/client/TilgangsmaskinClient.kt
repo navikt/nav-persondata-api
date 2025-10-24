@@ -15,7 +15,7 @@ import java.util.*
 @Component
 class TilgangsmaskinClientImpl (
     private val tokenService: TokenService,
-    @Qualifier("tilgangWebClient")
+    @param:Qualifier("tilgangWebClient")
     private val webClient: WebClient,
 
 

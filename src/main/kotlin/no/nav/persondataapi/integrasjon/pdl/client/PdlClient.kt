@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient
 class PdlClient(
     private val tokenService: TokenService,
 
-    @Value("\${PDL_URL}")
+    @param:Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
     @Cacheable(value = ["pdl-person"], key = "#personIdent")

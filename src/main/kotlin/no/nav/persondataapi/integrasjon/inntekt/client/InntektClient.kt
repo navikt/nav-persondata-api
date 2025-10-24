@@ -19,7 +19,7 @@ import java.util.UUID
 @Component
 class InntektClient(
     private val tokenService: TokenService,
-    @Qualifier("inntektWebClient")
+    @param:Qualifier("inntektWebClient")
     private val webClient: WebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
