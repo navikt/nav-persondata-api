@@ -86,6 +86,7 @@ class CacheConfiguration {
 
         if (valkeyProperties.host.isNullOrBlank()) {
             valkeyProperties.host = environment.entries.firstOrNull {  it.key.startsWith("VALKEY_HOST_") }?.value
+            logger.info("VALKEY_HOST: ${valkeyProperties.host}")
         }
 
         if (valkeyProperties.password.isNullOrBlank()) {
