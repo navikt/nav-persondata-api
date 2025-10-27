@@ -93,6 +93,7 @@ class CacheConfiguration {
         }
 
         valkeyProperties.port = environment.entries.firstOrNull {  it.key.startsWith("VALKEY_PORT_") }?.value?.toIntOrNull() ?: valkeyProperties.port
+        logger.info("VALKEY_PORT: ${valkeyProperties.port}")
 
         return valkeyProperties
     }
