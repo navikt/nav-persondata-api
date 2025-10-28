@@ -75,4 +75,15 @@ class ClientMetricsConfig {
             }
         }
 
+    @Bean
+    @Qualifier("modiaContextHolderObservation")
+    fun modiaContextHolderObservationConvention(): ClientRequestObservationConvention =
+        object : DefaultClientRequestObservationConvention() {
+            override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
+                return super.getLowCardinalityKeyValues(ctx)
+                    .and(KeyValue.of("system", "modiacontextholder"))
+                    .and(KeyValue.of("operation", "context"))
+            }
+        }
+
 }
