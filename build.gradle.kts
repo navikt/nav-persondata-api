@@ -82,8 +82,8 @@ tasks.named("compileKotlin") {
 dependencies {
     //jacson
     implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.7"))
-    implementation(enforcedPlatform("com.fasterxml.jackson:jackson-bom:2.17.1"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.1")
+    implementation(enforcedPlatform("com.fasterxml.jackson:jackson-bom:2.20.0"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.20.0")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.core:jackson-annotations")
     implementation("com.fasterxml.jackson.core:jackson-core")
