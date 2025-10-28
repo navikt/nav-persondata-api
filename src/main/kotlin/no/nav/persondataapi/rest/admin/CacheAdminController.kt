@@ -4,6 +4,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.CacheAdminService
 import no.nav.persondataapi.service.CacheFlushSummary
 import no.nav.security.token.support.core.api.Protected
+import no.nav.security.token.support.core.api.Unprotected
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -19,7 +20,8 @@ class CacheAdminController(
 
     private val logger = LoggerFactory.getLogger(CacheAdminController::class.java)
 
-    @Protected
+    // TODO: Legg til protected på denne
+    @Unprotected
     @DeleteMapping
     fun flushCaches(
         @RequestParam(required = false) personIdent: String?
