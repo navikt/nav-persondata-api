@@ -6,6 +6,14 @@ server:
 spring:
   codec:
     max-in-memory-size: 5MB
+  data:
+    redis:
+      host: ${VALKEY_HOST_NAV_PERSONDATA_API}
+      password: ${VALKEY_PASSWORD_NAV_PERSONDATA_API}
+      username: ${VALKEY_USERNAME_NAV_PERSONDATA_API}
+      port: ${VALKEY_PORT_NAV_PERSONDATA_API}
+      ssl:
+        enabled: true
 
 cache:
   default-expiration: 1h
@@ -38,6 +46,10 @@ management:
     distribution:
       percentiles-histogram:
         http.client.requests: true
+  health:
+    redis:
+      enabled: false
+
   tags:
     application: nav-persondata-api
     env: ${NAIS_CLUSTER_NAME:local}

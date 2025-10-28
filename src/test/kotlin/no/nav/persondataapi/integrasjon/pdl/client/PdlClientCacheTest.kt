@@ -1,6 +1,8 @@
 package no.nav.persondataapi.integrasjon.pdl.client
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.persondataapi.konfigurasjon.CacheConfiguration
+import no.nav.persondataapi.konfigurasjon.CacheConfig
 import no.nav.persondataapi.konfigurasjon.CacheProperties
 import org.junit.jupiter.api.Test
 import org.springframework.cache.CacheManager
@@ -15,7 +17,7 @@ class PdlClientCacheTest {
             defaultExpiration = Duration.ofHours(1),
             maximumSize = 1000,
             caches = mapOf(
-                "pdl-person" to no.nav.persondataapi.konfigurasjon.CacheConfig(
+                "pdl-person" to CacheConfig(
                     expiration = Duration.ofHours(1),
                     maximumSize = 1000
                 )
@@ -23,7 +25,7 @@ class PdlClientCacheTest {
         )
 
         val cacheConfiguration = CacheConfiguration()
-        val cacheManager: CacheManager = cacheConfiguration.cacheManager(cacheProperties)
+        val cacheManager: CacheManager = cacheConfiguration.caffeineCacheManager(cacheProperties)
 
         assertNotNull(cacheManager, "CacheManager skal være konfigurert")
 
