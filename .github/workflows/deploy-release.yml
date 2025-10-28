@@ -6,15 +6,23 @@ permissions:
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag som skal deployes'
+        required: true
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+  IMAGE: ${{ github.event_name == 'workflow_dispatch' && format('ghcr.io/{0}:{1}', github.repository, github.event.inputs.tag) || format('ghcr.io/{0}:{1}', github.repository, github.ref_name) }}
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_REF }}
       - name: test and build
         uses: actions/setup-java@v5
         with:
@@ -39,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_REF }}
       - uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
