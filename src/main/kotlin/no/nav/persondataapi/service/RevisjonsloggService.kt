@@ -3,7 +3,7 @@ package no.nav.persondataapi.service
 // Loggers
 import no.nav.persondataapi.application
 import no.nav.persondataapi.rest.domene.PersonIdent
-import no.nav.persondataapi.service.AuditLogger.Operation
+import no.nav.persondataapi.service.RevisjonsLogger.Operasjon
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
@@ -12,27 +12,27 @@ import java.time.Clock
 import java.time.Instant
 
 @Service
-class AuditService (val auditLogger: AuditLogger)
+class RevisjonsloggService (val auditLogger: RevisjonsLogger)
 {
 
     val logger = LoggerFactory.getLogger(javaClass)
-    val audit = LoggerFactory.getLogger("audit")
+    val revisjonslogg = LoggerFactory.getLogger("audit")
     var clock = Clock.systemDefaultZone()
-    fun auditLookupGranted(ident: PersonIdent,saksbehandlerIdent: String) {
+    fun tilgangOppslagGodkjent(ident: PersonIdent, saksbehandlerIdent: String) {
 
         val msg: String
         try {
             msg = auditLogger.createCefMessage(
                        application = application,
                        saksbehandlerIdent = saksbehandlerIdent,
-                       fnr = ident.value,
-                       operation = Operation.READ,
+                       personIdent = ident.value,
+                       operasjon = Operasjon.READ,
                        requestPath = "/oppslag/personbruker",
-                       permit = AuditLogger.Permit.PERMIT,
+                       adgang = RevisjonsLogger.Adgang.PERMIT,
                        endMillis = Instant.now(clock).toEpochMilli()
                        )
             MDC.put("team", "team holmes")
-            audit.info(msg)
+            revisjonslogg.info(msg)
             MDC.clear()
         } catch (e: Exception) {
             logger.error(e.message, e)
@@ -42,27 +42,30 @@ class AuditService (val auditLogger: AuditLogger)
 
 }
 @Component
-class AuditLogger {
+class RevisjonsLogger {
+    /*
+    * Lager eb CEF kompatibel streng som vi skal sende til ArchSite for audit logging.
+    * */
     fun createCefMessage(
         application: String,
         saksbehandlerIdent: String,
-        fnr: String?,
-        operation: Operation,
+        personIdent: String?,
+        operasjon: Operasjon,
         requestPath: String,
-        permit: Permit,
+        adgang: Adgang,
         endMillis: Long
     ): String {
-        val subject = fnr?.padStart(11, '0')
+        val subject = personIdent?.padStart(11, '0')
         val duidStr = subject?.let { " duid=$it" } ?: ""
-        return "CEF:0|$application|oppslag-bruker|1.0|${operation.logString}|oppslag-bruker|INFO|" +
+        return "CEF:0|$application|oppslag-bruker|1.0|${operasjon.logString}|oppslag-bruker|INFO|" +
                 "end=$endMillis$duidStr suid=$saksbehandlerIdent request=$requestPath " +
-                "flexString1Label=Decision flexString1=${permit.logString}"
+                "flexString1Label=Decision flexString1=${adgang.logString}"
     }
 
-    enum class Operation(val logString: String) {
+    enum class Operasjon(val logString: String) {
         READ("audit:access"), WRITE("audit:update"), UNKNOWN("audit:unknown")
     }
-    enum class Permit(val logString: String) {
+    enum class Adgang(val logString: String) {
         PERMIT("Permit"), DENY("Deny")
     }
 }
