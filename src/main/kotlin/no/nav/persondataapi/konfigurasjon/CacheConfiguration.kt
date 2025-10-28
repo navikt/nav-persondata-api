@@ -1,5 +1,6 @@
 package no.nav.persondataapi.konfigurasjon
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator
 import com.github.benmanes.caffeine.cache.Caffeine
@@ -93,7 +94,11 @@ class CacheConfiguration {
                     .allowIfBaseType(Collection::class.java)
                     .allowIfBaseType(Map::class.java)
                     .build()
-                activateDefaultTyping(typeValidator, ObjectMapper.DefaultTyping.EVERYTHING)
+                activateDefaultTyping(
+                    typeValidator,
+                    ObjectMapper.DefaultTyping.EVERYTHING,
+                    JsonTypeInfo.As.PROPERTY
+                )
             }
             return GenericJackson2JsonRedisSerializer(redisMapper)
         }
