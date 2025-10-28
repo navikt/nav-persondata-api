@@ -1,6 +1,7 @@
 package no.nav.persondataapi.konfigurasjon
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -69,7 +70,7 @@ class CacheConfiguration {
     }
 
     private fun redisCacheConfiguration(ttl: Duration, objectMapper: ObjectMapper): RedisCacheConfiguration {
-        val serializer = GenericJackson2JsonRedisSerializer(objectMapper)
+        val serializer = createRedisSerializer(objectMapper)
         return RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(ttl)
             .serializeValuesWith(
@@ -81,6 +82,23 @@ class CacheConfiguration {
     @Bean
     @ConfigurationProperties(prefix = "cache")
     fun cacheProperties(): CacheProperties = CacheProperties()
+
+    companion object {
+        internal fun createRedisSerializer(objectMapper: ObjectMapper): GenericJackson2JsonRedisSerializer {
+            val redisMapper = objectMapper.copy().apply {
+                val typeValidator = BasicPolymorphicTypeValidator.builder()
+                    .allowIfSubType("no.nav")
+                    .allowIfSubType("java.time")
+                    .allowIfSubType("java.math")
+                    .allowIfSubType("java.util.ArrayList")
+                    .allowIfBaseType(Collection::class.java)
+                    .allowIfBaseType(Map::class.java)
+                    .build()
+                activateDefaultTyping(typeValidator, ObjectMapper.DefaultTyping.EVERYTHING)
+            }
+            return GenericJackson2JsonRedisSerializer(redisMapper)
+        }
+    }
 }
 
 data class CacheProperties(
