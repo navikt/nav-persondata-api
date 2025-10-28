@@ -23,7 +23,7 @@ class CacheAdminService(
         "inntekt-historikk",
     )
 
-    fun flushAlleCacher(): CacheFlushSummary {
+    fun flushAlleCacher(): CacheFlushOppsummering {
         val tømteCacher = cacheManager.cacheNames
             .mapNotNull { name ->
                 cacheManager.getCache(name)
@@ -34,44 +34,44 @@ class CacheAdminService(
 
         logger.info("Flushet alle cacher: {}", tømteCacher)
 
-        return CacheFlushSummary(
+        return CacheFlushOppsummering(
             flushedeCacher = tømteCacher,
             scope = CacheFlushScope.ALLE
         )
     }
 
-    fun flushCacherForPersonIdent(personIdent: PersonIdent): CacheFlushSummary {
+    fun flushCacherForPersonIdent(personIdent: PersonIdent): CacheFlushOppsummering {
         val flushede = mutableSetOf<String>()
 
         personIdentCacher.forEach { cacheName ->
-            cacheManager.evict(cacheName, personIdent)?.let { flushede.add(cacheName) }
+            cacheManager.fjernFraCache(cacheName, personIdent)?.let { flushede.add(cacheName) }
         }
 
         cacherSomTømmesPåPersonFlush.forEach { cacheName ->
-            cacheManager.clear(cacheName)?.let { flushede.add(cacheName) }
+            cacheManager.tøm(cacheName)?.let { flushede.add(cacheName) }
         }
 
-        val oppsummering = CacheFlushSummary(
+        val oppsummering = CacheFlushOppsummering(
             flushedeCacher = flushede.toList().sorted(),
             scope = CacheFlushScope.PERSON,
             personIdent = personIdent.toString()
         )
 
-        logger.info("Flushed cacher for {}: {}", personIdent, oppsummering.flushedeCacher)
+        logger.info("Flushet cacher for {}: {}", personIdent, oppsummering.flushedeCacher)
 
         return oppsummering
     }
 
-    private fun CacheManager.evict(cacheName: String, key: Any): Cache? =
+    private fun CacheManager.fjernFraCache(cacheName: String, key: Any): Cache? =
         getCache(cacheName)?.also { cache ->
             cache.evict(key)
         }
 
-    private fun CacheManager.clear(cacheName: String): Cache? =
+    private fun CacheManager.tøm(cacheName: String): Cache? =
         getCache(cacheName)?.also(Cache::clear)
 }
 
-data class CacheFlushSummary(
+data class CacheFlushOppsummering(
     val flushedeCacher: List<String>,
     val scope: CacheFlushScope,
     val personIdent: String? = null,

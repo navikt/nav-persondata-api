@@ -2,7 +2,7 @@ package no.nav.persondataapi.rest.admin
 
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.CacheAdminService
-import no.nav.persondataapi.service.CacheFlushSummary
+import no.nav.persondataapi.service.CacheFlushOppsummering
 import no.nav.security.token.support.core.api.Protected
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -23,7 +23,7 @@ class CacheAdminController(
     @DeleteMapping
     fun flushCacher(
         @RequestBody(required = false) request: CacheFlushRequest?,
-    ): ResponseEntity<CacheFlushSummary> {
+    ): ResponseEntity<CacheFlushOppsummering> {
         val oppsummering = if (request?.personIdent == null) {
             // TODO: Burde vi ha en slags form for validering av hvem som sender denne?
             logger.info("Flush request for all cacher mottatt")
