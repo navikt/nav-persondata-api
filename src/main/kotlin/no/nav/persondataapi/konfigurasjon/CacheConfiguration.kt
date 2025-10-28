@@ -15,6 +15,7 @@ import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
+import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
 
 @Configuration
@@ -28,13 +29,12 @@ class CacheConfiguration {
     fun redisCacheManager(
         cacheProperties: CacheProperties,
         redisConnectionFactory: RedisConnectionFactory,
-        objectMapper: ObjectMapper
     ): CacheManager {
         logger.info("Konfigurerer cache manager med Valkey/Redis backend")
 
-        val defaultConfig = redisCacheConfiguration(cacheProperties.defaultExpiration, objectMapper)
+        val defaultConfig = redisCacheConfiguration(cacheProperties.defaultExpiration)
         val cacheConfigurations = cacheProperties.caches.mapValues { (_, config) ->
-            redisCacheConfiguration(config.expiration, objectMapper)
+            redisCacheConfiguration(config.expiration)
         }
 
         return RedisCacheManager.builder(redisConnectionFactory)
@@ -68,15 +68,14 @@ class CacheConfiguration {
         return cacheManager
     }
 
-    private fun redisCacheConfiguration(ttl: Duration, objectMapper: ObjectMapper): RedisCacheConfiguration {
-        val serializer = GenericJackson2JsonRedisSerializer(objectMapper)
-        return RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(ttl)
-            .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(serializer)
-            )
-            .disableCachingNullValues()
-    }
+  private fun redisCacheConfiguration(ttl: Duration): RedisCacheConfiguration {
+    val serializer = GenericJackson2JsonRedisSerializer() // uses built-in mapper with type info
+    return RedisCacheConfiguration.defaultCacheConfig()
+      .entryTtl(ttl)
+      .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
+      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
+      .disableCachingNullValues()
+  }
 
     @Bean
     @ConfigurationProperties(prefix = "cache")
