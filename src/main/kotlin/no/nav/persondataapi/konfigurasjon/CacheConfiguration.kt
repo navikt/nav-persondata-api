@@ -17,7 +17,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import java.time.Duration
-import kotlin.collections.mapValues
 
 @Configuration
 @EnableCaching
@@ -88,7 +87,7 @@ class CacheConfiguration {
         internal fun createRedisSerializer(objectMapper: ObjectMapper): GenericJackson2JsonRedisSerializer {
             val redisMapper = objectMapper.copy().apply {
                 val typeValidator = BasicPolymorphicTypeValidator.builder()
-                    .allowIfSubType("no.nav.persondataapi")
+                    .allowIfSubType("no.nav")
                     .allowIfSubType("java.time")
                     .allowIfBaseType(Collection::class.java)
                     .allowIfBaseType(Map::class.java)
