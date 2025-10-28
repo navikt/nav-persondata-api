@@ -12,7 +12,7 @@ data class RolleConfig(
 
 @Component
 class Grupper(
-    @Value("\${GRUPPER}") private val rollerJson: String
+    @param:Value("\${GRUPPER}") private val rollerJson: String
 ) {
     private val mapper = jacksonObjectMapper()
     val roller: List<RolleConfig> = mapper.readValue(rollerJson)

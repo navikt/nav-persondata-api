@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class EregClient(
-    @Qualifier("eregWebClient")
+    @param:Qualifier("eregWebClient")
     private val webClient: WebClient,
     private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
 ) {

@@ -17,7 +17,7 @@ import java.util.UUID
 @Component
 class AaregClient(
     private val tokenService: TokenService,
-    @Qualifier("aaregWebClient")
+    @param:Qualifier("aaregWebClient")
     private val webClient: WebClient,
 ) {
 

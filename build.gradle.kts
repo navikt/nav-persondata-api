@@ -1,13 +1,15 @@
 import com.expediagroup.graphql.plugin.gradle.graphql
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val tokenSupportVersion = "5.0.30"
 val latestGraphQLKotlinVersion = "9.0.0-alpha.8"
 
 
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.2.20"
     id("org.springframework.boot") version "3.2.7"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.spring") version "1.9.24"
+    kotlin("plugin.spring") version "2.2.20"
     id("com.expediagroup.graphql") version "9.0.0-alpha.8"
     id("org.openapi.generator") version "7.0.1"
 }
@@ -61,7 +63,7 @@ tasks.named("build") {
 
 }
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "21"
+  compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
 tasks.named<Jar>("bootJar") {
     archiveFileName.set("app.jar")
