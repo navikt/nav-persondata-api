@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: test and build
-        uses: actions/setup-java@v4.2.1
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
