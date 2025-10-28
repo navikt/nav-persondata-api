@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val tokenSupportVersion = "5.0.30"
 val graphQLKotlinVersion = "9.0.0-alpha.8"
-val springBootVersion = "3.2.7"
+val springBootVersion = "3.5.7"
 val jacksonVersion = "2.17.1"
 val kotlinVersion = "2.2.20"
 val coroutinesVersion = "1.9.0"
@@ -10,7 +10,7 @@ val coroutinesVersion = "1.9.0"
 
 plugins {
   kotlin("jvm") version "2.2.20"
-  id("org.springframework.boot") version "3.2.7"
+  id("org.springframework.boot") version "3.5.7"
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.2.20"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
