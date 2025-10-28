@@ -77,6 +77,11 @@ dependencies {
   // Jackson - BOM handles transitive versions
   implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
 
+  implementation("org.apache.commons:commons-lang3") {
+    version { strictly("3.18.0") }
+    because("Fixes CVE-2025-48924")
+  }
+
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
