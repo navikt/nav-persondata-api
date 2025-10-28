@@ -54,7 +54,7 @@ class AuditLogger {
     ): String {
         val subject = fnr?.padStart(11, '0')
         val duidStr = subject?.let { " duid=$it" } ?: ""
-        return "CEF:0|$application|Sporingslogg|1.0|${operation.logString}|Sporingslogg|INFO|" +
+        return "CEF:0|$application|oppslag-bruker|1.0|${operation.logString}|oppslag-bruker|INFO|" +
                 "end=$endMillis$duidStr suid=$saksbehandlerIdent request=$requestPath " +
                 "flexString1Label=Decision flexString1=${permit.logString}"
     }
