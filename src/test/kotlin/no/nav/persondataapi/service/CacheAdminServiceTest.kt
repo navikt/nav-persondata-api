@@ -26,11 +26,11 @@ class CacheAdminServiceTest {
     }
 
     @Test
-    fun `flushAllCaches clears every cache`() {
+    fun `flushAlleCacher tømmer alle cacher`() {
         cacheManager.getCache("pdl-person")!!.put(PersonIdent("12345678910"), "verdi")
         cacheManager.getCache("kodeverk-landkoder")!!.put("NO", "Norge")
 
-        val summary = service.flushAllCaches()
+        val summary = service.flushAlleCacher()
 
         cacheManager.cacheNames.forEach { cacheName ->
             val cache = cacheManager.getCache(cacheName)!!
@@ -41,14 +41,14 @@ class CacheAdminServiceTest {
         }
         assertEquals(
             cacheManager.cacheNames.map { it }.sorted(),
-            summary.flushedCaches
+            summary.flushedeCacher
         )
-        assertEquals(CacheFlushScope.ALL, summary.scope)
+        assertEquals(CacheFlushScope.ALLE, summary.scope)
         assertNull(summary.personIdent)
     }
 
     @Test
-    fun `flushCachesForPerson evicts person caches and clears inntekt`() {
+    fun `flushCacherForPersonIdent fjerner person cacher for en gitt person, og clearer inntektscache`() {
         val ident = PersonIdent("12345678910")
         cacheManager.getCache("pdl-person")!!.put(ident, "pdl")
         cacheManager.getCache("aareg-arbeidsforhold")!!.put(ident, "aareg")
@@ -56,7 +56,7 @@ class CacheAdminServiceTest {
         cacheManager.getCache("inntekt-historikk")!!.put("12345678910_2020-01-01_2020-12-31", "inntekt")
         cacheManager.getCache("kodeverk-landkoder")!!.put("NO", "Norge")
 
-        val summary = service.flushCachesForPerson(ident)
+        val oppsummering = service.flushCacherForPersonIdent(ident)
 
         listOf("pdl-person", "aareg-arbeidsforhold", "utbetaling-bruker").forEach { cacheName ->
             val cache = cacheManager.getCache(cacheName)!!
@@ -70,9 +70,9 @@ class CacheAdminServiceTest {
         val kodeverkCache = cacheManager.getCache("kodeverk-landkoder")!!
         assertEquals("Norge", kodeverkCache.nativeCacheAsMap()["NO"])
 
-        assertEquals(CacheFlushScope.PERSON, summary.scope)
-        assertEquals("123456*****", summary.personIdent)
-        assertEquals(listOf("aareg-arbeidsforhold", "inntekt-historikk", "pdl-person", "utbetaling-bruker"), summary.flushedCaches)
+        assertEquals(CacheFlushScope.PERSON, oppsummering.scope)
+        assertEquals("123456*****", oppsummering.personIdent)
+        assertEquals(listOf("aareg-arbeidsforhold", "inntekt-historikk", "pdl-person", "utbetaling-bruker"), oppsummering.flushedeCacher)
     }
 
     @Suppress("UNCHECKED_CAST")

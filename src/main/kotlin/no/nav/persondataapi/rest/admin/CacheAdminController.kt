@@ -2,14 +2,13 @@ package no.nav.persondataapi.rest.admin
 
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.CacheAdminService
-import no.nav.persondataapi.service.CacheFlushSummary
+import no.nav.persondataapi.service.CacheFlushOppsummering
 import no.nav.security.token.support.core.api.Protected
-import no.nav.security.token.support.core.api.Unprotected
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -20,21 +19,25 @@ class CacheAdminController(
 
     private val logger = LoggerFactory.getLogger(CacheAdminController::class.java)
 
-    // TODO: Legg til protected på denne
-    @Unprotected
+    @Protected
     @DeleteMapping
-    fun flushCaches(
-        @RequestParam(required = false) personIdent: String?
-    ): ResponseEntity<CacheFlushSummary> {
-        val summary = if (personIdent.isNullOrBlank()) {
-            logger.info("Flush request for all caches mottatt")
-            cacheAdminService.flushAllCaches()
+    fun flushCacher(
+        @RequestBody(required = false) request: CacheFlushRequest?,
+    ): ResponseEntity<CacheFlushOppsummering> {
+        val oppsummering = if (request?.personIdent == null) {
+            // TODO: Burde vi ha en slags form for validering av hvem som sender denne?
+            logger.info("Flush request for all cacher mottatt")
+            cacheAdminService.flushAlleCacher()
         } else {
-            val ident = PersonIdent(personIdent)
-            logger.info("Flush request for {} mottatt", ident)
-            cacheAdminService.flushCachesForPerson(ident)
+            val personIdent = request.personIdent
+            logger.info("Flush request for {} mottatt", personIdent)
+            cacheAdminService.flushCacherForPersonIdent(personIdent)
         }
 
-        return ResponseEntity.ok(summary)
+        return ResponseEntity.ok(oppsummering)
     }
 }
+
+data class CacheFlushRequest(
+    val personIdent: PersonIdent?
+)
