@@ -89,6 +89,8 @@ class CacheConfiguration {
                 val typeValidator = BasicPolymorphicTypeValidator.builder()
                     .allowIfSubType("no.nav")
                     .allowIfSubType("java.time")
+                    .allowIfSubType("java.math")
+                    .allowIfSubType("java.util.ArrayList")
                     .allowIfBaseType(Collection::class.java)
                     .allowIfBaseType(Map::class.java)
                     .build()
