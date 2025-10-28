@@ -46,6 +46,10 @@ management:
     distribution:
       percentiles-histogram:
         http.client.requests: true
+  health:
+    redis:
+      enabled: false
+
   tags:
     application: nav-persondata-api
     env: ${NAIS_CLUSTER_NAME:local}
