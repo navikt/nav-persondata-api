@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
@@ -19,9 +20,13 @@ class PersonopplysningerController(
 ) {
     @Protected
     @PostMapping
-    fun hentPersonopplysninger(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
+    fun hentPersonopplysninger(
+        @RequestBody dto: OppslagRequestDto,
+        @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?
+    ): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
         return runBlocking {
-            val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident)
+            val logResponsAktivert = traceHeader?.toBoolean() ?: false
+            val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
 
             when (resultat) {
                 is PersonopplysningerResultat.Success -> {
@@ -47,5 +52,9 @@ class PersonopplysningerController(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val LOGG_HEADER = "logg"
     }
 }
