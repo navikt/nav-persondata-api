@@ -5,7 +5,7 @@ val graphQLKotlinVersion = "9.0.0-alpha.8"
 val springBootVersion = "3.5.7"
 val jacksonVersion = "2.17.1"
 val kotlinVersion = "2.2.20"
-val coroutinesVersion = "1.9.0"
+val coroutinesVersion = "1.10.2"
 
 
 plugins {
