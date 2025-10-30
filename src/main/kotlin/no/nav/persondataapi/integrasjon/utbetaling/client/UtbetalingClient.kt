@@ -20,7 +20,7 @@ class UtbetalingClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent")
+    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet")
     fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return runCatching {
             val antallÅr: Long = if (utvidet) 10 else 3
