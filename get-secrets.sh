@@ -36,7 +36,7 @@ fi
 # 🔑 Fetch secrets and store them in the properties file
 echo "🔑 Fetching secrets..."
 kubectl exec --tty deployment/nav-persondata-api -- printenv \
-  | grep -E 'AZURE_APP_CLIENT_SECRET|AZURE_APP_CLIENT_ID' \
+  | grep -E 'AZURE_APP_CLIENT_SECRET|AZURE_APP_CLIENT_ID|VALKEY_PORT_NAV_PERSONDATA_API|VALKEY_HOST_NAV_PERSONDATA_API|VALKEY_USERNAME_NAV_PERSONDATA_API|VALKEY_PASSWORD_NAV_PERSONDATA_API' \
   > "$SECRETS_FILE"
 
 echo "✅ Secrets saved to $SECRETS_FILE"
