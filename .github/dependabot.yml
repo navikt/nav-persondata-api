@@ -6,7 +6,9 @@ updates:
     commit-message:
       prefix: "⬆ "
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -14,7 +16,9 @@ updates:
     commit-message:
       prefix: "⬆ "
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
 
   # Maintain dependencies for Docker
   - package-ecosystem: "docker"
@@ -22,4 +26,6 @@ updates:
     commit-message:
       prefix: "⬆ "
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
