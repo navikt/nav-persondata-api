@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.LocalDate
 
-class StønadServiceTest {
+class YtelseServiceTest {
 
     @Test
     fun `skal maskere data når saksbehandler ikke har tilgang`() {
@@ -35,17 +35,17 @@ class StønadServiceTest {
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         // Data skal være maskert - listen finnes, men Stønad har ingen @Maskert-felter
         // så data vil være uendret (Stønad har ingen sensitive felter som skal maskeres)
         assertEquals(1, data.size)
@@ -58,16 +58,16 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = null,
             statusCode = 404,
             errorMessage = "Not found"
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.PersonIkkeFunnet)
+        assertTrue(resultat is YtelserResultat.PersonIkkeFunnet)
     }
 
     @Test
@@ -76,16 +76,16 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = null,
             statusCode = 403,
             errorMessage = "Forbidden"
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.IngenTilgang)
+        assertTrue(resultat is YtelserResultat.IngenTilgang)
     }
 
     @Test
@@ -94,16 +94,16 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = null,
             statusCode = 401,
             errorMessage = "Unauthorized"
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.IngenTilgang)
+        assertTrue(resultat is YtelserResultat.IngenTilgang)
     }
 
     @Test
@@ -112,16 +112,16 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = null,
             statusCode = 500,
             errorMessage = "Internal server error"
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.FeilIBaksystem)
+        assertTrue(resultat is YtelserResultat.FeilIBaksystem)
     }
 
     @Test
@@ -130,16 +130,16 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = null,
             statusCode = 502,
             errorMessage = "Bad gateway"
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.FeilIBaksystem)
+        assertTrue(resultat is YtelserResultat.FeilIBaksystem)
     }
 
     @Test
@@ -148,17 +148,17 @@ class StønadServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = emptyList()),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertTrue(data.isEmpty())
     }
 
@@ -178,17 +178,17 @@ class StønadServiceTest {
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertEquals(1, data.size)
         assertEquals("Dagpenger", data[0].stonadType)
         assertEquals(1, data[0].perioder.size)
@@ -219,17 +219,17 @@ class StønadServiceTest {
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse1, ytelse2))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertEquals(1, data.size)
         assertEquals("Dagpenger", data[0].stonadType)
         assertEquals(2, data[0].perioder.size)
@@ -257,17 +257,17 @@ class StønadServiceTest {
         val utbetaling = lagUtbetaling(ytelseListe = listOf(dagpenger, sykepenger))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertEquals(2, data.size)
         assertTrue(data.any { it.stonadType == "Dagpenger" })
         assertTrue(data.any { it.stonadType == "Sykepenger" })
@@ -295,17 +295,17 @@ class StønadServiceTest {
         val utbetaling = lagUtbetaling(ytelseListe = listOf(medType, utenType))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertEquals(1, data.size)
         assertEquals("Dagpenger", data[0].stonadType)
         assertEquals(1, data[0].perioder.size)
@@ -334,17 +334,17 @@ class StønadServiceTest {
         val utbetaling2 = lagUtbetaling(ytelseListe = listOf(ytelse2))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any()) } returns UtbetalingResultat(
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
             data = UtbetalingRespons(utbetalinger = listOf(utbetaling1, utbetaling2)),
             statusCode = 200,
             errorMessage = null
         )
 
-        val service = StønadService(utbetalingClient, brukertilgangService)
-        val resultat = service.hentStønaderForPerson(PersonIdent("12345678901"))
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
 
-        assertTrue(resultat is StønadResultat.Success)
-        val data = (resultat as StønadResultat.Success).data
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
         assertEquals(1, data.size)
         assertEquals("Dagpenger", data[0].stonadType)
         assertEquals(2, data[0].perioder.size)
