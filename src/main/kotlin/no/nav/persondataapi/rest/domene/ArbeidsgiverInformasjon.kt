@@ -15,6 +15,7 @@ data class ArbeidsgiverInformasjon(
         @Maskert
         val adresse: String,
         val ansettelsesDetaljer:List<AnsettelsesDetalj>,
+        val id:String,
     )
 
     data class AnsettelsesDetalj(

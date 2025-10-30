@@ -10,6 +10,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class ArbeidsforholdService(
@@ -85,9 +86,11 @@ class ArbeidsforholdService(
         eregDataRespons: Map<String, EregRespons>
     ): ArbeidsgiverInformasjon.ArbeidsgiverData {
         val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidssted()
+        val saltedOrgNummer = orgnummer.hashCode().toString()+ LocalDate.now().dayOfYear.toString()
         return ArbeidsgiverInformasjon.ArbeidsgiverData(
             arbeidsgiver = eregDataRespons.orgNummerTilOrgNavn(orgnummer),
             organisasjonsnummer = orgnummer,
+            id = saltedOrgNummer,
             adresse = eregDataRespons.orgnummerTilAdresse(orgnummer),
             ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map { ansettelsesdetaljer ->
                 ArbeidsgiverInformasjon.AnsettelsesDetalj(
