@@ -3,7 +3,7 @@ package no.nav.persondataapi.rest.domene
 import java.math.BigDecimal
 import java.time.LocalDate
 
-data class Stønad(
+data class Ytelse(
     val stonadType: String,
     val perioder : List<PeriodeInformasjon>
 ) {

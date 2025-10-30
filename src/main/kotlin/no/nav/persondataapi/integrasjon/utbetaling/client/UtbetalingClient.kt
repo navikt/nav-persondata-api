@@ -21,13 +21,13 @@ class UtbetalingClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent")
-    fun hentUtbetalingerForBruker(personIdent: PersonIdent): UtbetalingResultat {
+    fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return runCatching {
-
+            val antallÅr: Long = if (utvidet) 10 else 3
             val requestBody = RequestBody(
                 ident = personIdent.value,
                 rolle = "RETTIGHETSHAVER",
-                periode = Periode(LocalDate.now().minusYears(3), LocalDate.now()),
+                periode = Periode(LocalDate.now().minusYears(antallÅr), LocalDate.now()),
                 periodetype = "UTBETALINGSPERIODE"
             )
             val oboToken = tokenService.getServiceToken(
@@ -43,7 +43,6 @@ class UtbetalingClient(
             response
         }.fold(
             onSuccess = { utbetalinger ->
-
                 UtbetalingResultat(
                     data = UtbetalingRespons(utbetalinger = utbetalinger),
                     statusCode = 200

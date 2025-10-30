@@ -1,8 +1,8 @@
 package no.nav.persondataapi.rest.oppslag
 
-import no.nav.persondataapi.rest.domene.Stønad
-import no.nav.persondataapi.service.StønadResultat
-import no.nav.persondataapi.service.StønadService
+import no.nav.persondataapi.rest.domene.Ytelse
+import no.nav.persondataapi.service.YtelserResultat
+import no.nav.persondataapi.service.YtelseService
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,34 +10,35 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping("/oppslag/stønad")
-class StønadController(
-    private val stønadService: StønadService
+class YtelseController(
+    private val ytelseService: YtelseService
 ) {
     @Protected
     @PostMapping
-    fun hentStønader(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<List<Stønad>>> {
-        val resultat = stønadService.hentStønaderForPerson(dto.ident)
+    fun hentYtelser(@RequestBody dto: OppslagRequestDto, @RequestParam(required = false, defaultValue = "false") utvidet: Boolean): ResponseEntity<OppslagResponseDto<List<Ytelse>>> {
+        val resultat = ytelseService.hentYtelserForPerson(dto.ident, utvidet)
 
         return when (resultat) {
-            is StønadResultat.Success -> {
+            is YtelserResultat.Success -> {
                 ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
             }
-            is StønadResultat.IngenTilgang -> {
+            is YtelserResultat.IngenTilgang -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Ingen tilgang", data = null),
                     HttpStatus.FORBIDDEN
                 )
             }
-            is StønadResultat.PersonIkkeFunnet -> {
+            is YtelserResultat.PersonIkkeFunnet -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Person ikke funnet", data = null),
                     HttpStatus.NOT_FOUND
                 )
             }
-            is StønadResultat.FeilIBaksystem -> {
+            is YtelserResultat.FeilIBaksystem -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Feil i baksystem", data = null),
                     HttpStatus.BAD_GATEWAY
