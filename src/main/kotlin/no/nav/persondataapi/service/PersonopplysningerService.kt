@@ -5,7 +5,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
-import org.springframework.cache.CacheManager
+import org.slf4j.MarkerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -17,16 +17,24 @@ class PersonopplysningerService(
     private val kodeverkService: KodeverkService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
+
 
     suspend fun finnesPerson(personIdent: PersonIdent): Boolean {
         val response = pdlClient.hentPerson(personIdent)
         return response.statusCode != 404
     }
 
-    suspend fun hentPersonopplysningerForPerson(personIdent: PersonIdent): PersonopplysningerResultat {
+    suspend fun hentPersonopplysningerForPerson(
+        personIdent: PersonIdent,
+        responsLog: Boolean = false
+    ): PersonopplysningerResultat {
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        if (responsLog) {
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, pdlResponse)
+        }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
         // Håndter feil fra PdlClient
