@@ -1,7 +1,10 @@
 package no.nav.persondataapi.rest.domene
 
 import no.nav.persondataapi.rest.oppslag.Maskert
+import java.time.LocalDate
 import java.time.YearMonth
+import java.util.Calendar
+import java.util.Locale
 
 data class ArbeidsgiverInformasjon(
     val løpendeArbeidsforhold : List<ArbeidsgiverData>,
@@ -15,6 +18,7 @@ data class ArbeidsgiverInformasjon(
         @Maskert
         val adresse: String,
         val ansettelsesDetaljer:List<AnsettelsesDetalj>,
+        val id:String,
     )
 
     data class AnsettelsesDetalj(
