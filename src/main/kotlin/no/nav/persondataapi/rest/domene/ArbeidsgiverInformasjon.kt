@@ -27,6 +27,6 @@ data class ArbeidsgiverInformasjon(
     )
     data class ÅpenPeriode(
         val fom: YearMonth,
-        val tom: YearMonth?,
+        var tom: YearMonth?,
     )
 }
