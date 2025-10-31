@@ -54,7 +54,7 @@ fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
     when (this.title) {
         "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false  // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse.
         "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false   // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse i utlandet.
-        "AVVIST_FORTROLIG_ADRESSE" -> return true           // Saksbehandler har tilgang til brukere med fortrolig adresse.
+        "AVVIST_FORTROLIG_ADRESSE" -> return false           // Saksbehandler har tilgang til brukere med fortrolig adresse.
         "AVVIST_GEOGRAFISK" -> return false                 // Saksbehandler har ikke tilgang til brukerens geografiske område eller enhet.
         "AVVIST_AVDOED" -> return false                     // Saksbehandler har ikke tilgang til brukere som har vært død i mer enn X måneder.
         "AVVIST_SKJERMING" -> return true                   // Saksbehandler har tilgang til Nav-ansatte og andre skjermede brukere.
