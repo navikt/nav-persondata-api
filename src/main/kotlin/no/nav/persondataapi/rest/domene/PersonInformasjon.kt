@@ -10,6 +10,8 @@ data class PersonInformasjon(
     val adresse: Bostedsadresse? =null,
     val sivilstand: String? = null,
     val alder: Int,
+    val fødselsdato: String,
+    val dødsdato: String? = null,
 ) {
     data class Navn(
         @Maskert

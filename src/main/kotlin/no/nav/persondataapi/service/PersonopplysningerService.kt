@@ -72,6 +72,8 @@ class PersonopplysningerService(
             alder = pdlData.foedselsdato.first().foedselsdato?.let {
                 Period.between(LocalDate.parse(it), LocalDate.now()).years
             } ?: -1,
+            fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
+            dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
         )
 
         // Berik med kodeverkdata
