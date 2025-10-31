@@ -25,12 +25,12 @@ class TilgangMaskinServiceTest {
         Assertions.assertEquals(403,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
-    fun `Basic adgang skal ha tilgang til fortrolig`() {
+    fun `Basic adgang ikke ha tilgang til fortrolig`() {
         val client = TilgangsMaskinMockClient()
         client.title=fortroligAdresse
         val tms = TilgangService(client, grupper = Grupper("[]"))
 
-        Assertions.assertEquals(200,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
+        Assertions.assertEquals(403,tms.sjekkTilgang(PersonIdent("123458123465"),"2222"))
     }
     @Test
     fun `Basic adgang skal ha tilgang til egen_ansatt`() {
