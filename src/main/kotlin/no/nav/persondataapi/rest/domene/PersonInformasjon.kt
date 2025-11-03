@@ -10,6 +10,7 @@ data class PersonInformasjon(
     val adresse: Bostedsadresse? =null,
     val sivilstand: String? = null,
     val alder: Int,
+    val adresseBeskyttelse: Skjerming = Skjerming.ÅPEN,
     val fødselsdato: String,
     val dødsdato: String? = null,
 ) {
@@ -59,4 +60,11 @@ data class PersonInformasjon(
         @Maskert
         val landkode: String
     )
+    enum class Skjerming {
+        ÅPEN,
+        FORTROLIG,
+        STRENGT_FORTROLIG,
+        STRENGT_FORTROLIG_UTLAND
+    }
+
 }

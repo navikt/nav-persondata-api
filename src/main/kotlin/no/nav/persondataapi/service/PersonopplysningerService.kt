@@ -1,5 +1,7 @@
 package no.nav.persondataapi.service
 
+import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
@@ -67,6 +69,7 @@ class PersonopplysningerService(
             aktørId = personIdent.value,
             adresse = pdlData.nåværendeBostedsadresse(),
             familemedlemmer = familiemedlemmer,
+            adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
             statsborgerskap = statsborgerskap,
             sivilstand = pdlData.gjeldendeSivilStand(),
             alder = pdlData.foedselsdato.first().foedselsdato?.let {
@@ -108,4 +111,23 @@ sealed class PersonopplysningerResultat {
     data object IngenTilgang : PersonopplysningerResultat()
     data object PersonIkkeFunnet : PersonopplysningerResultat()
     data object FeilIBaksystem : PersonopplysningerResultat()
+}
+
+fun Person.nåværendeAdresseBeskyttelse() : PersonInformasjon.Skjerming{
+    if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.ÅPEN
+
+    val  beskyttelser = this.adressebeskyttelse.firstOrNull { !it.metadata.historisk }
+    if (beskyttelser != null){
+        when (beskyttelser.gradering) {
+            AdressebeskyttelseGradering.UGRADERT -> return PersonInformasjon.Skjerming.ÅPEN
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG -> return PersonInformasjon.Skjerming.STRENGT_FORTROLIG
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> return PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
+            AdressebeskyttelseGradering.FORTROLIG -> return PersonInformasjon.Skjerming.FORTROLIG
+            AdressebeskyttelseGradering.__UNKNOWN_VALUE -> return PersonInformasjon.Skjerming.ÅPEN
+        }
+    }
+    else {
+        return PersonInformasjon.Skjerming.ÅPEN
+    }
+
 }
