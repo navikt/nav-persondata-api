@@ -113,21 +113,35 @@ sealed class PersonopplysningerResultat {
     data object FeilIBaksystem : PersonopplysningerResultat()
 }
 
-fun Person.nåværendeAdresseBeskyttelse() : PersonInformasjon.Skjerming{
+/**
+ * Henter personens nåværende adressebeskyttelse, basert på siste ikke-historiske oppføring.
+ *
+ * Denne funksjonen tolker adressebeskyttelsen for en `Person` slik:
+ *  - Dersom listen `adressebeskyttelse` er tom, antas personen å ha **ingen skjerming**.
+ *  - Første element i listen som **ikke er historisk** (`metadata.historisk == false`)
+ *    brukes som gjeldende beskyttelse.
+ *  - Graderingen mappes til verdier i `PersonInformasjon.Skjerming`:
+ *      - `UGRADERT` → `ÅPEN`
+ *      - `FORTROLIG` → `FORTROLIG`
+ *      - `STRENGT_FORTROLIG` → `STRENGT_FORTROLIG`
+ *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
+ *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `ÅPEN`
+ *
+ * Dersom ingen gyldig adressebeskyttelse finnes, returneres `ÅPEN` som standard.
+ *
+ * @receiver `Person`-objektet som inneholder adressebeskyttelsesdata.
+ * @return En verdi av typen [PersonInformasjon.Skjerming] som representerer gjeldende beskyttelsesnivå.
+ */
+fun Person.nåværendeAdresseBeskyttelse(): PersonInformasjon.Skjerming {
     if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.ÅPEN
 
-    val  beskyttelser = this.adressebeskyttelse.firstOrNull { !it.metadata.historisk }
-    if (beskyttelser != null){
-        when (beskyttelser.gradering) {
-            AdressebeskyttelseGradering.UGRADERT -> return PersonInformasjon.Skjerming.ÅPEN
-            AdressebeskyttelseGradering.STRENGT_FORTROLIG -> return PersonInformasjon.Skjerming.STRENGT_FORTROLIG
-            AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> return PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
-            AdressebeskyttelseGradering.FORTROLIG -> return PersonInformasjon.Skjerming.FORTROLIG
-            AdressebeskyttelseGradering.__UNKNOWN_VALUE -> return PersonInformasjon.Skjerming.ÅPEN
-        }
-    }
-    else {
-        return PersonInformasjon.Skjerming.ÅPEN
-    }
+    val beskyttelse = adressebeskyttelse.firstOrNull { !it.metadata.historisk }
 
+    return when (beskyttelse?.gradering) {
+        AdressebeskyttelseGradering.UGRADERT -> PersonInformasjon.Skjerming.ÅPEN
+        AdressebeskyttelseGradering.FORTROLIG -> PersonInformasjon.Skjerming.FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
+        AdressebeskyttelseGradering.__UNKNOWN_VALUE, null -> PersonInformasjon.Skjerming.ÅPEN
+    }
 }
