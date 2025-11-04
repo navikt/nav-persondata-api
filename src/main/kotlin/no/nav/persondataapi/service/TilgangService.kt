@@ -26,7 +26,10 @@ class TilgangService(
         logger.info("Sjekker tilgang til $brukerIdent, svar er : ${data?.status} - ${data?.title}")
         return when {
             data?.status == 204 -> 200
-            data?.harTilgangMedBasicAdgang() == true -> 200
+            data?.harTilgangMedBasicAdgang() == true -> {
+                logger.warn("overstyrer skjerming for $brukerIdent - ${data.title}")
+                return 200
+            }
             else -> data?.status ?: resultat.statusCode!!
         }
     }
