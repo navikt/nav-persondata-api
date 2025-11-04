@@ -121,7 +121,7 @@ sealed class PersonopplysningerResultat {
  *  - Første element i listen som **ikke er historisk** (`metadata.historisk == false`)
  *    brukes som gjeldende beskyttelse.
  *  - Graderingen mappes til verdier i `PersonInformasjon.Skjerming`:
- *      - `UGRADERT` → `ÅPEN`
+ *      - `UGRADERT` → `UGRADERT`
  *      - `FORTROLIG` → `FORTROLIG`
  *      - `STRENGT_FORTROLIG` → `STRENGT_FORTROLIG`
  *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
@@ -133,15 +133,15 @@ sealed class PersonopplysningerResultat {
  * @return En verdi av typen [PersonInformasjon.Skjerming] som representerer gjeldende beskyttelsesnivå.
  */
 fun Person.nåværendeAdresseBeskyttelse(): PersonInformasjon.Skjerming {
-    if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.ÅPEN
+    if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.UGRADERT
 
     val beskyttelse = adressebeskyttelse.firstOrNull { !it.metadata.historisk }
 
     return when (beskyttelse?.gradering) {
-        AdressebeskyttelseGradering.UGRADERT -> PersonInformasjon.Skjerming.ÅPEN
+        AdressebeskyttelseGradering.UGRADERT -> PersonInformasjon.Skjerming.UGRADERT
         AdressebeskyttelseGradering.FORTROLIG -> PersonInformasjon.Skjerming.FORTROLIG
         AdressebeskyttelseGradering.STRENGT_FORTROLIG -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG
         AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
-        AdressebeskyttelseGradering.__UNKNOWN_VALUE, null -> PersonInformasjon.Skjerming.ÅPEN
+        AdressebeskyttelseGradering.__UNKNOWN_VALUE, null -> PersonInformasjon.Skjerming.UGRADERT
     }
 }
