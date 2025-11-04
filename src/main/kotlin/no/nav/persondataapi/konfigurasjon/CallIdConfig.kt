@@ -3,7 +3,9 @@ package no.nav.persondataapi.konfigurasjon
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.MDC
+import org.springframework.core.Ordered
 
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -18,15 +20,23 @@ object CallId {
 }
 
 @Component
-@Order(0) // tidlig i kjeden
-class NavCallIdServletFilter : OncePerRequestFilter() {
+@Order(Ordered.LOWEST_PRECEDENCE) // sikkert etter Spring Security / token-filteret
+class NavCallIdServletFilter(
+    private val tokenValidationContextHolder: TokenValidationContextHolder
+) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         chain: FilterChain
     ) {
+        val navIdent = runCatching {
+            val ctx = tokenValidationContextHolder.getTokenValidationContext()
+            val token = ctx.firstValidToken // kan være null hvis ingen gyldige tokens
+            token?.jwtTokenClaims?.get("NAVident")?.toString()
+        }.getOrDefault("ukjent")
         val incoming = request.getHeader(CallId.HEADER) ?: UUID.randomUUID().toString()
         MDC.put(CallId.HEADER, incoming)
+        MDC.put("navIdent", navIdent)
         try {
             chain.doFilter(request, response)
         } finally {
