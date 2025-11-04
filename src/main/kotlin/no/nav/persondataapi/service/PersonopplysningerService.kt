@@ -125,7 +125,7 @@ sealed class PersonopplysningerResultat {
  *      - `FORTROLIG` → `FORTROLIG`
  *      - `STRENGT_FORTROLIG` → `STRENGT_FORTROLIG`
  *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
- *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `ÅPEN`
+ *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `UGRADERT`
  *
  * Dersom ingen gyldig adressebeskyttelse finnes, returneres `ÅPEN` som standard.
  *
