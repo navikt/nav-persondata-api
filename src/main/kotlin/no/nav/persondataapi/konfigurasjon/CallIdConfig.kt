@@ -41,6 +41,7 @@ class NavCallIdServletFilter(
             chain.doFilter(request, response)
         } finally {
             MDC.remove(CallId.HEADER)
+            MDC.remove("navIdent")
         }
     }
 }
