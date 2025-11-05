@@ -7,6 +7,8 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
+import org.slf4j.LoggerFactory
+import org.slf4j.MarkerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
@@ -22,8 +24,8 @@ class AaregClient(
 ) {
 
     // Jackson for parsing etter at vi har logget rå-body
-
-    private val arbeidsforholdListType = object : TypeReference<List<Arbeidsforhold>>() {}
+    private val log = LoggerFactory.getLogger(javaClass)
+    private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
 
     @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent")
     fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
@@ -48,9 +50,17 @@ class AaregClient(
                     response.bodyToMono(String::class.java)
                         .map { raw ->
                             if (status.is2xxSuccessful) {
-                                val parsed: List<Arbeidsforhold> =
-                                    JsonUtils.fromJson(raw)
-                                status.value() to parsed
+                                try {
+                                    val parsed: List<Arbeidsforhold> =
+                                        JsonUtils.fromJson(raw)
+                                    status.value() to parsed
+                                }
+                                catch (ex:Exception) {
+                                    log.error("Klarte ikke å parse Aareg-respons. se Team Logs for full trace", ex)
+                                    log.error(teamLogsMarker,"Klarte ikke å parse Aareg-respons. Rådata: $raw", ex)
+                                    throw RuntimeException("Feil ved parsing av Aareg-respons", ex)
+                                }
+
                             } else {
                                 throw HttpStatusException(
                                     status.value(),

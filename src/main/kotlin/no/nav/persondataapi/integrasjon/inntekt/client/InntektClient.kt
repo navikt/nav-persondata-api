@@ -71,7 +71,7 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger", error)
+                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,

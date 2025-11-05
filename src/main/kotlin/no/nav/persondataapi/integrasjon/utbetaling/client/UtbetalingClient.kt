@@ -49,7 +49,7 @@ class UtbetalingClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger", error)
+                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
                 if (error.message?.contains("ikke tilgang") == true) {
                     UtbetalingResultat(
                         data = null,
