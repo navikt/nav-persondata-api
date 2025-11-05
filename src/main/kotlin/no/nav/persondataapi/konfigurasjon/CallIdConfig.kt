@@ -3,6 +3,7 @@ package no.nav.persondataapi.konfigurasjon
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import no.nav.persondataapi.responstracing.LOGG_HEADER
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.MDC
 import org.springframework.core.Ordered
@@ -35,6 +36,8 @@ class NavCallIdServletFilter(
             token?.jwtTokenClaims?.get("NAVident")?.toString()
         }.getOrDefault("ukjent")
         val incoming = request.getHeader(CallId.HEADER) ?: UUID.randomUUID().toString()
+        val loggRespons = request.getHeader(LOGG_HEADER)?.toBoolean()?.toString() ?: "false"
+        MDC.put(LOGG_HEADER, loggRespons)
         MDC.put(CallId.HEADER, incoming)
         MDC.put("navIdent", navIdent)
         try {
@@ -42,6 +45,7 @@ class NavCallIdServletFilter(
         } finally {
             MDC.remove(CallId.HEADER)
             MDC.remove("navIdent")
+            MDC.remove(LOGG_HEADER)
         }
     }
 }

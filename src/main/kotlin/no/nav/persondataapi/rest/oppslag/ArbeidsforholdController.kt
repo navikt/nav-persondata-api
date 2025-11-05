@@ -1,10 +1,12 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.responstracing.LOGG_HEADER
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
 import no.nav.persondataapi.service.ArbeidsforholdResultat
 import no.nav.persondataapi.service.ArbeidsforholdService
 import no.nav.security.token.support.core.api.Protected
+import org.slf4j.MDC
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

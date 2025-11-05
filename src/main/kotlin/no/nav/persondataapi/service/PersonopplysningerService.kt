@@ -1,6 +1,8 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
@@ -17,8 +19,6 @@ class PersonopplysningerService(
     private val kodeverkService: KodeverkService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
-    private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
-
 
     suspend fun finnesPerson(personIdent: PersonIdent): Boolean {
         val response = pdlClient.hentPerson(personIdent)
@@ -33,7 +33,7 @@ class PersonopplysningerService(
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
         if (responsLog) {
-            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, pdlResponse)
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
         }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
