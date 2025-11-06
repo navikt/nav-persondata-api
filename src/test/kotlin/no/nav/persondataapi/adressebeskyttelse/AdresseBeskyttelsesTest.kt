@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 class AdresseBeskyttelsesTest {
 
     @Test
-    fun `dersom ingen adressebeskyttelse så skal ÅPEN returneres`() {
+    fun `dersom ingen adressebeskyttelse så skal UGRADERT returneres`() {
         val person = lagPdlPerson(emptyList())
         Assertions.assertEquals(PersonInformasjon.Skjerming.UGRADERT,person.nåværendeAdresseBeskyttelse())
     }
