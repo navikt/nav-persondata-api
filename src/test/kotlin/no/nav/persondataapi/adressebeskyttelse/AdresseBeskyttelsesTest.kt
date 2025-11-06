@@ -19,7 +19,7 @@ class AdresseBeskyttelsesTest {
         Assertions.assertEquals(PersonInformasjon.Skjerming.UGRADERT,person.nåværendeAdresseBeskyttelse())
     }
     @Test
-    fun `dersom  adressebeskyttelse som er utgått så skal ÅPEN returneres`() {
+    fun `dersom  adressebeskyttelse som er utgått så skal UGRADERT returneres`() {
 
         val person = lagPdlPerson(
             adressebeskyttelse = (
