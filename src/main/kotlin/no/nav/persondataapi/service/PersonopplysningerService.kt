@@ -127,7 +127,7 @@ sealed class PersonopplysningerResultat {
  *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
  *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `UGRADERT`
  *
- * Dersom ingen gyldig adressebeskyttelse finnes, returneres `ÅPEN` som standard.
+ * Dersom ingen gyldig adressebeskyttelse finnes, returneres `UGRADERT ` som standard.
  *
  * @receiver `Person`-objektet som inneholder adressebeskyttelsesdata.
  * @return En verdi av typen [PersonInformasjon.Skjerming] som representerer gjeldende beskyttelsesnivå.
