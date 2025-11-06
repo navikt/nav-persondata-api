@@ -1,6 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.responstracing.LOGG_HEADER
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.service.PersonopplysningerResultat
 import no.nav.persondataapi.service.PersonopplysningerService
@@ -54,7 +55,4 @@ class PersonopplysningerController(
         }
     }
 
-    companion object {
-        private const val LOGG_HEADER = "logg"
-    }
 }

@@ -5,6 +5,9 @@ import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
@@ -24,6 +27,9 @@ class ArbeidsforholdService(
     suspend fun hentArbeidsforholdForPerson(personIdent: PersonIdent): ArbeidsforholdResultat {
         // Hent arbeidsforhold fra Aareg
         val aaregRespons = aaregClient.hentArbeidsforhold(personIdent)
+        if (erTraceLoggingAktvert()) {
+            logger.info(teamLogsMarker,"Logging aktivert - full AAREG-respons for {}: {}", personIdent, JsonUtils.toJson(aaregRespons).toPrettyString())
+        }
         logger.info("Hentet arbeidsforhold for $personIdent, status ${aaregRespons.statusCode}")
 
         // Håndter feil fra Aareg
