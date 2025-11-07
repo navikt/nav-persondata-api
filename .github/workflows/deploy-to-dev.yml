@@ -32,7 +32,7 @@ jobs:
           ORG_GRADLE_PROJECT_githubUser: x-access-token
           ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker build & push
+      - name: Docker push
         id: docker-push
         uses: nais/docker-build-push@v0
         with:
