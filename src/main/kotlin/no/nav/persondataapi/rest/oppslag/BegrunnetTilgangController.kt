@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/oppslag/audit")
-class AuditController(
+@RequestMapping("/oppslag/begrunnetTilgang")
+class BegrunnetTilgangController(
     private val begrunnetTilgangService: BegrunnetTilgangService
 ) {
 
     @Protected
     @PostMapping
-    fun loggOppslag(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<OppslagResponseDto<Unit>> {
+    fun loggBegrunnetYilgang(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<OppslagResponseDto<Unit>> {
         begrunnetTilgangService.loggBegrunnetTilgang(dto.ident,dto.begrunnelse)
         return ResponseEntity.accepted().body(OppslagResponseDto(data = null))
     }

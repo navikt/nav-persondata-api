@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 // Loggers
 import no.nav.persondataapi.application
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.RevisjonsLogger.Operasjon
 import org.slf4j.LoggerFactory
@@ -32,7 +33,9 @@ class RevisjonsloggService (val auditLogger: RevisjonsLogger)
                        endMillis = Instant.now(clock).toEpochMilli()
                        )
             MDC.put("team", "team holmes")
-            revisjonslogg.info(msg)
+            logger.info(teamLogsMarker,msg)
+            //TODO:Legg in linjen under når vi skal legge til brukere
+            //revisjonslogg.info(msg)
             MDC.clear()
         } catch (e: Exception) {
             logger.error(e.message, e)
