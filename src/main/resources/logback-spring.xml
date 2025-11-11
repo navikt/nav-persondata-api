@@ -38,7 +38,8 @@
         <appender-ref ref="default-json" />
         <appender-ref ref="team-logs" />
     </root>
-
+    <logger name="io.lettuce.core.protocol.ConnectionWatchdog" level="WARN" />
+    <logger name="io.lettuce.core.protocol.ReconnectionHandler" level="WARN" />
     <!-- Only audit logs goes to AuditLogger (naudit) -->
     <logger name="audit" level="info">
         <appender-ref ref="AuditLogger" />
