@@ -11,12 +11,13 @@ class BegrunnetTilgangService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun loggBegrunnetTilgang(personIdent: PersonIdent, begrunnelse: String) {
+    fun loggBegrunnetTilgang(personIdent: PersonIdent, begrunnelse: String,mangel: String) {
         logger.info(
             teamLogsMarker,
-            "Begrunnet tilgang registrert; ident={} melding={}",
+            "Begrunnet tilgang registrert; ident={} melding={} mangel={}",
             personIdent.value,
-            begrunnelse
+            begrunnelse,
+            mangel,
         )
     }
 }

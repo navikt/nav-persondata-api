@@ -15,11 +15,11 @@ class AuditControllerTest {
 
     @Test
     fun `skal logge audit og returnere accepted`() {
-        val request = BegrunnelseRequestDto(PersonIdent("12345678901"),"begrunnelse")
+        val request = BegrunnelseRequestDto(PersonIdent("12345678901"),"begrunnelse","mangel")
 
-        val response = controller.loggBegrunnetYilgang(request,)
+        val response = controller.loggBegrunnetTilgang(request,)
 
-        verify { auditLogService.loggBegrunnetTilgang(request.ident,request.begrunnelse) }
+        verify { auditLogService.loggBegrunnetTilgang(request.ident,request.begrunnelse,request.mangel) }
         assertEquals(HttpStatus.ACCEPTED, response.statusCode)
     }
 }
