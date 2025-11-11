@@ -16,8 +16,8 @@ class BegrunnetTilgangController(
 
     @Protected
     @PostMapping
-    fun loggBegrunnetTilgang(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<OppslagResponseDto<Unit>> {
-        begrunnetTilgangService.loggBegrunnetTilgang(dto.ident,dto.begrunnelse, mangel = dto.mangel)
-        return ResponseEntity.accepted().body(OppslagResponseDto(data = null))
+    fun loggBegrunnetTilgang(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<Void> {
+        begrunnetTilgangService.loggBegrunnetTilgang(personIdent = dto.ident, begrunnelse = dto.begrunnelse, mangel = dto.mangel)
+        return ResponseEntity.accepted().build()
     }
 }
