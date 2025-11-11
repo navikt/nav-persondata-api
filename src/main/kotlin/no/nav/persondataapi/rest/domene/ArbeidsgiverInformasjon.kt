@@ -15,6 +15,7 @@ data class ArbeidsgiverInformasjon(
         @Maskert
         val adresse: String,
         val ansettelsesDetaljer:List<AnsettelsesDetalj>,
+        val id:String,
     )
 
     data class AnsettelsesDetalj(
@@ -26,6 +27,6 @@ data class ArbeidsgiverInformasjon(
     )
     data class ÅpenPeriode(
         val fom: YearMonth,
-        val tom: YearMonth?,
+        var tom: YearMonth?,
     )
 }

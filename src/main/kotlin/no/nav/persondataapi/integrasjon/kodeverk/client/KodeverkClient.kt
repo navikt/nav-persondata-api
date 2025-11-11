@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono
 @Component
 class KodeverkClient(
     private val tokenService: TokenService,
-    @Qualifier("kodeverkWebClient")
+    @param:Qualifier("kodeverkWebClient")
     private val webClient: WebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)

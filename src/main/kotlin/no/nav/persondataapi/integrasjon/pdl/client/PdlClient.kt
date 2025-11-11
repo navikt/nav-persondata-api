@@ -7,6 +7,7 @@ import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -16,9 +17,10 @@ import org.springframework.web.reactive.function.client.WebClient
 class PdlClient(
     private val tokenService: TokenService,
 
-    @Value("\${PDL_URL}")
+    @param:Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
     @Cacheable(value = ["pdl-person"], key = "#personIdent")
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
@@ -43,6 +45,7 @@ class PdlClient(
             if ("not_found".equals(response.errors!!.first().extensions?.get("code"))){
                 status = 404
             }
+            log.error("Feil i kall mot PDL : ${response.errors!!.first().message}")
             return PersonDataResultat(
                 data = null,
                 statusCode = status,

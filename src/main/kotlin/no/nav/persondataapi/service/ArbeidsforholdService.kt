@@ -5,11 +5,16 @@ import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.YearMonth
 
 @Service
 class ArbeidsforholdService(
@@ -22,6 +27,9 @@ class ArbeidsforholdService(
     suspend fun hentArbeidsforholdForPerson(personIdent: PersonIdent): ArbeidsforholdResultat {
         // Hent arbeidsforhold fra Aareg
         val aaregRespons = aaregClient.hentArbeidsforhold(personIdent)
+        if (erTraceLoggingAktvert()) {
+            logger.info(teamLogsMarker,"Logging aktivert - full AAREG-respons for {}: {}", personIdent, JsonUtils.toJson(aaregRespons).toPrettyString())
+        }
         logger.info("Hentet arbeidsforhold for $personIdent, status ${aaregRespons.statusCode}")
 
         // Håndter feil fra Aareg
@@ -64,7 +72,6 @@ class ArbeidsforholdService(
             .map { arbeidsforhold ->
                 mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold, unikeOrganisasjonsnumre)
             }
-
         logger.info("Fant ${løpendeArbeidsforhold.size} løpende og ${historiskeArbeidsforhold.size} historiske arbeidsforhold for $personIdent")
 
         var respons = ArbeidsgiverInformasjon(
@@ -84,10 +91,14 @@ class ArbeidsforholdService(
         arbeidsforhold: Arbeidsforhold,
         eregDataRespons: Map<String, EregRespons>
     ): ArbeidsgiverInformasjon.ArbeidsgiverData {
+        val sluttdatoForArbeidsforhold = arbeidsforhold.ansettelsesperiode.sluttdato
+
         val orgnummer = arbeidsforhold.hentOrgNummerTilArbeidssted()
+        val saltedOrgNummer = orgnummer.hashCode().toString()+ LocalDate.now().dayOfYear.toString()
         return ArbeidsgiverInformasjon.ArbeidsgiverData(
             arbeidsgiver = eregDataRespons.orgNummerTilOrgNavn(orgnummer),
             organisasjonsnummer = orgnummer,
+            id = saltedOrgNummer,
             adresse = eregDataRespons.orgnummerTilAdresse(orgnummer),
             ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map { ansettelsesdetaljer ->
                 ArbeidsgiverInformasjon.AnsettelsesDetalj(
@@ -96,7 +107,7 @@ class ArbeidsforholdService(
                     antallTimerPrUke = ansettelsesdetaljer.antallTimerPrUke,
                     periode = ArbeidsgiverInformasjon.ÅpenPeriode(
                         fom = ansettelsesdetaljer.rapporteringsmaaneder.fra,
-                        tom = ansettelsesdetaljer.rapporteringsmaaneder.til
+                        tom = ansettelsesdetaljer.rapporteringsmaaneder.til ?:sluttdatoForArbeidsforhold?.let { YearMonth.from(it) }
                     ),
                     yrke = ansettelsesdetaljer.yrke.beskrivelse
                 )

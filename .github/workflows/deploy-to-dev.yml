@@ -3,37 +3,46 @@ permissions:
   contents: "read"
   id-token: "write"
   packages: "write"
+
 on:
   push:
-      branches: [ main ]
+    branches: [ main ]
   workflow_dispatch:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      - name: test and build
-        uses: actions/setup-java@v4.2.1
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: "21"
           check-latest: true
-      - run: ./gradlew test bootJar
+
+      - name: Test and build
+        run: ./gradlew test bootJar
         env:
           ORG_GRADLE_PROJECT_githubUser: x-access-token
           ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.GITHUB_TOKEN }}
-      - uses: nais/docker-build-push@v0
+
+      - name: Docker push
         id: docker-push
+        uses: nais/docker-build-push@v0
         with:
           team: holmes # required
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }} # required, but is defined as an organization variable
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }} # required, but is defined as an organization secret
+
     outputs:
       image: ${{ steps.docker-push.outputs.image }}
+
   deploypreprod:
     name: Deploy to dev
     needs: build_and_push
@@ -47,3 +56,51 @@ jobs:
           RESOURCE: .nais/nais.yaml
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
+
+  notify_on_failure:
+    name: Notify Slack on failure
+    needs: [build_and_push, deploypreprod]
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure jq is available
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
+          fi
+
+      - name: Post to Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          payload=$(jq -n \
+            --arg repo "${{ github.repository }}" \
+            --arg branch "${{ github.ref_name }}" \
+            --arg actor "${{ github.actor }}" \
+            --arg run_url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            '{
+              attachments: [
+                {
+                  color: "#ff0000",
+                  blocks: [
+                    { "type": "header",
+                      "text": { "type": "plain_text", "text": "❌ Deploy til dev feilet", "emoji": true }
+                    },
+                    { "type": "section",
+                      "text": { "type": "mrkdwn",
+                                "text": "*Repo:* <\($repo)|\($repo)>\n*Branch:* `\($branch)`\n*Actor:* `\($actor)`"
+                      }
+                    },
+                    { "type": "section",
+                      "text": { "type": "mrkdwn",
+                                "text": "<\($run_url)|Se feilet deploy>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }')
+          curl -X POST -H 'Content-type: application/json' \
+               --data "$payload" \
+               "$SLACK_WEBHOOK_URL"

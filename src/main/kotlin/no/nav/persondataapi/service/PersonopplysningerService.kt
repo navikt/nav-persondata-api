@@ -1,11 +1,15 @@
 package no.nav.persondataapi.service
 
+import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
-import org.springframework.cache.CacheManager
+import org.slf4j.MarkerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -23,10 +27,16 @@ class PersonopplysningerService(
         return response.statusCode != 404
     }
 
-    suspend fun hentPersonopplysningerForPerson(personIdent: PersonIdent): PersonopplysningerResultat {
+    suspend fun hentPersonopplysningerForPerson(
+        personIdent: PersonIdent,
+        responsLog: Boolean = false
+    ): PersonopplysningerResultat {
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        if (responsLog) {
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
+        }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
         // Håndter feil fra PdlClient
@@ -59,11 +69,14 @@ class PersonopplysningerService(
             aktørId = personIdent.value,
             adresse = pdlData.nåværendeBostedsadresse(),
             familemedlemmer = familiemedlemmer,
+            adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
             statsborgerskap = statsborgerskap,
             sivilstand = pdlData.gjeldendeSivilStand(),
             alder = pdlData.foedselsdato.first().foedselsdato?.let {
                 Period.between(LocalDate.parse(it), LocalDate.now()).years
             } ?: -1,
+            fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
+            dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
         )
 
         // Berik med kodeverkdata
@@ -98,4 +111,37 @@ sealed class PersonopplysningerResultat {
     data object IngenTilgang : PersonopplysningerResultat()
     data object PersonIkkeFunnet : PersonopplysningerResultat()
     data object FeilIBaksystem : PersonopplysningerResultat()
+}
+
+/**
+ * Henter personens nåværende adressebeskyttelse, basert på siste ikke-historiske oppføring.
+ *
+ * Denne funksjonen tolker adressebeskyttelsen for en `Person` slik:
+ *  - Dersom listen `adressebeskyttelse` er tom, antas personen å ha **ingen skjerming**.
+ *  - Første element i listen som **ikke er historisk** (`metadata.historisk == false`)
+ *    brukes som gjeldende beskyttelse.
+ *  - Graderingen mappes til verdier i `PersonInformasjon.Skjerming`:
+ *      - `UGRADERT` → `UGRADERT`
+ *      - `FORTROLIG` → `FORTROLIG`
+ *      - `STRENGT_FORTROLIG` → `STRENGT_FORTROLIG`
+ *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
+ *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `UGRADERT`
+ *
+ * Dersom ingen gyldig adressebeskyttelse finnes, returneres `UGRADERT ` som standard.
+ *
+ * @receiver `Person`-objektet som inneholder adressebeskyttelsesdata.
+ * @return En verdi av typen [PersonInformasjon.Skjerming] som representerer gjeldende beskyttelsesnivå.
+ */
+fun Person.nåværendeAdresseBeskyttelse(): PersonInformasjon.Skjerming {
+    if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.UGRADERT
+
+    val beskyttelse = adressebeskyttelse.firstOrNull { !it.metadata.historisk }
+
+    return when (beskyttelse?.gradering) {
+        AdressebeskyttelseGradering.UGRADERT -> PersonInformasjon.Skjerming.UGRADERT
+        AdressebeskyttelseGradering.FORTROLIG -> PersonInformasjon.Skjerming.FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
+        AdressebeskyttelseGradering.__UNKNOWN_VALUE, null -> PersonInformasjon.Skjerming.UGRADERT
+    }
 }

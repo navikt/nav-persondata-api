@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
+import kotlin.test.assertNotEquals
 
 class ArbeidsforholdServiceTest {
 
@@ -55,6 +56,96 @@ class ArbeidsforholdServiceTest {
         assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
         assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
         assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
+    }
+
+    @Test
+    fun `skal ha unike id på ulike arbeidsforhold også når saksbehandler ikke har tilgang`() = runBlocking {
+        val brukertilgangService = mockk<BrukertilgangService>()
+        val aaregClient = mockk<AaregClient>()
+        val eregClient = mockk<EregClient>()
+
+        val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)
+
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { aaregClient.hentArbeidsforhold(any()) } returns AaregDataResultat(
+            data = listOf(arbeidsforhold),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+        val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+        assertTrue(resultat is ArbeidsforholdResultat.Success)
+        val data = (resultat as ArbeidsforholdResultat.Success).data
+        // Data skal være maskert - listene finnes men @Maskert-felter er erstattet med *******
+        assertEquals(1, data.løpendeArbeidsforhold.size)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
+        assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
+    }
+    @Test
+    fun `skal ha lik id på like arbeidsforhold også  når saksbehandler ikke har tilgang`() = runBlocking {
+        val brukertilgangService = mockk<BrukertilgangService>()
+        val aaregClient = mockk<AaregClient>()
+        val eregClient = mockk<EregClient>()
+
+        val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)
+        val arbeidsforhold2 = lagArbeidsforhold("999888777", sluttdato = null)
+
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { aaregClient.hentArbeidsforhold(any()) } returns AaregDataResultat(
+            data = listOf(arbeidsforhold,arbeidsforhold2),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+        val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+        assertTrue(resultat is ArbeidsforholdResultat.Success)
+        val data = (resultat as ArbeidsforholdResultat.Success).data
+        // Data skal være maskert - listene finnes men @Maskert-felter er erstattet med *******
+        assertEquals(2, data.løpendeArbeidsforhold.size)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
+        assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
+        assertEquals(data.løpendeArbeidsforhold[0].id,data.løpendeArbeidsforhold[1].id)
+    }
+    @Test
+    fun `skal ha ullik id på uklike arbeidsforhold også når saksbehandler ikke har tilgang`() = runBlocking {
+        val brukertilgangService = mockk<BrukertilgangService>()
+        val aaregClient = mockk<AaregClient>()
+        val eregClient = mockk<EregClient>()
+
+        val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)
+        val arbeidsforhold2 = lagArbeidsforhold("999888778", sluttdato = null)
+
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+        every { aaregClient.hentArbeidsforhold(any()) } returns AaregDataResultat(
+            data = listOf(arbeidsforhold,arbeidsforhold2),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon("999888777") } returns lagEregRespons("999888777", "Test Bedrift AS")
+        every { eregClient.hentOrganisasjon("999888778") } returns lagEregRespons("999888778", "Test Bedrift AS2")
+
+        val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+        val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+        assertTrue(resultat is ArbeidsforholdResultat.Success)
+        val data = (resultat as ArbeidsforholdResultat.Success).data
+        // Data skal være maskert - listene finnes men @Maskert-felter er erstattet med *******
+        assertEquals(2, data.løpendeArbeidsforhold.size)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
+        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
+        assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
+        assertNotEquals(data.løpendeArbeidsforhold[0].id,data.løpendeArbeidsforhold[1].id)
     }
 
     @Test

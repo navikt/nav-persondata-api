@@ -19,7 +19,7 @@ import java.util.UUID
 @Component
 class InntektClient(
     private val tokenService: TokenService,
-    @Qualifier("inntektWebClient")
+    @param:Qualifier("inntektWebClient")
     private val webClient: WebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -71,7 +71,7 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger", error)
+                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,

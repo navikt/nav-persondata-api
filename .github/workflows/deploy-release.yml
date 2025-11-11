@@ -6,17 +6,25 @@ permissions:
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag som skal deployes'
+        required: true
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+  IMAGE: ${{ github.event_name == 'workflow_dispatch' && format('ghcr.io/{0}:{1}', github.repository, github.event.inputs.tag) || format('ghcr.io/{0}:{1}', github.repository, github.ref_name) }}
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_REF }}
       - name: test and build
-        uses: actions/setup-java@v4.2.1
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -39,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_REF }}
       - uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
@@ -46,3 +56,35 @@ jobs:
           RESOURCE: .nais/prod.yaml
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
+      - uses: actions/github-script@v8
+        name: Post Slack-melding om prodsetting
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const rel = context.payload.release;
+            const tag = rel?.tag_name ?? "ukjent tag";
+            const url = rel?.html_url ?? `https://github.com/${owner}/${repo}/releases`;
+            
+            const text = `*${repo}* ble prodsatt med release ${tag} :tada:`;
+            const blocks = [
+              { type: "section", text: { type: "mrkdwn", text } },
+              {
+                type: "context",
+                elements: [
+                  { type: "mrkdwn", text: `<${url}|Se release>` },
+                  { type: "mrkdwn", text: `Cluster: prod-gcp` }
+                ]
+              }
+            ];
+            
+            const resp = await fetch(process.env.SLACK_WEBHOOK_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ blocks, username: "Prod-vakta", icon_emoji: ":in-prod:" })
+            });
+            
+            if (!resp.ok) {
+              throw new Error(`Slack webhook feilet: ${resp.status} ${await resp.text()}`);
+            }

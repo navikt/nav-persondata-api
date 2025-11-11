@@ -15,19 +15,19 @@ import java.time.LocalDate
 @Component
 class UtbetalingClient(
     private val tokenService: TokenService,
-    @Qualifier("utbetalingWebClient")
+    @param:Qualifier("utbetalingWebClient")
     private val webClient: WebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent")
-    fun hentUtbetalingerForBruker(personIdent: PersonIdent): UtbetalingResultat {
+    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet")
+    fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return runCatching {
-
+            val antallÅr: Long = if (utvidet) 10 else 3
             val requestBody = RequestBody(
                 ident = personIdent.value,
                 rolle = "RETTIGHETSHAVER",
-                periode = Periode(LocalDate.now().minusYears(3), LocalDate.now()),
+                periode = Periode(LocalDate.now().minusYears(antallÅr), LocalDate.now()),
                 periodetype = "UTBETALINGSPERIODE"
             )
             val oboToken = tokenService.getServiceToken(
@@ -43,14 +43,13 @@ class UtbetalingClient(
             response
         }.fold(
             onSuccess = { utbetalinger ->
-
                 UtbetalingResultat(
                     data = UtbetalingRespons(utbetalinger = utbetalinger),
                     statusCode = 200
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger", error)
+                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
                 if (error.message?.contains("ikke tilgang") == true) {
                     UtbetalingResultat(
                         data = null,
