@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.EnableCaching
 @EnableCaching
 class Application
 
+const val application = "watson\\oppslag-bruker"
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
 }
