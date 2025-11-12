@@ -86,7 +86,7 @@ spec:
         - application: kodeverk-api
           namespace: team-rocket
         - application: modiacontextholder
-          namespace: team-rocket
+          namespace: personoversikt
       external:
         - host: sokos-utbetaldata.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
