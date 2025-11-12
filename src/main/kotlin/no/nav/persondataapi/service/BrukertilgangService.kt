@@ -12,25 +12,33 @@ class BrukertilgangService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
     fun harSaksbehandlerTilgangTilPersonIdent(personIdent: PersonIdent): Boolean {
-        val status = hentStatusPåBruker(personIdent)
-        return status == 200
+        return hentTilgangsvurdering(personIdent).status == 200
     }
 
-    fun hentStatusPåBruker(personIdent: PersonIdent): Int {
+    fun hentTilgangsvurdering(personIdent: PersonIdent): BrukertilgangVurdering {
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 
         val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
 
-        return when (val status = tilgangService.sjekkTilgang(personIdent, token.encodedToken)) {
-            403 -> {
+        val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)
+        val beregnetStatus = tilgangService.beregnStatus(resultat)
+        val status = if (beregnetStatus != 200) {
                 if (tilgangService.harUtvidetTilgang(groups)) {
-                    logger.info("saksbehandler benytter  utvidet tilgang til $personIdent")
-                    return 200
+                    logger.info("Saksbehandler har utvidet tilgang til $personIdent")
+                    200
                 }
-                else status
-            }
-            else -> status
-        }
+                else beregnetStatus
+        } else beregnetStatus
+
+        return BrukertilgangVurdering(
+            status = status,
+            tilgang = resultat.data?.title ?: "UKJENT"
+        )
     }
 }
+
+data class BrukertilgangVurdering(
+    val status: Int,
+    val tilgang: String,
+)
