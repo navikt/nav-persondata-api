@@ -35,6 +35,7 @@ class YtelseService(
             .asSequence()
             .flatMap { it.ytelseListe.asSequence() }
             .filter { it.ytelsestype != null }
+            .filter { it.ytelsestype != "Feriepenger" }
             .groupBy { it.ytelsestype }
             .map { (type, liste) ->
                 val perioder = liste.map { ytelse ->
