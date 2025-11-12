@@ -90,7 +90,7 @@ dependencies {
   runtimeOnly("io.opentelemetry:opentelemetry-exporter-otlp")
 
   // Strukturerte JSON-logger (til stdout -> NAIS logger)
-  implementation("net.logstash.logback:logstash-logback-encoder:8.1")
+  implementation("net.logstash.logback:logstash-logback-encoder:9.0")
 
   implementation("io.projectreactor.netty:reactor-netty-http")
   implementation("org.springframework.boot:spring-boot-starter-web")
