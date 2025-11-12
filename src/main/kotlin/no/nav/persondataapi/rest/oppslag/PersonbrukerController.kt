@@ -27,7 +27,7 @@ class PersonbrukerController(
     private val logger = LoggerFactory.getLogger(javaClass)
     @Protected
     @PostMapping
-    fun sjekkOmBrukerEksisterer(@RequestBody dto: OppslagRequestDto): ResponseEntity<PersonbrukerResponseDto> {
+    fun hentEksistensOgTilgang(@RequestBody dto: OppslagRequestDto): ResponseEntity<PersonbrukerResponseDto> {
         val token = tokenValidationContextHolder.getTokenValidationContext().firstValidToken
         val saksbehandlerIdent = token!!.jwtTokenClaims.get("NAVident").toString()
         logger.info("Saksbehandler $saksbehandlerIdent slår opp person ${dto.ident}")
@@ -37,7 +37,7 @@ class PersonbrukerController(
             logger.info("Fant bruker ${dto.ident}, men saksbehandler har ikke tilgang til å se all informasjon")
             return ResponseEntity
                 .status(HttpStatus.PARTIAL_CONTENT)
-                .body(PersonbrukerResponseDto(tilgang = tilgangsvurdering.tilgang))
+                .body(PersonbrukerResponseDto(tilgang = tilgangsvurdering.tilgang, harUtvidetTilgang = tilgangsvurdering.harUtvidetTilgang))
         }
         return runBlocking {
             if (!personopplysningerService.finnesPerson(dto.ident)) {
@@ -51,12 +51,13 @@ class PersonbrukerController(
                 } catch (e: Exception) {
                     logger.error("Feil ved oppdatering av modiakontekst for bruker ${dto.ident}", e)
                 }
-                ResponseEntity.ok(PersonbrukerResponseDto(tilgang = tilgangsvurdering.tilgang))
+                ResponseEntity.ok(PersonbrukerResponseDto(tilgang = tilgangsvurdering.tilgang, harUtvidetTilgang = tilgangsvurdering.harUtvidetTilgang))
             }
         }
     }
 
     data class PersonbrukerResponseDto(
         val tilgang: String,
+        val harUtvidetTilgang: Boolean
     )
 }
