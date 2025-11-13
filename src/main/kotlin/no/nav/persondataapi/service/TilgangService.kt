@@ -14,6 +14,7 @@ class TilgangService(
     private val grupper: Grupper
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
+
     fun harUtvidetTilgang(groups: List<String>): Boolean {
         val utvidetTilgangId = grupper.finnRolleId(AdGrupper.UTVIDET_TILGANG.azureGruoup)
         logger.info("Saksbehandler er medlem av $groups")
