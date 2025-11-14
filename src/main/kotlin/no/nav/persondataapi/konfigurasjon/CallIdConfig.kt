@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import no.nav.persondataapi.responstracing.LOGG_HEADER
+import no.nav.persondataapi.tokenutilities.NAV_IDENT
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.slf4j.MDC
 import org.springframework.core.Ordered
@@ -39,12 +40,12 @@ class NavCallIdServletFilter(
         val loggRespons = request.getHeader(LOGG_HEADER)?.toBoolean()?.toString() ?: "false"
         MDC.put(LOGG_HEADER, loggRespons)
         MDC.put(CallId.HEADER, incoming)
-        MDC.put("navIdent", navIdent)
+        MDC.put(NAV_IDENT, navIdent)
         try {
             chain.doFilter(request, response)
         } finally {
             MDC.remove(CallId.HEADER)
-            MDC.remove("navIdent")
+            MDC.remove(NAV_IDENT)
             MDC.remove(LOGG_HEADER)
         }
     }
