@@ -13,21 +13,31 @@ class TilgangService(
     private val tilgangsmaskinClient: TilgangsmaskinClient,
     private val grupper: Grupper
 ) {
-    private val logger = LoggerFactory.getLogger(TilgangService::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     fun harUtvidetTilgang(groups: List<String>): Boolean {
         val utvidetTilgangId = grupper.finnRolleId(AdGrupper.UTVIDET_TILGANG.azureGruoup)
-        logger.info("bruker er medlem av  $groups")
+        logger.info("Saksbehandler er medlem av $groups")
         return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
     }
 
     fun sjekkTilgang(brukerIdent: PersonIdent, saksbehandlerToken: String): Int {
-        val resultat = tilgangsmaskinClient.sjekkTilgang(brukerIdent, saksbehandlerToken)
+        val resultat = hentTilgangsresultat(brukerIdent, saksbehandlerToken)
         val data = resultat.data
         logger.info("Sjekker tilgang til $brukerIdent, svar er : ${data?.status} - ${data?.title}")
+        return beregnStatus(resultat)
+    }
+
+    fun hentTilgangsresultat(brukerIdent: PersonIdent, saksbehandlerToken: String): TilgangResultat {
+        return tilgangsmaskinClient.sjekkTilgang(brukerIdent, saksbehandlerToken)
+    }
+
+    internal fun beregnStatus(resultat: TilgangResultat): Int {
+        val data = resultat.data
         return when {
             data?.status == 204 -> 200
             data?.harTilgangMedBasicAdgang() == true -> {
-                logger.warn("overstyrer skjerming for $brukerIdent - ${data.title}")
+                logger.info("Overstyrer skjerming for ${resultat.data.brukerIdent} - ${data.title}")
                 return 200
             }
             else -> data?.status ?: resultat.statusCode!!
