@@ -80,6 +80,8 @@ spec:
           namespace: nais-system
         - application: kodeverk-api
           namespace: team-rocket
+        - application: modiacontextholder
+          namespace: personoversikt
       external:
         - host: sokos-utbetaldata.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
@@ -126,6 +128,6 @@ spec:
       value: api://prod-gcp.team-rocket.kodeverk-api/.default
 
     - name: MODIA_CONTEXT_HOLDER_URL
-      value: http://modiacontextholder
+      value: http://modiacontextholder.personoversikt
     - name: MODIA_CONTEXT_HOLDER_SCOPE
       value: api://prod-gcp.personoversikt.modiacontextholder/.default
