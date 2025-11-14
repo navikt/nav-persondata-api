@@ -80,6 +80,8 @@ spec:
           namespace: nais-system
         - application: kodeverk-api
           namespace: team-rocket
+        - application: modiacontextholder
+          namespace: personoversikt
       external:
         - host: sokos-utbetaldata.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
