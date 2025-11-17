@@ -17,42 +17,40 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("/oppslag/personopplysninger")
 class PersonopplysningerController(
-    private val personopplysningerService: PersonopplysningerService
+	private val personopplysningerService: PersonopplysningerService,
 ) {
-    @Protected
-    @PostMapping
-    fun hentPersonopplysninger(
-        @RequestBody dto: OppslagRequestDto,
-        @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?
-    ): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
-        return runBlocking {
-            val logResponsAktivert = traceHeader?.toBoolean() ?: false
-            val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
+	@Protected
+	@PostMapping
+	fun hentPersonopplysninger(
+		@RequestBody dto: OppslagRequestDto,
+		@RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?,
+	): ResponseEntity<OppslagResponseDto<PersonInformasjon>> =
+		runBlocking {
+			val logResponsAktivert = traceHeader?.toBoolean() ?: false
+			val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
 
-            when (resultat) {
-                is PersonopplysningerResultat.Success -> {
-                    ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
-                }
-                is PersonopplysningerResultat.IngenTilgang -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Ingen tilgang", data = null),
-                        HttpStatus.FORBIDDEN
-                    )
-                }
-                is PersonopplysningerResultat.PersonIkkeFunnet -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Person ikke funnet", data = null),
-                        HttpStatus.NOT_FOUND
-                    )
-                }
-                is PersonopplysningerResultat.FeilIBaksystem -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Feil i baksystem", data = null),
-                        HttpStatus.BAD_GATEWAY
-                    )
-                }
-            }
-        }
-    }
-
+			when (resultat) {
+				is PersonopplysningerResultat.Success -> {
+					ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
+				}
+				is PersonopplysningerResultat.IngenTilgang -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Ingen tilgang", data = null),
+						HttpStatus.FORBIDDEN,
+					)
+				}
+				is PersonopplysningerResultat.PersonIkkeFunnet -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Person ikke funnet", data = null),
+						HttpStatus.NOT_FOUND,
+					)
+				}
+				is PersonopplysningerResultat.FeilIBaksystem -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Feil i baksystem", data = null),
+						HttpStatus.BAD_GATEWAY,
+					)
+				}
+			}
+		}
 }

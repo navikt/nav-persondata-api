@@ -15,37 +15,38 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("/oppslag/arbeidsforhold")
 class ArbeidsforholdController(
-    private val arbeidsforholdService: ArbeidsforholdService
+	private val arbeidsforholdService: ArbeidsforholdService,
 ) {
-    @Protected
-    @PostMapping
-    fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
-        return runBlocking {
-            val resultat = arbeidsforholdService.hentArbeidsforholdForPerson(dto.ident)
+	@Protected
+	@PostMapping
+	fun hentArbeidsforhold(
+		@RequestBody dto: OppslagRequestDto,
+	): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> =
+		runBlocking {
+			val resultat = arbeidsforholdService.hentArbeidsforholdForPerson(dto.ident)
 
-            when (resultat) {
-                is ArbeidsforholdResultat.Success -> {
-                    ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
-                }
-                is ArbeidsforholdResultat.IngenTilgang -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Ingen tilgang", data = null),
-                        HttpStatus.FORBIDDEN
-                    )
-                }
-                is ArbeidsforholdResultat.PersonIkkeFunnet -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Person ikke funnet", data = null),
-                        HttpStatus.NOT_FOUND
-                    )
-                }
-                is ArbeidsforholdResultat.FeilIBaksystem -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Feil i baksystem", data = null),
-                        HttpStatus.BAD_GATEWAY
-                    )
-                }
-            }
-        }
-    }
+			when (resultat) {
+				is ArbeidsforholdResultat.Success -> {
+					ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
+				}
+				is ArbeidsforholdResultat.IngenTilgang -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Ingen tilgang", data = null),
+						HttpStatus.FORBIDDEN,
+					)
+				}
+				is ArbeidsforholdResultat.PersonIkkeFunnet -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Person ikke funnet", data = null),
+						HttpStatus.NOT_FOUND,
+					)
+				}
+				is ArbeidsforholdResultat.FeilIBaksystem -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Feil i baksystem", data = null),
+						HttpStatus.BAD_GATEWAY,
+					)
+				}
+			}
+		}
 }

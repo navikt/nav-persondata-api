@@ -6,33 +6,31 @@ import org.springframework.stereotype.Service
 
 @Service
 class BrukertilgangService(
-    val tokenValidationContextHolder: TokenValidationContextHolder,
-    val tilgangService: TilgangService,
+	val tokenValidationContextHolder: TokenValidationContextHolder,
+	val tilgangService: TilgangService,
 ) {
-    fun harSaksbehandlerTilgangTilPersonIdent(personIdent: PersonIdent): Boolean {
-        return hentTilgangsvurdering(personIdent).status == 200
-    }
+	fun harSaksbehandlerTilgangTilPersonIdent(personIdent: PersonIdent): Boolean = hentTilgangsvurdering(personIdent).status == 200
 
-    fun hentTilgangsvurdering(personIdent: PersonIdent): BrukertilgangVurdering {
-        val context = tokenValidationContextHolder.getTokenValidationContext()
-        val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
+	fun hentTilgangsvurdering(personIdent: PersonIdent): BrukertilgangVurdering {
+		val context = tokenValidationContextHolder.getTokenValidationContext()
+		val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 
-        val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
+		val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
 
-        val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)
-        val beregnetStatus = tilgangService.beregnStatus(resultat)
-        val harUtvidetTilgang = tilgangService.harUtvidetTilgang(groups)
+		val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)
+		val beregnetStatus = tilgangService.beregnStatus(resultat)
+		val harUtvidetTilgang = tilgangService.harUtvidetTilgang(groups)
 
-        return BrukertilgangVurdering(
-            status = if (harUtvidetTilgang) 200 else beregnetStatus,
-            tilgang = resultat.data?.title ?: "OK",
-            harUtvidetTilgang = harUtvidetTilgang
-        )
-    }
+		return BrukertilgangVurdering(
+			status = if (harUtvidetTilgang) 200 else beregnetStatus,
+			tilgang = resultat.data?.title ?: "OK",
+			harUtvidetTilgang = harUtvidetTilgang,
+		)
+	}
 }
 
 data class BrukertilgangVurdering(
-    val status: Int,
-    val tilgang: String,
-    val harUtvidetTilgang: Boolean,
+	val status: Int,
+	val tilgang: String,
+	val harUtvidetTilgang: Boolean,
 )

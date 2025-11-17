@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("/oppslag/begrunnet-tilgang")
 class BegrunnetTilgangController(
-    private val begrunnetTilgangService: BegrunnetTilgangService
+	private val begrunnetTilgangService: BegrunnetTilgangService,
 ) {
-
-    @Protected
-    @PostMapping
-    fun loggBegrunnetTilgang(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<Void> {
-        begrunnetTilgangService.loggBegrunnetTilgang(personIdent = dto.ident, begrunnelse = dto.begrunnelse, mangel = dto.mangel)
-        return ResponseEntity.accepted().build()
-    }
+	@Protected
+	@PostMapping
+	fun loggBegrunnetTilgang(
+		@RequestBody dto: BegrunnelseRequestDto,
+	): ResponseEntity<Void> {
+		begrunnetTilgangService.loggBegrunnetTilgang(personIdent = dto.ident, begrunnelse = dto.begrunnelse, mangel = dto.mangel)
+		return ResponseEntity.accepted().build()
+	}
 }

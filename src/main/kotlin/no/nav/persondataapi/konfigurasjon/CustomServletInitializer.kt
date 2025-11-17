@@ -8,11 +8,9 @@ import org.springframework.web.context.request.RequestContextListener
 
 @Configuration
 class CustomServletInitializer {
-
-
-
-    @Bean
-    fun servletContextInitializer() = ServletContextInitializer { servletContext: ServletContext ->
-        servletContext.addListener(RequestContextListener())
-    }
+	@Bean
+	fun servletContextInitializer() =
+		ServletContextInitializer { servletContext: ServletContext ->
+			servletContext.addListener(RequestContextListener())
+		}
 }

@@ -15,37 +15,38 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("/oppslag/inntekt")
 class InntektController(
-    private val inntektService: InntektService
+	private val inntektService: InntektService,
 ) {
-    @Protected
-    @PostMapping
-    fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
-        return runBlocking {
-            val resultat = inntektService.hentInntekterForPerson(dto.ident)
+	@Protected
+	@PostMapping
+	fun hentInntekter(
+		@RequestBody dto: OppslagRequestDto,
+	): ResponseEntity<OppslagResponseDto<InntektInformasjon>> =
+		runBlocking {
+			val resultat = inntektService.hentInntekterForPerson(dto.ident)
 
-            when (resultat) {
-                is InntektResultat.Success -> {
-                    ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
-                }
-                is InntektResultat.IngenTilgang -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Ingen tilgang", data = null),
-                        HttpStatus.FORBIDDEN
-                    )
-                }
-                is InntektResultat.PersonIkkeFunnet -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Person ikke funnet", data = null),
-                        HttpStatus.NOT_FOUND
-                    )
-                }
-                is InntektResultat.FeilIBaksystem -> {
-                    ResponseEntity(
-                        OppslagResponseDto(error = "Feil i baksystem", data = null),
-                        HttpStatus.BAD_GATEWAY
-                    )
-                }
-            }
-        }
-    }
+			when (resultat) {
+				is InntektResultat.Success -> {
+					ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
+				}
+				is InntektResultat.IngenTilgang -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Ingen tilgang", data = null),
+						HttpStatus.FORBIDDEN,
+					)
+				}
+				is InntektResultat.PersonIkkeFunnet -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Person ikke funnet", data = null),
+						HttpStatus.NOT_FOUND,
+					)
+				}
+				is InntektResultat.FeilIBaksystem -> {
+					ResponseEntity(
+						OppslagResponseDto(error = "Feil i baksystem", data = null),
+						HttpStatus.BAD_GATEWAY,
+					)
+				}
+			}
+		}
 }

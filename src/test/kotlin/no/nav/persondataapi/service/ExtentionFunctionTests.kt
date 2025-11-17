@@ -10,170 +10,169 @@ import java.math.BigDecimal
 import java.time.OffsetDateTime
 
 class ExtentionFunctionTests {
+	@Test
+	fun historikkDataSkalHåndtereNullVersjoner() {
+		val historikkData =
+			HistorikkData(
+				maaned = "2020-01-01",
+				opplysningspliktig = "123",
+				underenhet = "1234",
+				norskident = "12345678901",
+				versjoner = emptyList(),
+			)
+		Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
+	}
 
-    @Test
-    fun historikkDataSkalHåndtereNullVersjoner() {
+	@Test
+	fun kunYtelseFraOffentligeSkalIkkeTelleIHistorikken() {
+		val historikkData =
+			HistorikkData(
+				maaned = "2020-01-01",
+				opplysningspliktig = "123",
+				underenhet = "1234",
+				norskident = "12345678901",
+				versjoner =
+					listOf(
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
+							inntektListe =
+								listOf(
+									YtelseFraOffentlige(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
+							inntektListe =
+								listOf(
+									YtelseFraOffentlige(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+					),
+			)
+		Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
+	}
 
-        val historikkData = HistorikkData(
-            maaned = "2020-01-01",
-            opplysningspliktig = "123",
-            underenhet = "1234",
-            norskident = "12345678901",
-            versjoner = emptyList(),
-        )
-        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
-    }
-    @Test
-    fun kunYtelseFraOffentligeSkalIkkeTelleIHistorikken() {
+	@Test
+	fun kunEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {
+		val historikkData =
+			HistorikkData(
+				maaned = "2020-01-01",
+				opplysningspliktig = "123",
+				underenhet = "1234",
+				norskident = "12345678901",
+				versjoner =
+					listOf(
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
+							inntektListe =
+								listOf(
+									YtelseFraOffentlige(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
+							inntektListe =
+								listOf(
+									Loennsinntekt(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+					),
+			)
+		Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
+	}
 
-        val historikkData = HistorikkData(
-            maaned = "2020-01-01",
-            opplysningspliktig = "123",
-            underenhet = "1234",
-            norskident = "12345678901",
-            versjoner = listOf(
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
-                    inntektListe = listOf(
-                        YtelseFraOffentlige (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-
-
-                        )
-                    )
-                ),
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
-                    inntektListe = listOf(
-                        YtelseFraOffentlige (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-                        )
-                    )
-                )
-
-            ),
-        )
-        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
-    }
-
-    @Test
-    fun kunEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {
-
-        val historikkData = HistorikkData(
-            maaned = "2020-01-01",
-            opplysningspliktig = "123",
-            underenhet = "1234",
-            norskident = "12345678901",
-            versjoner = listOf(
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
-                    inntektListe = listOf(
-                        YtelseFraOffentlige (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-
-
-                        )
-                    )
-                ),
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
-                    inntektListe = listOf(
-                        Loennsinntekt (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-                        )
-                    )
-                )
-
-            ),
-        )
-        Assertions.assertFalse(historikkData.harHistorikkPåNormallønn())
-    }
-
-    @Test
-    fun MerEnEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {
-
-        val historikkData = HistorikkData(
-            maaned = "2020-01-01",
-            opplysningspliktig = "123",
-            underenhet = "1234",
-            norskident = "12345678901",
-            versjoner = listOf(
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
-                    inntektListe = listOf(
-                        Loennsinntekt (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-
-
-                        )
-                    )
-                ),
-                Inntektsinformasjon(
-                    maaned = "1234",
-                    opplysningspliktig = "1234",
-                    underenhet = "1234",
-                    norskident = "12345678901",
-                    oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
-                    inntektListe = listOf(
-                        Loennsinntekt (
-                            beloep = BigDecimal.valueOf(12344),
-                            fordel = "kontantytelse",
-                            beskrivelse ="",
-                            inngaarIGrunnlagForTrekk = false,
-                            utloeserArbeidsgiveravgift = false,
-                            type = "YtelseFraOffentlige"
-                        )
-                    )
-                )
-
-            ),
-        )
-        Assertions.assertTrue(historikkData.harHistorikkPåNormallønn())
-    }
-
+	@Test
+	fun merEnEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {
+		val historikkData =
+			HistorikkData(
+				maaned = "2020-01-01",
+				opplysningspliktig = "123",
+				underenhet = "1234",
+				norskident = "12345678901",
+				versjoner =
+					listOf(
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(30),
+							inntektListe =
+								listOf(
+									Loennsinntekt(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+						Inntektsinformasjon(
+							maaned = "1234",
+							opplysningspliktig = "1234",
+							underenhet = "1234",
+							norskident = "12345678901",
+							oppsummeringstidspunkt = OffsetDateTime.now().minusDays(10),
+							inntektListe =
+								listOf(
+									Loennsinntekt(
+										beloep = BigDecimal.valueOf(12344),
+										fordel = "kontantytelse",
+										beskrivelse = "",
+										inngaarIGrunnlagForTrekk = false,
+										utloeserArbeidsgiveravgift = false,
+										type = "YtelseFraOffentlige",
+									),
+								),
+						),
+					),
+			)
+		Assertions.assertTrue(historikkData.harHistorikkPåNormallønn())
+	}
 }

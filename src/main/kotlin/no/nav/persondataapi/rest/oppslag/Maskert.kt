@@ -21,5 +21,5 @@ package no.nav.persondataapi.rest.oppslag
 @Target(AnnotationTarget.FIELD, AnnotationTarget.PROPERTY)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Maskert(
-    val maskertVerdi: String = "*******"
+	val maskertVerdi: String = "*******",
 )

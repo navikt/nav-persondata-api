@@ -9,44 +9,46 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class EregClient(
-    @param:Qualifier("eregWebClient")
-    private val webClient: WebClient,
-    private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
+	@param:Qualifier("eregWebClient")
+	private val webClient: WebClient,
+	private val objectMapper: ObjectMapper,
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
+	private val logger = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["ereg-organisasjon"], key = "#orgnummer")
-    fun hentOrganisasjon(orgnummer: String): EregRespons {
-        val rawJson: String = try {
-            webClient.get()
-                .uri { uriBuilder ->
-                    uriBuilder
-                        .path("/v2/organisasjon/$orgnummer")
-                        .queryParam("inkluderHistorikk", "false")
-                        .queryParam("inkluderHierarki", "false")
-                        .build()
-                }
-                .retrieve()
-                .bodyToMono(String::class.java)
-                .block()!!
-        } catch (ex: Exception) {
-            logger.error("Klarte ikke å hente data fra Ereg for orgnummer=$orgnummer", ex)
-            return fallback(orgnummer)
-        }
+	@Cacheable(value = ["ereg-organisasjon"], key = "#orgnummer")
+	fun hentOrganisasjon(orgnummer: String): EregRespons {
+		val rawJson: String =
+			try {
+				webClient
+					.get()
+					.uri { uriBuilder ->
+						uriBuilder
+							.path("/v2/organisasjon/$orgnummer")
+							.queryParam("inkluderHistorikk", "false")
+							.queryParam("inkluderHierarki", "false")
+							.build()
+					}.retrieve()
+					.bodyToMono(String::class.java)
+					.block()!!
+			} catch (ex: Exception) {
+				logger.error("Klarte ikke å hente data fra Ereg for orgnummer=$orgnummer", ex)
+				return fallback(orgnummer)
+			}
 
-        return try {
-            objectMapper.readValue(rawJson, EregRespons::class.java)
-        } catch (ex: Exception) {
-            logger.error("Klarte ikke å parse Ereg-respons for orgnummer=$orgnummer. Rå JSON:\n$rawJson", ex)
-            fallback(orgnummer)
-        }
-    }
+		return try {
+			objectMapper.readValue(rawJson, EregRespons::class.java)
+		} catch (ex: Exception) {
+			logger.error("Klarte ikke å parse Ereg-respons for orgnummer=$orgnummer. Rå JSON:\n$rawJson", ex)
+			fallback(orgnummer)
+		}
+	}
 
-    private fun fallback(orgnummer: String) = EregRespons(
-        organisasjonsnummer = orgnummer,
-        type = "",
-        navn = null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
-    )
+	private fun fallback(orgnummer: String) =
+		EregRespons(
+			organisasjonsnummer = orgnummer,
+			type = "",
+			navn = null,
+			organisasjonDetaljer = null,
+			virksomhetDetaljer = null,
+		)
 }
