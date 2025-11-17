@@ -99,6 +99,9 @@ class PersonopplysningerService(
             statsborgerskap = input.statsborgerskap.map { kodeverkService.mapLandkodeTilLandnavn(it) },
             adresse = input.adresse?.let { adresse ->
                 adresse.copy(
+                    norskAdresse = adresse.norskAdresse?.copy(
+                        poststed = kodeverkService.mapPostnummerTilPoststed(adresse.norskAdresse.postnummer)
+                    ),
                     utenlandskAdresse = adresse.utenlandskAdresse?.copy(
                         landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode)
                     )
