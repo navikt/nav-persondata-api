@@ -34,8 +34,10 @@ class PersonopplysningerService(
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        val geografiskTilknytning = pdlClient.hentGeografiskTilknytning(personIdent)
         if (responsLog) {
             logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-geografiskTilknytning respons for {}: {}", personIdent, JsonUtils.toJson(geografiskTilknytning).toPrettyString())
         }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
