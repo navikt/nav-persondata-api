@@ -916,6 +916,7 @@ type Vegadresse {
     bydelsnummer: String
     tilleggsnavn: String
     postnummer: String
+    poststed: String
     koordinater: Koordinater
 }
 

@@ -494,6 +494,7 @@ fragment vegadresseDetails on Vegadresse {
     bruksenhetsnummer
     tilleggsnavn
     postnummer
+    poststed
     kommunenummer
     bydelsnummer
     koordinater {
