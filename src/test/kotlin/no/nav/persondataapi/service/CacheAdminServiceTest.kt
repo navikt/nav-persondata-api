@@ -21,6 +21,7 @@ class CacheAdminServiceTest {
             "utbetaling-bruker",
             "inntekt-historikk",
             "kodeverk-landkoder",
+            "kodeverk-poststeder",
         )
         service = CacheAdminService(cacheManager)
     }

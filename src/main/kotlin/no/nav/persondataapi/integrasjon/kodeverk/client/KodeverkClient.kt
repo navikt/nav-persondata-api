@@ -48,6 +48,36 @@ class KodeverkClient(
             } ?: emptyList()
     }
 
+    @Cacheable(value = ["kodeverk-poststeder"])
+    fun hentPoststeder(): List<Poststed> {
+        val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
+
+        return webClient.get()
+            .uri("/api/v1/kodeverk/Postnummer/koder/betydninger?spraak=nb")
+            .header("Authorization", "Bearer $token")
+            .retrieve()
+            .bodyToMono<KodeverkResponse>()
+            .doOnError { ex ->
+                log.error("Feil ved henting av poststeder fra kodeverk", ex)
+            }
+            .onErrorResume { _ ->
+                // Returner en tom respons dersom noe feiler
+                Mono.just(KodeverkResponse(emptyMap()))
+            }
+            .block() // fortsatt blocking
+            ?.let { response ->
+                log.info("Hentet landkoder (${response.betydninger.keys.size} stk)")
+                response.betydninger.entries.mapNotNull { (kode, betydninger) ->
+                    betydninger.firstOrNull()
+                        ?.beskrivelser
+                        ?.values
+                        ?.firstOrNull()
+                        ?.term
+                        ?.let { Poststed(kode, it) }
+                }
+            } ?: emptyList()
+    }
+
 
 }
 
