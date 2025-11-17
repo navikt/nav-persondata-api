@@ -66,7 +66,7 @@ class KodeverkClient(
             }
             .block() // fortsatt blocking
             ?.let { response ->
-                log.info("Hentet landkoder (${response.betydninger.keys.size} stk)")
+                log.info("Hentet poststeder (${response.betydninger.keys.size} stk)")
                 response.betydninger.entries.mapNotNull { (kode, betydninger) ->
                     betydninger.firstOrNull()
                         ?.beskrivelser
