@@ -81,7 +81,7 @@ fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
             husbokstav = vegadresse.husbokstav,
             postnummer = vegadresse.postnummer,
             kommunenummer = vegadresse.kommunenummer,
-            poststed = vegadresse.postnummer
+            poststed = vegadresse.poststed
         )
     }
 
