@@ -15,6 +15,7 @@ plugins {
   kotlin("plugin.spring") version "2.2.21"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
   id("org.openapi.generator") version "7.17.0"
+  id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
 openApiGenerate {
@@ -39,6 +40,23 @@ graphql {
     // For statiske spørringer
     queryFileDirectory = "src/main/resources/graphql/queries"
     schemaFile = file("src/main/resources/graphql/schema/pdl-api-sdl.graphqls")
+  }
+}
+
+ktlint {
+  // KtLint 1.7.0 explicitly supports Kotlin 2.2.x
+  version.set("1.7.1")
+
+  verbose.set(true)
+  outputToConsole.set(true)
+  coloredOutput.set(true)
+
+  filter {
+      exclude("**/build.gradle.kts")
+      exclude("**/settings.gradle.kts")
+      // If you have other .kts scripts you want to skip:
+      exclude("**/gradle/*.kts")
+      exclude("**/build/generated/**")
   }
 }
 
@@ -71,6 +89,10 @@ tasks.withType<Test> {
 
 tasks.named("compileKotlin") {
   dependsOn("graphqlGenerateClient", "openApiGenerate")
+}
+
+tasks.named("check") {
+  dependsOn(tasks.named("ktlintCheck"))
 }
 
 dependencies {
