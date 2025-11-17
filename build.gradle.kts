@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask
 
 val tokenSupportVersion = "5.0.30"
 val graphQLKotlinVersion = "9.0.0-alpha.8"
@@ -46,7 +47,6 @@ graphql {
 ktlint {
   // KtLint 1.7.0 explicitly supports Kotlin 2.2.x
   version.set("1.7.1")
-
   verbose.set(true)
   outputToConsole.set(true)
   coloredOutput.set(true)
@@ -54,9 +54,9 @@ ktlint {
   filter {
       exclude("**/build.gradle.kts")
       exclude("**/settings.gradle.kts")
-      // If you have other .kts scripts you want to skip:
       exclude("**/gradle/*.kts")
-      exclude("**/build/generated/**")
+	  exclude("**/generate-resources/**")
+	  exclude("**/generated/**")
   }
 }
 
@@ -93,6 +93,18 @@ tasks.named("compileKotlin") {
 
 tasks.named("check") {
   dependsOn(tasks.named("ktlintCheck"))
+}
+
+tasks.named("ktlintMainSourceSetCheck") {
+	enabled = false
+}
+
+tasks.named("ktlintTestSourceSetCheck") {
+	enabled = false
+}
+
+tasks.withType<KtLintCheckTask>().configureEach {
+	dependsOn("openApiGenerate")
 }
 
 dependencies {
