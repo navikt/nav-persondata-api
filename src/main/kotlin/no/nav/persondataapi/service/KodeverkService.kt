@@ -10,4 +10,7 @@ class KodeverkService(
     fun mapLandkodeTilLandnavn(landkode: String?): String =
         kodeverkClient.hentLandkoder().find { landkode == it.landkode }?.land ?: "Ukjent"
 
+    fun mapPostnummerTilPoststed(postnummer: String?): String =
+        kodeverkClient.hentPoststeder().find { postnummer == it.postnummer }?.poststed ?: "Ukjent"
+
 }
