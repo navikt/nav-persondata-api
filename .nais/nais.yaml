@@ -137,3 +137,6 @@ spec:
 
     - name: MODIA_CONTEXT_HOLDER_SCOPE
       value: api://dev-gcp.personoversikt.modiacontextholder/.default
+
+    - name: JAVA_TOOL_OPTIONS
+      value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
