@@ -6,6 +6,9 @@ API for uthenting av persondata for Borger eller innbygger i Norge med Nav tilkn
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
 
+### Linting
+Kjør `./gradlew ktlintCheck` for å sjekke at koden følger linting-reglene. Kjør `./gradlew ktlintFormat` for å fikse eventuelle problemer automatisk.
+
 ### Henting av secrets
 
 Før du starter applikasjonen, må du hente ned noen secrets fra Kubernetes. Det kan du gjøre med å kjøre kommandoen `./get-secrets.sh`. De blir lagret i filen `src/main/resources/.env.local.properties`, som ignoreres av git.
