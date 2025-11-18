@@ -137,3 +137,6 @@ spec:
 
     - name: MODIA_CONTEXT_HOLDER_SCOPE
       value: api://dev-gcp.personoversikt.modiacontextholder/.default
+
+    - name: NORG2_URL
+      value: https://norg2.dev-fss-pub.nais.io/norg2
