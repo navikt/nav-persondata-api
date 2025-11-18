@@ -80,6 +80,12 @@ class PersonopplysningerService(
             } ?: -1,
             fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
             dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
+            navKontor = PersonInformasjon.NavKontor(
+                enhetId = lokalKontor.enhetId,
+                navn = lokalKontor.navn,
+                enhetNr = lokalKontor.enhetNr,
+                type = lokalKontor.type
+            ),
         )
 
         // Berik med kodeverkdata
