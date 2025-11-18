@@ -1,16 +1,11 @@
 package no.nav.persondataapi.integrasjon.norg2.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
-import no.nav.persondataapi.service.SCOPE
-import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.bodyToMono
-import reactor.core.publisher.Mono
 
 @Component
 class Norg2Client(

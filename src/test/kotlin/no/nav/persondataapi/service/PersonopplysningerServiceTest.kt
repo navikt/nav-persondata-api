@@ -14,6 +14,7 @@ import no.nav.persondataapi.generated.hentperson.Navn
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.generated.hentperson.Sivilstand
 import no.nav.persondataapi.generated.hentperson.Statsborgerskap
+import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.pdl.client.PersonDataResultat
@@ -29,6 +30,7 @@ class PersonopplysningerServiceTest {
     val brukertilgangService = mockk<BrukertilgangService>()
     val pdlClient = mockk<PdlClient>()
     val kodeverkService = mockk<KodeverkService>()
+    val navTilhørigetService = mockk<NavTilhørighetService>()
 
     private fun lagServiceMedStandardMocks(
         harTilgang: Boolean = true,
@@ -41,15 +43,24 @@ class PersonopplysningerServiceTest {
             data = null,
             statusCode = 200,
             errorMessage = null
-        )
+        ) ,
+        lokalKontor: NavLokalKontor = NavLokalKontor(
+            enhetId=1,
+            navn="TestNav",
+            enhetNr="1",
+            type="LOKALKONTOR"
+
+    )
+
     ): PersonopplysningerService {
         clearAllMocks()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
         coEvery { pdlClient.hentPerson(any()) } returns personResultat
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
+        coEvery { navTilhørigetService.finnLokalKontorForPersonIdent (any()) } returns lokalKontor
 
-        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
+        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService,navTilhørigetService)
     }
 
     @Test

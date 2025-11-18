@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest.domene
 
+import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.rest.oppslag.Maskert
 
 data class PersonInformasjon(
@@ -13,6 +14,7 @@ data class PersonInformasjon(
     val adresseBeskyttelse: Skjerming = Skjerming.UGRADERT,
     val fødselsdato: String,
     val dødsdato: String? = null,
+    val navLokalkontor: NavLokalKontor? = null,
 ) {
     data class Navn(
         @Maskert
@@ -22,7 +24,6 @@ data class PersonInformasjon(
         @Maskert
         val etternavn: String,
     )
-
     data class Bostedsadresse(
         val norskAdresse: NorskAdresse?,
         val utenlandskAdresse: UtenlandskAdresse?

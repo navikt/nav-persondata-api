@@ -87,6 +87,7 @@ spec:
         - host: pdl-api.prod-fss-pub.nais.io
         - host: ikomp-prod-fss-pub.nais.io
         - host: tilgangsmaskin.intern.nav.no
+        - host: norg2.prod-fss-pub.nais.io
   env:
     - name : GRUPPER
       value: |
