@@ -20,7 +20,7 @@
 - Aktuatorendepunkter og Prometheus-metrikker eksponeres via `application.yaml`, og WebClient-observasjoner tagges per nedstrømsystem (`src/main/resources/application.yaml:32`, `src/main/kotlin/no/nav/persondataapi/konfigurasjon/ClientMetricsConfig.kt:26`).
 
 ## Bygg og konfig
-- Bygges med Gradle og Spring Boot 3.2 / Kotlin 1.9. GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
+- <!-- versions --> GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
 - Avhengighetstre inkluderer WebFlux, Micrometer tracing, NAV token-support og logstash-encoder. Genererte kilder legges til som egne source directories (`build.gradle.kts:92`, `build.gradle.kts:54`).
 - Lokal profil importerer hemmeligheter fra `.env.local.properties` og definerer alle scope- og URL-variabler for integrasjoner (`src/main/resources/application-local.yaml:7`).
 
