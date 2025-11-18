@@ -6,8 +6,24 @@ API for uthenting av persondata for Borger eller innbygger i Norge med Nav tilkn
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
 
-### Linting
-Kjør `./gradlew ktlintCheck` for å sjekke at koden følger linting-reglene. Kjør `./gradlew ktlintFormat` for å fikse eventuelle problemer automatisk.
+### Kodeformattering og linting (ktlint)
+
+Dette prosjektet bruker [ktlint](https://github.com/pinterest/ktlint) som «single source of truth» for Kotlin-stil og -formattering.  
+Regler og formattering styres via `.editorconfig` i rotmappa.
+
+#### Kjøre ktlint via Gradle
+
+Vi har satt opp ktlint via Gradle-plugin, og følgende kommandoer er tilgjengelige:
+
+```bash
+# Sjekk at all kode følger reglene (feiler build ved brudd)
+./gradlew ktlintCheck
+
+# Forsøk å auto-fikse formatteringsfeil
+./gradlew ktlintFormat
+```
+
+Kjør ktlintCheck lokalt før du pusher, og bruk ktlintFormat for å rydde opp i enkle formatteringsfeil.  
 
 ### Henting av secrets
 
