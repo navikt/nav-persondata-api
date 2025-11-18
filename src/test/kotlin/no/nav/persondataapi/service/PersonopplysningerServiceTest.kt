@@ -13,6 +13,7 @@ import no.nav.persondataapi.generated.hentperson.Navn
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.generated.hentperson.Sivilstand
 import no.nav.persondataapi.generated.hentperson.Statsborgerskap
+import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.pdl.client.PersonDataResultat
 import no.nav.persondataapi.rest.domene.PersonIdent
@@ -50,6 +51,12 @@ class PersonopplysningerServiceTest {
             statusCode = 200,
             errorMessage = null
         )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 200,
+          errorMessage = null
+        )
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
@@ -76,6 +83,12 @@ class PersonopplysningerServiceTest {
             errorMessage = "Not found"
         )
 
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 404,
+          errorMessage = "Not found"
+        )
+
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
@@ -93,6 +106,12 @@ class PersonopplysningerServiceTest {
             data = null,
             statusCode = 403,
             errorMessage = "Forbidden"
+        )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 403,
+          errorMessage = "Forbidden"
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
@@ -114,6 +133,12 @@ class PersonopplysningerServiceTest {
             errorMessage = "Internal server error"
         )
 
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 500,
+          errorMessage = "Internal server error"
+        )
+
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
@@ -133,6 +158,12 @@ class PersonopplysningerServiceTest {
             errorMessage = "Bad gateway"
         )
 
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 502,
+          errorMessage = "Bad gateway"
+        )
+
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
@@ -150,6 +181,12 @@ class PersonopplysningerServiceTest {
             data = null,
             statusCode = 200,
             errorMessage = null
+        )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 200,
+          errorMessage = null
         )
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
@@ -184,6 +221,13 @@ class PersonopplysningerServiceTest {
             statusCode = 200,
             errorMessage = null
         )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 200,
+          errorMessage = null
+        )
+
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
@@ -222,6 +266,12 @@ class PersonopplysningerServiceTest {
             errorMessage = null
         )
 
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 200,
+          errorMessage = null
+        )
+
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
@@ -252,6 +302,12 @@ class PersonopplysningerServiceTest {
             errorMessage = null
         )
 
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+          data = null,
+          statusCode = 200,
+          errorMessage = null
+        )
+
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
@@ -280,6 +336,13 @@ class PersonopplysningerServiceTest {
             statusCode = 200,
             errorMessage = null
         )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+            data = null,
+            statusCode = 200,
+            errorMessage = null
+        )
+
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
         every { kodeverkService.mapLandkodeTilLandnavn("SWE") } returns "Sverige"
         every { kodeverkService.mapLandkodeTilLandnavn("DNK") } returns "Danmark"
@@ -315,6 +378,12 @@ class PersonopplysningerServiceTest {
             statusCode = 200,
             errorMessage = null
         )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+            data = null,
+            statusCode = 200,
+            errorMessage = null
+        )
         every { kodeverkService.mapLandkodeTilLandnavn("XXX") } returns "Ukjent"
 
         val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
@@ -345,6 +414,12 @@ class PersonopplysningerServiceTest {
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
         coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
             data = person,
+            statusCode = 200,
+            errorMessage = null
+        )
+
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
+            data = null,
             statusCode = 200,
             errorMessage = null
         )
