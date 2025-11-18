@@ -49,7 +49,7 @@ class KodeverkClient(
     }
 
     @Cacheable(value = ["kodeverk-postnummer"])
-    fun hentPostnumre(): List<PostnummerOgPoststed> {
+    fun hentPostnummer(): List<PostnummerOgPoststed> {
         val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
 
         return webClient.get()
@@ -58,7 +58,7 @@ class KodeverkClient(
             .retrieve()
             .bodyToMono<KodeverkResponse>()
             .doOnError { ex ->
-                log.error("Feil ved henting av postnumre fra kodeverk", ex)
+                log.error("Feil ved henting av postnummer fra kodeverk", ex)
             }
             .onErrorResume { _ ->
                 // Returner en tom respons dersom noe feiler
@@ -66,7 +66,7 @@ class KodeverkClient(
             }
             .block() // fortsatt blocking
             ?.let { response ->
-                log.info("Hentet postnumre (${response.betydninger.values.size} stk)")
+                log.info("Hentet postnummer (${response.betydninger.values.size} stk)")
                 response.betydninger.entries.mapNotNull { (kode, betydninger) ->
                     betydninger.firstOrNull()
                         ?.beskrivelser
