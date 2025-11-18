@@ -92,6 +92,7 @@ spec:
         - host: pdl-api.dev-fss-pub.nais.io
         - host: ikomp-q2.dev-fss-pub.nais.io
         - host: tilgangsmaskin.intern.dev.nav.no
+        - host: norg2.dev-fss-pub.nais.io
   env:
     - name: GRUPPER
       value: |
