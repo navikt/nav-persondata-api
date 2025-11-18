@@ -1,5 +1,6 @@
 package no.nav.persondataapi.service
 
+import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -25,12 +26,34 @@ import org.junit.jupiter.api.Test
 
 class PersonopplysningerServiceTest {
 
+    val brukertilgangService = mockk<BrukertilgangService>()
+    val pdlClient = mockk<PdlClient>()
+    val kodeverkService = mockk<KodeverkService>()
+
+    private fun lagServiceMedStandardMocks(
+        harTilgang: Boolean = true,
+        personResultat: PersonDataResultat = PersonDataResultat(
+            data = null,
+            statusCode = 200,
+            errorMessage = null
+        ),
+        geoResultat: GeografiskTilknytningResultat = GeografiskTilknytningResultat(
+            data = null,
+            statusCode = 200,
+            errorMessage = null
+        )
+    ): PersonopplysningerService {
+        clearAllMocks()
+
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
+        coEvery { pdlClient.hentPerson(any()) } returns personResultat
+        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
+
+        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
+    }
+
     @Test
     fun `skal maskere data når saksbehandler ikke har tilgang`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Ola",
             mellomnavn = "Nordmann",
@@ -45,21 +68,17 @@ class PersonopplysningerServiceTest {
             )
         )
 
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = false,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
 
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 200,
-          errorMessage = null
-        )
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -72,24 +91,14 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal returnere PersonIkkeFunnet når PdlClient returnerer 404`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = null,
-            statusCode = 404,
-            errorMessage = "Not found"
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = null,
+                statusCode = 404,
+                errorMessage = "Not found"
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 404,
-          errorMessage = "Not found"
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.PersonIkkeFunnet)
@@ -97,24 +106,14 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal returnere IngenTilgang når PdlClient returnerer 403`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = null,
-            statusCode = 403,
-            errorMessage = "Forbidden"
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = null,
+                statusCode = 403,
+                errorMessage = "Forbidden"
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 403,
-          errorMessage = "Forbidden"
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.IngenTilgang)
@@ -122,24 +121,14 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal returnere FeilIBaksystem når PdlClient returnerer 500`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = null,
-            statusCode = 500,
-            errorMessage = "Internal server error"
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = null,
+                statusCode = 500,
+                errorMessage = "Internal server error"
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 500,
-          errorMessage = "Internal server error"
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.FeilIBaksystem)
@@ -147,24 +136,14 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal returnere FeilIBaksystem når PdlClient returnerer annen feilkode`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = null,
-            statusCode = 502,
-            errorMessage = "Bad gateway"
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = null,
+                statusCode = 502,
+                errorMessage = "Bad gateway"
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 502,
-          errorMessage = "Bad gateway"
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.FeilIBaksystem)
@@ -172,24 +151,14 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal returnere PersonIkkeFunnet når data er null selv med 200 status`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = null,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = null,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 200,
-          errorMessage = null
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.PersonIkkeFunnet)
@@ -197,10 +166,6 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal mappe personopplysninger med barn og ektefelle`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Ola",
             mellomnavn = "Nordmann",
@@ -215,22 +180,17 @@ class PersonopplysningerServiceTest {
             )
         )
 
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
-        )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 200,
-          errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
 
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
 
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -248,31 +208,20 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal håndtere person uten mellomnavn`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Kari",
             mellomnavn = null,
             etternavn = "Normann",
             foedselsdato = "1990-06-15"
         )
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 200,
-          errorMessage = null
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -285,30 +234,19 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal beregne korrekt alder basert på fødselsdato`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Test",
             etternavn = "Testesen",
             foedselsdato = "2000-01-01"
         )
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-          data = null,
-          statusCode = 200,
-          errorMessage = null
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -319,35 +257,25 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal håndtere person med flere statsborgerskap`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Multi",
             etternavn = "Citizen",
             foedselsdato = "1985-05-20",
             statsborgerskap = listOf("NOR", "SWE", "DNK")
         )
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
-        )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-            data = null,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
 
         every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
         every { kodeverkService.mapLandkodeTilLandnavn("SWE") } returns "Sverige"
         every { kodeverkService.mapLandkodeTilLandnavn("DNK") } returns "Danmark"
 
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -361,32 +289,22 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal håndtere ukjent landkode ved bruk av kodeverk`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Unknown",
             etternavn = "Country",
             foedselsdato = "1980-03-10",
             statsborgerskap = listOf("XXX")
         )
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
-        )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-            data = null,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
         every { kodeverkService.mapLandkodeTilLandnavn("XXX") } returns "Ukjent"
 
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
@@ -398,10 +316,6 @@ class PersonopplysningerServiceTest {
 
     @Test
     fun `skal håndtere sivilstand uten relatert person`() = runBlocking {
-        val brukertilgangService = mockk<BrukertilgangService>()
-        val pdlClient = mockk<PdlClient>()
-        val kodeverkService = mockk<KodeverkService>()
-
         val person = lagPerson(
             fornavn = "Single",
             etternavn = "Person",
@@ -410,21 +324,14 @@ class PersonopplysningerServiceTest {
                 lagSivilstand(null, Sivilstandstype.UGIFT)
             )
         )
-
-        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        coEvery { pdlClient.hentPerson(any()) } returns PersonDataResultat(
-            data = person,
-            statusCode = 200,
-            errorMessage = null
+        val service = lagServiceMedStandardMocks(
+            harTilgang = true,
+            personResultat = PersonDataResultat(
+                data = person,
+                statusCode = 200,
+                errorMessage = null
+            )
         )
-
-        coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns GeografiskTilknytningResultat(
-            data = null,
-            statusCode = 200,
-            errorMessage = null
-        )
-
-        val service = PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService)
         val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
 
         assertTrue(resultat is PersonopplysningerResultat.Success)
