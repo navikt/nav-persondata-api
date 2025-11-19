@@ -86,4 +86,15 @@ class ClientMetricsConfig {
             }
         }
 
+    @Bean
+    @Qualifier("norg2Observation")
+    fun norg2ObservationConvention(): ClientRequestObservationConvention =
+        object : DefaultClientRequestObservationConvention() {
+            override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
+                return super.getLowCardinalityKeyValues(ctx)
+                    .and(KeyValue.of("system", "norg2"))
+                    .and(KeyValue.of("operation", "navkontor"))
+            }
+        }
+
 }

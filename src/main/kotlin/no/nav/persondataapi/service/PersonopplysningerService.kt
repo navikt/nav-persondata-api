@@ -19,6 +19,7 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
+    private val navTilhørighetService: NavTilhørighetService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -34,8 +35,10 @@ class PersonopplysningerService(
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
         if (responsLog) {
             logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-geografisk-Tilknytning respons for {}: {}", personIdent, JsonUtils.toJson(lokalKontor).toPrettyString())
         }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
@@ -77,6 +80,12 @@ class PersonopplysningerService(
             } ?: -1,
             fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
             dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
+            navKontor = PersonInformasjon.NavKontor(
+                enhetId = lokalKontor.enhetId,
+                navn = lokalKontor.navn,
+                enhetNr = lokalKontor.enhetNr,
+                type = lokalKontor.type
+            ),
         )
 
         // Berik med kodeverkdata

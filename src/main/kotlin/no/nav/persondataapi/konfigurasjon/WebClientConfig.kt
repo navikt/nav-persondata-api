@@ -40,6 +40,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     lateinit var kodeverkURL: String
     @Value("\${MODIA_CONTEXT_HOLDER_URL}")
     lateinit var modiaContextHolderUrl: String
+    @Value("\${NORG2_URL}")
+    lateinit var norg2URL: String
 
     @Bean
     fun tokenWebClient(builder: WebClient.Builder): WebClient =
@@ -211,6 +213,32 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
+
+    @Bean
+    fun norg2WebClient(builder: WebClient.Builder,
+                          @Qualifier("norg2Observation")
+                          convention: ClientRequestObservationConvention,
+                          navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
+        builder
+            .baseUrl(norg2URL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(
+                ReactorClientHttpConnector(
+                    HttpClient.create().metrics(true,
+                        java.util.function.Function<String, String> { uri ->
+                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
+                            uri
+                        })
+                )
+            )
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+
 
     @Bean
     fun modiaContextHolderWebClient(builder: WebClient.Builder,

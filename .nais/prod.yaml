@@ -87,6 +87,7 @@ spec:
         - host: pdl-api.prod-fss-pub.nais.io
         - host: ikomp-prod-fss-pub.nais.io
         - host: tilgangsmaskin.intern.nav.no
+        - host: norg2.prod-fss-pub.nais.io
   env:
     - name : GRUPPER
       value: |
@@ -131,3 +132,6 @@ spec:
       value: http://modiacontextholder.personoversikt
     - name: MODIA_CONTEXT_HOLDER_SCOPE
       value: api://prod-gcp.personoversikt.modiacontextholder/.default
+
+    - name: NORG2_URL
+      value: https://norg2.prod-fss-pub.nais.io/norg2
