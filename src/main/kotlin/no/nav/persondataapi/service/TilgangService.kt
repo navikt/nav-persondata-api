@@ -36,6 +36,7 @@ class TilgangService(
         val data = resultat.data
         return when {
             data?.status == 204 -> 200
+            data?.title == "AVVIST_GEOGRAFISK" -> 200
             data?.harTilgangMedBasicAdgang() == true -> {
                 logger.info("Overstyrer skjerming for ${resultat.data.brukerIdent} - ${data.title}")
                 return 200
