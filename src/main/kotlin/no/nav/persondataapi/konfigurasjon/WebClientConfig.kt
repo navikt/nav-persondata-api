@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.web.reactive.function.client.ClientRequest
-
 import org.springframework.web.reactive.function.client.ClientRequestObservationConvention
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
@@ -83,25 +82,23 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             .build()
 
     @Bean
-    fun inntektWebClient(builder: WebClient.Builder,
-                         @Qualifier("inntektObservation")
-                         convention: ClientRequestObservationConvention,
-                         navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
+    fun inntektWebClient(
+        builder: WebClient.Builder,
+        observationRegistry: ObservationRegistry,
+        @Qualifier("inntektObservation")
+        convention: ClientRequestObservationConvention,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+    ): WebClient =
         builder
             .baseUrl(inntektURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(
+            }.clientConnector(
                 ReactorClientHttpConnector(
-                    HttpClient.create().metrics(true,
-                        java.util.function.Function<String, String> { uri ->
-                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
-                            uri
-                        })
-                )
-            )
+                    HttpClient.create(),
+                ),
+            ).observationRegistry(observationRegistry)
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
