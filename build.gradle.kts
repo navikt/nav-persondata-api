@@ -111,6 +111,7 @@ dependencies {
   testImplementation("io.mockk:mockk:1.14.6")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   implementation("io.micrometer:micrometer-registry-prometheus")
+  implementation("io.micrometer:micrometer-observation")
 
   /*
   WebFlux
