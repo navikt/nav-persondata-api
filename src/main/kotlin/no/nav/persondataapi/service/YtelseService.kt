@@ -1,5 +1,6 @@
 package no.nav.persondataapi.service
 
+import io.micrometer.core.annotation.Timed
 import no.nav.persondataapi.integrasjon.utbetaling.client.UtbetalingClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.Ytelse
@@ -14,6 +15,7 @@ class YtelseService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
+    @Timed(value = "ytelser_tid", description = "Hvor lang tid kall mot ytelser tar")
     fun hentYtelserForPerson(personIdent: PersonIdent, utvidet: Boolean): YtelserResultat {
         val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(personIdent, utvidet)
         logger.info("Hentet ${if (utvidet) "utvidete " else ""}ytelser for $personIdent, status ${utbetalingResponse.statusCode}")
