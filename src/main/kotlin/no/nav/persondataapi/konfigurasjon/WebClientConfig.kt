@@ -140,14 +140,21 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             .build()
 
     @Bean
-    fun eregWebClient(builder: WebClient.Builder,
-                      navCallIdHeaderFilter: ExchangeFilterFunction): WebClient =
+    fun eregWebClient(
+        builder: WebClient.Builder,
+        observationRegistry: ObservationRegistry,
+        @Qualifier("eeregObservation")
+        convention: ClientRequestObservationConvention,
+        navCallIdHeaderFilter: ExchangeFilterFunction
+    ): WebClient =
         builder
             .baseUrl(eregURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
+            .observationRegistry(observationRegistry)
+            .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
 

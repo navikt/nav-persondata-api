@@ -44,6 +44,17 @@ class ClientMetricsConfig {
         }
 
     @Bean
+    @Qualifier("eeregObservation")
+    fun eeregObservationConvention(): ClientRequestObservationConvention =
+        object : DefaultClientRequestObservationConvention() {
+            override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
+                return super.getLowCardinalityKeyValues(ctx)
+                    .and(KeyValue.of("system", "eereg"))
+                    .and(KeyValue.of("operation", "tester"))
+            }
+        }
+
+    @Bean
     @Qualifier("utbetalingObservation")
     fun utbetalingObservationConvention(): ClientRequestObservationConvention =
         object : DefaultClientRequestObservationConvention() {
