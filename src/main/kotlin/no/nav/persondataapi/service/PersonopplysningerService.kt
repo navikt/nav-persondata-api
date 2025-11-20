@@ -54,7 +54,7 @@ class PersonopplysningerService(
 
         // Mappe familie og sivilstand
         val foreldreOgBarn = pdlData.forelderBarnRelasjon.associate {
-            Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name)
+            Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
         }
         val statsborgerskap = pdlData.statsborgerskap.map { it.land }
         val ektefelle = pdlData.sivilstand
