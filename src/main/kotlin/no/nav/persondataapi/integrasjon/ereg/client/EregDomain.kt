@@ -64,7 +64,7 @@ data class Naering(
 /** Adresse gjenbrukes for både forretnings- og postadresse */
 data class Adresse(
     val type: String,
-    val adresselinje1: String,
+    val adresselinje1: String? = null,
     val adresselinje2: String? = null,
     val adresselinje3: String? = null,
     val postnummer: String,
