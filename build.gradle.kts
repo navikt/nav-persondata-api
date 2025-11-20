@@ -112,6 +112,8 @@ dependencies {
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   implementation("io.micrometer:micrometer-registry-prometheus")
   implementation("io.micrometer:micrometer-observation")
+  implementation("io.micrometer:micrometer-observation-aop")
+
 
   /*
   WebFlux
