@@ -1,4 +1,5 @@
 package no.nav.persondataapi.integrasjon.utbetaling.client
+import io.micrometer.core.annotation.Timed
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 
@@ -21,6 +22,7 @@ class UtbetalingClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet")
+    @Timed(value = "utbetaling_tid", description = "Hvor lang tid kall mot utbetaling tar")
     fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return runCatching {
             val antallÅr: Long = if (utvidet) 10 else 3
@@ -68,7 +70,7 @@ class UtbetalingClient(
     }
 }
 
-data class UtbetalingRespons(val utbetalinger: List<no.nav.persondataapi.integrasjon.utbetaling.dto.Utbetaling>)
+data class UtbetalingRespons(val utbetalinger: List<Utbetaling>)
 
 data class UtbetalingResultat(
     val data: UtbetalingRespons?,
