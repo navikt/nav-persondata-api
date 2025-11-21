@@ -13,6 +13,8 @@
 - If there are more than one obvious way to solve a problem, stop and ask what approach I would like to take
 - If you need more context to make an informed suggestion, ask questions until you know enough to make the right choice
 - Prefer readable code over "clever code"
+- Update docs/arkitektur.md when doing larger changes to the overall architecture
+- Update docs/integrasjoner.md when adding, changing or deleting integrations
 - 
 ## Project Structure & Module Organization
 - Primary Kotlin sources live in `src/main/kotlin/no/nav/persondataapi`, with packages mirroring feature areas.
