@@ -9,6 +9,7 @@
 ## Integrasjoner og dataflyt
 
 graph TD
+
 A[Persondata-api] -->|REST API| B[OBO-veksling og client-credentials]
 A[Persondata-api] -->|DOMENE| C[Personoppslag]
 A[Persondata-api] -->|GraphQL| D[PDL]
