@@ -7,6 +7,16 @@
 - Domeneobjekter i `rest/domene` markerer sensitive felter med `@Maskert`, mens `MaskeringUtil` traverserer objekter rekursivt og erstatter verdier ved behov (`src/main/kotlin/no/nav/persondataapi/rest/domene/PersonInformasjon.kt:5`, `src/main/kotlin/no/nav/persondataapi/rest/oppslag/Maskert.kt:21`, `MaskeringUtil.kt:15`).
 
 ## Integrasjoner og dataflyt
+
+graph TD
+A[Persondata-api] -->|REST API| B[OBO-veksling og client-credentials]
+A[Persondata-api] -->|DOMENE| C[Personoppslag]
+A[Persondata-api] -->|GraphQL| D[PDL]
+A[Persondata-api] -->|Oppslag| E[Inntekt]
+A[Persondata-api] -->|Oppslag| F[Arbeidsforhold]
+A[Persondata-api] -->|Oppslag| G[Utbetalinger]
+A[Persondata-api] -->|Oppslag| H[Tilgangsmaskinen]
+
 - WebClient-instansene konfigureres sentralt med Call-ID-filter, Micrometer-merking og systemspesifikke observation-konvensjoner (`src/main/kotlin/no/nav/persondataapi/konfigurasjon/WebClientConfig.kt:42`, `ClientMetricsConfig.kt:19`).
 - `TokenService` håndterer både OBO-veksling og client-credentials mot NAVs sikkerhetsplattform basert på miljøvariabler (`src/main/kotlin/no/nav/persondataapi/service/TokenService.kt:19`).
 - PDL-data hentes via GraphQL med caching og tilpassede headers (`src/main/kotlin/no/nav/persondataapi/integrasjon/pdl/client/PdlClient.kt:22`); kodeverk- og organisasjonsdata hentes og brukes til beriking (`src/main/kotlin/no/nav/persondataapi/service/KodeverkService.kt:4`, `integrasjon/kodeverk/client/KodeverkClient.kt:27`, `integrasjon/ereg/client/EregClient.kt:16`).
