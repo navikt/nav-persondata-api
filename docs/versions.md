@@ -1,0 +1,8 @@
+- Java: 21
+- Gradle: 8.10
+- Spring Boot: 3.5.7
+- Kotlin: 2.2.20
+- Jackson: 2.17.1
+- Coroutines: 1.10.2
+- Token Support: 5.0.30
+- GraphQL Kotlin: 9.0.0-alpha.8

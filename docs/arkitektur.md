@@ -7,6 +7,17 @@
 - Domeneobjekter i `rest/domene` markerer sensitive felter med `@Maskert`, mens `MaskeringUtil` traverserer objekter rekursivt og erstatter verdier ved behov (`src/main/kotlin/no/nav/persondataapi/rest/domene/PersonInformasjon.kt:5`, `src/main/kotlin/no/nav/persondataapi/rest/oppslag/Maskert.kt:21`, `MaskeringUtil.kt:15`).
 
 ## Integrasjoner og dataflyt
+
+graph TD
+
+A[Persondata-api] -->|REST API| B[OBO-veksling og client-credentials]
+A[Persondata-api] -->|DOMENE| C[Personoppslag]
+A[Persondata-api] -->|GraphQL| D[PDL]
+A[Persondata-api] -->|Oppslag| E[Inntekt]
+A[Persondata-api] -->|Oppslag| F[Arbeidsforhold]
+A[Persondata-api] -->|Oppslag| G[Utbetalinger]
+A[Persondata-api] -->|Oppslag| H[Tilgangsmaskinen]
+
 - WebClient-instansene konfigureres sentralt med Call-ID-filter, Micrometer-merking og systemspesifikke observation-konvensjoner (`src/main/kotlin/no/nav/persondataapi/konfigurasjon/WebClientConfig.kt:42`, `ClientMetricsConfig.kt:19`).
 - `TokenService` håndterer både OBO-veksling og client-credentials mot NAVs sikkerhetsplattform basert på miljøvariabler (`src/main/kotlin/no/nav/persondataapi/service/TokenService.kt:19`).
 - PDL-data hentes via GraphQL med caching og tilpassede headers (`src/main/kotlin/no/nav/persondataapi/integrasjon/pdl/client/PdlClient.kt:22`); kodeverk- og organisasjonsdata hentes og brukes til beriking (`src/main/kotlin/no/nav/persondataapi/service/KodeverkService.kt:4`, `integrasjon/kodeverk/client/KodeverkClient.kt:27`, `integrasjon/ereg/client/EregClient.kt:16`).
@@ -20,7 +31,7 @@
 - Aktuatorendepunkter og Prometheus-metrikker eksponeres via `application.yaml`, og WebClient-observasjoner tagges per nedstrømsystem (`src/main/resources/application.yaml:32`, `src/main/kotlin/no/nav/persondataapi/konfigurasjon/ClientMetricsConfig.kt:26`).
 
 ## Bygg og konfig
-- Bygges med Gradle og Spring Boot 3.2 / Kotlin 1.9. GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
+- <!-- versions --> GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
 - Avhengighetstre inkluderer WebFlux, Micrometer tracing, NAV token-support og logstash-encoder. Genererte kilder legges til som egne source directories (`build.gradle.kts:92`, `build.gradle.kts:54`).
 - Lokal profil importerer hemmeligheter fra `.env.local.properties` og definerer alle scope- og URL-variabler for integrasjoner (`src/main/resources/application-local.yaml:7`).
 
