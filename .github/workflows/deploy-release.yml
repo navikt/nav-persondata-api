@@ -53,7 +53,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: .nais/prod.yaml
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/prod.json
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
       - uses: actions/github-script@v8

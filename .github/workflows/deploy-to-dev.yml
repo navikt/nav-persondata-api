@@ -54,6 +54,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev.json
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
 
