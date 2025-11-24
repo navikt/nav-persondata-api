@@ -44,7 +44,7 @@ class PdlClient(
             }
     }
 
-    @Cacheable(value = ["pdl-person"], key = "#personIdent")
+    @Cacheable(value = ["pdl-person"], key = "#personIdent", unless = "#result.statusCode != 200")
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
@@ -94,9 +94,12 @@ class PdlClient(
     suspend fun hentGeografiskTilknytning(personIdent: PersonIdent): GeografiskTilknytningResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
+        val httpClient = createTimeoutHttpClient()
+
         val client = GraphQLWebClient(
             url = pdlUrl,
-            builder = WebClient.builder(),
+            builder = WebClient.builder()
+                .clientConnector(ReactorClientHttpConnector(httpClient))
         )
         val query = HentGeografiskTilknytning(
             HentGeografiskTilknytning.Variables(
