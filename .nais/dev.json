@@ -12,10 +12,16 @@
     "tilgangsmaskin.intern.dev.nav.no",
     "norg2.dev-fss-pub.nais.io"
   ],
-  "GROUPS": [
-    { "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
-    { "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
-  ],
+  "GROUPS": {
+    "BASIC": {
+      "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Basic"
+    },
+    "EXTENDED": {
+      "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    }
+  },
   "ENVS": [
     {
       "name": "UTBETALING_SCOPE",
@@ -83,7 +89,7 @@
     },
     {
       "name": "JAVA_TOOL_OPTIONS",
-      "value": "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      "value": "\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005\""
     }
   ]
 }

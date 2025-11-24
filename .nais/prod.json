@@ -12,10 +12,16 @@
     "tilgangsmaskin.intern.nav.no",
     "norg2.prod-fss-pub.nais.io"
   ],
-  "GROUPS": [
-    { "id": "a1d74637-a6fc-41a9-9277-f368ee6745b3", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
-    { "id": "206f49eb-51fb-4afe-b1b1-33cf2165aa23", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
-  ],
+  "GROUPS": {
+    "BASIC": {
+      "id": "206f49eb-51fb-4afe-b1b1-33cf2165aa23",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Basic"
+    },
+    "EXTENDED": {
+      "id": "a1d74637-a6fc-41a9-9277-f368ee6745b3",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    }
+  },
   "ENVS": [
     {
       "name": "UTBETALING_SCOPE",

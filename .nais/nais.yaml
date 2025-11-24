@@ -30,8 +30,8 @@ spec:
       singlePageApplication: true
       claims:
         groups:
-          - id: "b734a20d-63e3-4b44-bb77-87f7f0b7f48a" # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
-          - id: "222dedb1-a80d-48c9-b8d3-1e8149be9063" # 0000-GA-kontroll-Oppslag-Bruker-Basic
+          - id: {{GROUPS.EXTENDED.id}} # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
+          - id: {{GROUPS.BASIC.id}} # 0000-GA-kontroll-Oppslag-Bruker-Basic
         extra:
           - "NAVident"
           - "azp_name"
@@ -94,11 +94,10 @@ spec:
     - name: GRUPPER
       value: |
         [
-        {{#each GROUPS}}
-        { "id": "{{id}}", "name": "{{name}}" },
-        {{/each}}
+        { "id": "{{GROUPS.EXTENDED.id}}", "name": "{{GROUPS.EXTENDED.name}}" },
+        { "id": "{{GROUPS.BASIC.id}}", "name": "{{GROUPS.BASIC.name}}" }
         ]
     {{#each ENVS}}
     - name: {{name}}
-      value: {{value}}
+      value: {{{value}}}
     {{/each}}
