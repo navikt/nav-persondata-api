@@ -7,7 +7,7 @@
 - All new code should be tested thoroughly
 - Ensure you check that all new code is securely designed
 - Whenever implementing a new functionality, find similar implementations in the codebase and follow those implementation patterns
-- Refactor large functions classes to optimize for readability and re-use
+- Refactor large functions and classes to optimize for readability and re-use
 - Avoid adding external packages unless necessary
 - Apply the Object wrapper pattern where applicable (where you wrap a string or other types in an object)
 - If there are more than one obvious way to solve a problem, stop and ask what approach I would like to take
@@ -15,7 +15,7 @@
 - Prefer readable code over "clever code"
 - Update docs/arkitektur.md when doing larger changes to the overall architecture
 - Update docs/integrasjoner.md when adding, changing or deleting integrations
-- 
+
 ## Project Structure & Module Organization
 - Primary Kotlin sources live in `src/main/kotlin/no/nav/persondataapi`, with packages mirroring feature areas.
 - API contracts reside in `src/main/resources/openapi` and GraphQL queries in `src/main/resources/graphql`; generated clients land in `build/generated/...` and should not be hand-edited.
