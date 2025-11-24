@@ -2,6 +2,9 @@ package no.nav.persondataapi.konfigurasjon
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import io.micrometer.observation.ObservationRegistry
+import io.netty.channel.ChannelOption
+import io.netty.handler.timeout.ReadTimeoutHandler
+import io.netty.handler.timeout.WriteTimeoutHandler
 import io.netty.resolver.DefaultAddressResolverGroup
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Qualifier
@@ -17,6 +20,7 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
+import java.time.Duration
 import java.util.UUID
 
 @Configuration
@@ -57,30 +61,33 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             .build()
     @Bean
     fun utbetalingWebClient(
-                    builder: WebClient.Builder,
-                    @Qualifier("utbetalingObservation")
-                    convention: ClientRequestObservationConvention,
-                    navCallIdHeaderFilter: ExchangeFilterFunction
-    ): WebClient =
-        builder
+        builder: WebClient.Builder,
+        @Qualifier("utbetalingObservation")
+        convention: ClientRequestObservationConvention,
+        navCallIdHeaderFilter: ExchangeFilterFunction
+    ): WebClient {
+
+        // 1️⃣ Definer HttpClient med timeouts
+        val httpClient = HttpClient.create()
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)              // 5 sek connect-timeout
+            .responseTimeout(Duration.ofSeconds(30))                        // 30 sek response-time
+            .doOnConnected { conn ->
+                conn.addHandlerLast(ReadTimeoutHandler(10))                 // 10 sek read-timeout
+                conn.addHandlerLast(WriteTimeoutHandler(10))                // 10 sek write-timeout
+            }
+            .metrics(true) { uri -> uri }
+
+        return builder
             .baseUrl("$utbetalingURL/utbetaldata/api/v2/hent-utbetalingsinformasjon/intern")
-            //.defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
-            .clientConnector(
-                ReactorClientHttpConnector(
-                    HttpClient.create().metrics(true,
-                        java.util.function.Function<String, String> { uri ->
-                            // Returnér hva du vil tagge som "uri" (f.eks. masker variabler)
-                            uri
-                        })
-                )
-            )
+            .clientConnector(ReactorClientHttpConnector(httpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
+    }
 
     @Bean
     fun inntektWebClient(builder: WebClient.Builder,

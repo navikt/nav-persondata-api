@@ -28,8 +28,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "inntekt"))
-                    .and(KeyValue.of("operation", "hentInntekter"))
             }
         }
     @Bean
@@ -38,8 +36,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "aareg"))
-                    .and(KeyValue.of("operation", "arbeidsforhold"))
             }
         }
 
@@ -49,8 +45,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "sokos-utbetaldata"))
-                    .and(KeyValue.of("operation", "hent-utbetalingsinformasjon"))
             }
         }
     @Bean
@@ -59,8 +53,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "pdl"))
-                    .and(KeyValue.of("operation", "hent-Person"))
             }
         }
 
@@ -70,8 +62,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "kodeverk"))
-                    .and(KeyValue.of("operation", "hent-kodeverk"))
             }
         }
 
@@ -81,8 +71,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "modiacontextholder"))
-                    .and(KeyValue.of("operation", "context"))
             }
         }
 
@@ -92,8 +80,6 @@ class ClientMetricsConfig {
         object : DefaultClientRequestObservationConvention() {
             override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
                 return super.getLowCardinalityKeyValues(ctx)
-                    .and(KeyValue.of("system", "norg2"))
-                    .and(KeyValue.of("operation", "navkontor"))
             }
         }
 
