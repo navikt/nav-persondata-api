@@ -105,6 +105,8 @@ spec:
     - name: UTBETALING_URL
       value: https://sokos-utbetaldata.dev-fss-pub.nais.io
 
+    - name:
+
     - name: PDL_SCOPE
       value: api://dev-fss.pdl.pdl-api/.default
     - name: PDL_URL

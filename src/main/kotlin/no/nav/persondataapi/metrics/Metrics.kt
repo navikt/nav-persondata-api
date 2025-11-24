@@ -10,6 +10,9 @@ class PdlMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "pdl
 class UtbetalingMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "utbetaling")
 
 @Component
+class KontoregisterMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "kontoregister")
+
+@Component
 class InntektMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "inntekt")
 
 @Component

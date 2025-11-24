@@ -45,7 +45,6 @@ class InntektClient(
             )
             val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
 
-
             val responseResult = webClient.post()
                 .uri("/rest/v2/inntektshistorikk")
                 .header("Authorization", "Bearer $oboToken")
