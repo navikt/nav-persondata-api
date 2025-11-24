@@ -26,7 +26,7 @@ class KontoregisterClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "hent-konto-med-historikk"
 
-    @Cacheable(value = ["kontoregister-bruker"], key = "#personIdent.value", unless = "#result.statusCode != 200")
+    @Cacheable(value = ["kontonummer-persom"], key = "#personIdent", unless = "#result.statusCode != 200")
     fun hentKontoMedKontoHistorikk(personIdent: PersonIdent):KontoRegisterResultat  {
         return try {
             // Selve kallet måles i timeren
