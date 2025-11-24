@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.integrasjon.kontoregister.KontoregisterClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.konfigurasjon.teamLogsMarker
@@ -19,7 +20,8 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
-    private val navTilhørighetService: NavTilhørighetService
+    private val navTilhørighetService: NavTilhørighetService,
+    private val kontoregisterClient: KontoregisterClient
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -51,6 +53,14 @@ class PersonopplysningerService(
         }
 
         val pdlData = pdlResponse.data ?: return PersonopplysningerResultat.PersonIkkeFunnet
+        val kontoregisterData = kontoregisterClient.hentKontoMedKontoHistorikk(personIdent).data
+        if (kontoregisterData != null) {
+            logger.info("Hentet kontoregisterdata for $personIdent: ${kontoregisterData.aktivKonto}")
+        } else {
+            logger.info("Ingen kontoregisterdata funnet for $personIdent")
+        }
+
+
 
         // Mappe familie og sivilstand
         val foreldreOgBarn = pdlData.forelderBarnRelasjon.associate {

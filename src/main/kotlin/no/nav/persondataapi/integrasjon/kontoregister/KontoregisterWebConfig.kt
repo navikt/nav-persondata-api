@@ -2,7 +2,6 @@ package no.nav.persondataapi.integrasjon.kontoregister
 
 import io.micrometer.common.KeyValues
 import io.micrometer.observation.ObservationRegistry
-import io.micrometer.observation.ObservationRegistry.ObservationConfig
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler

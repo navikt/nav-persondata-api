@@ -14,6 +14,9 @@ import no.nav.persondataapi.generated.hentperson.Navn
 import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.generated.hentperson.Sivilstand
 import no.nav.persondataapi.generated.hentperson.Statsborgerskap
+import no.nav.persondataapi.integrasjon.kontoregister.KontoRegisterRespons
+import no.nav.persondataapi.integrasjon.kontoregister.KontoRegisterResultat
+import no.nav.persondataapi.integrasjon.kontoregister.KontoregisterClient
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
@@ -24,6 +27,7 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import java.util.Collections.emptyList
 
 class PersonopplysningerServiceTest {
 
@@ -31,6 +35,7 @@ class PersonopplysningerServiceTest {
     val pdlClient = mockk<PdlClient>()
     val kodeverkService = mockk<KodeverkService>()
     val navTilhørigetService = mockk<NavTilhørighetService>()
+    val kontoregisterClient= mockk<KontoregisterClient>()
 
     private fun lagServiceMedStandardMocks(
         harTilgang: Boolean = true,
@@ -49,8 +54,13 @@ class PersonopplysningerServiceTest {
             navn="TestNav",
             enhetNr="1",
             type="LOKALKONTOR"
+        ),
+        kontoregisterResultat: KontoRegisterResultat = KontoRegisterResultat(
+            data = null,
+            statusCode = 200,
+            errorMessage = null
+        )
 
-    )
 
     ): PersonopplysningerService {
         clearAllMocks()
@@ -59,8 +69,8 @@ class PersonopplysningerServiceTest {
         coEvery { pdlClient.hentPerson(any()) } returns personResultat
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent (any()) } returns lokalKontor
-
-        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService,navTilhørigetService)
+        every { kontoregisterClient.hentKontoMedKontoHistorikk(any()) } returns kontoregisterResultat
+        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService,navTilhørigetService, kontoregisterClient)
     }
 
     @Test
