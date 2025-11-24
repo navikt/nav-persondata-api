@@ -59,3 +59,5 @@ KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 
 MODIA_CONTEXT_HOLDER_URL: https://modiacontextholder.intern.dev.nav.no
 MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.default
+
+NORG2_URL: https://norg2.dev-fss-pub.nais.io/norg2

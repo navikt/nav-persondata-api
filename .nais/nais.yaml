@@ -15,7 +15,7 @@ spec:
       runtime: java
   resources:
     limits:
-      memory: 512Mi
+      memory: 1Gi
     requests:
       cpu: 200m
       memory: 256Mi
@@ -52,8 +52,8 @@ spec:
   ingresses:
     - https://nav-persondata-api.intern.dev.nav.no
   replicas:
-    min: 2
-    max: 2
+    min: 1
+    max: 1
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
@@ -92,6 +92,7 @@ spec:
         - host: pdl-api.dev-fss-pub.nais.io
         - host: ikomp-q2.dev-fss-pub.nais.io
         - host: tilgangsmaskin.intern.dev.nav.no
+        - host: norg2.dev-fss-pub.nais.io
   env:
     - name: GRUPPER
       value: |
@@ -137,3 +138,9 @@ spec:
 
     - name: MODIA_CONTEXT_HOLDER_SCOPE
       value: api://dev-gcp.personoversikt.modiacontextholder/.default
+
+    - name: JAVA_TOOL_OPTIONS
+      value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+
+    - name: NORG2_URL
+      value: https://norg2.dev-fss-pub.nais.io/norg2
