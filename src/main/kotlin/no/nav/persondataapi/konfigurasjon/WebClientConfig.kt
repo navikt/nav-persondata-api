@@ -393,7 +393,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
     private fun httpClientMedPool(konfig: HttpClientKonfig): HttpClient {
         val connectionProvider = ConnectionProvider.builder(konfig.poolNavn)
-            .maxConnections(200)
+            .maxConnections(30)
+            // Brannmuren mellom FSS og GCP dropper idle connections etter 60 minutter
             .maxIdleTime(Duration.ofMinutes(55))
             .maxLifeTime(Duration.ofMinutes(59))
             .evictInBackground(Duration.ofMinutes(5))
