@@ -25,7 +25,11 @@ class InntektClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
 
-    @Cacheable(value = ["inntekt-historikk"], key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom")
+    @Cacheable(
+        value = ["inntekt-historikk"],
+        key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom",
+        unless = "#result.statusCode != 200"
+    )
     fun hentInntekter(
         personIdent: PersonIdent,
         kontrollPeriode: KontrollPeriode = KontrollPeriode(
@@ -71,7 +75,7 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
+                log.error("Feil ved henting av inntekter : ${error.message}", error)
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,
