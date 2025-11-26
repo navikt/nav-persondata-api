@@ -45,7 +45,11 @@ class PdlClient(
             }
     }
 
-    @Cacheable(value = ["pdl-person"], key = "#personIdent", unless = "#result.statusCode != 200")
+    @Cacheable(
+        value = ["pdl-person"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
@@ -90,7 +94,11 @@ class PdlClient(
         }
     }
 
-    @Cacheable(value = ["pdl-geografisktilknytning"], key = "#personIdent")
+    @Cacheable(
+        value = ["pdl-geografisktilknytning"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     suspend fun hentGeografiskTilknytning(personIdent: PersonIdent): GeografiskTilknytningResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
