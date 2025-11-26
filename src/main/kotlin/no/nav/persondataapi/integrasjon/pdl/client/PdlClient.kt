@@ -147,7 +147,7 @@ class PdlClient(
         const val Tema = "TEMA"
     }
 
-    private fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
+    internal fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
         val firstError = errors.first()
         val code = firstError.extensions?.get("code") as? String
 
