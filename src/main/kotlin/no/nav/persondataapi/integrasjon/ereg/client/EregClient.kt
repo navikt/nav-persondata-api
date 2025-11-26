@@ -17,8 +17,7 @@ class EregClient(
 
     @Cacheable(
         value = ["ereg-organisasjon"],
-        key = "#orgnummer",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        key = "#orgnummer"
     )
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         val rawJson: String = try {
