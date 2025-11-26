@@ -1,7 +1,11 @@
 package no.nav.persondataapi.integrasjon.inntekt.client
 
+import io.netty.handler.timeout.ReadTimeoutException
+import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.metrics.DownstreamResult
+import no.nav.persondataapi.metrics.InntektMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -14,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.UUID
+import java.util.concurrent.TimeoutException
 
 
 @Component
@@ -21,8 +26,10 @@ class InntektClient(
     private val tokenService: TokenService,
     @param:Qualifier("inntektWebClient")
     private val webClient: WebClient,
+    private val metrics: InntektMetrics,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+    private val operationName = "inntektshistorikk"
 
 
     @Cacheable(
@@ -38,6 +45,11 @@ class InntektClient(
         )
     ): InntektDataResultat {
         return runCatching {
+            metrics
+                .timer(operationName)
+                .recordCallable {
+
+
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
@@ -65,9 +77,13 @@ class InntektClient(
                         }
                     }
                 }.block()!!
+
             responseResult
+                }
         }.fold(
-            onSuccess = { inntekt ->
+            onSuccess = {
+                inntekt ->
+                metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
                 InntektDataResultat(
                     data = inntekt,
                     statusCode = 200,
@@ -75,6 +91,15 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
+                val resultType = when {
+                    erTimeout(error) -> DownstreamResult.TIMEOUT
+                    error.message?.contains("ikke tilgang", ignoreCase = true) == true ->
+                        DownstreamResult.CLIENT_ERROR
+                    else -> DownstreamResult.UNEXPECTED
+                }
+
+                metrics.counter(operationName, resultType).increment()
+
                 log.error("Feil ved henting av inntekter : ${error.message}", error)
                 InntektDataResultat(
                     data = null,
@@ -84,6 +109,13 @@ class InntektClient(
             }
         )
     }
+    private fun erTimeout(e: Throwable): Boolean =
+        when (e) {
+            is TimeoutException -> true
+            is ReadTimeoutException -> true
+            is WriteTimeoutException -> true
+            else -> false
+        }
 }
 
 data class InntektDataResultat(
