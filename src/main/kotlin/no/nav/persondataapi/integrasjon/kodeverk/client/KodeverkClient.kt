@@ -18,7 +18,10 @@ class KodeverkClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["kodeverk-landkoder"])
+    @Cacheable(
+        value = ["kodeverk-landkoder"],
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentLandkoder(): List<Landkode> {
         val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
 
@@ -48,7 +51,10 @@ class KodeverkClient(
             } ?: emptyList()
     }
 
-    @Cacheable(value = ["kodeverk-postnummer"])
+    @Cacheable(
+        value = ["kodeverk-postnummer"],
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentPostnummer(): List<PostnummerOgPoststed> {
         val token = tokenService.getServiceToken(SCOPE.KODEVERK_SCOPE)
 

@@ -27,7 +27,11 @@ class AaregClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
 
-    @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent")
+    @Cacheable(
+        value = ["aareg-arbeidsforhold"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
         return runCatching {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)

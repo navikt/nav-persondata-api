@@ -2,6 +2,7 @@ package no.nav.persondataapi.integrasjon.pdl.client
 
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
+import com.expediagroup.graphql.client.types.GraphQLClientError
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
@@ -44,7 +45,11 @@ class PdlClient(
             }
     }
 
-    @Cacheable(value = ["pdl-person"], key = "#personIdent", unless = "#result.statusCode != 200")
+    @Cacheable(
+        value = ["pdl-person"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
@@ -68,18 +73,17 @@ class PdlClient(
                 header(Behandlingsnummer, "B634")
                 header(Tema, "KTR")
             }
-            if (response.errors?.isNotEmpty() == true) {
-                var status = 500
-                if ("not_found".equals(response.errors!!.first().extensions?.get("code"))) {
-                    status = 404
-                }
-                log.error("Feil i kall mot PDL : ${response.errors!!.first().message}")
+
+            val errors = response.errors.orEmpty()
+            if (errors.isNotEmpty()) {
+                val (status, message) = håndterPdlFeil(errors)
                 return PersonDataResultat(
                     data = null,
                     statusCode = status,
-                    errorMessage = response.errors?.get(0)?.message,
+                    errorMessage = message
                 )
             }
+
             return PersonDataResultat(
                 data = response.data!!.hentPerson,
                 statusCode = 200,
@@ -90,7 +94,11 @@ class PdlClient(
         }
     }
 
-    @Cacheable(value = ["pdl-geografisktilknytning"], key = "#personIdent")
+    @Cacheable(
+        value = ["pdl-geografisktilknytning"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     suspend fun hentGeografiskTilknytning(personIdent: PersonIdent): GeografiskTilknytningResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
@@ -112,18 +120,17 @@ class PdlClient(
                 header(Behandlingsnummer, "B634")
                 header(Tema, "KTR")
             }
-            if (response.errors?.isNotEmpty() == true) {
-                var status = 500
-                if ("not_found".equals(response.errors!!.first().extensions?.get("code"))) {
-                    status = 404
-                }
-                log.error("Feil i kall mot PDL : ${response.errors!!.first().message}")
+
+            val errors = response.errors.orEmpty()
+            if (errors.isNotEmpty()) {
+                val (status, message) = håndterPdlFeil(errors)
                 return GeografiskTilknytningResultat(
                     data = null,
                     statusCode = status,
-                    errorMessage = response.errors?.get(0)?.message,
+                    errorMessage = message
                 )
             }
+
             return GeografiskTilknytningResultat(
                 data = response.data!!.hentGeografiskTilknytning,
                 statusCode = 200,
@@ -133,12 +140,28 @@ class PdlClient(
             return handlePdlExceptionGeo(ex, "HentGeografiskTilknytning")
         }
 
-
     }
 
     companion object CustomHeaders {
         const val Behandlingsnummer = "behandlingsnummer"
         const val Tema = "TEMA"
+    }
+
+    internal fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
+        val firstError = errors.first()
+        val code = firstError.extensions?.get("code") as? String
+
+        val status = when (code) {
+            "not_found" -> {
+                log.info("Feil i kall mot PDL : ${firstError.message}")
+                404
+            }
+            else -> {
+                log.error("Feil i kall mot PDL : ${firstError.message}")
+                500
+            }
+        }
+        return status to firstError.message
     }
 
     private fun handlePdlException(e: Exception, opperasjon: String): PersonDataResultat {
