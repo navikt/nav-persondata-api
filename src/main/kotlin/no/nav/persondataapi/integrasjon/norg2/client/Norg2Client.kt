@@ -17,7 +17,7 @@ class Norg2Client(
 
     @Cacheable(
         value = ["norg2-lokalKontor"],
-        unless = "#result.enhetsId == -1"
+        unless = "#result.enhetId == -1"
     )
     fun hentLokalNavKontor(lokalKontor:String): NavLokalKontor {
 
