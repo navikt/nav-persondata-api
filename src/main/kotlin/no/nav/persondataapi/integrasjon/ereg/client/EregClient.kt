@@ -15,7 +15,11 @@ class EregClient(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["ereg-organisasjon"], key = "#orgnummer")
+    @Cacheable(
+        value = ["ereg-organisasjon"],
+        key = "#orgnummer",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         val rawJson: String = try {
             webClient.get()

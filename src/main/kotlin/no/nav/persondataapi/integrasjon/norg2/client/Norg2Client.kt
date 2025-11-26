@@ -11,11 +11,14 @@ import org.springframework.web.reactive.function.client.WebClient
 class Norg2Client(
     @param:Qualifier("norg2WebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
+    private val objectMapper: ObjectMapper
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["norg2-lokalKontor"])
+    @Cacheable(
+        value = ["norg2-lokalKontor"],
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentLokalNavKontor(lokalKontor:String): NavLokalKontor {
 
         val rawJson = try {

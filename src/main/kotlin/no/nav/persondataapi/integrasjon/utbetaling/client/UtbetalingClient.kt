@@ -27,7 +27,11 @@ class UtbetalingClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "hentUtbetalinger"
 
-    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet")
+    @Cacheable(
+        value = ["utbetaling-bruker"],
+        key = "#personIdent + '_' + #utvidet",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return try {
             // Selve kallet måles i timeren
