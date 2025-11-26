@@ -99,7 +99,7 @@ class UtbetalingClient(
     }
 
     private fun erTimeout(e: Throwable): Boolean =
-        when (e) {
+        when (e.cause) {
             is TimeoutException -> true
             is ReadTimeoutException -> true
             is WriteTimeoutException -> true
