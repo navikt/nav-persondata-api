@@ -53,9 +53,9 @@ class PersonopplysningerService(
         }
 
         val pdlData = pdlResponse.data ?: return PersonopplysningerResultat.PersonIkkeFunnet
-        val kontoregisterData = kontoregisterClient.hentKontoMedKontoHistorikk(personIdent).data
-        if (kontoregisterData != null) {
-            logger.info("Hentet kontoregisterdata for $personIdent: ${kontoregisterData.aktivKonto}")
+        val kontoregisterData = kontoregisterClient.hentKontoMedKontoHistorikk(personIdent)
+        if (kontoregisterData != null && kontoregisterData.statusCode == 200) {
+            logger.info("Hentet kontoregisterdata for $personIdent: ${kontoregisterData.data?.aktivKonto}")
         } else {
             logger.info("Ingen kontoregisterdata funnet for $personIdent")
         }

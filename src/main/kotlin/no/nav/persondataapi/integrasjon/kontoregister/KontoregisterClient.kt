@@ -2,7 +2,7 @@ package no.nav.persondataapi.integrasjon.kontoregister
 
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
-import no.nav.persondataapi.integrasjon.utbetaling.dto.Utbetaling
+
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.KontoregisterMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
@@ -11,7 +11,8 @@ import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.core.ParameterizedTypeReference
+
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import java.util.concurrent.TimeoutException
@@ -26,36 +27,61 @@ class KontoregisterClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "hent-konto-med-historikk"
 
-    @Cacheable(value = ["kontonummer-persom"], key = "#personIdent", unless = "#result.statusCode != 200")
-    fun hentKontoMedKontoHistorikk(personIdent: PersonIdent):KontoRegisterResultat  {
+    @Cacheable(
+        value = ["kontonummer-persom"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200"
+    )
+    fun hentKontoMedKontoHistorikk(personIdent: PersonIdent): KontoRegisterResultat {
+
         return try {
-            // Selve kallet måles i timeren
-            val kontohistorikk: KontoRegisterRespons? = metrics
+            val resultat: ResponseEntity<KontoRegisterRespons>? = metrics
                 .timer(operationName)
-                .recordCallable {
+                .recordCallable { hentFraKontoregister(personIdent) }
 
-                    val requestBody = RequestBody(
-                        kontohaver = personIdent.value
-                    )
+            val status = resultat?.statusCode?.value()
+            val body = resultat?.body
 
-                    val oboToken = tokenService.getServiceToken(SCOPE.KONTOREGISTER_SCOPE)
-
-                    webClient.post()
-                        .header("Authorization", "Bearer $oboToken")
-                        .bodyValue(requestBody)
-                        .retrieve()
-                        .bodyToMono(object : ParameterizedTypeReference<KontoRegisterRespons>() {})
-                        .block()!! // API-kontrakt: forventer alltid en liste
+            when (status) {
+                200 -> {
+                    metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
+                    KontoRegisterResultat(data = body, statusCode = 200)
+                }
+                204 -> {
+                    metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
+                    KontoRegisterResultat(data = body, statusCode = 204)
                 }
 
-            // Kallet kom helt frem og tilbake uten exception → SUCCESS
-            metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
+                404 -> {
+                    metrics.counter(operationName, DownstreamResult.CLIENT_ERROR).increment()
+                    KontoRegisterResultat(
+                        data = null,
+                        statusCode = 404,
+                        errorMessage = "Kontohistorikk ikke funnet for ${personIdent.value}"
+                    )
+                }
 
-            KontoRegisterResultat(
-                data = kontohistorikk,
-                statusCode = 200
-            )
+                401, 403 -> {
+                    metrics.counter(operationName, DownstreamResult.CLIENT_ERROR).increment()
+                    KontoRegisterResultat(
+                        data = null,
+                        statusCode = 401,
+                        errorMessage = "Ingen tilgang til kontoregister for ${personIdent.value}"
+                    )
+                }
+
+                else -> {
+                    metrics.counter(operationName, DownstreamResult.UNEXPECTED).increment()
+                    KontoRegisterResultat(
+                        data = null,
+                        statusCode = 500,
+                        errorMessage = "Uventet statuskode $status fra kontoregister"
+                    )
+                }
+            }
+
         } catch (e: Exception) {
+
             val resultType = when {
                 erTimeout(e) -> DownstreamResult.TIMEOUT
                 e.message?.contains("ikke tilgang", ignoreCase = true) == true ->
@@ -64,40 +90,61 @@ class KontoregisterClient(
             }
 
             metrics.counter(operationName, resultType).increment()
-
-            log.error("Feil ved henting av utbetalinger for $personIdent: ${e.message}", e)
+            log.error("Feil ved kontoregister-kall for $personIdent: ${e.message}", e)
 
             when (resultType) {
-                DownstreamResult.TIMEOUT -> KontoRegisterResultat(
-                    data = null,
-                    statusCode = 504,
-                    errorMessage = "Timeout mot utbetalingstjenesten"
-                )
+                DownstreamResult.TIMEOUT ->
+                    KontoRegisterResultat(null, 504, "Timeout mot kontoregister")
 
-                DownstreamResult.CLIENT_ERROR -> KontoRegisterResultat(
-                    data = null,
-                    statusCode = 401,
-                    errorMessage = "Ingen tilgang til utbetalinger for $personIdent"
-                )
+                DownstreamResult.CLIENT_ERROR ->
+                    KontoRegisterResultat(null, 401, "Ingen tilgang til kontoregister")
 
-                else -> KontoRegisterResultat(
-                    data = null,
-                    statusCode = 500,
-                    errorMessage = "Feil ved lesing: ${e.message}"
-                )
+                else ->
+                    KontoRegisterResultat(null, 500, e.message)
             }
         }
     }
 
+    /**
+     * Utfører selve WebClient-kallet, men returnerer ResponseEntity
+     * med både body OG statuskode.
+     */
+    private fun hentFraKontoregister(personIdent: PersonIdent): ResponseEntity<KontoRegisterRespons> {
+        val token = tokenService.getServiceToken(SCOPE.KONTOREGISTER_SCOPE)
+
+        val requestBody = RequestBody(kontohaver = personIdent.value)
+
+        return webClient.post()
+            .header("Authorization", "Bearer $token")
+            .bodyValue(requestBody)
+            .exchangeToMono { response ->
+
+                val status = response.statusCode()
+
+                if (status.is2xxSuccessful) {
+                    response.bodyToMono(KontoRegisterRespons::class.java)
+                        .defaultIfEmpty(KontoRegisterRespons(null,emptyList()))
+                        .map { body -> ResponseEntity.status(status).body(body) }
+                } else {
+                    response.bodyToMono(KontoRegisterRespons::class.java)
+                        .defaultIfEmpty(KontoRegisterRespons(null,emptyList()))
+                        .map { body -> ResponseEntity.status(status).body(body) }
+                }
+            }
+            .block() ?: ResponseEntity.status(500).body(null)
+    }
+
     private fun erTimeout(e: Throwable): Boolean =
         when (e) {
-            is TimeoutException -> true
-            is ReadTimeoutException -> true
-            is WriteTimeoutException -> true
+            is TimeoutException,
+            is ReadTimeoutException,
+            is WriteTimeoutException,
+            is java.net.ConnectException,
+            is io.netty.channel.ConnectTimeoutException -> true
             else -> false
         }
-}
 
+}
 data class KontoRegisterRespons(
     val aktivKonto: KontoInfo?,
     val kontohistorikk: List<KontoHistorikkEntry>
