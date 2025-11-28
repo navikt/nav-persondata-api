@@ -40,8 +40,8 @@ class PdlClient(
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
             .responseTimeout(Duration.ofSeconds(30))
             .doOnConnected { conn ->
-                conn.addHandlerLast(ReadTimeoutHandler(10))
-                conn.addHandlerLast(WriteTimeoutHandler(10))
+                conn.addHandlerLast(ReadTimeoutHandler(30))
+                conn.addHandlerLast(WriteTimeoutHandler(30))
             }
     }
 
