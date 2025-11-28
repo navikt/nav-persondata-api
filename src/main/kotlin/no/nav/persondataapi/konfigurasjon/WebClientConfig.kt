@@ -31,7 +31,7 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         val poolNavn: String,
         val connectTimeout: Duration = Duration.ofSeconds(5),
         val responseTimeout: Duration = Duration.ofSeconds(30),
-        val readTimeout: Duration = Duration.ofSeconds(30),
+        val readTimeout: Duration = Duration.ofSeconds(50),
         val resolver: AddressResolverGroup<InetSocketAddress>? = null,
         val uriTagger: (String) -> String = { it }
     )
