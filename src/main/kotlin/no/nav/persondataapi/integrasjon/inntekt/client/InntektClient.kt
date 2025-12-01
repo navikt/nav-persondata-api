@@ -4,6 +4,7 @@ import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.InntektMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
@@ -76,7 +77,8 @@ class InntektClient(
                             throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
                         }
                     }
-                }.block()!!
+                }.retryWhen(RetryPolicy.reactorRetrySpec())
+                .block()!!
 
             responseResult
                 }
@@ -109,6 +111,7 @@ class InntektClient(
             }
         )
     }
+
     private fun erTimeout(e: Throwable): Boolean =
         when (e.cause) {
             is TimeoutException -> true
