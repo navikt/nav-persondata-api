@@ -32,7 +32,7 @@ fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
         ?.organisasjonDetaljer
         ?.forretningsadresser
         ?.firstOrNull { it.gyldighetsperiode.tom == null }
-        ?.let { "${it.adresselinje1}, ${it.postnummer}" }
+        ?.let { "${it.adresselinje1}, ${it.postnummer ?: "Ukjent postnummer"}" }
         ?: "INGEN ADRESSSE"
 
 fun Person.gjeldendeFornavn(): String {
