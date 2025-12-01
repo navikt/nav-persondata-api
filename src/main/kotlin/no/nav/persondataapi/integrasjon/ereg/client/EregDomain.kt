@@ -67,7 +67,7 @@ data class Adresse(
     val adresselinje1: String? = null,
     val adresselinje2: String? = null,
     val adresselinje3: String? = null,
-    val postnummer: String,
+    val postnummer: String? = null,
     val poststed: String? = null,
     val landkode: String? = null,
     val kommunenummer: String? = null,
