@@ -10,6 +10,7 @@ import no.nav.persondataapi.generated.HentGeografiskTilknytning
 import no.nav.persondataapi.generated.HentPerson
 import no.nav.persondataapi.generated.hentgeografisktilknytning.GeografiskTilknytning
 import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.konfigurasjon.RetryPolicy.coroutineRetry
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.PdlMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
@@ -38,10 +39,10 @@ class PdlClient(
     fun createTimeoutHttpClient(): HttpClient {
         return HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-            .responseTimeout(Duration.ofSeconds(30))
+            .responseTimeout(Duration.ofSeconds(5))
             .doOnConnected { conn ->
-                conn.addHandlerLast(ReadTimeoutHandler(30))
-                conn.addHandlerLast(WriteTimeoutHandler(30))
+                conn.addHandlerLast(ReadTimeoutHandler(5))
+                conn.addHandlerLast(WriteTimeoutHandler(5))
             }
     }
 
@@ -68,10 +69,12 @@ class PdlClient(
         )
         try {
 
-            val response = client.execute(query) {
-                header("Authorization", "Bearer $token")
-                header(Behandlingsnummer, "B634")
-                header(Tema, "KTR")
+            val response = coroutineRetry(kilde = "PDL-HentPerson") {
+                client.execute(query) {
+                    header("Authorization", "Bearer $token")
+                    header(Behandlingsnummer, "B634")
+                    header(Tema, "KTR")
+                }
             }
 
             val errors = response.errors.orEmpty()
