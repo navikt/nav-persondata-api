@@ -3,6 +3,9 @@ package no.nav.persondataapi.service
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
@@ -21,7 +24,9 @@ class InntektService(
         // Hent inntekter fra InntektClient
         val inntektResponse = inntektClient.hentInntekter(personIdent)
         logger.info("Hentet inntekter for $personIdent, status ${inntektResponse.statusCode}")
-
+        if (erTraceLoggingAktvert()){
+            logger.info(teamLogsMarker,"Logging aktivert - full Inntekt-respons for {}: {}", personIdent, JsonUtils.toJson(inntektResponse).toPrettyString())
+        }
         // Håndter feil fra InntektClient
         when (inntektResponse.statusCode) {
             404 -> return InntektResultat.PersonIkkeFunnet
