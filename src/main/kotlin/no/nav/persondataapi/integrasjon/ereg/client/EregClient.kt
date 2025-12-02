@@ -49,7 +49,5 @@ class EregClient(
         organisasjonsnummer = orgnummer,
         type = "",
         navn = null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }

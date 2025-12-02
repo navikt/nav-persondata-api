@@ -100,7 +100,6 @@ class ArbeidsforholdService(
             arbeidsgiver = eregDataRespons.orgNummerTilOrgNavn(orgnummer),
             organisasjonsnummer = orgnummer,
             id = saltedOrgNummer,
-            adresse = eregDataRespons.orgnummerTilAdresse(orgnummer),
             ansettelsesDetaljer = arbeidsforhold.ansettelsesdetaljer.map { ansettelsesdetaljer ->
                 ArbeidsgiverInformasjon.AnsettelsesDetalj(
                     type = ansettelsesdetaljer.type,

@@ -392,7 +392,5 @@ private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
                 gyldighetsperiode = PeriodeDato(fom = LocalDate.now())
             )
         } else null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }
