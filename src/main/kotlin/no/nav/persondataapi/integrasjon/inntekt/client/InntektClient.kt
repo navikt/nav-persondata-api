@@ -77,7 +77,7 @@ class InntektClient(
                             throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
                         }
                     }
-                }.retryWhen(RetryPolicy.reactorRetrySpec())
+                }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Inntektshistorikk"))
                 .block()!!
 
             responseResult

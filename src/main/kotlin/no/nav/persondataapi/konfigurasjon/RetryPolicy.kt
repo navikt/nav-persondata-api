@@ -25,6 +25,7 @@ object RetryPolicy {
     /** Reactor Retry for WebClient */
     fun reactorRetrySpec(
         attempts: Long = 3,
+        kilde:String = "underliggende system",
         initialBackoff: Duration = Duration.ofMillis(200),
         maxBackoff: Duration = Duration.ofSeconds(2)
     ): Retry =
@@ -33,10 +34,10 @@ object RetryPolicy {
             .maxBackoff(maxBackoff)
             .filter(retryableExceptions)
             .doBeforeRetry { signal ->
-                log.warn(
-                    "Retrying downstream call " +
-                            "(attempt ${signal.totalRetries() + 1}) " +
-                            "due to ${signal.failure()::class.simpleName}: ${signal.failure().message}"
+                log.info(
+                    "prøver kall mot ${kilde }på nytt " +
+                            "(forsøk ${signal.totalRetries() + 1}) " +
+                            "på grunn av ${signal.failure()::class.simpleName}: ${signal.failure().message}"
                 )
             }
             .onRetryExhaustedThrow { _, signal -> signal.failure() }
@@ -45,6 +46,7 @@ object RetryPolicy {
     /** Coroutine-basert retry for GraphQLWebClient (PDL) */
     suspend fun <T> coroutineRetry(
         attempts: Int = 3,
+        kilde:String = "underliggende system",
         initialBackoffMs: Long = 200,
         block: suspend () -> T
     ): T {
@@ -59,7 +61,7 @@ object RetryPolicy {
                 if (!retryableExceptions(e)) throw e
 
                 val backoff = initialBackoffMs * (1L shl attempt)
-                log.warn("Retrying downstream call (attempt ${attempt + 1}) after backoff ${backoff}ms due to ${e::class.simpleName}")
+                log.info("prøver kall mot ${kilde }på nytt  (forsøk ${attempt + 1}) etter ventetid ${backoff}ms på grunn av  ${e::class.simpleName}")
 
                 delay(backoff)
             }

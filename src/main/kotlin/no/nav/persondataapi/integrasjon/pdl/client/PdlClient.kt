@@ -69,7 +69,7 @@ class PdlClient(
         )
         try {
 
-            val response = coroutineRetry {
+            val response = coroutineRetry(kilde = "HentPerson") {
                 client.execute(query) {
                     header("Authorization", "Bearer $token")
                     header(Behandlingsnummer, "B634")
