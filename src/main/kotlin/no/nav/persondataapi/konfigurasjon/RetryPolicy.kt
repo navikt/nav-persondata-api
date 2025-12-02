@@ -8,6 +8,7 @@ import java.net.ConnectException
 import java.time.Duration
 import java.util.concurrent.TimeoutException
 import kotlinx.coroutines.delay
+import org.springframework.web.reactive.function.client.WebClientRequestException
 
 object RetryPolicy {
 
@@ -19,6 +20,7 @@ object RetryPolicy {
                 t is ReadTimeoutException ||
                 t is WriteTimeoutException ||
                 t is ConnectException ||
+                t is WebClientRequestException
                 t.message?.contains("Serverfeil") == true
     }
 
