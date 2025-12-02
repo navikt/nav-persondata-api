@@ -79,7 +79,5 @@ private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
                 gyldighetsperiode = no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato(fom = LocalDate.now())
             )
         } else null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }

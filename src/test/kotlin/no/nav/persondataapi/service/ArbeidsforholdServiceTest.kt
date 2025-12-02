@@ -55,7 +55,6 @@ class ArbeidsforholdServiceTest {
         assertEquals(1, data.løpendeArbeidsforhold.size)
         assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
         assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
-        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
     }
 
     @Test
@@ -83,7 +82,6 @@ class ArbeidsforholdServiceTest {
         assertEquals(1, data.løpendeArbeidsforhold.size)
         assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
         assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
-        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
         assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
     }
     @Test
@@ -112,7 +110,6 @@ class ArbeidsforholdServiceTest {
         assertEquals(2, data.løpendeArbeidsforhold.size)
         assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
         assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
-        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
         assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
         assertEquals(data.løpendeArbeidsforhold[0].id,data.løpendeArbeidsforhold[1].id)
     }
@@ -143,7 +140,6 @@ class ArbeidsforholdServiceTest {
         assertEquals(2, data.løpendeArbeidsforhold.size)
         assertEquals("*******", data.løpendeArbeidsforhold[0].arbeidsgiver)
         assertEquals("*******", data.løpendeArbeidsforhold[0].organisasjonsnummer)
-        assertEquals("*******", data.løpendeArbeidsforhold[0].adresse)
         assertNotEquals("*******",data.løpendeArbeidsforhold[0].id)
         assertNotEquals(data.løpendeArbeidsforhold[0].id,data.løpendeArbeidsforhold[1].id)
     }
@@ -325,7 +321,6 @@ class ArbeidsforholdServiceTest {
         assertEquals(1, data.løpendeArbeidsforhold.size)
         val arbeidsgiver = data.løpendeArbeidsforhold[0]
         assertEquals("999888777 - Ukjent navn", arbeidsgiver.arbeidsgiver)
-        assertEquals("INGEN ADRESSSE", arbeidsgiver.adresse)
     }
 
     @Test
@@ -517,7 +512,5 @@ private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
                 gyldighetsperiode = no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato(fom = LocalDate.now())
             )
         } else null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }
