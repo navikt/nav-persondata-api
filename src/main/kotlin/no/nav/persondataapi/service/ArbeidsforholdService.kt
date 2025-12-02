@@ -58,6 +58,7 @@ class ArbeidsforholdService(
             .hentIdenter()
             .map { it.ident }
             .distinct()
+            .filter { it.matches("\\d{9}".toRegex()) }
             .associateWith { ident -> eregClient.hentOrganisasjon(ident) }
 
         // Skill mellom løpende og historiske arbeidsforhold
