@@ -16,6 +16,7 @@ import java.time.LocalDate
 import java.util.concurrent.TimeoutException
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
 
 @Component
 class UtbetalingClient(
@@ -54,6 +55,7 @@ class UtbetalingClient(
                         .bodyValue(requestBody)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<Utbetaling>>() {})
+                        .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "utbetalingHistorikk"))
                         .block()!! // API-kontrakt: forventer alltid en liste
                 }
 
