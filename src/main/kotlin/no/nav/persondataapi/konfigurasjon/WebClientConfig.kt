@@ -373,7 +373,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
     private val httpClientKonfigurasjoner = mapOf(
         "utbetaling" to HttpClientKonfig(poolNavn = "utbetaling-pool"),
-        "inntekt" to HttpClientKonfig(poolNavn = "inntekt-pool"),
+        "inntekt" to HttpClientKonfig(
+            poolNavn = "inntekt-pool",
+            readTimeout = Duration.ofSeconds(10),
+            responseTimeout = Duration.ofSeconds(10),
+        ),
         "aareg" to HttpClientKonfig(poolNavn = "aareg-pool"),
         "ereg" to HttpClientKonfig(poolNavn = "ereg-pool"),
         "pdl" to HttpClientKonfig(
