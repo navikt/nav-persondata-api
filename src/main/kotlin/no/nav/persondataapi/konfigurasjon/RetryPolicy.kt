@@ -14,7 +14,7 @@ object RetryPolicy {
     private val log = LoggerFactory.getLogger(RetryPolicy::class.java)
 
     /** Hvilke exceptions som regnes som retrybare */
-    val retryableExceptions: (Throwable) -> Boolean = { t ->
+    private val retryableExceptions: (Throwable) -> Boolean = { t ->
         t is TimeoutException ||
                 t is ReadTimeoutException ||
                 t is WriteTimeoutException ||
@@ -24,18 +24,18 @@ object RetryPolicy {
 
     /** Reactor Retry for WebClient */
     fun reactorRetrySpec(
-        attempts: Long = 3,
-        kilde:String = "underliggende system",
-        initialBackoff: Duration = Duration.ofMillis(200),
+        forsøk: Int = 3,
+        kilde:String,
+        initiellBackoff: Duration = Duration.ofMillis(200),
         maxBackoff: Duration = Duration.ofSeconds(2)
     ): Retry =
         Retry
-            .backoff(attempts, initialBackoff)
+            .backoff(forsøk.toLong(), initiellBackoff)
             .maxBackoff(maxBackoff)
             .filter(retryableExceptions)
             .doBeforeRetry { signal ->
                 log.info(
-                    "prøver kall mot ${kilde }på nytt " +
+                    "prøver kall mot ${kilde} på nytt " +
                             "(forsøk ${signal.totalRetries() + 1}) " +
                             "på grunn av ${signal.failure()::class.simpleName}: ${signal.failure().message}"
                 )
@@ -45,23 +45,31 @@ object RetryPolicy {
 
     /** Coroutine-basert retry for GraphQLWebClient (PDL) */
     suspend fun <T> coroutineRetry(
-        attempts: Int = 3,
-        kilde:String = "underliggende system",
+        forsøk: Int = 3,
+        kilde:String,
         initialBackoffMs: Long = 200,
         block: suspend () -> T
     ): T {
         var lastError: Throwable? = null
 
-        repeat(attempts) { attempt ->
+        repeat(forsøk) { attempt ->
             try {
                 return block()
             } catch (e: Throwable) {
                 lastError = e
 
                 if (!retryableExceptions(e)) throw e
+                /*
+                *
+                * Dette uttrykket lager exponential backoff — altså ventetid som øker eksponentielt for hver retry:
+                * forsøk → 200 ms
+                * forsøk → 400 ms
+                * forsøk → 800 ms
+                *
+                * */
 
                 val backoff = initialBackoffMs * (1L shl attempt)
-                log.info("prøver kall mot ${kilde }på nytt  (forsøk ${attempt + 1}) etter ventetid ${backoff}ms på grunn av  ${e::class.simpleName}")
+                log.info("Prøver kall mot ${kilde} på nytt (forsøk ${attempt + 1}) etter ventetid ${backoff}ms på grunn av  ${e::class.simpleName}")
 
                 delay(backoff)
             }

@@ -55,7 +55,7 @@ class UtbetalingClient(
                         .bodyValue(requestBody)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<Utbetaling>>() {})
-                        .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "utbetalingHistorikk"))
+                        .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "UtbetalingHistorikk"))
                         .block()!! // API-kontrakt: forventer alltid en liste
                 }
 
