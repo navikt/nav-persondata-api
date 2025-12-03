@@ -66,6 +66,8 @@ interface TilgangsmaskinClient {
 *   - AVVIST_SKJERMING
 *   - AVVIST_VERGE
 *   - AVVIST_MANGLENDE_DATA
+*   - AVVIST_PERSON_UTLAND
+*   - AVVIST_UKJENT_BOSTED
 *
 * */
 fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
@@ -73,12 +75,15 @@ fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
         "AVVIST_STRENGT_FORTROLIG_ADRESSE" -> return false  // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse.
         "AVVIST_STRENGT_FORTROLIG_UTLAND" -> return false   // Saksbehandler har ikke tilgang til brukere med strengt fortrolig adresse i utlandet.
         "AVVIST_FORTROLIG_ADRESSE" -> return false          // Saksbehandler har ikke tilgang til brukere med fortrolig adresse.
-        "AVVIST_GEOGRAFISK" -> return true                 // Saksbehandler har  tilgang til brukerens geografiske område eller enhet.
-        "AVVIST_AVDOED" -> return true                     // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
-        "AVVIST_SKJERMING" -> return false                   // Saksbehandler har tilgang til Nav-ansatte og andre skjermede brukere.
+        "AVVIST_GEOGRAFISK" -> return true                  // Saksbehandler har  tilgang til brukerens geografiske område eller enhet.
+        "AVVIST_AVDOED" -> return true                      // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
+        "AVVIST_AVDØD" -> return true                       // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
+        "AVVIST_SKJERMING" -> return false                  // Saksbehandler har ikke tilgang til Nav-ansatte og andre skjermede brukere.
         "AVVIST_HABILITET" -> return true                   // Saksbehandler har tilgang til data om seg selv eller sine nærstående.
         "AVVIST_VERGE" -> return true                       // Saksbehandler har tilgang om man er registrert som brukerens verge.
         "AVVIST_MANGLENDE_DATA" -> return true              // Om baksystemer kræsjer, anta at man har tilgang
+        "AVVIST_PERSON_UTLAND" -> return true               // Saksbehandler har tilgang om man er registrert i utlandet
+        "AVVIST_UKJENT_BOSTED" -> return true               // Saksbehandler har tilgang om man ikke vet bosted
     }
     return false
 }
