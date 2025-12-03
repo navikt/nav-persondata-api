@@ -77,8 +77,8 @@ fun TilgangMaskinResultat.harTilgangMedBasicAdgang(): Boolean {
         "AVVIST_FORTROLIG_ADRESSE" -> return false          // Saksbehandler har ikke tilgang til brukere med fortrolig adresse.
         "AVVIST_GEOGRAFISK" -> return true                  // Saksbehandler har  tilgang til brukerens geografiske område eller enhet.
         "AVVIST_AVDOED" -> return true                      // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
-        "AVVIST_AVDØD" -> return true                      // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
-        "AVVIST_SKJERMING" -> return false                  // Saksbehandler har tilgang til Nav-ansatte og andre skjermede brukere.
+        "AVVIST_AVDØD" -> return true                       // Saksbehandler har  tilgang til brukere som har vært død i mer enn X måneder.
+        "AVVIST_SKJERMING" -> return false                  // Saksbehandler har ikke tilgang til Nav-ansatte og andre skjermede brukere.
         "AVVIST_HABILITET" -> return true                   // Saksbehandler har tilgang til data om seg selv eller sine nærstående.
         "AVVIST_VERGE" -> return true                       // Saksbehandler har tilgang om man er registrert som brukerens verge.
         "AVVIST_MANGLENDE_DATA" -> return true              // Om baksystemer kræsjer, anta at man har tilgang

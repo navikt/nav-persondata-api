@@ -49,7 +49,7 @@ class InntektService(
                     ?.filterIsInstance<Loennsinntekt>()
                     ?.map { loenn ->
                         InntektInformasjon.Lønnsdetaljer(
-                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn ?: historikk.opplysningspliktig,
+                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
                             periode = historikk.maaned,
                             arbeidsforhold = "",
                             stillingsprosent = "",
@@ -64,7 +64,7 @@ class InntektService(
                         ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
 
                     respons = listOf(InntektInformasjon.Lønnsdetaljer(
-                        arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn ?: "Ukjent",
+                        arbeidsgiver = null,
                         periode = historikk.maaned,
                         arbeidsforhold = "",
                         stillingsprosent = "",
