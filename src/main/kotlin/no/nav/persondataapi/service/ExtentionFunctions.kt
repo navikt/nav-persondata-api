@@ -84,18 +84,13 @@ fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
 }
 
 fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
-    return if (this == null || this.isEmpty()) {
-        null
-    } else {
-        this.maxByOrNull { it.oppsummeringstidspunkt }!!
-    }
+
+    return this?.maxByOrNull { it.oppsummeringstidspunkt }
 }
 fun List<Inntektsinformasjon>?.eldste(): Inntektsinformasjon? {
-    return if (this == null || this.isEmpty()) {
-        null
-    } else {
-        this.minByOrNull { it.oppsummeringstidspunkt }!!
-    }
+
+        return this?.minByOrNull { it.oppsummeringstidspunkt }!!
+
 }
 
 
