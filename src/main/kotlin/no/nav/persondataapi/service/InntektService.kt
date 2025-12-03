@@ -38,10 +38,13 @@ class InntektService(
         // Prosesser lønnsinntekt
         val lønnsinntekt = inntektResponse.data?.data
             .orEmpty()
-            .flatMap { historikk ->
+            .flatMap {
+                historikk ->
                 val arbeidsgiver = eregClient.hentOrganisasjon(historikk.opplysningspliktig)
 
-                historikk.versjoner.nyeste()
+                val nyeste = historikk.versjoner.nyeste()
+
+                var respons = historikk.versjoner.nyeste()
                     ?.inntektListe
                     ?.filterIsInstance<Loennsinntekt>()
                     ?.map { loenn ->
@@ -57,6 +60,21 @@ class InntektService(
                         )
                     }
                     .orEmpty()
+                if (respons.isEmpty() && historikk.versjoner.eldste()?.inntektListe
+                        ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
+
+                    respons = listOf(InntektInformasjon.Lønnsdetaljer(
+                        arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
+                        periode = historikk.maaned,
+                        arbeidsforhold = "",
+                        stillingsprosent = "",
+                        lønnstype = historikk.versjoner.eldste()?.inntektListe?.first()?.type,
+                        antall = null,
+                        beløp = null,
+                        harFlereVersjoner = true
+                    ))
+                }
+                respons
             }
 
         logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $personIdent")
