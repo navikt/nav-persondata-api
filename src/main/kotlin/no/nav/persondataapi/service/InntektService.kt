@@ -39,18 +39,17 @@ class InntektService(
         // Prosesser lønnsinntekt
         val lønnsinntekt = inntektResponse.data?.data
             .orEmpty()
-            .flatMap {
-                historikk ->
-                val arbeidsgiver = eregClient.hentOrganisasjon(historikk.opplysningspliktig)
-
-                val nyeste = historikk.versjoner.nyeste()
+            .flatMap { historikk ->
+                val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) {
+                    eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                } else null
 
                 var respons = historikk.versjoner.nyeste()
                     ?.inntektListe
                     ?.filterIsInstance<Loennsinntekt>()
                     ?.map { loenn ->
                         InntektInformasjon.Lønnsdetaljer(
-                            arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
+                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn ?: historikk.opplysningspliktig,
                             periode = historikk.maaned,
                             arbeidsforhold = "",
                             stillingsprosent = "",
