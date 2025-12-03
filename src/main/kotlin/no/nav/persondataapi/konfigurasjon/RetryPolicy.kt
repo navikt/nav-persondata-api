@@ -16,12 +16,14 @@ object RetryPolicy {
 
     /** Hvilke exceptions som regnes som retrybare */
     private val retryableExceptions: (Throwable) -> Boolean = { t ->
-        t is TimeoutException ||
-                t is ReadTimeoutException ||
-                t is WriteTimeoutException ||
-                t is ConnectException ||
-                t is WebClientRequestException
-                t.message?.contains("Serverfeil") == true
+        val root = t.rootCause()
+        when (root) {
+            is TimeoutException,
+            is ReadTimeoutException,
+            is WriteTimeoutException,
+            is ConnectException -> true
+            else -> false
+        }
     }
 
     /** Reactor Retry for WebClient */
@@ -79,4 +81,11 @@ object RetryPolicy {
 
         throw lastError ?: RuntimeException("Ukjent feil etter retry")
     }
+}
+fun Throwable.rootCause(): Throwable {
+    var cause = this
+    while (cause.cause != null && cause.cause !== cause) {
+        cause = cause.cause!!
+    }
+    return cause
 }
