@@ -315,7 +315,7 @@ class InntektServiceTest {
 
         Assertions.assertNotNull(periode)
         
-        assertEquals(null, periode!!.beløp)
+        assertEquals(BigDecimal.ZERO, periode!!.beløp)
     }
     @Test
     fun `skal håndtere flere historikkperioder for samme person`() = runBlocking {

@@ -11,6 +11,7 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 @Service
 class InntektService(
@@ -70,7 +71,7 @@ class InntektService(
                         stillingsprosent = "",
                         lønnstype = historikk.versjoner.eldste()?.inntektListe?.first()?.type,
                         antall = null,
-                        beløp = null,
+                        beløp = BigDecimal.ZERO,
                         harFlereVersjoner = true
                     ))
                 }
