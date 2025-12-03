@@ -64,7 +64,7 @@ class InntektService(
                         ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
 
                     respons = listOf(InntektInformasjon.Lønnsdetaljer(
-                        arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
+                        arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn ?: "Ukjent",
                         periode = historikk.maaned,
                         arbeidsforhold = "",
                         stillingsprosent = "",
