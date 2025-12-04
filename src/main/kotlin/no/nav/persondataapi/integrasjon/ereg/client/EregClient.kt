@@ -1,6 +1,7 @@
 package no.nav.persondataapi.integrasjon.ereg.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
@@ -31,6 +32,7 @@ class EregClient(
                 }
                 .retrieve()
                 .bodyToMono(String::class.java)
+                .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "ereg-organisasjon"))
                 .block()!!
         } catch (ex: Exception) {
             logger.error("Klarte ikke å hente data fra Ereg for orgnummer=$orgnummer", ex)

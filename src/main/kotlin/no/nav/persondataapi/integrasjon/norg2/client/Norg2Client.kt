@@ -1,6 +1,7 @@
 package no.nav.persondataapi.integrasjon.norg2.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
@@ -27,6 +28,7 @@ class Norg2Client(
                 .uri("/api/v1/enhet/navkontor/$lokalKontor")
                 .retrieve()
                 .bodyToMono(String::class.java)
+                .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Norg2"))
                 .block()!!
         }
         catch (ex: Exception) {

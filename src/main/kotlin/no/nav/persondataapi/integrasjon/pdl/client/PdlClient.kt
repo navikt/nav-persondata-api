@@ -118,10 +118,12 @@ class PdlClient(
             )
         )
         try {
-            val response = client.execute(query) {
-                header("Authorization", "Bearer $token")
-                header(Behandlingsnummer, "B634")
-                header(Tema, "KTR")
+            val response = coroutineRetry(kilde = "PDL-Geografisktilknytning") {
+                client.execute(query) {
+                    header("Authorization", "Bearer $token")
+                    header(Behandlingsnummer, "B634")
+                    header(Tema, "KTR")
+                }
             }
 
             val errors = response.errors.orEmpty()
