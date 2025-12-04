@@ -14,37 +14,37 @@ import org.springframework.stereotype.Service
 
 @Service
 class NavTilhørighetService(
-    private val pdlClient: PdlClient,
-    private val norg2Client: Norg2Client
+    private val pdlClient: PdlClient, private val norg2Client: Norg2Client
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun finnLokalKontorForPersonIdent(personIdent: PersonIdent): NavLokalKontor {
         val geografiskTilknytning = pdlClient.hentGeografiskTilknytning(personIdent)
         if (erTraceLoggingAktvert()) {
-            logger.info(teamLogsMarker,"Logging aktivert - full PDL-geografisk-Tilknytning respons for {}: {}", personIdent, JsonUtils.toJson(geografiskTilknytning).toPrettyString())
-        }
-        val norgIdent = geografiskTilknytning.data?.hentNorgIdent()
-        if (norgIdent != null) {
-            return norg2Client.hentLokalNavKontor(norgIdent)
-        }
-        else  {
-            return NavLokalKontor(
-                -1,
-                "Ukjent",
-                "",
-                ""
+            logger.info(
+                teamLogsMarker,
+                "Logging aktivert - full PDL geografisk-tilknytning respons for {}: {}",
+                personIdent,
+                JsonUtils.toJson(geografiskTilknytning).toPrettyString()
             )
         }
+        val norgIdent = geografiskTilknytning.data?.hentNorgIdent()
+        if (norgIdent == null) {
+            return NavLokalKontor(
+                -1, "Uklart", "", ""
+            )
+        }
+        return norg2Client.hentLokalNavKontor(norgIdent)
+
     }
 }
 
-fun GeografiskTilknytning.hentNorgIdent():String?{
-    when (this.gtType){
-      GtType.BYDEL -> return  this.gtBydel
-        GtType.KOMMUNE -> return  this.gtKommune
-        GtType.UTLAND -> return  this.gtLand
-        GtType.UDEFINERT -> return null
-        GtType.__UNKNOWN_VALUE -> return null
+fun GeografiskTilknytning.hentNorgIdent(): String? {
+    return when (this.gtType) {
+        GtType.BYDEL -> this.gtBydel
+        GtType.KOMMUNE -> this.gtKommune
+        GtType.UTLAND -> null
+        GtType.UDEFINERT -> null
+        GtType.__UNKNOWN_VALUE -> null
     }
 }
