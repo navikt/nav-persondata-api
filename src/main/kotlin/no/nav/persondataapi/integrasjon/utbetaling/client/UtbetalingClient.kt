@@ -17,6 +17,7 @@ import java.util.concurrent.TimeoutException
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
+import no.nav.persondataapi.konfigurasjon.rootCause
 
 @Component
 class UtbetalingClient(
@@ -101,7 +102,7 @@ class UtbetalingClient(
     }
 
     private fun erTimeout(e: Throwable): Boolean =
-        when (e.cause) {
+        when (e.rootCause()) {
             is TimeoutException -> true
             is ReadTimeoutException -> true
             is WriteTimeoutException -> true
