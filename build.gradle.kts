@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val tokenSupportVersion = "5.0.30"
 val graphQLKotlinVersion = "9.0.0-alpha.8"
-val springBootVersion = "3.5.7"
+val springBootVersion = "4.0.0"
 val jacksonVersion = "2.17.1"
 val kotlinVersion = "2.2.20"
 val coroutinesVersion = "1.10.2"
