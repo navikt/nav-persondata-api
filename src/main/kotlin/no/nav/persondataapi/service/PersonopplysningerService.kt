@@ -1,6 +1,10 @@
 package no.nav.persondataapi.service
 
+import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
@@ -15,10 +19,9 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
+    private val navTilhørighetService: NavTilhørighetService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
-    private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
-
 
     suspend fun finnesPerson(personIdent: PersonIdent): Boolean {
         val response = pdlClient.hentPerson(personIdent)
@@ -32,8 +35,10 @@ class PersonopplysningerService(
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
         if (responsLog) {
-            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, pdlResponse)
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
+            logger.info(teamLogsMarker,"Logging aktivert - full PDL-geografisk-Tilknytning respons for {}: {}", personIdent, JsonUtils.toJson(lokalKontor).toPrettyString())
         }
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
@@ -49,7 +54,7 @@ class PersonopplysningerService(
 
         // Mappe familie og sivilstand
         val foreldreOgBarn = pdlData.forelderBarnRelasjon.associate {
-            Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name)
+            Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
         }
         val statsborgerskap = pdlData.statsborgerskap.map { it.land }
         val ektefelle = pdlData.sivilstand
@@ -67,11 +72,20 @@ class PersonopplysningerService(
             aktørId = personIdent.value,
             adresse = pdlData.nåværendeBostedsadresse(),
             familemedlemmer = familiemedlemmer,
+            adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
             statsborgerskap = statsborgerskap,
             sivilstand = pdlData.gjeldendeSivilStand(),
             alder = pdlData.foedselsdato.first().foedselsdato?.let {
                 Period.between(LocalDate.parse(it), LocalDate.now()).years
             } ?: -1,
+            fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
+            dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
+            navKontor = PersonInformasjon.NavKontor(
+                enhetId = lokalKontor.enhetId,
+                navn = lokalKontor.navn,
+                enhetNr = lokalKontor.enhetNr,
+                type = lokalKontor.type
+            ),
         )
 
         // Berik med kodeverkdata
@@ -92,6 +106,9 @@ class PersonopplysningerService(
             statsborgerskap = input.statsborgerskap.map { kodeverkService.mapLandkodeTilLandnavn(it) },
             adresse = input.adresse?.let { adresse ->
                 adresse.copy(
+                    norskAdresse = adresse.norskAdresse?.copy(
+                        poststed = kodeverkService.mapPostnummerTilPoststed(adresse.norskAdresse.postnummer)
+                    ),
                     utenlandskAdresse = adresse.utenlandskAdresse?.copy(
                         landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode)
                     )
@@ -106,4 +123,37 @@ sealed class PersonopplysningerResultat {
     data object IngenTilgang : PersonopplysningerResultat()
     data object PersonIkkeFunnet : PersonopplysningerResultat()
     data object FeilIBaksystem : PersonopplysningerResultat()
+}
+
+/**
+ * Henter personens nåværende adressebeskyttelse, basert på siste ikke-historiske oppføring.
+ *
+ * Denne funksjonen tolker adressebeskyttelsen for en `Person` slik:
+ *  - Dersom listen `adressebeskyttelse` er tom, antas personen å ha **ingen skjerming**.
+ *  - Første element i listen som **ikke er historisk** (`metadata.historisk == false`)
+ *    brukes som gjeldende beskyttelse.
+ *  - Graderingen mappes til verdier i `PersonInformasjon.Skjerming`:
+ *      - `UGRADERT` → `UGRADERT`
+ *      - `FORTROLIG` → `FORTROLIG`
+ *      - `STRENGT_FORTROLIG` → `STRENGT_FORTROLIG`
+ *      - `STRENGT_FORTROLIG_UTLAND` → `STRENGT_FORTROLIG_UTLAND`
+ *      - Ukjente verdier (`__UNKNOWN_VALUE`) → `UGRADERT`
+ *
+ * Dersom ingen gyldig adressebeskyttelse finnes, returneres `UGRADERT ` som standard.
+ *
+ * @receiver `Person`-objektet som inneholder adressebeskyttelsesdata.
+ * @return En verdi av typen [PersonInformasjon.Skjerming] som representerer gjeldende beskyttelsesnivå.
+ */
+fun Person.nåværendeAdresseBeskyttelse(): PersonInformasjon.Skjerming {
+    if (adressebeskyttelse.isEmpty()) return PersonInformasjon.Skjerming.UGRADERT
+
+    val beskyttelse = adressebeskyttelse.firstOrNull { !it.metadata.historisk }
+
+    return when (beskyttelse?.gradering) {
+        AdressebeskyttelseGradering.UGRADERT -> PersonInformasjon.Skjerming.UGRADERT
+        AdressebeskyttelseGradering.FORTROLIG -> PersonInformasjon.Skjerming.FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
+        AdressebeskyttelseGradering.__UNKNOWN_VALUE, null -> PersonInformasjon.Skjerming.UGRADERT
+    }
 }

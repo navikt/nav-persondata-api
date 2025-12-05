@@ -14,7 +14,7 @@ plugins {
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.2.21"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
-  id("org.openapi.generator") version "7.0.1"
+  id("org.openapi.generator") version "7.17.0"
 }
 
 openApiGenerate {
@@ -108,7 +108,7 @@ dependencies {
   }
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-  testImplementation("io.mockk:mockk:1.13.8")
+  testImplementation("io.mockk:mockk:1.14.6")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   implementation("io.micrometer:micrometer-registry-prometheus")
 

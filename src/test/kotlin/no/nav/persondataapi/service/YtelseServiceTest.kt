@@ -349,6 +349,44 @@ class YtelseServiceTest {
         assertEquals("Dagpenger", data[0].stonadType)
         assertEquals(2, data[0].perioder.size)
     }
+
+    @Test
+    fun `skal filtrere bort Feriepenger`() {
+        val brukertilgangService = mockk<BrukertilgangService>()
+        val utbetalingClient = mockk<UtbetalingClient>()
+
+        val dagpenger = lagYtelse(
+            ytelsestype = "Dagpenger",
+            beløp = BigDecimal("10000"),
+            fom = LocalDate.of(2024, 1, 1),
+            tom = LocalDate.of(2024, 1, 31)
+        )
+
+        val feriepenger = lagYtelse(
+            ytelsestype = "Feriepenger",
+            beløp = BigDecimal("5000"),
+            fom = LocalDate.of(2024, 6, 1),
+            tom = LocalDate.of(2024, 6, 30)
+        )
+
+        val utbetaling = lagUtbetaling(ytelseListe = listOf(dagpenger, feriepenger))
+
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
+            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+            statusCode = 200,
+            errorMessage = null
+        )
+
+        val service = YtelseService(utbetalingClient, brukertilgangService)
+        val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
+
+        assertTrue(resultat is YtelserResultat.Success)
+        val data = (resultat as YtelserResultat.Success).data
+        assertEquals(1, data.size)
+        assertEquals("Dagpenger", data[0].stonadType)
+        assertTrue(data.none { it.stonadType == "Feriepenger" })
+    }
 }
 
 // Hjelpefunksjoner for å lage testdata

@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.TARGET_REF }}
       - name: test and build
@@ -46,13 +46,46 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.TARGET_REF }}
       - uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: .nais/prod.yaml
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/prod.json
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
+      - uses: actions/github-script@v8
+        name: Post Slack-melding om prodsetting
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const rel = context.payload.release;
+            const tag = rel?.tag_name ?? "ukjent tag";
+            const url = rel?.html_url ?? `https://github.com/${owner}/${repo}/releases`;
+            
+            const text = `*${repo}* ble prodsatt med release ${tag} :tada:`;
+            const blocks = [
+              { type: "section", text: { type: "mrkdwn", text } },
+              {
+                type: "context",
+                elements: [
+                  { type: "mrkdwn", text: `<${url}|Se release>` },
+                  { type: "mrkdwn", text: `Cluster: prod-gcp` }
+                ]
+              }
+            ];
+            
+            const resp = await fetch(process.env.SLACK_WEBHOOK_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ blocks, username: "Prod-vakta", icon_emoji: ":in-prod:" })
+            });
+            
+            if (!resp.ok) {
+              throw new Error(`Slack webhook feilet: ${resp.status} ${await resp.text()}`);
+            }

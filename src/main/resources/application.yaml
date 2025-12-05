@@ -37,6 +37,9 @@ cache:
     kodeverk-landkoder:
       expiration: 1h
       maximum-size: 100
+    kodeverk-postnummer:
+      expiration: 1d
+      maximum-size: 1000
 management:
   endpoints:
     web:

@@ -21,6 +21,7 @@ class CacheAdminServiceTest {
             "utbetaling-bruker",
             "inntekt-historikk",
             "kodeverk-landkoder",
+            "kodeverk-postnummer",
         )
         service = CacheAdminService(cacheManager)
     }
@@ -55,6 +56,7 @@ class CacheAdminServiceTest {
         cacheManager.getCache("utbetaling-bruker")!!.put(ident, "utbetaling")
         cacheManager.getCache("inntekt-historikk")!!.put("12345678910_2020-01-01_2020-12-31", "inntekt")
         cacheManager.getCache("kodeverk-landkoder")!!.put("NO", "Norge")
+        cacheManager.getCache("kodeverk-postnummer")!!.put("1337", "Sandvika")
 
         val oppsummering = service.flushCacherForPersonIdent(ident)
 
@@ -69,6 +71,9 @@ class CacheAdminServiceTest {
         // øvrige cache skal fortsatt ha verdi
         val kodeverkCache = cacheManager.getCache("kodeverk-landkoder")!!
         assertEquals("Norge", kodeverkCache.nativeCacheAsMap()["NO"])
+
+        val postnummerCache = cacheManager.getCache("kodeverk-postnummer")!!
+        assertEquals("Sandvika", postnummerCache.nativeCacheAsMap()["1337"])
 
         assertEquals(CacheFlushScope.PERSON, oppsummering.scope)
         assertEquals("123456*****", oppsummering.personIdent)
