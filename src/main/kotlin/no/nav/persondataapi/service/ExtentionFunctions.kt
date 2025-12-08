@@ -27,14 +27,6 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer: String): String {
 
 }
 
-fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
-    this[orgnummer]
-        ?.organisasjonDetaljer
-        ?.forretningsadresser
-        ?.firstOrNull { it.gyldighetsperiode.tom == null }
-        ?.let { "${it.adresselinje1}, ${it.postnummer}" }
-        ?: "INGEN ADRESSSE"
-
 fun Person.gjeldendeFornavn(): String {
     val navn = this.navn.firstOrNull() ?: return ""
     return navn.fornavn
@@ -92,11 +84,13 @@ fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
 }
 
 fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
-    return if (this == null || this.isEmpty()) {
-        null
-    } else {
-        this.minByOrNull { it.oppsummeringstidspunkt }!!
-    }
+
+    return this?.maxByOrNull { it.oppsummeringstidspunkt }
+}
+fun List<Inntektsinformasjon>?.eldste(): Inntektsinformasjon? {
+
+        return this?.minByOrNull { it.oppsummeringstidspunkt }!!
+
 }
 
 

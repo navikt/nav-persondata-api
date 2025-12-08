@@ -16,6 +16,8 @@ import java.time.LocalDate
 import java.util.concurrent.TimeoutException
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
+import no.nav.persondataapi.konfigurasjon.rootCause
 
 @Component
 class UtbetalingClient(
@@ -27,7 +29,11 @@ class UtbetalingClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "hentUtbetalinger"
 
-    @Cacheable(value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet")
+    @Cacheable(
+        value = ["utbetaling-bruker"],
+        key = "#personIdent + '_' + #utvidet",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentUtbetalingerForBruker(personIdent: PersonIdent, utvidet: Boolean): UtbetalingResultat {
         return try {
             // Selve kallet måles i timeren
@@ -50,6 +56,7 @@ class UtbetalingClient(
                         .bodyValue(requestBody)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<Utbetaling>>() {})
+                        .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "UtbetalingHistorikk"))
                         .block()!! // API-kontrakt: forventer alltid en liste
                 }
 
@@ -95,7 +102,7 @@ class UtbetalingClient(
     }
 
     private fun erTimeout(e: Throwable): Boolean =
-        when (e) {
+        when (e.rootCause()) {
             is TimeoutException -> true
             is ReadTimeoutException -> true
             is WriteTimeoutException -> true

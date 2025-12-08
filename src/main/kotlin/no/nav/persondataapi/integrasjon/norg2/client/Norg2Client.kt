@@ -1,6 +1,7 @@
 package no.nav.persondataapi.integrasjon.norg2.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
@@ -11,11 +12,14 @@ import org.springframework.web.reactive.function.client.WebClient
 class Norg2Client(
     @param:Qualifier("norg2WebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
+    private val objectMapper: ObjectMapper
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable(value = ["norg2-lokalKontor"])
+    @Cacheable(
+        value = ["norg2-lokalKontor"],
+        unless = "#result.enhetId == -1"
+    )
     fun hentLokalNavKontor(lokalKontor:String): NavLokalKontor {
 
         val rawJson = try {
@@ -24,6 +28,7 @@ class Norg2Client(
                 .uri("/api/v1/enhet/navkontor/$lokalKontor")
                 .retrieve()
                 .bodyToMono(String::class.java)
+                .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Norg2"))
                 .block()!!
         }
         catch (ex: Exception) {

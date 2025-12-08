@@ -1,0 +1,4249 @@
+{
+  "data" :[ {
+    "maaned" : "2020-12",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2020-12",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2020-12-17T16:17:50.521Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2020-12",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-01-02T19:10:19.697Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-01",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "654567650",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-01",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "654567650",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-02-08T15:16:04.899Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "221.88",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-01",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-01",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-01-20T19:25:48.766Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "10098.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2020-12-21",
+          "sluttdato" : "2020-12-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "12342.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-02",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-02",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-02-20T14:02:30.023Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2021-01-18",
+          "sluttdato" : "2021-01-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-03",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-03",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-03-22T11:29:05.55Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4488.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2021-02-15",
+          "sluttdato" : "2021-02-18"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "6732.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2021-02-19",
+          "sluttdato" : "2021-02-28"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2021-03",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-04-01T11:43:30.401Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4488.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2021-02-15",
+          "sluttdato" : "2021-02-18"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "6732.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2021-02-19",
+          "sluttdato" : "2021-02-28"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-04",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-04",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-04-21T02:33:00.506Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2021-04",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-05-01T09:10:24.438Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-05",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-05",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-05-20T14:47:50.344Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11220.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2021-05",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-06-01T12:28:56.359Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-06",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "654567650",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-06",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "654567650",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-07-14T14:06:39.706Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "19388.56",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-06",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-06-23T07:48:27.9Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "26433.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2021-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-07-01T17:24:40.754Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "37653.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-07",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-07",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-07-20T16:35:28.346Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-08",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-08",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-08-20T16:59:37.627Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22440.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2021-08",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-09-08T19:06:46.301Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "33660.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-09",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-09",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-09-22T21:34:41.411Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5984.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-10",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "654567650",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-10",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "654567650",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-10-07T19:09:35.258Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "32196.45",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "165.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-11",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "654567650",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-11",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "654567650",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-11-17T09:49:06.696Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "30732.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "157.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-11",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-11",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-11-23T18:19:17.631Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5236.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2021-12",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2021-12",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2021-12-03T20:22:56.291Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "24879.08",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "127.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-01",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-01",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-01-21T14:23:09.921Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "24879.08",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "127.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-02",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-02",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-02-18T10:36:40.473Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "30732.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "157.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-03",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-03",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-03-09T07:22:56.506Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "29269.51",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "150.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-04",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-04",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-04-25T14:28:06.291Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "292.7",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "overtidsgodtgjoerelse",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "1.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "33659.93",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "172.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-05",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-05",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-05-04T14:38:41.943Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "4390.43",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "helligdagstillegg",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "26342.55",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "135.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-06",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-06",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-06-02T18:42:05.149Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12635.33",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "3041.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "helligdagstillegg",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "28893.3",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "142.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "1030.05",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-06",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-06-22T12:16:59.121Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "21744.36",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "dagpengerVedArbeidsloeshet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-07",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-07",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-07-05T07:38:48.576Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "1520.7",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "helligdagstillegg",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "31934.7",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "157.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-08",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-08",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-08-04T10:07:48.69Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "24331.2",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "120.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-09",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-09",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-09-05T05:57:28.609Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "27904.5",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "135.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "5114.8",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-10",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-10",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-10-05T10:08:56.015Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "34105.5",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "165.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-11",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-11",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-11-08T12:22:24.325Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "311.55",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "overtidsgodtgjoerelse",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "1.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "32920.45",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "158.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "420.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-12",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-12",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2022-12-14T08:59:58.074Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "34270.5",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "165.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2022-12",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2022-12",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-01-01T14:04:06.165Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "1361.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-01",
+    "opplysningspliktig" : "987654321",
+    "underenhet" : "998765432",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-01",
+      "opplysningspliktig" : "987654321",
+      "underenhet" : "998765432",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-01-04T15:33:11.594Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "58769.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "1557.75",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "helligdagstillegg",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "52.0",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "32712.75",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "157.5",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "112.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilIkkeArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-02",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-02",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-02-16T10:08:32.968Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "114.62",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.25",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "33697.32",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "165.54",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-03",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-03",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-03-13T13:31:54.536Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "98.99",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "12.25",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "29247.5",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "143.68",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-04",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-04",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-04-18T13:55:39.327Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "119.83",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "33465.27",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "164.4",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-05",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-05",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-05-11T14:11:53.255Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "72.94",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "-24.5",
+        "fordel" : "naturalytelse",
+        "beskrivelse" : "skattepliktigDelForsikringer",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "25202.78",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "123.81",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-06",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-06",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-06-13T14:41:00.535Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "105.49",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "36260.09",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "166.79",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-07",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-07",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-07-11T12:24:13.363Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "65.64",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "18649.41",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "86.98",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-08",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-08",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-08-15T10:20:31.271Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "32.82",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "9189.54",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "42.75",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-09",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-09",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-09-13T14:44:32.363Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "125.81",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "36025.14",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "167.59",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-10",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-10",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-10-18T13:28:10.146Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "114.87",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "33602.54",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "156.32",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-11",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-11",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-11-20T09:36:45.927Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "109.4",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "32147.26",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "149.55",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2023-12",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2023-12",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2023-12-12T15:51:11.526Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "92.99",
+        "fordel" : "utgiftsgodtgjoerelse",
+        "beskrivelse" : "annet",
+        "inngaarIGrunnlagForTrekk" : false,
+        "utloeserArbeidsgiveravgift" : false,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "35464.1",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "164.98",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-01",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-01",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-01-12T12:51:51.41Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "29013.15",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "134.97",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-02",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "925013528",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-02",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-02-20T12:55:54.481Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-02",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-02",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-02-13T11:38:47.435Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "35468.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "165.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-03",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "925013528",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-03",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-03-11T14:29:00.697Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "41917.2",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "30.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-03",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "929972791",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-03",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "929972791",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-03-11T14:28:59.128Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "-35468.4",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "0.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-03",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-03",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-03-20T21:07:38.658Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "12456.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-02-07",
+          "sluttdato" : "2024-02-16"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-04",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-04",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-05-01T06:23:46.312Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "14013.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-02-19",
+          "sluttdato" : "2024-02-29"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "23355.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "32697.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-03-01",
+          "sluttdato" : "2024-03-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-06",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "925013528",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-06",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-06-11T15:53:36.416Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "46181.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2024-06",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-01-16T13:36:35.041Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2024-06",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-01-17T08:05:20.001Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "46181.98",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-06",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-06-21T01:36:19.355Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "10899.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-04-20",
+          "sluttdato" : "2024-04-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "18684.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-05-01",
+          "sluttdato" : "2024-05-16"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-09",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-09",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-09-20T13:31:08.632Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "14013.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-06-01",
+          "sluttdato" : "2024-06-13"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "17127.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-05-17",
+          "sluttdato" : "2024-05-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2024-09",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-10-01T14:02:39.598Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "14013.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-06-01",
+          "sluttdato" : "2024-06-13"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "17127.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-05-17",
+          "sluttdato" : "2024-05-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "17127.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-06-14",
+          "sluttdato" : "2024-06-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "34254.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-08-01",
+          "sluttdato" : "2024-08-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "35811.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-07-01",
+          "sluttdato" : "2024-07-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-10",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "925013528",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-10",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-10-11T11:46:47.602Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "13446.64",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "timeloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : "60.0",
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "Loennsinntekt",
+        "beloep" : "236.48",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "uregelmessigeTilleggKnyttetTilArbeidetTid",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-10",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-10",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-10-21T14:21:40.894Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "20241.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-09-12",
+          "sluttdato" : "2024-09-30"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2024-10",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-11-01T10:25:18.161Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4671.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "20241.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-09-12",
+          "sluttdato" : "2024-09-30"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-11",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-11",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2024-11-20T12:04:12.898Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "31140.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-10-04",
+          "sluttdato" : "2024-10-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2024-12",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2024-12",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-01-01T14:09:08.352Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "32697.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2024-11-01",
+          "sluttdato" : "2024-11-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "34254.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-01",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-01",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:09:49.259Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-01",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:18:40.896Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-02",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-02",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:10:59.936Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-02",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:19:56.718Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-02",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-02",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-02-20T11:27:41.991Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "23355.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-01-01",
+          "sluttdato" : "2025-01-21"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-02",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-03-01T11:58:16.932Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "10143.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "23355.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-01-01",
+          "sluttdato" : "2025-01-21"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-03",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-03",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:12:31.463Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-03",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:20:47.565Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-03",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-03",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-03-21T06:01:16.756Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-02-24",
+          "sluttdato" : "2025-02-28"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "9342.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-02-01",
+          "sluttdato" : "2025-02-10"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "12456.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-01-22",
+          "sluttdato" : "2025-01-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-03",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-04-03T00:45:06.911Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-02-24",
+          "sluttdato" : "2025-02-28"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "16905.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "9342.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-02-01",
+          "sluttdato" : "2025-02-10"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "12456.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "sykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-01-22",
+          "sluttdato" : "2025-01-31"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-04",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-04",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:15:24.072Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-04",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:22:08.306Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-04",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-04",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-04-22T18:22:47.662Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "1127.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-03-31",
+          "sluttdato" : "2025-03-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4508.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-03-24",
+          "sluttdato" : "2025-03-30"
+        },
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-04",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-04-29T16:33:40.093Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "1127.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-03-31",
+          "sluttdato" : "2025-03-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-03-24",
+          "sluttdato" : "2025-03-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "15778.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-05",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-05",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:16:24.965Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-05",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:23:44.317Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-05",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-05",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-05-20T13:01:15.641Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "3381.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-04-28",
+          "sluttdato" : "2025-04-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-04-21",
+          "sluttdato" : "2025-04-27"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "13524.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-05",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-06-02T15:57:47.426Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "3381.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-04-28",
+          "sluttdato" : "2025-04-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5635.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-04-21",
+          "sluttdato" : "2025-04-27"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "13524.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "9342.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepengerSykepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-06",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-06",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:18:46.996Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-06",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:24:29.832Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-06",
+    "opplysningspliktig" : "112233445",
+    "underenhet" : "925013528",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-06",
+      "opplysningspliktig" : "112233445",
+      "underenhet" : "925013528",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-06-13T08:16:36.664Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "12099.73",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "feriepenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-06",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-06-20T19:36:52.887Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "672.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-01",
+          "sluttdato" : "2025-05-18"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-19",
+          "sluttdato" : "2025-05-25"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-26",
+          "sluttdato" : "2025-05-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "11830.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-06",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-07-01T11:42:01.748Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "672.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-01",
+          "sluttdato" : "2025-05-18"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-19",
+          "sluttdato" : "2025-05-25"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-05-26",
+          "sluttdato" : "2025-05-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "23660.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-07",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-07",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:19:47.712Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-07",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:24:55.262Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-07",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-07",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-07-21T10:44:48.094Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "1183.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-06-30",
+          "sluttdato" : "2025-06-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "10647.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-07",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-08-01T15:20:13.842Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "1183.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-06-30",
+          "sluttdato" : "2025-06-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "22477.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-08",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-08",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:21:03.673Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-08",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:25:20.508Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-08",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-08",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-08-20T15:35:00.358Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4732.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-07-28",
+          "sluttdato" : "2025-07-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "7098.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-08",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-09-01T11:47:35.901Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "4732.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-07-28",
+          "sluttdato" : "2025-07-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "18928.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-09",
+    "opplysningspliktig" : "776655443",
+    "underenhet" : "554433221",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-09",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-02T10:22:24.938Z",
+      "inntektListe" : [ {
+        "type" : "Loennsinntekt",
+        "beloep" : "67500.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "fastloenn",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : true,
+        "antall" : null,
+        "skattemessigBosattLand" : null,
+        "opptjeningsland" : null,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-09",
+      "opplysningspliktig" : "776655443",
+      "underenhet" : "554433221",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-11-06T14:26:00.941Z",
+      "inntektListe" : [ ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-09",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-09",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-09-19T03:44:14.7Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-08-25",
+          "sluttdato" : "2025-08-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    }, {
+      "maaned" : "2025-09",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-01T13:55:39.428Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-08-25",
+          "sluttdato" : "2025-08-31"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "17745.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  }, {
+    "maaned" : "2025-10",
+    "opplysningspliktig" : "123456789",
+    "underenhet" : "123456789",
+    "norskident" : "99999999999",
+    "versjoner" : [ {
+      "maaned" : "2025-10",
+      "opplysningspliktig" : "123456789",
+      "underenhet" : "123456789",
+      "norskident" : "99999999999",
+      "oppsummeringstidspunkt" : "2025-10-20T12:48:52.548Z",
+      "inntektListe" : [ {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "2366.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-09-29",
+          "sluttdato" : "2025-09-30"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "5915.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : {
+          "type" : "Etterbetalingsperiode",
+          "startdato" : "2025-09-22",
+          "sluttdato" : "2025-09-28"
+        },
+        "manuellVurdering" : null
+      }, {
+        "type" : "YtelseFraOffentlige",
+        "beloep" : "15379.0",
+        "fordel" : "kontantytelse",
+        "beskrivelse" : "arbeidsavklaringspenger",
+        "inngaarIGrunnlagForTrekk" : true,
+        "utloeserArbeidsgiveravgift" : false,
+        "skatteOgAvgiftsregel" : null,
+        "opptjeningsperiodeFom" : null,
+        "opptjeningsperiodeTom" : null,
+        "tilleggsinformasjon" : null,
+        "manuellVurdering" : null
+      } ],
+      "forskuddstrekkListe" : [ ],
+      "avvikListe" : [ ]
+    } ]
+  } ]
+}

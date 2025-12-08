@@ -1,0 +1,91 @@
+{
+  "TENANT": "nav.no",
+  "INGRESS": "https://nav-persondata-api.intern.nav.no",
+  "MIN_REPLICAS": 2,
+  "MAX_REPLICAS": 2,
+  "GCP_CLUSTER": "prod-gcp",
+  "FSS_CLUSTER": "prod-fss",
+  "OUTBOUND_EXTERNAL_HOSTS": [
+    "sokos-utbetaldata.prod-fss-pub.nais.io",
+    "pdl-api.prod-fss-pub.nais.io",
+    "ikomp-prod-fss-pub.nais.io",
+    "tilgangsmaskin.intern.nav.no",
+    "norg2.prod-fss-pub.nais.io"
+  ],
+  "GROUPS": {
+    "BASIC": {
+      "id": "206f49eb-51fb-4afe-b1b1-33cf2165aa23",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Basic"
+    },
+    "EXTENDED": {
+      "id": "a1d74637-a6fc-41a9-9277-f368ee6745b3",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    }
+  },
+  "ENVS": [
+    {
+      "name": "UTBETALING_SCOPE",
+      "value": "api://prod-fss.okonomi.sokos-utbetaldata/.default"
+    },
+    {
+      "name": "UTBETALING_URL",
+      "value": "https://sokos-utbetaldata.prod-fss-pub.nais.io"
+    },
+    {
+      "name": "PDL_SCOPE",
+      "value": "api://prod-fss.pdl.pdl-api/.default"
+    },
+    {
+      "name": "PDL_URL",
+      "value": "https://pdl-api.prod-fss-pub.nais.io/graphql"
+    },
+    {
+      "name": "INNTEKT_SCOPE",
+      "value": "api://prod-fss.team-inntekt.ikomp/.default"
+    },
+    {
+      "name": "INNTEKT_URL",
+      "value": "https://ikomp.prod-fss-pub.nais.io"
+    },
+    {
+      "name": "TILGANGMASKIN_SCOPE",
+      "value": "api://prod-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default"
+    },
+    {
+      "name": "TILGANGMASKIN_URL",
+      "value": "https://tilgangsmaskin.intern.nav.no"
+    },
+    {
+      "name": "AAREG_SCOPE",
+      "value": "api://prod-fss.arbeidsforhold.aareg-services-nais/.default"
+    },
+    {
+      "name": "AAREG_URL",
+      "value": "https://aareg-services.prod-fss-pub.nais.io/api"
+    },
+    {
+      "name": "EREG_URL",
+      "value": "https://ereg-services.prod-fss-pub.nais.io/api"
+    },
+    {
+      "name": "KODEVERK_SCOPE",
+      "value": "api://prod-gcp.team-rocket.kodeverk-api/.default"
+    },
+    {
+      "name": "KODEVERK_URL",
+      "value": "http://kodeverk-api.team-rocket.svc.cluster.local"
+    },
+    {
+      "name": "MODIA_CONTEXT_HOLDER_SCOPE",
+      "value": "api://prod-gcp.personoversikt.modiacontextholder/.default"
+    },
+    {
+      "name": "MODIA_CONTEXT_HOLDER_URL",
+      "value": "http://modiacontextholder.personoversikt"
+    },
+    {
+      "name": "NORG2_URL",
+      "value": "https://norg2.prod-fss-pub.nais.io/norg2"
+    }
+  ]
+}

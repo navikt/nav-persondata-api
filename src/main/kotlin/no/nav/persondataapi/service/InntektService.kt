@@ -3,11 +3,15 @@ package no.nav.persondataapi.service
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 @Service
 class InntektService(
@@ -21,7 +25,9 @@ class InntektService(
         // Hent inntekter fra InntektClient
         val inntektResponse = inntektClient.hentInntekter(personIdent)
         logger.info("Hentet inntekter for $personIdent, status ${inntektResponse.statusCode}")
-
+        if (erTraceLoggingAktvert()){
+            logger.info(teamLogsMarker,"Logging aktivert - full Inntekt-respons for {}: {}", personIdent, JsonUtils.toJson(inntektResponse).toPrettyString())
+        }
         // Håndter feil fra InntektClient
         when (inntektResponse.statusCode) {
             404 -> return InntektResultat.PersonIkkeFunnet
@@ -34,14 +40,16 @@ class InntektService(
         val lønnsinntekt = inntektResponse.data?.data
             .orEmpty()
             .flatMap { historikk ->
-                val arbeidsgiver = eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) {
+                    eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                } else null
 
-                historikk.versjoner.nyeste()
+                var respons = historikk.versjoner.nyeste()
                     ?.inntektListe
                     ?.filterIsInstance<Loennsinntekt>()
                     ?.map { loenn ->
                         InntektInformasjon.Lønnsdetaljer(
-                            arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
+                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
                             periode = historikk.maaned,
                             arbeidsforhold = "",
                             stillingsprosent = "",
@@ -52,6 +60,21 @@ class InntektService(
                         )
                     }
                     .orEmpty()
+                if (respons.isEmpty() && historikk.versjoner.eldste()?.inntektListe
+                        ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
+
+                    respons = listOf(InntektInformasjon.Lønnsdetaljer(
+                        arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
+                        periode = historikk.maaned,
+                        arbeidsforhold = "",
+                        stillingsprosent = "",
+                        lønnstype = historikk.versjoner.eldste()?.inntektListe?.first()?.type,
+                        antall = null,
+                        beløp = BigDecimal.ZERO,
+                        harFlereVersjoner = true
+                    ))
+                }
+                respons
             }
 
         logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $personIdent")

@@ -1,5 +1,7 @@
 package no.nav.persondataapi.service
 
+import no.nav.persondataapi.generated.enums.GtType
+import no.nav.persondataapi.generated.hentgeografisktilknytning.GeografiskTilknytning
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.norg2.client.Norg2Client
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
@@ -12,24 +14,37 @@ import org.springframework.stereotype.Service
 
 @Service
 class NavTilhørighetService(
-    private val pdlClient: PdlClient,
-    private val norg2Client: Norg2Client
+    private val pdlClient: PdlClient, private val norg2Client: Norg2Client
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun finnLokalKontorForPersonIdent(personIdent: PersonIdent): NavLokalKontor {
         val geografiskTilknytning = pdlClient.hentGeografiskTilknytning(personIdent)
         if (erTraceLoggingAktvert()) {
-            logger.info(teamLogsMarker,"Logging aktivert - full PDL-geografisk-Tilknytning respons for {}: {}", personIdent, JsonUtils.toJson(geografiskTilknytning).toPrettyString())
-        }
-        if (geografiskTilknytning.data == null || geografiskTilknytning.data.gtKommune == null) {
-            return NavLokalKontor(
-                -1,
-                "Ukjent",
-                "",
-                ""
+            logger.info(
+                teamLogsMarker,
+                "Logging aktivert - full PDL geografisk-tilknytning respons for {}: {}",
+                personIdent,
+                JsonUtils.toJson(geografiskTilknytning).toPrettyString()
             )
         }
-        return norg2Client.hentLokalNavKontor(geografiskTilknytning.data.gtKommune)
+        val norgIdent = geografiskTilknytning.data?.hentNorgIdent()
+        if (norgIdent == null) {
+            return NavLokalKontor(
+                -1, "Uklart", "", ""
+            )
+        }
+        return norg2Client.hentLokalNavKontor(norgIdent)
+
+    }
+}
+
+fun GeografiskTilknytning.hentNorgIdent(): String? {
+    return when (this.gtType) {
+        GtType.BYDEL -> this.gtBydel
+        GtType.KOMMUNE -> this.gtKommune
+        GtType.UTLAND -> null
+        GtType.UDEFINERT -> null
+        GtType.__UNKNOWN_VALUE -> null
     }
 }
