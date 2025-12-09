@@ -1,5 +1,6 @@
 package no.nav.persondataapi.integrasjon.ereg.client
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.metrics.EregMetrics
 import org.slf4j.LoggerFactory
@@ -7,13 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import tools.jackson.databind.json.JsonMapper
 
 @Component
 class EregClient(
     @param:Qualifier("eregWebClient")
     private val webClient: WebClient,
-    private val objectMapper: JsonMapper, // injiseres automatisk av Spring Boot
+    private val objectMapper: ObjectMapper, // injiseres automatisk av Spring Boot
     private val metrics: EregMetrics
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
