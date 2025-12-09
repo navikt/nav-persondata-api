@@ -417,7 +417,7 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
         "token" to HttpClientKonfig(poolNavn = "token-pool"),
         "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
-        "dp-datadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool")
+        "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool")
     )
 
     private fun httpClientFor(navn: String): HttpClient = httpClientMedPool(httpClientKonfigurasjoner.getValue(navn))

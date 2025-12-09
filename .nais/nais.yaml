@@ -86,6 +86,8 @@ spec:
           namespace: team-rocket
         - application: modiacontextholder
           namespace: personoversikt
+        - application: dp-datadeling
+          namespace: teamdagpenger
       external:
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}

@@ -36,7 +36,7 @@ class dagpengerDatadelingClient(
 
         @Cacheable(
             value = ["meldekort"],
-            key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom",
+            key = "#personIdent + '_' + #utvidet",
             unless = "#result.statusCode != 200 && #result.statusCode != 404"
         )
         fun hentInntekter(
@@ -45,12 +45,11 @@ class dagpengerDatadelingClient(
 
         ): DagpengerMeldekortRespons {
             val antallÅr: Long = if (utvidet) 10 else 3
+            val oboToken = tokenService.getServiceToken(SCOPE.DP_DATADELING_SCOPE)
             return runCatching {
                 metrics
                     .timer(operationName)
                     .recordCallable {
-
-
                         val formatter = DateTimeFormatter.ofPattern("yyyy-MM.DD")
 
                         val requestBody = MeldekortRequest(
@@ -59,7 +58,7 @@ class dagpengerDatadelingClient(
                             tilOgMedDato = LocalDate.now().format(formatter),
                         )
 
-                        val oboToken = tokenService.getServiceToken(SCOPE.DP_DATADELING_SCOPE)
+
 
 
                         val responseResult = webClient.post()
