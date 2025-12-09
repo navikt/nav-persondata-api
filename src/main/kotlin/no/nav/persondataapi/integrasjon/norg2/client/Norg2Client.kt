@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import tools.jackson.databind.json.JsonMapper
 
 @Component
 class Norg2Client(
     @param:Qualifier("norg2WebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: JsonMapper
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 

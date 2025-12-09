@@ -27,6 +27,10 @@ import java.util.UUID
 @Configuration
 class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
+    @Bean
+    fun webClientBuilder(): WebClient.Builder =
+        WebClient.builder()
+
     private data class HttpClientKonfig(
         val poolNavn: String,
         val connectTimeout: Duration = Duration.ofSeconds(5),
