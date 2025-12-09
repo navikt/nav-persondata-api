@@ -27,10 +27,6 @@ import java.util.UUID
 @Configuration
 class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
-    @Bean
-    fun webClientBuilder(): WebClient.Builder =
-        WebClient.builder()
-
     private data class HttpClientKonfig(
         val poolNavn: String,
         val connectTimeout: Duration = Duration.ofSeconds(5),
@@ -367,11 +363,7 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun navCallIdHeaderFilter(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { req ->
             Mono.deferContextual { ctx ->
-                val callId: String = ctx.getOrDefault<String>(
-                    CallId.CTX_KEY, null)
-                    ?: (MDC.get(CallId.HEADER)
-                    ?: UUID.randomUUID().toString()
-                )
+                val callId = ctx.getOrDefault(CallId.CTX_KEY, MDC.get(CallId.HEADER) ?: UUID.randomUUID().toString())
                 val mutated = ClientRequest.from(req)
                     .header(CallId.HEADER, callId)
                     .build()
