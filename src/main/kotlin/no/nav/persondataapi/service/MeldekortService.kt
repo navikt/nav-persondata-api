@@ -15,7 +15,7 @@ class MeldekortService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentDagpengeMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): MeldekortResultat {
-        val utbetalingResponse = dpDatadelingClient.hentInntekter(personIdent, utvidet)
+        val utbetalingResponse = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
         logger.info("Hentet ${if (utvidet) "utvidete " else ""}dagpenger meldekort for $personIdent, status ${utbetalingResponse.statusCode}")
 
         when (utbetalingResponse.statusCode) {

@@ -39,7 +39,7 @@ class dagpengerDatadelingClient(
             key = "#personIdent + '_' + #utvidet",
             unless = "#result.statusCode != 200 && #result.statusCode != 404"
         )
-        fun hentInntekter(
+        fun hentDagpengeMeldekort(
             personIdent: PersonIdent,
             utvidet:Boolean,
 
