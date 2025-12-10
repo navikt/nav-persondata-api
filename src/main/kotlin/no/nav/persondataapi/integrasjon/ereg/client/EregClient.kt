@@ -1,6 +1,6 @@
 package no.nav.persondataapi.integrasjon.ereg.client
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.json.JsonMapper
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.metrics.EregMetrics
 import org.slf4j.LoggerFactory
@@ -13,11 +13,12 @@ import org.springframework.web.reactive.function.client.WebClient
 class EregClient(
     @param:Qualifier("eregWebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper, // injiseres automatisk av Spring Boot
+    private val jsonMapper: JsonMapper,
     private val metrics: EregMetrics
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val operationName = "organisasjon"
+
     @Cacheable(
         value = ["ereg-organisasjon"],
         key = "#orgnummer"
@@ -46,7 +47,7 @@ class EregClient(
         }
 
         return try {
-            objectMapper.readValue(rawJson, EregRespons::class.java)
+            jsonMapper.readValue(rawJson, EregRespons::class.java)
         } catch (ex: Exception) {
             logger.error("Klarte ikke å parse Ereg-respons for orgnummer=$orgnummer. Rå JSON:\n$rawJson", ex)
             fallback(orgnummer)

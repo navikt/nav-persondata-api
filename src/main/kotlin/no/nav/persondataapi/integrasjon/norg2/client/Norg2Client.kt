@@ -1,6 +1,6 @@
 package no.nav.persondataapi.integrasjon.norg2.client
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.json.JsonMapper
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient
 class Norg2Client(
     @param:Qualifier("norg2WebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper
+    private val jsonMapper: JsonMapper
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -37,7 +37,7 @@ class Norg2Client(
     }
 
     return try {
-        objectMapper.readValue(rawJson, NavLokalKontor::class.java)
+        jsonMapper.readValue(rawJson, NavLokalKontor::class.java)
     } catch (ex: Exception) {
         logger.error("Klarte ikke å parse Norg2-respons for enhetsnummer=$lokalKontor. Rå JSON:\n$rawJson", ex)
         fallback()
@@ -50,6 +50,3 @@ class Norg2Client(
         type = "Ukjent",
     )
 }
-
-
-
