@@ -95,7 +95,6 @@ class CacheConfiguration {
             return GenericJacksonJsonRedisSerializer
                 .builder()
                 .enableDefaultTyping(typeValidator)
-                .typeValidator(typeValidator)
                 .build()
         }
     }
