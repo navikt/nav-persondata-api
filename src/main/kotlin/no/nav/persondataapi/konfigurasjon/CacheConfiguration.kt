@@ -1,7 +1,6 @@
 package no.nav.persondataapi.konfigurasjon
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import java.time.Duration
 
@@ -29,13 +28,12 @@ class CacheConfiguration {
     fun redisCacheManager(
         cacheProperties: CacheProperties,
         redisConnectionFactory: RedisConnectionFactory,
-        objectMapper: ObjectMapper
     ): CacheManager {
         logger.info("Konfigurerer cache manager med Valkey/Redis backend")
 
-        val defaultConfig = redisCacheConfiguration(cacheProperties.defaultExpiration, objectMapper)
+        val defaultConfig = redisCacheConfiguration(cacheProperties.defaultExpiration)
         val cacheConfigurations = cacheProperties.caches.mapValues { (_, config) ->
-            redisCacheConfiguration(config.expiration, objectMapper)
+            redisCacheConfiguration(config.expiration)
         }
 
         return RedisCacheManager.builder(redisConnectionFactory)
@@ -69,8 +67,8 @@ class CacheConfiguration {
         return cacheManager
     }
 
-    private fun redisCacheConfiguration(ttl: Duration, objectMapper: ObjectMapper): RedisCacheConfiguration {
-        val serializer = createRedisSerializer(objectMapper)
+    private fun redisCacheConfiguration(ttl: Duration): RedisCacheConfiguration {
+        val serializer = createRedisSerializer()
         return RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(ttl)
             .serializeValuesWith(
@@ -84,19 +82,21 @@ class CacheConfiguration {
     fun cacheProperties(): CacheProperties = CacheProperties()
 
     companion object {
-        internal fun createRedisSerializer(objectMapper: ObjectMapper): GenericJackson2JsonRedisSerializer {
-            val redisMapper = objectMapper.copy().apply {
-                val typeValidator = BasicPolymorphicTypeValidator.builder()
-                    .allowIfSubType("no.nav")
-                    .allowIfSubType("java.time")
-                    .allowIfSubType("java.math")
-                    .allowIfSubType("java.util.ArrayList")
-                    .allowIfBaseType(Collection::class.java)
-                    .allowIfBaseType(Map::class.java)
-                    .build()
-                activateDefaultTyping(typeValidator, ObjectMapper.DefaultTyping.EVERYTHING)
-            }
-            return GenericJackson2JsonRedisSerializer(redisMapper)
+        internal fun createRedisSerializer(): GenericJacksonJsonRedisSerializer {
+            val typeValidator = BasicPolymorphicTypeValidator.builder()
+                .allowIfSubType("no.nav")
+                .allowIfSubType("java.time")
+                .allowIfSubType("java.math")
+                .allowIfSubType("java.util.ArrayList")
+                .allowIfBaseType(Collection::class.java)
+                .allowIfBaseType(Map::class.java)
+                .build()
+
+            return GenericJacksonJsonRedisSerializer
+                .builder()
+                .enableDefaultTyping(typeValidator)
+                .typeValidator(typeValidator)
+                .build()
         }
     }
 }
