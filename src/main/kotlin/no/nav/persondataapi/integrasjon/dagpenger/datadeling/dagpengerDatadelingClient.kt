@@ -50,7 +50,7 @@ class dagpengerDatadelingClient(
                 metrics
                     .timer(operationName)
                     .recordCallable {
-                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM.DD")
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
                         val requestBody = MeldekortRequest(
                             personIdent = personIdent.value,
@@ -68,8 +68,9 @@ class dagpengerDatadelingClient(
                             .bodyValue(requestBody)
                             .exchangeToMono { response ->
                                 val status = response.statusCode()
+                                println(response.toString())
                                 if (status.is2xxSuccessful) {
-                                    response.bodyToMono(object : ParameterizedTypeReference<List<Meldekort>>() {})
+                                response.bodyToMono(object : ParameterizedTypeReference<List<Meldekort>>() {})
                                 } else {
                                     response.bodyToMono(String::class.java).map { body ->
                                         throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body")
@@ -85,12 +86,14 @@ class dagpengerDatadelingClient(
                         inntekt ->
                     metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
                     DagpengerMeldekortRespons(
-                        data=inntekt,
+                        data = inntekt,
+
                         statusCode = 200,
                         message = null
                     )
                 },
                 onFailure = { error ->
+                    error.printStackTrace()
                     val resultType = when {
                         erTimeout(error) -> DownstreamResult.TIMEOUT
                         error.message?.contains("ikke tilgang", ignoreCase = true) == true ->

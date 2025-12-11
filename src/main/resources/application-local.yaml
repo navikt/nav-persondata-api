@@ -62,5 +62,5 @@ MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.def
 
 NORG2_URL: https://norg2.dev-fss-pub.nais.io/norg2
 
-DP_DATADELING_URL: https://dp-datadelingintern.dev.nav.no
-DP_DATADELING_SCOPE: dev-gcp:teamdagpenger:dp-datadeling
+DP_DATADELING_URL: https://dp-datadeling.intern.dev.nav.no
+DP_DATADELING_SCOPE: api://dev-gcp.teamdagpenger.dp-datadeling/.default

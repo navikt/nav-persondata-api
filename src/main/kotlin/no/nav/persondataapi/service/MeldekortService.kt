@@ -1,11 +1,18 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.dagpenger.datadeling.dagpengerDatadelingClient
+import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Aktivitet
+import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.AktivitetType
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Meldekort
+import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStatus
+import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class MeldekortService(
@@ -40,13 +47,80 @@ class MeldekortService(
             meldekort = maskerObjekt(meldekort)
 
         }
+        val response = meldekort
+            .filter { meldekort -> meldekort.status == MeldekortStatus.Innsendt }
+            .map { meldekort -> MeldekortDto(
+            dager = meldekort.dager.map {
+                dag -> DagDto(
+                    dato = dag.dato,
+                    aktiviteter = dag.aktiviteter.map {
+                        aktivitet ->
+                        AktivitetDto(
+                            id = aktivitet.id,
+                            type = AktivitetTypeDto.valueOf(aktivitet.type.name),
+                            timer = aktivitet.timerAsDouble(),
+                            dato = dag.dato)
+                    },
+                    dagIndex = dag.dagIndex,
 
-        return MeldekortResultat.Success(meldekort)
+                )
+            },
+            periode = PeriodeDto(meldekort.periode.fraOgMed, meldekort.periode.tilOgMed),
+            opprettetAv = meldekort.opprettetAv,
+            migrert = meldekort.migrert,
+            kilde = KildeDto(meldekort.kilde.rolle,meldekort.kilde.ident),
+            innsendtTidspunkt = meldekort.innsendtTidspunkt,
+            registrertArbeidssoker = meldekort.registrertArbeidssoker,
+            meldedato = meldekort.meldedato,
+            id = meldekort.ident,
+        ) }
+        return MeldekortResultat.Success(response)
     }
 }
 
+data class MeldekortDto(
+
+    val dager: List<DagDto>,
+    val id: String,                     // "1915708190" → ikke UUID
+    //val status: MeldekortStatus,
+    val periode: PeriodeDto,
+    val opprettetAv: String,
+    val migrert: Boolean,               // Nytt felt i faktisk API
+    val kilde: KildeDto,
+    val innsendtTidspunkt: LocalDateTime?,
+    val registrertArbeidssoker: Boolean?,
+    val meldedato: LocalDate?
+
+)
+data class PeriodeDto(
+    val fraOgMed: LocalDate,
+    val tilOgMed: LocalDate
+)
+data class KildeDto(
+    val rolle: String,
+    val ident: String
+)
+data class DagDto(
+    val dato: LocalDate,
+    val aktiviteter: List<AktivitetDto>,
+    val dagIndex: Int
+)
+
+data class AktivitetDto(
+    val id: String,                   // Ikke alltid UUID-format
+    val type: AktivitetTypeDto,
+    val timer: Double?,               // Kan mangle!
+    val dato: LocalDate? = null       // Kan mangle (viktig!)
+)
+enum class AktivitetTypeDto {
+    Arbeid,
+    Fravaer,
+    Syk,
+    Utdanning
+}
+
 sealed class MeldekortResultat {
-    data class Success(val data: List<Meldekort>) : MeldekortResultat()
+    data class Success(val data: List<MeldekortDto>) : MeldekortResultat()
     data object IngenTilgang : MeldekortResultat()
     data object PersonIkkeFunnet : MeldekortResultat()
     data object FeilIBaksystem : MeldekortResultat()

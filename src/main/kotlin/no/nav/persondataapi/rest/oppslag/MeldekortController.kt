@@ -1,10 +1,9 @@
 package no.nav.persondataapi.rest.oppslag
 
-import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Meldekort
-import no.nav.persondataapi.rest.domene.Ytelse
+
+import no.nav.persondataapi.service.MeldekortDto
 import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
-import no.nav.persondataapi.service.YtelserResultat
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,7 +20,7 @@ class MeldekortController(
 ) {
     @Protected
     @PostMapping
-    fun hentMeldekort(@RequestBody dto: OppslagRequestDto, @RequestParam(required = false, defaultValue = "false") utvidet: Boolean): ResponseEntity<OppslagResponseDto<List<Meldekort>>> {
+    fun hentMeldekort(@RequestBody dto: OppslagRequestDto, @RequestParam(required = false, defaultValue = "false") utvidet: Boolean): ResponseEntity<OppslagResponseDto<List<MeldekortDto>>> {
         val resultat = meldekortService.hentDagpengeMeldekortForPerson(dto.ident, utvidet)
 
         return when (resultat) {

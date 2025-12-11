@@ -1,8 +1,9 @@
 package no.nav.persondataapi.integrasjon.dagpenger.meldekort.client
 
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
+
 
 data class MeldekortRequest(
     val personIdent : String,
@@ -12,28 +13,33 @@ data class MeldekortRequest(
 
 
 data class Meldekort(
-    val id: UUID,
+    val id: String,                     // "1915708190" → ikke UUID
     val ident: String,
     val status: MeldekortStatus,
     val type: MeldekortType,
+
     val periode: Periode,
     val dager: List<Dag>,
+
     val kanSendes: Boolean,
     val kanEndres: Boolean,
     val kanSendesFra: LocalDate,
     val sisteFristForTrekk: LocalDate?,
+
     val opprettetAv: String,
-    val originalMeldekortId: UUID?,
+    val migrert: Boolean,               // Nytt felt i faktisk API
+
     val kilde: Kilde,
+
     val innsendtTidspunkt: LocalDateTime?,
-    val meldedato: LocalDate?,
     val registrertArbeidssoker: Boolean?,
-    val begrunnelse: String
+    val meldedato: LocalDate?
 )
 
+
 enum class MeldekortStatus {
-    TilUtfylling,
-    Innsendt
+    Innsendt,
+    TilUtfylling
 }
 
 enum class MeldekortType {
@@ -47,27 +53,36 @@ data class Periode(
 )
 
 data class Dag(
-    val type: String, // Alltid "dag" i datasettet
-    val dagIndex: Int,
     val dato: LocalDate,
-    val aktiviteter: List<Aktivitet>
+    val aktiviteter: List<Aktivitet>,
+    val dagIndex: Int
 )
 
 data class Aktivitet(
-    val id: UUID,
-    val type: AktivitetType,  // Nå ENUM
-    val dato: LocalDate,
-    val timer: String         // ISO-8601 "PT2H", "PT7H30M", eller tom streng
+    val id: String,                   // Ikke alltid UUID-format
+    val type: AktivitetType,
+    val timer: String?,               // Kan mangle!
+    val dato: LocalDate? = null       // Kan mangle (viktig!)
 )
+ fun Aktivitet.timerAsDouble(): Double? {
+    if (this.timer != null) {
+        val duration = Duration.parse(this.timer)
+        val hoursDecimal = duration.toMinutes().toDouble() / 60.0
+        return hoursDecimal
+    }
+    else{
+        return null
+    }
+}
 
 enum class AktivitetType {
     Arbeid,
+    Fravaer,
     Syk,
-    Utdanning,
-    Fravaer
+    Utdanning
 }
 
 data class Kilde(
-    val rolle: String,  // "Bruker" eller "Saksbehandler"
+    val rolle: String,
     val ident: String
 )
