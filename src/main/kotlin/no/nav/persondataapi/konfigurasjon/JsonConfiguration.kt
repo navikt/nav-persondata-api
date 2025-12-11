@@ -1,29 +1,23 @@
 package no.nav.persondataapi.konfigurasjon
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
+import tools.jackson.databind.DeserializationFeature
+import tools.jackson.databind.JsonNode
+import tools.jackson.databind.module.SimpleModule
+import tools.jackson.databind.ser.std.ToStringSerializer
+import tools.jackson.databind.json.JsonMapper
+import tools.jackson.module.kotlin.KotlinModule
+import tools.jackson.module.kotlin.readValue
 import java.math.BigDecimal
 
 
 object JsonUtils {
-    val mapper: ObjectMapper = ObjectMapper()
-        .registerModule(KotlinModule.Builder().build())
-        .registerModule(JavaTimeModule())
-        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    val mapper: JsonMapper = JsonMapper.builder()
+        .addModule(KotlinModule.Builder().build())
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .registerModule(
+        .addModule(
             SimpleModule().addSerializer(BigDecimal::class.java, ToStringSerializer.instance)
         )
-
-
+        .build()
 
     inline fun <reified T> fromJson(json: String): T =
         mapper.readValue(json)

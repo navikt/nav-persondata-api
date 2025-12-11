@@ -10,7 +10,7 @@ val coroutinesVersion = "1.10.2"
 
 plugins {
   kotlin("jvm") version "2.2.21"
-  id("org.springframework.boot") version "3.5.7"
+  id("org.springframework.boot") version "4.0.0"
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.2.21"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
@@ -82,8 +82,7 @@ dependencies {
     because("Fixes CVE-2025-48924")
   }
 
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+  implementation("tools.jackson.module:jackson-module-kotlin:3.0.0")
 
   // Tracing (Micrometer → OpenTelemetry)
   implementation("io.micrometer:micrometer-tracing-bridge-otel")
