@@ -129,6 +129,6 @@ dependencies {
   implementation("com.expediagroup:graphql-kotlin-client:$graphQLKotlinVersion")
   implementation("com.expediagroup:graphql-kotlin-spring-client:$graphQLKotlinVersion")
 
-  implementation("io.swagger.core.v3:swagger-annotations:2.2.40")
-  implementation("io.swagger.core.v3:swagger-models:2.2.40")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.41")
+  implementation("io.swagger.core.v3:swagger-models:2.2.41")
 }
