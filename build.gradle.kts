@@ -82,8 +82,7 @@ dependencies {
     because("Fixes CVE-2025-48924")
   }
 
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+  implementation("tools.jackson.module:jackson-module-kotlin:3.0.+")
 
   // Tracing (Micrometer → OpenTelemetry)
   implementation("io.micrometer:micrometer-tracing-bridge-otel")
