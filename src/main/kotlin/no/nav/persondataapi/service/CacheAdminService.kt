@@ -15,8 +15,10 @@ class CacheAdminService(
 
     private val personIdentCacher = setOf(
         "pdl-person",
+        "pdl-geografisktilknytning",
         "aareg-arbeidsforhold",
         "utbetaling-bruker",
+        "norg2-lokalKontor",
     )
 
     private val cacherSomTømmesPåPersonFlush = setOf(
