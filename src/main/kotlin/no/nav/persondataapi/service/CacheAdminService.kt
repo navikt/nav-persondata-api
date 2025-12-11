@@ -18,6 +18,7 @@ class CacheAdminService(
         "pdl-geografisktilknytning",
         "aareg-arbeidsforhold",
         "utbetaling-bruker",
+        "norg2-lokalKontor",
     )
 
     private val cacherSomTømmesPåPersonFlush = setOf(
