@@ -17,11 +17,13 @@ class CacheAdminServiceTest {
     fun setup() {
         cacheManager = ConcurrentMapCacheManager(
             "pdl-person",
+            "pdl-geografisktilknytning",
             "aareg-arbeidsforhold",
             "utbetaling-bruker",
             "inntekt-historikk",
             "kodeverk-landkoder",
             "kodeverk-postnummer",
+            "norg2-lokalKontor",
         )
         service = CacheAdminService(cacheManager)
     }
@@ -52,15 +54,23 @@ class CacheAdminServiceTest {
     fun `flushCacherForPersonIdent fjerner person cacher for en gitt person, og clearer inntektscache`() {
         val ident = PersonIdent("12345678910")
         cacheManager.getCache("pdl-person")!!.put(ident, "pdl")
+        cacheManager.getCache("pdl-geografisktilknytning")!!.put(ident, "geo")
         cacheManager.getCache("aareg-arbeidsforhold")!!.put(ident, "aareg")
         cacheManager.getCache("utbetaling-bruker")!!.put(ident, "utbetaling")
         cacheManager.getCache("inntekt-historikk")!!.put("12345678910_2020-01-01_2020-12-31", "inntekt")
         cacheManager.getCache("kodeverk-landkoder")!!.put("NO", "Norge")
         cacheManager.getCache("kodeverk-postnummer")!!.put("1337", "Sandvika")
+        cacheManager.getCache("norg2-lokalKontor")!!.put(ident, "lokalkontor")
 
         val oppsummering = service.flushCacherForPersonIdent(ident)
 
-        listOf("pdl-person", "aareg-arbeidsforhold", "utbetaling-bruker").forEach { cacheName ->
+        listOf(
+            "pdl-person",
+            "pdl-geografisktilknytning",
+            "aareg-arbeidsforhold",
+            "utbetaling-bruker",
+            "norg2-lokalKontor",
+        ).forEach { cacheName ->
             val cache = cacheManager.getCache(cacheName)!!
             assertNull(cache.nativeCacheAsMap()[ident], "Cache $cacheName skal være tømt for ident")
         }
@@ -77,7 +87,14 @@ class CacheAdminServiceTest {
 
         assertEquals(CacheFlushScope.PERSON, oppsummering.scope)
         assertEquals("123456*****", oppsummering.personIdent)
-        assertEquals(listOf("aareg-arbeidsforhold", "inntekt-historikk", "pdl-person", "utbetaling-bruker"), oppsummering.flushedeCacher)
+        assertEquals(listOf(
+            "aareg-arbeidsforhold",
+            "inntekt-historikk",
+            "norg2-lokalKontor",
+            "pdl-geografisktilknytning",
+            "pdl-person",
+            "utbetaling-bruker",
+            ), oppsummering.flushedeCacher)
     }
 
     @Suppress("UNCHECKED_CAST")
