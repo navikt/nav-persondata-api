@@ -56,7 +56,6 @@ class DagpengerDatadelingClient(
 
                 val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
                     .header("Authorization", "Bearer $oboToken")
-                    .header("Nav-Call-Id", UUID.randomUUID().toString())
                     .bodyValue(requestBody)
                     .exchangeToMono { response ->
                         val status = response.statusCode()
