@@ -16,14 +16,13 @@ import java.time.LocalDateTime
 
 @Service
 class MeldekortService(
-    private val dpDatadelingClient: dagpengerDatadelingClient,
-    private val brukertilgangService: BrukertilgangService
+    private val dpDatadelingClient: dagpengerDatadelingClient, private val brukertilgangService: BrukertilgangService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentDagpengeMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): MeldekortResultat {
         val utbetalingResponse = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
-        logger.info("Hentet ${if (utvidet) "utvidete " else ""}dagpenger meldekort for $personIdent, status ${utbetalingResponse.statusCode}")
+        logger.info("Hentet ${if (utvidet) "utvidete " else ""} dagpenge-meldekort for $personIdent, status ${utbetalingResponse.statusCode}")
 
         when (utbetalingResponse.statusCode) {
             404 -> return MeldekortResultat.PersonIkkeFunnet
@@ -33,7 +32,7 @@ class MeldekortService(
         }
 
         if (utbetalingResponse.data.isNullOrEmpty()) {
-            logger.info("Fant ingen dagpenge meldekort for $personIdent")
+            logger.info("Fant ingen dagpenge-meldekort for $personIdent")
             return MeldekortResultat.Success(emptyList())
         }
 
@@ -49,31 +48,33 @@ class MeldekortService(
         }
         val response = meldekort
             .filter { meldekort -> meldekort.status == MeldekortStatus.Innsendt }
-            .map { meldekort -> MeldekortDto(
-            dager = meldekort.dager.map {
-                dag -> DagDto(
-                    dato = dag.dato,
-                    aktiviteter = dag.aktiviteter.map {
-                        aktivitet ->
-                        AktivitetDto(
-                            id = aktivitet.id,
-                            type = AktivitetTypeDto.valueOf(aktivitet.type.name),
-                            timer = aktivitet.timerAsDouble(),
-                            dato = dag.dato)
-                    },
-                    dagIndex = dag.dagIndex,
+            .map { meldekort ->
+                MeldekortDto(
+                    dager = meldekort.dager.map { dag ->
+                        DagDto(
+                            dato = dag.dato,
+                            aktiviteter = dag.aktiviteter.map { aktivitet ->
+                                AktivitetDto(
+                                    id = aktivitet.id,
+                                    type = AktivitetTypeDto.valueOf(aktivitet.type.name),
+                                    timer = aktivitet.timerAsDouble(),
+                                    dato = dag.dato
+                                )
+                            },
+                            dagIndex = dag.dagIndex,
 
+                            )
+                    },
+                    periode = PeriodeDto(meldekort.periode.fraOgMed, meldekort.periode.tilOgMed),
+                    opprettetAv = meldekort.opprettetAv,
+                    migrert = meldekort.migrert,
+                    kilde = KildeDto(meldekort.kilde.rolle, meldekort.kilde.ident),
+                    innsendtTidspunkt = meldekort.innsendtTidspunkt,
+                    registrertArbeidssoker = meldekort.registrertArbeidssoker,
+                    meldedato = meldekort.meldedato,
+                    id = meldekort.ident,
                 )
-            },
-            periode = PeriodeDto(meldekort.periode.fraOgMed, meldekort.periode.tilOgMed),
-            opprettetAv = meldekort.opprettetAv,
-            migrert = meldekort.migrert,
-            kilde = KildeDto(meldekort.kilde.rolle,meldekort.kilde.ident),
-            innsendtTidspunkt = meldekort.innsendtTidspunkt,
-            registrertArbeidssoker = meldekort.registrertArbeidssoker,
-            meldedato = meldekort.meldedato,
-            id = meldekort.ident,
-        ) }
+            }
         return MeldekortResultat.Success(response)
     }
 }
@@ -81,42 +82,37 @@ class MeldekortService(
 data class MeldekortDto(
 
     val dager: List<DagDto>,
-    val id: String,                     // "1915708190" → ikke UUID
-    //val status: MeldekortStatus,
+    val id: String,
     val periode: PeriodeDto,
     val opprettetAv: String,
-    val migrert: Boolean,               // Nytt felt i faktisk API
+    val migrert: Boolean,
     val kilde: KildeDto,
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
     val meldedato: LocalDate?
 
 )
+
 data class PeriodeDto(
-    val fraOgMed: LocalDate,
-    val tilOgMed: LocalDate
+    val fraOgMed: LocalDate, val tilOgMed: LocalDate
 )
+
 data class KildeDto(
-    val rolle: String,
-    val ident: String
+    val rolle: String, val ident: String
 )
+
 data class DagDto(
-    val dato: LocalDate,
-    val aktiviteter: List<AktivitetDto>,
-    val dagIndex: Int
+    val dato: LocalDate, val aktiviteter: List<AktivitetDto>, val dagIndex: Int
 )
 
 data class AktivitetDto(
     val id: String,                   // Ikke alltid UUID-format
-    val type: AktivitetTypeDto,
-    val timer: Double?,               // Kan mangle!
+    val type: AktivitetTypeDto, val timer: Double?,               // Kan mangle!
     val dato: LocalDate? = null       // Kan mangle (viktig!)
 )
+
 enum class AktivitetTypeDto {
-    Arbeid,
-    Fravaer,
-    Syk,
-    Utdanning
+    Arbeid, Fravaer, Syk, Utdanning
 }
 
 sealed class MeldekortResultat {

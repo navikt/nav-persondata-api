@@ -20,25 +20,31 @@ class MeldekortController(
 ) {
     @Protected
     @PostMapping
-    fun hentMeldekort(@RequestBody dto: OppslagRequestDto, @RequestParam(required = false, defaultValue = "false") utvidet: Boolean): ResponseEntity<OppslagResponseDto<List<MeldekortDto>>> {
+    fun hentMeldekort(
+        @RequestBody dto: OppslagRequestDto,
+        @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
+    ): ResponseEntity<OppslagResponseDto<List<MeldekortDto>>> {
         val resultat = meldekortService.hentDagpengeMeldekortForPerson(dto.ident, utvidet)
 
         return when (resultat) {
             is MeldekortResultat.Success -> {
                 ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
             }
+
             is MeldekortResultat.IngenTilgang -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Ingen tilgang", data = null),
                     HttpStatus.FORBIDDEN
                 )
             }
+
             is MeldekortResultat.PersonIkkeFunnet -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Person ikke funnet", data = null),
                     HttpStatus.NOT_FOUND
                 )
             }
+
             is MeldekortResultat.FeilIBaksystem -> {
                 ResponseEntity(
                     OppslagResponseDto(error = "Feil i baksystem", data = null),
