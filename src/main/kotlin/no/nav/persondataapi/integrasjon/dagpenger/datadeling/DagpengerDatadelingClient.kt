@@ -23,7 +23,7 @@ import java.util.UUID
 import java.util.concurrent.TimeoutException
 
 @Component
-class dagpengerDatadelingClient(
+class DagpengerDatadelingClient(
     @param:Qualifier("dpDatadelingClient") private val webClient: WebClient,
     private val metrics: DPDataDelingMetrics,
     private val tokenService: TokenService,

@@ -1,22 +1,18 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.integrasjon.dagpenger.datadeling.dagpengerDatadelingClient
-import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Aktivitet
-import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.AktivitetType
-import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Meldekort
+import no.nav.persondataapi.integrasjon.dagpenger.datadeling.DagpengerDatadelingClient
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStatus
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
 class MeldekortService(
-    private val dpDatadelingClient: dagpengerDatadelingClient, private val brukertilgangService: BrukertilgangService
+    private val dpDatadelingClient: DagpengerDatadelingClient, private val brukertilgangService: BrukertilgangService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
