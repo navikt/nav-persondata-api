@@ -246,6 +246,7 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
             .clientConnector(ReactorClientHttpConnector(eregHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
+
     @Bean
     fun dpDatadelingClient(
         builder: WebClient.Builder,

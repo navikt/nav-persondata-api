@@ -17,22 +17,22 @@ class MeldekortService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentDagpengeMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): MeldekortResultat {
-        val utbetalingResponse = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
-        logger.info("Hentet ${if (utvidet) "utvidete " else ""} dagpenge-meldekort for $personIdent, status ${utbetalingResponse.statusCode}")
+        val meldekortRespons = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
+        logger.info("Hentet ${if (utvidet) "utvidete " else ""} dagpenge-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
 
-        when (utbetalingResponse.statusCode) {
+        when (meldekortRespons.statusCode) {
             404 -> return MeldekortResultat.PersonIkkeFunnet
             403, 401 -> return MeldekortResultat.IngenTilgang
             500 -> return MeldekortResultat.FeilIBaksystem
             !in 200..299 -> return MeldekortResultat.FeilIBaksystem
         }
 
-        if (utbetalingResponse.data.isNullOrEmpty()) {
+        if (meldekortRespons.data.isNullOrEmpty()) {
             logger.info("Fant ingen dagpenge-meldekort for $personIdent")
             return MeldekortResultat.Success(emptyList())
         }
 
-        var meldekort = utbetalingResponse.data
+        var meldekort = meldekortRespons.data
         logger.info("Fant ${meldekort.size} meldekort for $personIdent")
 
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
@@ -66,7 +66,7 @@ class MeldekortService(
                     innsendtTidspunkt = meldekort.innsendtTidspunkt,
                     registrertArbeidssoker = meldekort.registrertArbeidssoker,
                     meldedato = meldekort.meldedato,
-                    id = meldekort.ident,
+                    id = meldekort.id,
                 )
             }
         return MeldekortResultat.Success(response)
