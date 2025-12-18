@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets
 class MeldekortParseResponsTest {
 
     @Test
-    fun `Skal returnere OK fra PDL`() {
+    fun `Skal parse respons fra meldekort`() {
         val jsonString = lesJsonFraFil("testrespons/DagpengerMeldekortSample.json")
         val meldekort: List<Meldekort> = JsonUtils.fromJson(jsonString)
         Assertions.assertNotNull(meldekort)
