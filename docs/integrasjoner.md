@@ -35,6 +35,13 @@
 - Cache: `utbetaling-bruker`.
 - Bruk: Henter utbetalingsinformasjon for innbygger.
 
+## Dagpenger datadeling (Meldekort)
+- Protokoll: REST.
+- Endepunkt: `${DP_DATADELING_URL}/dagpenger/datadeling/v1/meldekort`.
+- Auth: Client credentials med `DP_DATADELING_SCOPE`.
+- Cache: `meldekort` (nøkkel per ident og utvidet-flagget).
+- Bruk: Henter dagpenge-meldekort for oppslag, med periode på 3 år eller 10 år ved utvidet visning.
+
 ## Aareg (Arbeidsforhold)
 - Protokoll: REST.
 - Endepunkt: `${AAREG_URL}`.

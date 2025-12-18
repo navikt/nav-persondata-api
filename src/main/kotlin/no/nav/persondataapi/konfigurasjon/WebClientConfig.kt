@@ -70,6 +70,9 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Value("\${NORG2_URL}")
     lateinit var norg2URL: String
 
+    @Value("\${DP_DATADELING_URL}")
+    lateinit var dpDatadelingURL: String
+
 
     /**
      * HttpClient for tokenutveksling med pool.
@@ -227,6 +230,10 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("eregHttpClient")
     fun eregHttpClient(): HttpClient = httpClientFor("ereg")
 
+    @Bean
+    @Qualifier("dpDatadelingHttpClient")
+    fun dpdatadelingHttpClient(): HttpClient = httpClientFor("dpDatadeling")
+
 
     @Bean
     fun eregWebClient(
@@ -241,6 +248,22 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
                 it.contentType = MediaType.APPLICATION_JSON
             }
             .clientConnector(ReactorClientHttpConnector(eregHttpClient))
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    fun dpDatadelingClient(
+        builder: WebClient.Builder,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("dpDatadelingHttpClient") dpDatadelingHttpClient: HttpClient
+    ): WebClient =
+        builder
+            .baseUrl(dpDatadelingURL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(ReactorClientHttpConnector(dpDatadelingHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -399,7 +422,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "kodeverk" to HttpClientKonfig(poolNavn = "kodeverk-pool"),
         "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
         "token" to HttpClientKonfig(poolNavn = "token-pool"),
-        "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool")
+        "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
+        "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool")
     )
 
     private fun httpClientFor(navn: String): HttpClient = httpClientMedPool(httpClientKonfigurasjoner.getValue(navn))

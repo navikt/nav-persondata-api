@@ -12,13 +12,13 @@ class PdlParseResponsTest {
 
     @Test
     fun `Skal returnere OK fra PDL`() {
-        val jsonString = readJsonFromFile("testrespons/PdlResponsSample.json")
+        val jsonString = lesJsonFraFil("testrespons/PdlResponsSample.json")
         val person: Person = JsonUtils.fromJson(jsonString)
         person.nåværendeBostedsadresse()
     }
 
 }
-private fun readJsonFromFile(filename: String): String {
+private fun lesJsonFraFil(filename: String): String {
     val resource = ClassPathResource(filename)
     val inputStream = resource.inputStream
     return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8)

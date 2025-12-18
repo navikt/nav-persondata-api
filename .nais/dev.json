@@ -88,6 +88,14 @@
       "value": "https://norg2.dev-fss-pub.nais.io/norg2"
     },
     {
+      "name": "DP_DATADELING_URL",
+      "value": "https://dp-datadeling.intern.dev.nav.no"
+    },
+    {
+      "name": "DP_DATADELING_SCOPE",
+      "value": "api://dev-gcp.teamdagpenger.dp-datadeling/.default"
+    },
+    {
       "name": "JAVA_TOOL_OPTIONS",
       "value": "\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005\""
     }

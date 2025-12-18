@@ -1,0 +1,249 @@
+[ {
+  "id" : "1915708190",
+  "ident" : "02877398113",
+  "status" : "Innsendt",
+  "type" : "Ordinaert",
+  "periode" : {
+    "fraOgMed" : "2025-10-27",
+    "tilOgMed" : "2025-11-09"
+  },
+  "dager" : [ {
+    "dato" : "2025-10-27",
+    "aktiviteter" : [ ],
+    "dagIndex" : 0
+  }, {
+    "dato" : "2025-10-28",
+    "aktiviteter" : [ ],
+    "dagIndex" : 1
+  }, {
+    "dato" : "2025-10-29",
+    "aktiviteter" : [ ],
+    "dagIndex" : 2
+  }, {
+    "dato" : "2025-10-30",
+    "aktiviteter" : [ ],
+    "dagIndex" : 3
+  }, {
+    "dato" : "2025-10-31",
+    "aktiviteter" : [ ],
+    "dagIndex" : 4
+  }, {
+    "dato" : "2025-11-01",
+    "aktiviteter" : [ ],
+    "dagIndex" : 5
+  }, {
+    "dato" : "2025-11-02",
+    "aktiviteter" : [ ],
+    "dagIndex" : 6
+  }, {
+    "dato" : "2025-11-03",
+    "aktiviteter" : [ ],
+    "dagIndex" : 7
+  }, {
+    "dato" : "2025-11-04",
+    "aktiviteter" : [ ],
+    "dagIndex" : 8
+  }, {
+    "dato" : "2025-11-05",
+    "aktiviteter" : [ ],
+    "dagIndex" : 9
+  }, {
+    "dato" : "2025-11-06",
+    "aktiviteter" : [ {
+      "id" : "019abaea-90a1-7830-8413-810903a1ce3e",
+      "type" : "Arbeid",
+      "timer" : "PT10H"
+    } ],
+    "dagIndex" : 10
+  }, {
+    "dato" : "2025-11-07",
+    "aktiviteter" : [ {
+      "id" : "019abaea-a254-72f3-ab37-1eca93e93411",
+      "type" : "Fravaer"
+    } ],
+    "dagIndex" : 11
+  }, {
+    "dato" : "2025-11-08",
+    "aktiviteter" : [ ],
+    "dagIndex" : 12
+  }, {
+    "dato" : "2025-11-09",
+    "aktiviteter" : [ ],
+    "dagIndex" : 13
+  } ],
+  "kanSendes" : false,
+  "kanEndres" : true,
+  "kanSendesFra" : "2025-11-08",
+  "sisteFristForTrekk" : "2025-11-17",
+  "opprettetAv" : "Dagpenger",
+  "migrert" : false,
+  "kilde" : {
+    "rolle" : "Bruker",
+    "ident" : "02877398113"
+  },
+  "innsendtTidspunkt" : "2025-11-25T13:09:22.219582Z",
+  "registrertArbeidssoker" : true,
+  "meldedato" : "2025-11-25"
+}, {
+  "id" : "75e087f7-d6ca-4587-9ff6-b09d45ee0089",
+  "ident" : "02877398113",
+  "status" : "Innsendt",
+  "type" : "Ordinaert",
+  "periode" : {
+    "fraOgMed" : "2025-11-10",
+    "tilOgMed" : "2025-11-23"
+  },
+  "dager" : [ {
+    "dato" : "2025-11-10",
+    "aktiviteter" : [ ],
+    "dagIndex" : 0
+  }, {
+    "dato" : "2025-11-11",
+    "aktiviteter" : [ ],
+    "dagIndex" : 1
+  }, {
+    "dato" : "2025-11-12",
+    "aktiviteter" : [ ],
+    "dagIndex" : 2
+  }, {
+    "dato" : "2025-11-13",
+    "aktiviteter" : [ ],
+    "dagIndex" : 3
+  }, {
+    "dato" : "2025-11-14",
+    "aktiviteter" : [ ],
+    "dagIndex" : 4
+  }, {
+    "dato" : "2025-11-15",
+    "aktiviteter" : [ ],
+    "dagIndex" : 5
+  }, {
+    "dato" : "2025-11-16",
+    "aktiviteter" : [ ],
+    "dagIndex" : 6
+  }, {
+    "dato" : "2025-11-17",
+    "aktiviteter" : [ ],
+    "dagIndex" : 7
+  }, {
+    "dato" : "2025-11-18",
+    "aktiviteter" : [ ],
+    "dagIndex" : 8
+  }, {
+    "dato" : "2025-11-19",
+    "aktiviteter" : [ ],
+    "dagIndex" : 9
+  }, {
+    "dato" : "2025-11-20",
+    "aktiviteter" : [ ],
+    "dagIndex" : 10
+  }, {
+    "dato" : "2025-11-21",
+    "aktiviteter" : [ ],
+    "dagIndex" : 11
+  }, {
+    "dato" : "2025-11-22",
+    "aktiviteter" : [ ],
+    "dagIndex" : 12
+  }, {
+    "dato" : "2025-11-23",
+    "aktiviteter" : [ ],
+    "dagIndex" : 13
+  } ],
+  "kanSendes" : false,
+  "kanEndres" : true,
+  "kanSendesFra" : "2025-11-22",
+  "sisteFristForTrekk" : "2025-12-01",
+  "opprettetAv" : "Dagpenger",
+  "migrert" : false,
+  "kilde" : {
+    "rolle" : "Bruker",
+    "ident" : "02877398113"
+  },
+  "innsendtTidspunkt" : "2025-11-25T13:09:45.724533Z",
+  "registrertArbeidssoker" : true,
+  "meldedato" : "2025-11-25"
+}, {
+  "id" : "1cf3fd4e-59b5-4e8c-86c9-4a7f5e636808",
+  "ident" : "02877398113",
+  "status" : "Innsendt",
+  "type" : "Ordinaert",
+  "periode" : {
+    "fraOgMed" : "2025-11-24",
+    "tilOgMed" : "2025-12-07"
+  },
+  "dager" : [ {
+    "dato" : "2025-11-24",
+    "aktiviteter" : [ ],
+    "dagIndex" : 0
+  }, {
+    "dato" : "2025-11-25",
+    "aktiviteter" : [ ],
+    "dagIndex" : 1
+  }, {
+    "dato" : "2025-11-26",
+    "aktiviteter" : [ {
+      "id" : "019afd1c-e23a-74ff-a111-5c5c2fe92206",
+      "type" : "Arbeid",
+      "timer" : "PT10H"
+    } ],
+    "dagIndex" : 2
+  }, {
+    "dato" : "2025-11-27",
+    "aktiviteter" : [ ],
+    "dagIndex" : 3
+  }, {
+    "dato" : "2025-11-28",
+    "aktiviteter" : [ ],
+    "dagIndex" : 4
+  }, {
+    "dato" : "2025-11-29",
+    "aktiviteter" : [ ],
+    "dagIndex" : 5
+  }, {
+    "dato" : "2025-11-30",
+    "aktiviteter" : [ ],
+    "dagIndex" : 6
+  }, {
+    "dato" : "2025-12-01",
+    "aktiviteter" : [ ],
+    "dagIndex" : 7
+  }, {
+    "dato" : "2025-12-02",
+    "aktiviteter" : [ ],
+    "dagIndex" : 8
+  }, {
+    "dato" : "2025-12-03",
+    "aktiviteter" : [ ],
+    "dagIndex" : 9
+  }, {
+    "dato" : "2025-12-04",
+    "aktiviteter" : [ ],
+    "dagIndex" : 10
+  }, {
+    "dato" : "2025-12-05",
+    "aktiviteter" : [ ],
+    "dagIndex" : 11
+  }, {
+    "dato" : "2025-12-06",
+    "aktiviteter" : [ ],
+    "dagIndex" : 12
+  }, {
+    "dato" : "2025-12-07",
+    "aktiviteter" : [ ],
+    "dagIndex" : 13
+  } ],
+  "kanSendes" : false,
+  "kanEndres" : true,
+  "kanSendesFra" : "2025-12-06",
+  "sisteFristForTrekk" : "2025-12-15",
+  "opprettetAv" : "Dagpenger",
+  "migrert" : false,
+  "kilde" : {
+    "rolle" : "Bruker",
+    "ident" : "02877398113"
+  },
+  "innsendtTidspunkt" : "2025-12-08T09:38:52.960599Z",
+  "registrertArbeidssoker" : true,
+  "meldedato" : "2025-12-08"
+} ]
