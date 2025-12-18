@@ -6,7 +6,7 @@ import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.Meldekort
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortRequest
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
-import no.nav.persondataapi.metrics.DPDataDelingMetrics
+import no.nav.persondataapi.metrics.DPDatadelingMetrics
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeoutException
 @Component
 class DagpengerDatadelingClient(
     @param:Qualifier("dpDatadelingClient") private val webClient: WebClient,
-    private val metrics: DPDataDelingMetrics,
+    private val metrics: DPDatadelingMetrics,
     private val tokenService: TokenService,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -55,10 +55,11 @@ class DagpengerDatadelingClient(
                 )
 
                 val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
-                    .header("Authorization", "Bearer $oboToken").header("Nav-Call-Id", UUID.randomUUID().toString())
-                    .bodyValue(requestBody).exchangeToMono { response ->
+                    .header("Authorization", "Bearer $oboToken")
+                    .header("Nav-Call-Id", UUID.randomUUID().toString())
+                    .bodyValue(requestBody)
+                    .exchangeToMono { response ->
                         val status = response.statusCode()
-                        println(response.toString())
                         if (status.is2xxSuccessful) {
                             response.bodyToMono(object : ParameterizedTypeReference<List<Meldekort>>() {})
                         } else {
@@ -78,7 +79,6 @@ class DagpengerDatadelingClient(
                 message = null
             )
         }, onFailure = { error ->
-            error.printStackTrace()
             val resultType = when {
                 erTimeout(error) -> DownstreamResult.TIMEOUT
                 error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
@@ -87,7 +87,7 @@ class DagpengerDatadelingClient(
 
             metrics.counter(operationName, resultType).increment()
 
-            log.error("Feil ved henting av dagpenger-meldekort : ${error.message}", error)
+            log.error("Feil ved henting av dagpenger-meldekort: ${error.message}", error)
             return DagpengerMeldekortRespons(
                 data = null, statusCode = 500, message = error.rootCause().message
             )
@@ -103,5 +103,7 @@ class DagpengerDatadelingClient(
 }
 
 data class DagpengerMeldekortRespons(
-    val data: List<Meldekort>? = null, val statusCode: Int, val message: String?
+    val data: List<Meldekort>? = null,
+    val statusCode: Int,
+    val message: String?
 )

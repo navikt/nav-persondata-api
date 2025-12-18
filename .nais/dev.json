@@ -89,11 +89,11 @@
     },
     {
       "name": "DP_DATADELING_URL",
-      "value": "api://dev-gcp.team-rocket.kodeverk-api/.default"
+      "value": "https://dp-datadeling.intern.dev.nav.no"
     },
     {
       "name": "DP_DATADELING_SCOPE",
-      "value": "https://dp-datadelingintern.dev.nav.no"
+      "value": "api://dev-gcp.teamdagpenger.dp-datadeling/.default"
     },
     {
       "name": "JAVA_TOOL_OPTIONS",

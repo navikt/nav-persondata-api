@@ -6,36 +6,29 @@ import java.time.LocalDateTime
 
 
 data class MeldekortRequest(
-    val personIdent : String,
-    val fraOgMedDato:String,
-    val tilOgMedDato:String,
+    val personIdent: String,
+    val fraOgMedDato: String,
+    val tilOgMedDato: String,
 )
 
-
 data class Meldekort(
-    val id: String,                     // "1915708190" → ikke UUID
+    val id: String,
     val ident: String,
     val status: MeldekortStatus,
     val type: MeldekortType,
-
     val periode: Periode,
     val dager: List<Dag>,
-
     val kanSendes: Boolean,
     val kanEndres: Boolean,
     val kanSendesFra: LocalDate,
     val sisteFristForTrekk: LocalDate?,
-
     val opprettetAv: String,
-    val migrert: Boolean,               // Nytt felt i faktisk API
-
+    val migrert: Boolean,
     val kilde: Kilde,
-
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
     val meldedato: LocalDate?
 )
-
 
 enum class MeldekortStatus {
     Innsendt,
@@ -59,18 +52,18 @@ data class Dag(
 )
 
 data class Aktivitet(
-    val id: String,                   // Ikke alltid UUID-format
+    val id: String,
     val type: AktivitetType,
-    val timer: String?,               // Kan mangle!
-    val dato: LocalDate? = null       // Kan mangle (viktig!)
+    val timer: String?,
+    val dato: LocalDate?
 )
- fun Aktivitet.timerAsDouble(): Double? {
+
+fun Aktivitet.timerAsDouble(): Double? {
     if (this.timer != null) {
         val duration = Duration.parse(this.timer)
         val hoursDecimal = duration.toMinutes().toDouble() / 60.0
         return hoursDecimal
-    }
-    else{
+    } else {
         return null
     }
 }

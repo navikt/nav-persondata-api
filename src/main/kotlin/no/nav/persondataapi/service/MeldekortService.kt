@@ -33,15 +33,13 @@ class MeldekortService(
         }
 
         var meldekort = utbetalingResponse.data
-
-
         logger.info("Fant ${meldekort.size} meldekort for $personIdent")
 
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente meldekort for $personIdent. Maskerer responsen")
             meldekort = maskerObjekt(meldekort)
-
         }
+
         val response = meldekort
             .filter { meldekort -> meldekort.status == MeldekortStatus.Innsendt }
             .map { meldekort ->
@@ -76,7 +74,6 @@ class MeldekortService(
 }
 
 data class MeldekortDto(
-
     val dager: List<DagDto>,
     val id: String,
     val periode: PeriodeDto,
@@ -86,7 +83,6 @@ data class MeldekortDto(
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
     val meldedato: LocalDate?
-
 )
 
 data class PeriodeDto(
@@ -102,9 +98,10 @@ data class DagDto(
 )
 
 data class AktivitetDto(
-    val id: String,                   // Ikke alltid UUID-format
-    val type: AktivitetTypeDto, val timer: Double?,               // Kan mangle!
-    val dato: LocalDate? = null       // Kan mangle (viktig!)
+    val id: String,
+    val type: AktivitetTypeDto,
+    val timer: Double?,
+    val dato: LocalDate?
 )
 
 enum class AktivitetTypeDto {
