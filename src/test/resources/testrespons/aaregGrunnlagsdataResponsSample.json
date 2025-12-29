@@ -94,7 +94,6 @@
       "permisjoner": null,
       "permitteringer": null,
       "timerMedTimeloenn": null,
-      "utenlandsopphold": null,
       "idHistorikk": null,
       "varsler": null,
       "rapporteringsordning": {
@@ -498,7 +497,6 @@
           "sporingsinformasjon": null
         }
       ],
-      "utenlandsopphold": null,
       "idHistorikk": [
         {
           "id": "V986929150R611L0001",
@@ -650,7 +648,6 @@
           "sporingsinformasjon": null
         }
       ],
-      "utenlandsopphold": null,
       "idHistorikk": [
         {
           "id": "5",
@@ -753,7 +750,6 @@
       "permisjoner": null,
       "permitteringer": null,
       "timerMedTimeloenn": null,
-      "utenlandsopphold": null,
       "idHistorikk": [
         {
           "id": "6",

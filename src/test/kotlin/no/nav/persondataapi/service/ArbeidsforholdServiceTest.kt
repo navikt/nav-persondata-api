@@ -485,7 +485,6 @@ private fun lagArbeidsforhold(
         permisjoner = null,
         permitteringer = null,
         timerMedTimeloenn = null,
-        utenlandsopphold = null,
         idHistorikk = null,
         varsler = null,
         rapporteringsordning = Kodeverksentitet(kode = "A_ORDNINGEN", beskrivelse = "A-ordningen"),

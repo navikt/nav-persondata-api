@@ -79,7 +79,6 @@ data class Arbeidsforhold(
     val permisjoner: List<no.nav.persondataapi.integrasjon.aareg.client.PermisjonPermittering>?,
     val permitteringer: List<no.nav.persondataapi.integrasjon.aareg.client.PermisjonPermittering>?,
     val timerMedTimeloenn: List<no.nav.persondataapi.integrasjon.aareg.client.TimerMedTimeloenn>?,
-    val utenlandsopphold: List<no.nav.persondataapi.integrasjon.aareg.client.Utenlandsopphold>?,
     val idHistorikk: List<no.nav.persondataapi.integrasjon.aareg.client.IdHistorikk>?,
     val varsler: List<no.nav.persondataapi.integrasjon.aareg.client.Varsel>?,
     val rapporteringsordning: no.nav.persondataapi.integrasjon.aareg.client.Kodeverksentitet,
@@ -96,14 +95,6 @@ data class Arbeidsforhold(
 data class Varsel(
     val entitet: no.nav.persondataapi.integrasjon.aareg.client.Entitet,
     val varsling: no.nav.persondataapi.integrasjon.aareg.client.Kodeverksentitet?
-)
-
-data class Utenlandsopphold(
-    val land: no.nav.persondataapi.integrasjon.aareg.client.Kodeverksentitet?,
-    val startdato: LocalDate,
-    val sluttdato: LocalDate?,
-    val rapporteringsmaaneder: no.nav.persondataapi.integrasjon.aareg.client.Rapporteringsmaaneder?,
-    val sporingsinformasjon: no.nav.persondataapi.integrasjon.aareg.client.Sporingsinformasjon?
 )
 
 data class TimerMedTimeloenn(
@@ -187,7 +178,6 @@ data class AaRegArbeidsforhold(
     val sistBekreftet: LocalDateTime?,
     val sporingsinformasjon: no.nav.persondataapi.integrasjon.aareg.client.AaRegSporingsinformasjon?,
     val type: no.nav.persondataapi.integrasjon.aareg.client.Kodeverksentitet?,
-    val utenlandsopphold: List<no.nav.persondataapi.integrasjon.aareg.client.AaRegUtenlandsopphold>?
 )
 
 data class AaRegArbeidsgiverArbeidsforhold(
@@ -253,17 +243,6 @@ data class AaRegSporingsinformasjon(
     val opprettetKilde: String?,
     val opprettetKildereferanse: String?,
     val opprettetTidspunkt: LocalDateTime?
-)
-
-data class AaRegTjenestefeilResponse(
-    val melding: String
-)
-
-data class AaRegUtenlandsopphold(
-    val landkode: String,
-    val periode: no.nav.persondataapi.integrasjon.aareg.client.AaRegPeriode?,
-    val rapporteringsperiode: YearMonth,
-    val sporingsinformasjon: no.nav.persondataapi.integrasjon.aareg.client.AaRegSporingsinformasjon
 )
 
 fun List<no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold>.hentIdenter(): List<no.nav.persondataapi.integrasjon.aareg.client.Ident> {
