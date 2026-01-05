@@ -29032,7 +29032,6 @@
         "permisjoner": null,
         "permitteringer": null,
         "timerMedTimeloenn": null,
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": null,
         "rapporteringsordning": {
@@ -29127,7 +29126,6 @@
         "permisjoner": null,
         "permitteringer": null,
         "timerMedTimeloenn": null,
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": [
           {
@@ -29266,7 +29264,6 @@
             "sporingsinformasjon": null
           }
         ],
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": [
           {
@@ -29377,7 +29374,6 @@
             "sporingsinformasjon": null
           }
         ],
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": [
           {
@@ -29480,7 +29476,6 @@
         "permisjoner": null,
         "permitteringer": null,
         "timerMedTimeloenn": null,
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": [
           {
@@ -29787,7 +29782,6 @@
             "sporingsinformasjon": null
           }
         ],
-        "utenlandsopphold": null,
         "idHistorikk": null,
         "varsler": [
           {
@@ -30013,7 +30007,6 @@
             "sporingsinformasjon": null
           }
         ],
-        "utenlandsopphold": null,
         "idHistorikk": [
           {
             "id": "590924373296000003394",
@@ -30469,7 +30462,6 @@
             "sporingsinformasjon": null
           }
         ],
-        "utenlandsopphold": null,
         "idHistorikk": [
           {
             "id": "1",
