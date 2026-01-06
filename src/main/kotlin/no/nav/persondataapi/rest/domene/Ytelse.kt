@@ -11,7 +11,10 @@ data class Ytelse(
         val periode: Periode,
         val beløp: BigDecimal,
         val kilde: String,
-        val info: String?
+        val info: String?,
+        val bruttoBeløp: BigDecimal? = null,
+        val refundertForOrg: String? = null
+
     )
 
     data class Periode(

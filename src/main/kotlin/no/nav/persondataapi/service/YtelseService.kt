@@ -50,6 +50,8 @@ class YtelseService(
                             tom = ytelse.ytelsesperiode.tom
                         ),
                         beløp = ytelse.ytelseNettobeloep,
+                        bruttoBeløp = ytelse.ytelseskomponentersum,
+                        refundertForOrg = ytelse.refundertForOrg?.ident ?: "UKJENT",
                         kilde = "SOKOS",
                         info = ytelse.bilagsnummer
                     )
