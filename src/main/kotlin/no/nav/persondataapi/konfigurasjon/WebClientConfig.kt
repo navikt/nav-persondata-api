@@ -24,18 +24,18 @@ import reactor.netty.resources.ConnectionProvider
 import java.net.InetSocketAddress
 import java.time.Duration
 import java.util.UUID
+import org.slf4j.LoggerFactory
+import org.springframework.util.unit.DataSize
+
 
 @Configuration
 class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
-    @Bean
-    fun webClientBuilder(): WebClient.Builder {
-        val strategies = ExchangeStrategies.builder()
-            .codecs { it.defaultCodecs().maxInMemorySize(5 * 1024 * 1024) }
-            .build()
+    private val log = LoggerFactory.getLogger(WebClientConfig::class.java)
 
-        return WebClient.builder().exchangeStrategies(strategies)
-    }
+    @Bean
+    fun webClientBuilder(strategies: ExchangeStrategies): WebClient.Builder =
+        WebClient.builder().exchangeStrategies(strategies)
 
     private data class HttpClientKonfig(
         val poolNavn: String,
@@ -454,4 +454,16 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
         return konfig.resolver?.let { httpClient.resolver(it) } ?: httpClient
     }
+
+    @Bean
+    fun exchangeStrategies(
+        @Value("\${spring.http.codecs.max-in-memory-size:256KB}") max: DataSize
+    ): ExchangeStrategies {
+        log.info("Applying WebClient maxInMemorySize={} ({} bytes)", max, max.toBytes())
+        return ExchangeStrategies.builder()
+            .codecs { it.defaultCodecs().maxInMemorySize(max.toBytes().toInt()) }
+            .build()
+    }
+
+
 }
