@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val tokenSupportVersion = "5.0.30"
 val graphQLKotlinVersion = "9.0.0-alpha.8"
@@ -57,8 +58,11 @@ sourceSets["main"].kotlin.srcDirs(
   "build/generate-resources/main/src/main/kotlin"
 )
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-  compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+tasks.withType<KotlinCompile>().configureEach {
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_21)
+    freeCompilerArgs.add("-Xannotation-default-target=param-property")
+  }
 }
 
 tasks.named<Jar>("bootJar") {
