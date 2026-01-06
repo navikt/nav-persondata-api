@@ -4,8 +4,9 @@ server:
   port: 8080
 
 spring:
-  codec:
-    max-in-memory-size: 5MB
+  http:
+    codecs:
+      max-in-memory-size: 5MB
   data:
     redis:
       host: ${VALKEY_HOST_NAV_PERSONDATA_API}
