@@ -16,6 +16,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientRequestObservationConvention
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
+import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
@@ -26,6 +27,15 @@ import java.util.UUID
 
 @Configuration
 class WebClientConfig(private val observationRegistry: ObservationRegistry) {
+
+    @Bean
+    fun webClientBuilder(): WebClient.Builder {
+        val strategies = ExchangeStrategies.builder()
+            .codecs { it.defaultCodecs().maxInMemorySize(5 * 1024 * 1024) }
+            .build()
+
+        return WebClient.builder().exchangeStrategies(strategies)
+    }
 
     private data class HttpClientKonfig(
         val poolNavn: String,
