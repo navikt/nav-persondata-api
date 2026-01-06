@@ -16,7 +16,6 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientRequestObservationConvention
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
-import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
@@ -24,18 +23,13 @@ import reactor.netty.resources.ConnectionProvider
 import java.net.InetSocketAddress
 import java.time.Duration
 import java.util.UUID
-import org.slf4j.LoggerFactory
-import org.springframework.util.unit.DataSize
-
 
 @Configuration
 class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
-    private val log = LoggerFactory.getLogger(WebClientConfig::class.java)
-
     @Bean
-    fun webClientBuilder(strategies: ExchangeStrategies): WebClient.Builder =
-        WebClient.builder().exchangeStrategies(strategies)
+    fun webClientBuilder(): WebClient.Builder =
+        WebClient.builder()
 
     private data class HttpClientKonfig(
         val poolNavn: String,
@@ -454,16 +448,4 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
 
         return konfig.resolver?.let { httpClient.resolver(it) } ?: httpClient
     }
-
-    @Bean
-    fun exchangeStrategies(
-        @Value("\${spring.http.codecs.max-in-memory-size:256KB}") max: DataSize
-    ): ExchangeStrategies {
-        log.info("Applying WebClient maxInMemorySize={} ({} bytes)", max, max.toBytes())
-        return ExchangeStrategies.builder()
-            .codecs { it.defaultCodecs().maxInMemorySize(max.toBytes().toInt()) }
-            .build()
-    }
-
-
 }
