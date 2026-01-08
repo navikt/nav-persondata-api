@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping("/oppslag/inntekt")
@@ -19,9 +20,9 @@ class InntektController(
 ) {
     @Protected
     @PostMapping
-    fun hentInntekter(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
+    fun hentInntekter(@RequestBody dto: OppslagRequestDto, @RequestParam(required = false, defaultValue = "false") utvidet: Boolean): ResponseEntity<OppslagResponseDto<InntektInformasjon>> {
         return runBlocking {
-            val resultat = inntektService.hentInntekterForPerson(dto.ident)
+            val resultat = inntektService.hentInntekterForPerson(personIdent = dto.ident, utvidet = utvidet)
 
             when (resultat) {
                 is InntektResultat.Success -> {

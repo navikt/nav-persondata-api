@@ -40,9 +40,8 @@ class DagpengerDatadelingClient(
     fun hentDagpengeMeldekort(
         personIdent: PersonIdent,
         utvidet: Boolean,
-
-        ): DagpengerMeldekortRespons {
-        val antallÅr: Long = if (utvidet) 10 else 3
+    ): DagpengerMeldekortRespons {
+        val antallÅr: Long = if (utvidet) 10 else 5
         val oboToken = tokenService.getServiceToken(SCOPE.DP_DATADELING_SCOPE)
         return runCatching {
             metrics.timer(operationName).recordCallable {

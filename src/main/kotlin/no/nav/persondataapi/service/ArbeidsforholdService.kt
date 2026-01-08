@@ -26,7 +26,7 @@ class ArbeidsforholdService(
 
     suspend fun hentArbeidsforholdForPerson(personIdent: PersonIdent): ArbeidsforholdResultat {
         // Hent arbeidsforhold fra Aareg
-        val aaregRespons = aaregClient.hentArbeidsforhold(personIdent)
+        val aaregRespons = aaregClient.hentArbeidsforhold(personIdent = personIdent)
         if (erTraceLoggingAktvert()) {
             logger.info(teamLogsMarker,"Logging aktivert - full AAREG-respons for {}: {}", personIdent, JsonUtils.toJson(aaregRespons).toPrettyString())
         }
