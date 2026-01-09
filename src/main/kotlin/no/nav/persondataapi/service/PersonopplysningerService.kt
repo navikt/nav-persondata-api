@@ -75,10 +75,10 @@ class PersonopplysningerService(
             adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
             statsborgerskap = statsborgerskap,
             sivilstand = pdlData.gjeldendeSivilStand(),
-            alder = pdlData.foedselsdato.first().foedselsdato?.let {
+            alder = pdlData.foedselsdato.firstOrNull()?.foedselsdato?.let {
                 Period.between(LocalDate.parse(it), LocalDate.now()).years
             } ?: -1,
-            fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
+            fødselsdato = pdlData.foedselsdato.firstOrNull()?.foedselsdato ?: "",
             dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
             navKontor = PersonInformasjon.NavKontor(
                 enhetId = lokalKontor.enhetId,
