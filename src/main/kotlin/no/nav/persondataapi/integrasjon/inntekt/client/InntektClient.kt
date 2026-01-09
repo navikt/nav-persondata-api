@@ -35,7 +35,7 @@ class InntektClient(
 
     @Cacheable(
         value = ["inntekt-historikk"],
-        key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom",
+        key = "#personIdent + '_' + #periode.fom + '_' + #periode.tom",
         unless = "#result.statusCode != 200 && #result.statusCode != 404"
     )
     fun hentInntekter(
