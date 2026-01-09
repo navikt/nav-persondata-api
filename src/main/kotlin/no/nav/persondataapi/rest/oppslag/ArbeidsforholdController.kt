@@ -21,7 +21,7 @@ class ArbeidsforholdController(
     @PostMapping
     fun hentArbeidsforhold(@RequestBody dto: OppslagRequestDto): ResponseEntity<OppslagResponseDto<ArbeidsgiverInformasjon>> {
         return runBlocking {
-            val resultat = arbeidsforholdService.hentArbeidsforholdForPerson(dto.ident)
+            val resultat = arbeidsforholdService.hentArbeidsforholdForPerson(personIdent = dto.ident)
 
             when (resultat) {
                 is ArbeidsforholdResultat.Success -> {

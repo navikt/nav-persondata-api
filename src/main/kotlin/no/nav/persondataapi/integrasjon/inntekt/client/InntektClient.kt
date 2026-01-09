@@ -40,7 +40,7 @@ class InntektClient(
     )
     fun hentInntekter(
         personIdent: PersonIdent,
-        kontrollPeriode: KontrollPeriode = KontrollPeriode(
+        periode: KontrollPeriode = KontrollPeriode(
             LocalDate.now().minusYears(5),
             LocalDate.now()
         )
@@ -50,15 +50,14 @@ class InntektClient(
                 .timer(operationName)
                 .recordCallable {
 
-
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
                 personident = personIdent.value,
                 filter = "NAVKontrollA-Inntekt",
                 formaal = "NAVKontroll",
-                maanedFom = kontrollPeriode.fom.format(formatter),
-                maanedTom = kontrollPeriode.tom.format(formatter),
+                maanedFom = periode.fom.format(formatter),
+                maanedTom = periode.tom.format(formatter),
             )
             val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
 
