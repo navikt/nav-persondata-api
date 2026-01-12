@@ -15,7 +15,7 @@ plugins {
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.3.0"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
-  id("org.openapi.generator") version "7.17.0"
+  id("org.openapi.generator") version "7.18.0"
 }
 
 openApiGenerate {
