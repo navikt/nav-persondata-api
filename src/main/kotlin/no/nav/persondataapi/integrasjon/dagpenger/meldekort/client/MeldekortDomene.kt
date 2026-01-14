@@ -24,7 +24,7 @@ data class Meldekort(
     val sisteFristForTrekk: LocalDate?,
     val opprettetAv: String,
     val migrert: Boolean,
-    val kilde: Kilde? = null,
+    val kilde: Kilde = Kilde(ident = "Ukjent", rolle = "Ukjent"),
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
     val meldedato: LocalDate?
