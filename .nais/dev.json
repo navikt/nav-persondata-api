@@ -40,6 +40,14 @@
       "value": "https://pdl-api.dev-fss-pub.nais.io/graphql"
     },
     {
+      "name": "NOM_SCOPE",
+      "value": "api://dev-gcp.nom.nom-api/.default"
+    },
+    {
+      "name": "NOM_URL",
+      "value": "https://nom-api.intern.dev.nav.no"
+    },
+    {
       "name": "INNTEKT_SCOPE",
       "value": "api://dev-fss.team-inntekt.ikomp-q2/.default"
     },
