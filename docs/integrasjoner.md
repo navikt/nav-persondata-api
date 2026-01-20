@@ -14,6 +14,13 @@
 - Cache: `pdl-person` og `pdl-geografisktilknytning`.
 - Bruk: Henter persondata og geografisk tilknytning for oppslag og NAV-kontorberikelse.
 
+## NOM (Ressurs og organisasjon)
+- Protokoll: GraphQL via Expediagroup-klient.
+- Endepunkt: `${NOM_URL}`.
+- Auth: Client credentials med `NOM_SCOPE`.
+- Cache: `nom-ressurs` (per NAV-ident).
+- Bruk: Henter saksbehandlers organisasjonstilhørighet til `/meg` og metrikker.
+
 ## Tilgangsmaskinen
 - Protokoll: REST.
 - Endepunkt: `${TILGANGMASKIN_URL}`.
