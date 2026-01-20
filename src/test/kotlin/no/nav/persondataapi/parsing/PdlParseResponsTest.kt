@@ -1,6 +1,6 @@
 package no.nav.persondataapi.parsing
 
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.service.nåværendeBostedsadresse
 import org.junit.jupiter.api.Test

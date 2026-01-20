@@ -1,7 +1,7 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.konfigurasjon.teamLogsMarker
