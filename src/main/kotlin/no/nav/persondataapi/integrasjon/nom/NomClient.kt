@@ -47,7 +47,7 @@ class NomClient(
         key = "#navIdent",
         unless = "#result.statusCode != 200 && #result.statusCode != 404"
     )
-    suspend fun hentRessurs(navIdent: String): RessursResultat {
+    suspend fun hentSaksbehandlerTilhørighet(navIdent: String): SaksbehandlerTilhørighetResultat {
         val token = tokenService.getServiceToken(SCOPE.NOM_SCOPE)
 
         val httpClient = createTimeoutHttpClient()
@@ -72,15 +72,22 @@ class NomClient(
             val errors = response.errors.orEmpty()
             if (errors.isNotEmpty()) {
                 val (status, message) = håndterNomFeil(errors)
-                return RessursResultat(
+                return SaksbehandlerTilhørighetResultat(
                     data = null,
                     statusCode = status,
                     errorMessage = message
                 )
             }
 
-            return RessursResultat(
-                data = response.data!!.ressurs,
+            val ressurs = response.data?.ressurs
+                ?: return SaksbehandlerTilhørighetResultat(
+                    data = null,
+                    statusCode = 404,
+                    errorMessage = "Fant ikke ressurs"
+                )
+
+            return SaksbehandlerTilhørighetResultat(
+                data = mapTilDomenemodell(ressurs),
                 statusCode = 200,
                 errorMessage = null,
             )
@@ -106,28 +113,39 @@ class NomClient(
         return status to firstError.message
     }
 
-    private fun handleNomException(e: Exception, operasjon: String): RessursResultat {
+    private fun handleNomException(e: Exception, operasjon: String): SaksbehandlerTilhørighetResultat {
         when (e) {
             is java.util.concurrent.TimeoutException,
             is io.netty.handler.timeout.ReadTimeoutException,
             is io.netty.handler.timeout.WriteTimeoutException -> {
                 metrics.counter(operasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot NOM ($operasjon)", e)
-                return RessursResultat(null, 504, "Timeout mot NOM")
+                return SaksbehandlerTilhørighetResultat(null, 504, "Timeout mot NOM")
             }
 
             else -> {
                 metrics.counter(operasjon, DownstreamResult.UNEXPECTED).increment()
                 log.error("Uventet feil mot NOM ($operasjon)", e)
-                return RessursResultat(null, 500, e.message)
+                return SaksbehandlerTilhørighetResultat(null, 500, e.message)
             }
         }
     }
 
+    private fun mapTilDomenemodell(resultat: Ressurs): SaksbehandlerTilhørighet {
+        return SaksbehandlerTilhørighet(
+            navIdent = resultat.navident,
+            organisasjoner = resultat.orgTilknytninger.map { it.orgEnhet.navn }
+        )
+    }
 }
 
-data class RessursResultat(
-    val data: Ressurs?,
+data class SaksbehandlerTilhørighet(
+    val navIdent: String,
+    val organisasjoner: List<String>
+)
+
+data class SaksbehandlerTilhørighetResultat(
+    val data: SaksbehandlerTilhørighet?,
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
