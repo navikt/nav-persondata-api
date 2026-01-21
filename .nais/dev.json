@@ -45,7 +45,7 @@
     },
     {
       "name": "NOM_URL",
-      "value": "https://nom-api.intern.dev.nav.no"
+      "value": "https://nom-api.intern.dev.nav.no/graphql"
     },
     {
       "name": "INNTEKT_SCOPE",
