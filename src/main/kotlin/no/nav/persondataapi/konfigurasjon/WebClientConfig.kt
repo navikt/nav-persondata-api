@@ -321,14 +321,14 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         @Qualifier("nomObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("nomHttpClient") pdlHttpClient: HttpClient
+        @Qualifier("nomHttpClient") nomHttpClient: HttpClient
     ): WebClient =
         base.clone()
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }
-            .clientConnector(ReactorClientHttpConnector(pdlHttpClient))
+            .clientConnector(ReactorClientHttpConnector(nomHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -453,6 +453,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "ereg" to HttpClientKonfig(poolNavn = "ereg-pool"),
         "pdl" to HttpClientKonfig(
             poolNavn = "pdl-pool",
+            resolver = DefaultAddressResolverGroup.INSTANCE,
+            uriTagger = { "/graphql" }
+        ),
+        "nom" to HttpClientKonfig(
+            poolNavn = "nom-pool",
             resolver = DefaultAddressResolverGroup.INSTANCE,
             uriTagger = { "/graphql" }
         ),
