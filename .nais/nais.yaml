@@ -92,6 +92,8 @@ spec:
           namespace: nom
         - application: aap-api
           namespace: aap
+        - application: aap-api
+          namespace: aap
       external:
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}
