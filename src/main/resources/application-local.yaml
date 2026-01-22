@@ -68,4 +68,4 @@ DP_DATADELING_URL: https://dp-datadeling.intern.dev.nav.no
 DP_DATADELING_SCOPE: api://dev-gcp.teamdagpenger.dp-datadeling/.default
 
 AAP_URL: https://aap-api.intern.dev.nav.no
-AAP_SCOPE: api://dev-gcp.aap.aap-api/.default
+AAP_SCOPE: api://dev-gcp.aap.api-intern/.default
