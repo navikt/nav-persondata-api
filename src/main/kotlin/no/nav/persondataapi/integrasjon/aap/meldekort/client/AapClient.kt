@@ -2,9 +2,9 @@ package no.nav.persondataapi.integrasjon.aap.meldekort.client
 
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AAPMaxRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AAPMaximumRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AAPMaximumRequest
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
-import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortRequest
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
 import no.nav.persondataapi.metrics.AAPMetrics
@@ -47,8 +47,8 @@ class AapClient(
             metrics.timer(operationName).recordCallable {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-                val requestBody = MeldekortRequest(
-                    personIdent = personIdent.value,
+                val requestBody = AAPMaximumRequest(
+                    personidentifikator = personIdent.value,
                     fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
                     tilOgMedDato = LocalDate.now().format(formatter),
                 )
@@ -59,13 +59,13 @@ class AapClient(
                     .exchangeToMono { response ->
                         val status = response.statusCode()
                         if (status.is2xxSuccessful) {
-                            response.bodyToMono(object : ParameterizedTypeReference<AAPMaxRespons>() {})
+                            response.bodyToMono(object : ParameterizedTypeReference<AAPMaximumRespons>() {})
                         } else {
                             response.bodyToMono(String::class.java).map { body ->
-                                throw RuntimeException("Feil fra AAP Max: HTTP $status – $body")
+                                throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")
                             }
                         }
-                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-max")).block()!!
+                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-maksimum")).block()!!
 
                 responseResult
             }

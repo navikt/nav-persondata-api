@@ -9,7 +9,7 @@ data class AAPMaximumRequest(
     val tilOgMedDato: String,
 )
 
-data class AAPMaxRespons(
+data class AAPMaximumRespons(
     val vedtak: List<Vedtak>
 )
 data class Vedtak(
