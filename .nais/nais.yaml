@@ -90,6 +90,8 @@ spec:
           namespace: teamdagpenger
         - application: nom-api
           namespace: nom
+        - application: aap-api
+          namespace: aap
       external:
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}

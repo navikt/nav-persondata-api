@@ -2,7 +2,14 @@ package no.nav.persondataapi.integrasjon.aap.meldekort.domene
 
 import java.time.LocalDate
 
-data class AAPMeldekortRespons(
+
+data class AAPMaximumRequest(
+    val personidentifikator: String,
+    val fraOgMedDato: String,
+    val tilOgMedDato: String,
+)
+
+data class AAPMaxRespons(
     val vedtak: List<Vedtak>
 )
 data class Vedtak(
