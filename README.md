@@ -5,6 +5,7 @@ API for uthenting av persondata for Borger eller innbygger i Norge med Nav tilkn
 
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
+Se [AGENTS.md Bygg, test og utvikling](../path/to/AGENTS.md#L42) for detaljer.
 
 ### Henting av secrets
 
