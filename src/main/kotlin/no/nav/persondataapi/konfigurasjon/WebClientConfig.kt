@@ -75,6 +75,9 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Value("\${DP_DATADELING_URL}")
     lateinit var dpDatadelingURL: String
 
+    @Value("\${AAP_URL}")
+    lateinit var aapURL: String
+
 
     /**
      * HttpClient for tokenutveksling med pool.
@@ -236,6 +239,10 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("dpDatadelingHttpClient")
     fun dpdatadelingHttpClient(): HttpClient = httpClientFor("dpDatadeling")
 
+    @Bean
+    @Qualifier("aapHttpClient")
+    fun aapHttpClient(): HttpClient = httpClientFor("aap")
+
 
     @Bean
     fun eregWebClient(
@@ -266,6 +273,22 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
                 it.contentType = MediaType.APPLICATION_JSON
             }
             .clientConnector(ReactorClientHttpConnector(dpDatadelingHttpClient))
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    fun aapWebClient(
+        builder: WebClient.Builder,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("aapHttpClient") aapHttpClient: HttpClient
+    ): WebClient =
+        builder
+            .baseUrl(aapURL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(ReactorClientHttpConnector(aapHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -425,7 +448,9 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
         "token" to HttpClientKonfig(poolNavn = "token-pool"),
         "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
-        "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool")
+        "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
+        "aap" to HttpClientKonfig(poolNavn = "aap-pool")
+
     )
 
     private fun httpClientFor(navn: String): HttpClient = httpClientMedPool(httpClientKonfigurasjoner.getValue(navn))

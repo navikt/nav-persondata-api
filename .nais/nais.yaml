@@ -88,6 +88,8 @@ spec:
           namespace: personoversikt
         - application: dp-datadeling
           namespace: teamdagpenger
+        - application: aap-api
+          namespace: aap
       external:
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}
