@@ -37,7 +37,8 @@ enum class MeldekortStatus {
 
 enum class MeldekortType {
     Ordinaert,
-    Etterregistrert
+    Etterregistrert,
+    Korrigert,
 }
 
 data class Periode(
