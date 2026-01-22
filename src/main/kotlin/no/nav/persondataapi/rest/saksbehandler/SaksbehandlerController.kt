@@ -1,8 +1,8 @@
-package no.nav.persondataapi.rest.meg
+package no.nav.persondataapi.rest.saksbehandler
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.rest.oppslag.OppslagResponseDto
-import no.nav.persondataapi.service.MegService
+import no.nav.persondataapi.service.SaksbehandlerService
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/meg")
-class MegController(
-    private val megService: MegService
+@RequestMapping("/saksbehandler")
+class SaksbehandlerController(
+    private val saksbehandlerService: SaksbehandlerService
 ) {
     /**
      * Henter saksbehandlerens organisasjonstilhørighet.
      */
     @Protected
     @GetMapping
-    fun hentMeg(): ResponseEntity<OppslagResponseDto<MegResponsDto>> {
+    fun hentSaksbehandler(): ResponseEntity<OppslagResponseDto<SaksbehandlerResponsDto>> {
         return runBlocking {
-            val resultat = megService.hentMeg()
+            val resultat = saksbehandlerService.hentSaksbehandler()
 
             if (resultat.data == null) {
                 val feilmelding = resultat.errorMessage ?: "Ukjent feil"
@@ -33,7 +33,7 @@ class MegController(
             } else {
                 ResponseEntity.ok(
                     OppslagResponseDto(
-                        data = MegResponsDto(
+                        data = SaksbehandlerResponsDto(
                             navIdent = resultat.data.navIdent,
                             organisasjoner = resultat.data.organisasjoner
                         )
@@ -43,7 +43,7 @@ class MegController(
         }
     }
 
-    data class MegResponsDto(
+    data class SaksbehandlerResponsDto(
         val navIdent: String,
         val organisasjoner: List<String>
     )

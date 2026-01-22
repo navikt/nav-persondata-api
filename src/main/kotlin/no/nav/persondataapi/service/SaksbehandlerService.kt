@@ -6,14 +6,14 @@ import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class MegService(
+class SaksbehandlerService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val nomClient: NomClient,
 ) {
     /**
      * Henter organisasjonstilhørighet for innlogget saksbehandler.
      */
-    suspend fun hentMeg(): SaksbehandlerTilhørighetResultat {
+    suspend fun hentSaksbehandler(): SaksbehandlerTilhørighetResultat {
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
         val navIdent = token.jwtTokenClaims.get("NAVident").toString()

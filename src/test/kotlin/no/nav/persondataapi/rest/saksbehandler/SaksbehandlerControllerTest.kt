@@ -1,21 +1,21 @@
-package no.nav.persondataapi.rest.meg
+package no.nav.persondataapi.rest.saksbehandler
 
 import io.mockk.coEvery
 import io.mockk.mockk
 import no.nav.persondataapi.integrasjon.nom.SaksbehandlerTilhørighet
 import no.nav.persondataapi.integrasjon.nom.SaksbehandlerTilhørighetResultat
-import no.nav.persondataapi.service.MegService
+import no.nav.persondataapi.service.SaksbehandlerService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
-class MegControllerTest {
+class SaksbehandlerControllerTest {
 
-    private val megService = mockk<MegService>()
-    private val controller = MegController(megService)
+    private val saksbehandlerService = mockk<SaksbehandlerService>()
+    private val controller = SaksbehandlerController(saksbehandlerService)
 
     @Test
-    fun `hentMeg skal returnere saksbehandlerdata`() {
+    fun `hentSaksbehandler skal returnere saksbehandlerdata`() {
         val resultat = SaksbehandlerTilhørighetResultat(
             data = SaksbehandlerTilhørighet(
                 navIdent = "Z12345",
@@ -24,9 +24,9 @@ class MegControllerTest {
             statusCode = 200,
             errorMessage = null
         )
-        coEvery { megService.hentMeg() } returns resultat
+        coEvery { saksbehandlerService.hentSaksbehandler() } returns resultat
 
-        val response = controller.hentMeg()
+        val response = controller.hentSaksbehandler()
 
         assertEquals(HttpStatus.OK, response.statusCode)
         assertEquals("Z12345", response.body?.data?.navIdent)
@@ -35,15 +35,15 @@ class MegControllerTest {
     }
 
     @Test
-    fun `hentMeg skal returnere feilmelding ved NOM-feil`() {
+    fun `hentSaksbehandler skal returnere feilmelding ved NOM-feil`() {
         val resultat = SaksbehandlerTilhørighetResultat(
             data = null,
             statusCode = 404,
             errorMessage = "Fant ikke ressurs"
         )
-        coEvery { megService.hentMeg() } returns resultat
+        coEvery { saksbehandlerService.hentSaksbehandler() } returns resultat
 
-        val response = controller.hentMeg()
+        val response = controller.hentSaksbehandler()
 
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
         assertEquals("Fant ikke ressurs", response.body?.error)

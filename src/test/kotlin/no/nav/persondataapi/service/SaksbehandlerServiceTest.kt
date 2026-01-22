@@ -15,14 +15,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
-class MegServiceTest {
+class SaksbehandlerServiceTest {
 
     private val tokenValidationContextHolder = mockk<TokenValidationContextHolder>()
     private val nomClient = mockk<NomClient>()
-    private val megService = MegService(tokenValidationContextHolder, nomClient)
+    private val saksbehandlerService = SaksbehandlerService(tokenValidationContextHolder, nomClient)
 
     @Test
-    fun `hentMeg skal bruke NAVident og returnere resultat fra NOM`() = runBlocking {
+    fun `hentSaksbehandler skal bruke NAVident og returnere resultat fra NOM`() = runBlocking {
         val context = mockk<TokenValidationContext>()
         val token = mockk<JwtToken>()
         val claims = mockk<JwtTokenClaims>()
@@ -41,13 +41,13 @@ class MegServiceTest {
         every { claims.get("NAVident") } returns "Z12345"
         coEvery { nomClient.hentSaksbehandlerTilhørighet("Z12345") } returns forventet
 
-        val resultat = megService.hentMeg()
+        val resultat = saksbehandlerService.hentSaksbehandler()
 
         assertEquals(forventet, resultat)
     }
 
     @Test
-    fun `hentMeg skal kaste feil når token mangler`() {
+    fun `hentSaksbehandler skal kaste feil når token mangler`() {
         val context = mockk<TokenValidationContext>()
 
         every { tokenValidationContextHolder.getTokenValidationContext() } returns context
@@ -55,7 +55,7 @@ class MegServiceTest {
 
         val exception = assertThrows(IllegalStateException::class.java) {
             runBlocking {
-                megService.hentMeg()
+                saksbehandlerService.hentSaksbehandler()
             }
         }
 
