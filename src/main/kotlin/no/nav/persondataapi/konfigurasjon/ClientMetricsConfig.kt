@@ -57,6 +57,15 @@ class ClientMetricsConfig {
         }
 
     @Bean
+    @Qualifier("nomObservation")
+    fun nomObservationConvention(): ClientRequestObservationConvention =
+        object : DefaultClientRequestObservationConvention() {
+            override fun getLowCardinalityKeyValues(ctx: ClientRequestObservationContext): KeyValues {
+                return super.getLowCardinalityKeyValues(ctx)
+            }
+        }
+
+    @Bean
     @Qualifier("kodeverkObservation")
     fun kodeverkObservationConvention(): ClientRequestObservationConvention =
         object : DefaultClientRequestObservationConvention() {

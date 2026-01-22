@@ -6,10 +6,10 @@ import com.expediagroup.graphql.client.types.GraphQLClientError
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
-import no.nav.persondataapi.generated.HentGeografiskTilknytning
-import no.nav.persondataapi.generated.HentPerson
-import no.nav.persondataapi.generated.hentgeografisktilknytning.GeografiskTilknytning
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.HentGeografiskTilknytning
+import no.nav.persondataapi.generated.pdl.HentPerson
+import no.nav.persondataapi.generated.pdl.hentgeografisktilknytning.GeografiskTilknytning
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.konfigurasjon.RetryPolicy.coroutineRetry
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.PdlMetrics
@@ -217,4 +217,3 @@ data class GeografiskTilknytningResultat(
     val statusCode: Int,               // f.eks. 200, 401, 500
     val errorMessage: String? = null
 )
-

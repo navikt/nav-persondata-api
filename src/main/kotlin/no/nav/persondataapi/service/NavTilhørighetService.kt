@@ -1,7 +1,7 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.generated.enums.GtType
-import no.nav.persondataapi.generated.hentgeografisktilknytning.GeografiskTilknytning
+import no.nav.persondataapi.generated.pdl.enums.GtType
+import no.nav.persondataapi.generated.pdl.hentgeografisktilknytning.GeografiskTilknytning
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.norg2.client.Norg2Client
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient

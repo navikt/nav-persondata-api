@@ -6,7 +6,7 @@ import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.Identtype
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {

@@ -23,3 +23,6 @@ class Norg2Metrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "n
 
 @Component
 class DPDatadelingMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "dp-datadeling")
+
+@Component
+class NomMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "nom")

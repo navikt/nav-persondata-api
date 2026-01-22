@@ -5,15 +5,15 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import no.nav.persondataapi.generated.enums.ForelderBarnRelasjonRolle
-import no.nav.persondataapi.generated.enums.Sivilstandstype
-import no.nav.persondataapi.generated.hentperson.Foedselsdato
-import no.nav.persondataapi.generated.hentperson.ForelderBarnRelasjon
-import no.nav.persondataapi.generated.hentperson.Metadata
-import no.nav.persondataapi.generated.hentperson.Navn
-import no.nav.persondataapi.generated.hentperson.Person
-import no.nav.persondataapi.generated.hentperson.Sivilstand
-import no.nav.persondataapi.generated.hentperson.Statsborgerskap
+import no.nav.persondataapi.generated.pdl.enums.ForelderBarnRelasjonRolle
+import no.nav.persondataapi.generated.pdl.enums.Sivilstandstype
+import no.nav.persondataapi.generated.pdl.hentperson.Foedselsdato
+import no.nav.persondataapi.generated.pdl.hentperson.ForelderBarnRelasjon
+import no.nav.persondataapi.generated.pdl.hentperson.Metadata
+import no.nav.persondataapi.generated.pdl.hentperson.Navn
+import no.nav.persondataapi.generated.pdl.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentperson.Sivilstand
+import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
@@ -400,7 +400,7 @@ private fun lagPerson(
         forelderBarnRelasjon = forelderBarnRelasjon,
         sivilstand = actualSivilstand,
         bostedsadresse = listOf(
-            no.nav.persondataapi.generated.hentperson.Bostedsadresse(
+            no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse(
                 vegadresse = null,
                 matrikkeladresse = null,
                 utenlandskAdresse = null,

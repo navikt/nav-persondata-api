@@ -1,3 +1,4 @@
+import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -34,13 +35,18 @@ openApiGenerate {
   )
 }
 
-graphql {
-  client {
-    packageName = "no.nav.persondataapi.generated"
-    // For statiske spørringer
-    queryFileDirectory = "src/main/resources/graphql/queries"
-    schemaFile = file("src/main/resources/graphql/schema/pdl-api-sdl.graphqls")
-  }
+val graphqlGeneratePdlClient by tasks.registering(GraphQLGenerateClientTask::class) {
+  packageName.set("no.nav.persondataapi.generated.pdl")
+  schemaFile.set(file("src/main/resources/graphql/schema/pdl/pdl-api-sdl.graphqls"))
+  queryFileDirectory.set(file("src/main/resources/graphql/queries/pdl"))
+  allowDeprecatedFields.set(false)
+}
+
+val graphqlGenerateNomClient by tasks.registering(GraphQLGenerateClientTask::class) {
+  packageName.set("no.nav.persondataapi.generated.nom")
+  schemaFile.set(file("src/main/resources/graphql/schema/nom/nom-api.graphqls"))
+  queryFileDirectory.set(file("src/main/resources/graphql/queries/nom"))
+  allowDeprecatedFields.set(false)
 }
 
 repositories {
@@ -74,7 +80,7 @@ tasks.withType<Test> {
 }
 
 tasks.named("compileKotlin") {
-  dependsOn("graphqlGenerateClient", "openApiGenerate")
+  dependsOn(graphqlGeneratePdlClient, graphqlGenerateNomClient, "openApiGenerate")
 }
 
 dependencies {

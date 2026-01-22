@@ -308,6 +308,43 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         )
 
     /**
+     * HttpClient for NOM-klienten med pool og resolver for DNS.
+     */
+    @Bean
+    @Qualifier("nomHttpClient")
+    fun nomHttpClient(): HttpClient = httpClientFor("nom")
+
+    @Bean
+    @Qualifier("nomWebClient")
+    fun nomWebClient(
+        base: WebClient.Builder,
+        @Qualifier("nomObservation")
+        convention: ClientRequestObservationConvention,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("nomHttpClient") nomHttpClient: HttpClient
+    ): WebClient =
+        base.clone()
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(ReactorClientHttpConnector(nomHttpClient))
+            .observationConvention(convention)
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    @Qualifier("nomGraphQLClient")
+    fun nomGraphQLClient(
+        @Qualifier("nomWebClient") webClient: WebClient,
+        @Value("\${NOM_URL}") nomUrl: String
+    ): GraphQLWebClient =
+        GraphQLWebClient(
+            url = nomUrl,
+            builder = webClient.mutate() // arver connector + observation
+        )
+
+    /**
      * HttpClient for Kodeverk-klienten med pool.
      */
     @Bean
@@ -416,6 +453,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "ereg" to HttpClientKonfig(poolNavn = "ereg-pool"),
         "pdl" to HttpClientKonfig(
             poolNavn = "pdl-pool",
+            resolver = DefaultAddressResolverGroup.INSTANCE,
+            uriTagger = { "/graphql" }
+        ),
+        "nom" to HttpClientKonfig(
+            poolNavn = "nom-pool",
             resolver = DefaultAddressResolverGroup.INSTANCE,
             uriTagger = { "/graphql" }
         ),
