@@ -37,7 +37,7 @@ flowchart TD
     B -->|2.4 tilgangssvar| A[Returner 403 Forbidden]
     B -->|3.1 Hent persondata| C{Sjekk tilganger}
     C -->|3.2 Logg tilgangsforespørsel| G[Audit logg]
-    C -->|3.3 Logg avslag/godkjenning| H[Audit logg]
+    C -->|3.3 Logg avslag/godkjenning| G[Audit logg]
     C -->|3.4 Sjekk tilgang til personident| E[Tilgangsmaskinen]
     C --->|3.5 Returner Tilgangssvar|B
     B -->|4.1 Hent data|F{Hent vedtaksdata}
