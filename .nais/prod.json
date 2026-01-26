@@ -109,7 +109,7 @@
     },
     {
       "name": "AAP_SCOPE",
-      "value": "api://prod-gcp.aap.aap-api/.default"
+      "value": "api://prod-gcp.aap.api-intern/.default"
     }
   ]
 }

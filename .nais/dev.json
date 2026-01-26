@@ -109,7 +109,7 @@
     },
     {
       "name": "AAP_SCOPE",
-      "value": "api://dev-gcp.aap.aap-api/.default"
+      "value": "api://dev-gcp.aap.api-intern/.default"
     },
     {
       "name": "JAVA_TOOL_OPTIONS",
