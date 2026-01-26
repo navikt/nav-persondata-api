@@ -92,7 +92,7 @@ dependencies {
     because("Fixes CVE-2025-48924")
   }
 
-  implementation("tools.jackson.module:jackson-module-kotlin:3.0.3")
+  implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
 
   // Tracing (Micrometer → OpenTelemetry)
   implementation("io.micrometer:micrometer-tracing-bridge-otel")
