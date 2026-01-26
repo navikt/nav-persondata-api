@@ -31,7 +31,7 @@ class AAPController(
         val resultat = aapClient.hentAapMax(personIdent = dto.ident,utvidet)
 
         when (resultat.statusCode){
-            200 -> return ResponseEntity.ok(OppslagResponseDto(data = emptyList()))
+            200 -> return ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
             else -> return  ResponseEntity(
                 OppslagResponseDto(error = "Feil i baksystem, ${resultat.statusCode}, ${resultat.data}"),
                 HttpStatus.INTERNAL_SERVER_ERROR
