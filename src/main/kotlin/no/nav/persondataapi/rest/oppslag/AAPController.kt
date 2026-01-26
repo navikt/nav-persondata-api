@@ -1,8 +1,11 @@
 package no.nav.persondataapi.rest.oppslag
 
 
+import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
+import no.nav.persondataapi.service.AAPMeldekortResultat
+import no.nav.persondataapi.service.ArbeidsforholdResultat
 import no.nav.persondataapi.service.MeldekortDto
 import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
@@ -28,14 +31,32 @@ class AAPController(
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
     ): ResponseEntity<OppslagResponseDto<List<Vedtak>>> {
 
-        val resultat = aapClient.hentAapMax(personIdent = dto.ident,utvidet)
+        return runBlocking {
+        val resultat = meldekortService.hentAAPMeldekortForPerson(personIdent = dto.ident,utvidet)
 
-        when (resultat.statusCode){
-            200 -> return ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
-            else -> return  ResponseEntity(
-                OppslagResponseDto(error = "Feil i baksystem, ${resultat.statusCode}, ${resultat.data}"),
-                HttpStatus.INTERNAL_SERVER_ERROR
-            )
+        when (resultat) {
+            is AAPMeldekortResultat.Success -> {
+                ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
+            }
+            is AAPMeldekortResultat.IngenTilgang -> {
+                ResponseEntity(
+                    OppslagResponseDto(error = "Ingen tilgang", data = null),
+                    HttpStatus.FORBIDDEN
+                )
+            }
+            is AAPMeldekortResultat.PersonIkkeFunnet -> {
+                ResponseEntity(
+                    OppslagResponseDto(error = "Person ikke funnet", data = null),
+                    HttpStatus.NOT_FOUND
+                )
+            }
+            is AAPMeldekortResultat.FeilIBaksystem -> {
+                ResponseEntity(
+                    OppslagResponseDto(error = "Feil i baksystem", data = null),
+                    HttpStatus.BAD_GATEWAY
+                )
+            }
+        }
         }
     }
 }

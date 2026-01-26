@@ -40,7 +40,7 @@ data class Utbetaling(
     val periode: Periode,
     val belop: Int,
     val dagsats: Int,
-    val utbetalingsgrad: Int,
+    val utbetalingsgrad: Int?,
 
     val reduksjon: Reduksjon?,
     val barnetilegg: Int?,
@@ -48,7 +48,7 @@ data class Utbetaling(
 )
 data class Periode(
     val fraOgMedDato: LocalDate, // evt. LocalDate
-    val tilOgMedDato: LocalDate  // evt. LocalDate
+    val tilOgMedDato: LocalDate?  // evt. LocalDate
 )
 
 data class Reduksjon(
