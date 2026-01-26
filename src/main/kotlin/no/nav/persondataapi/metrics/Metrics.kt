@@ -25,4 +25,7 @@ class Norg2Metrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "n
 class DPDatadelingMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "dp-datadeling")
 
 @Component
+class AAPMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "aap")
+
+@Component
 class NomMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "nom")

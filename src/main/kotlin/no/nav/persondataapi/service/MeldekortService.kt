@@ -1,5 +1,7 @@
 package no.nav.persondataapi.service
 
+import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.integrasjon.dagpenger.datadeling.DagpengerDatadelingClient
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStatus
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
@@ -12,7 +14,9 @@ import java.time.LocalDateTime
 
 @Service
 class MeldekortService(
-    private val dpDatadelingClient: DagpengerDatadelingClient, private val brukertilgangService: BrukertilgangService
+    private val dpDatadelingClient: DagpengerDatadelingClient,
+    private val aapClient: AapClient,
+    private val brukertilgangService: BrukertilgangService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -71,6 +75,87 @@ class MeldekortService(
             }
         return MeldekortResultat.Success(response)
     }
+
+    fun hentAAPMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): AAPMeldekortResultat {
+        val meldekortRespons = aapClient.hentAapMax(personIdent, utvidet)
+        logger.info("Hentet ${if (utvidet) "utvidete " else ""} AAP-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
+
+        when (meldekortRespons.statusCode) {
+            404 -> return AAPMeldekortResultat.PersonIkkeFunnet
+            403, 401 -> return AAPMeldekortResultat.IngenTilgang
+            500 -> return AAPMeldekortResultat.FeilIBaksystem
+            !in 200..299 -> return AAPMeldekortResultat.FeilIBaksystem
+        }
+
+        if (meldekortRespons.data.isNullOrEmpty()) {
+            logger.info("Fant ingen dagpenge-meldekort for $personIdent")
+            return AAPMeldekortResultat.Success(emptyList())
+        }
+
+        var meldekort = meldekortRespons.data
+        val antallInnsendt = meldekort.size
+        logger.info("Fant ${meldekort.size} aap meldekort (vedtak) for $personIdent", "hvorav $antallInnsendt har status Innsendt")
+        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            logger.info("Saksbehandler har ikke tilgang til å hente meldekort for $personIdent. Maskerer responsen")
+            meldekort = maskerObjekt(meldekort)
+        }
+        val new_modell = meldekort.map {
+            aapvedtak ->
+            AAPMeldekortDto(
+                vedtakId = aapvedtak.vedtakId,
+                status = aapvedtak.status,
+                saksnummer = aapvedtak.saksnummer,
+                vedtakPeriode = ÅpenPeriode(aapvedtak.periode.fraOgMedDato, aapvedtak.periode.tilOgMedDato),
+                rettighetsType = aapvedtak.rettighetsType,
+                kide = aapvedtak.kildesystem,
+                tema = Tema.AAP,
+                perioder = aapvedtak.utbetaling.map {
+                    utbetaling ->
+                    val arbeidetTimer = utbetaling.reduksjon?.timerArbeidet
+                    val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
+                    val utbetalingsgrad = utbetaling.utbetalingsgrad
+
+                    MeldekortPeriode(
+                        fraOgMed = utbetaling.periode.fraOgMedDato,
+                        tilOgMed = utbetaling.periode.tilOgMedDato!!,
+                        arbeidetTimer = arbeidetTimer,
+                        annenReduksjon = annenReduksjon,
+                        utbetalingsgrad = utbetalingsgrad,
+                    )
+                }
+            )
+        }
+        return AAPMeldekortResultat.Success(meldekortRespons.data)
+    }
+}
+
+data class AAPMeldekortDto(
+    val vedtakId: String,
+    val status: String,
+    val saksnummer: String,
+    val vedtakPeriode: ÅpenPeriode,
+    val rettighetsType: String,
+    val kide:String,
+    val tema:Tema,
+    val perioder:List<MeldekortPeriode> = emptyList(),
+)
+
+data class MeldekortPeriode(
+    val fraOgMed: LocalDate,
+    val tilOgMed: LocalDate,
+    val arbeidetTimer:String?,
+    val annenReduksjon:String?,
+    val utbetalingsgrad:Int?
+
+)
+data class TimerDto(
+    val antallTimer: String?,
+    val grad:Int?,
+    val type: AktivitetTypeDto
+)
+
+enum class Tema {
+    AAP, DAG, TILTAK
 }
 
 data class MeldekortDto(
@@ -83,6 +168,10 @@ data class MeldekortDto(
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
     val meldedato: LocalDate?
+)
+
+data class ÅpenPeriode(
+    val fraOgMed: LocalDate, val tilOgMed: LocalDate?
 )
 
 data class PeriodeDto(
@@ -105,7 +194,7 @@ data class AktivitetDto(
 )
 
 enum class AktivitetTypeDto {
-    Arbeid, Fravaer, Syk, Utdanning
+    Arbeid, Fravaer, Syk, Utdanning,Annet
 }
 
 sealed class MeldekortResultat {
@@ -113,4 +202,11 @@ sealed class MeldekortResultat {
     data object IngenTilgang : MeldekortResultat()
     data object PersonIkkeFunnet : MeldekortResultat()
     data object FeilIBaksystem : MeldekortResultat()
+}
+
+sealed class AAPMeldekortResultat {
+    data class Success(val data: List<Vedtak>) : AAPMeldekortResultat()
+    data object IngenTilgang : AAPMeldekortResultat()
+    data object PersonIkkeFunnet : AAPMeldekortResultat()
+    data object FeilIBaksystem : AAPMeldekortResultat()
 }
