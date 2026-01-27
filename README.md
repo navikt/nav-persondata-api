@@ -5,18 +5,26 @@ Dokumentasjon er samlet i egen mappe:
 <details>
   <summary>Vis alle sider</summary>
 
+- [Om prosjektet og agenter](docs/ OM_PROSJEKTET_OG_AGENTER.md)
 - [Integrasjoner](docs/Integrasjoner.md)
 - [Arkitektur](docs/arkitektur.md)
-- [Retningslinjer for koding](docs/AGENTS.md)
-- [Retningslinjer for prosjektet](docs/Prosjekt.md)
+
 
 </details>
 
-## Komme i gang
+## Kom raskt i gang
 
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
-Se [AGENTS.md Bygg, test og utvikling](../path/to/AGENTS.md#L42) for mer detaljer.
+<details>
+  <summary>Andre kommandoer:</summary>
+
+- `./get-secrets.sh` fetches NAIS credentials into the local env file; run once per session when targeting secure backends.
+- `./gradlew clean build` compiles sources, runs generators (`openApiGenerate`, `graphqlGenerateClient`) and executes the full test suite.
+- `./gradlew test` is the fastest loop for unit and integration tests.
+- `./gradlew bootRun --args='--spring.profiles.active=local'` starts the Spring Boot app locally with the `local` profile.
+
+</details>
 
 ### Henting av secrets
 
