@@ -116,6 +116,7 @@ class MeldekortService(
                 rettighetsType = aapvedtak.rettighetsType,
                 kide = aapvedtak.kildesystem,
                 tema = Tema.AAP,
+                vedtaktypeNavn = aapvedtak.vedtaksTypeNavn,
                 perioder = aapvedtak.utbetaling.map { utbetaling ->
                     val arbeidetTimer = utbetaling.reduksjon?.timerArbeidet
                     val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
@@ -131,7 +132,7 @@ class MeldekortService(
                 }
             )
         }
-        return AAPMeldekortResultat.Success(meldekortRespons.data)
+        return AAPMeldekortResultat.Success(new_modell)
     }
 }
 
@@ -152,7 +153,7 @@ sealed class MeldekortResultat {
 }
 
 sealed class AAPMeldekortResultat {
-    data class Success(val data: List<Vedtak>) : AAPMeldekortResultat()
+    data class Success(val data: List<AAPMeldekortDto>) : AAPMeldekortResultat()
     data object IngenTilgang : AAPMeldekortResultat()
     data object PersonIkkeFunnet : AAPMeldekortResultat()
     data object FeilIBaksystem : AAPMeldekortResultat()

@@ -13,6 +13,7 @@ data class AAPMeldekortDto(
     val kide:String,
     val tema:Tema,
     val perioder:List<AAPMeldekortPeriode> = emptyList(),
+    val vedtaktypeNavn: String?,
 )
 
 data class AAPMeldekortPeriode(
