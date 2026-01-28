@@ -6,6 +6,8 @@ on:
       - opened
       - synchronize
       - reopened
+  schedule:
+    - cron: '0 8 * * *' # Runs every day at 06:00 UTC
 
 jobs:
   automerge:
