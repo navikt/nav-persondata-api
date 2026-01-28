@@ -1,5 +1,9 @@
 name: Enable Dependabot Automerge
 
+concurrency:
+  group: dependabot-automerge
+  cancel-in-progress: false
+
 on:
   pull_request:
     types:
