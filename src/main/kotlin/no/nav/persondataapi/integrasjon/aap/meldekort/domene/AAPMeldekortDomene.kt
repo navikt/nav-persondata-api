@@ -52,7 +52,7 @@ data class Periode(
 )
 
 data class Reduksjon(
-    val annenReduksjon : String,
-    val timerArbeidet : String
+    val annenReduksjon : Float?,
+    val timerArbeidet : Double?
 
 )

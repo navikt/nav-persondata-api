@@ -1,9 +1,10 @@
 package no.nav.persondataapi.rest.oppslag
 
 
-import no.nav.persondataapi.service.MeldekortDto
+
 import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
+import no.nav.persondataapi.service.domain.DagpengeMeldekortDto
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -23,7 +24,7 @@ class MeldekortController(
     fun hentMeldekort(
         @RequestBody dto: OppslagRequestDto,
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<MeldekortDto>>> {
+    ): ResponseEntity<OppslagResponseDto<List<DagpengeMeldekortDto>>> {
         val resultat = meldekortService.hentDagpengeMeldekortForPerson(dto.ident, utvidet)
 
         return when (resultat) {

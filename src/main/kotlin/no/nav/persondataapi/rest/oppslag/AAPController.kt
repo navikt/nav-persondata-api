@@ -5,9 +5,6 @@ import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.service.AAPMeldekortResultat
-import no.nav.persondataapi.service.ArbeidsforholdResultat
-import no.nav.persondataapi.service.MeldekortDto
-import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
