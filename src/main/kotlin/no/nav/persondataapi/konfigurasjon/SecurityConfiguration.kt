@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Configuration
  * Sikkerhetskonfigurasjon for token-validering.
  *
  * Swagger UI og OpenAPI-dokumentasjon er unntatt fra autentisering
- * via ignorePathPatterns slik at utviklere kan se API-dokumentasjonen.
+ * via ignore-parameteret, slik at utviklere kan se API-dokumentasjonen.
  */
 @EnableJwtTokenValidation(
     ignore = [
-        "org.springdoc",
-        "org.springframework"
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
     ]
 )
 @Configuration
