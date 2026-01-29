@@ -4,7 +4,7 @@ import no.nav.persondataapi.service.Tema
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-data class AAPMeldekortDto(
+data class AapMeldekortDto(
     val vedtakId: String,
     val status: String,
     val saksnummer: String,
@@ -12,11 +12,11 @@ data class AAPMeldekortDto(
     val rettighetsType: String,
     val kide:String,
     val tema:Tema,
-    val perioder:List<AAPMeldekortPeriode> = emptyList(),
+    val perioder:List<AapMeldekortPeriode> = emptyList(),
     val vedtaktypeNavn: String?,
 )
 
-data class AAPMeldekortPeriode(
+data class AapMeldekortPeriode(
     val fraOgMed: LocalDate,
     val tilOgMed: LocalDate,
     val arbeidetTimer:Double?,
@@ -25,8 +25,8 @@ data class AAPMeldekortPeriode(
 
 )
 
-data class DagpengeMeldekortDto(
-    val dager: List<DagpengeMeldekortDag>,
+data class DagpengerMeldekortDto(
+    val dager: List<DagpengerMeldekortDag>,
     val id: String,
     val periode: PeriodeDto,
     val opprettetAv: String,
@@ -49,7 +49,7 @@ data class KildeDto(
     val rolle: String, val ident: String
 )
 
-data class DagpengeMeldekortDag(
+data class DagpengerMeldekortDag(
     val dato: LocalDate, val aktiviteter: List<AktivitetDto>, val dagIndex: Int
 )
 

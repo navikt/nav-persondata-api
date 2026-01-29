@@ -1,19 +1,18 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.integrasjon.dagpenger.datadeling.DagpengerDatadelingClient
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStatus
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
-import no.nav.persondataapi.service.domain.AAPMeldekortDto
+import no.nav.persondataapi.service.domain.AapMeldekortDto
 import no.nav.persondataapi.service.domain.AktivitetDto
 import no.nav.persondataapi.service.domain.AktivitetTypeDto
-import no.nav.persondataapi.service.domain.DagpengeMeldekortDag
-import no.nav.persondataapi.service.domain.DagpengeMeldekortDto
+import no.nav.persondataapi.service.domain.DagpengerMeldekortDag
+import no.nav.persondataapi.service.domain.DagpengerMeldekortDto
 import no.nav.persondataapi.service.domain.KildeDto
-import no.nav.persondataapi.service.domain.AAPMeldekortPeriode
+import no.nav.persondataapi.service.domain.AapMeldekortPeriode
 import no.nav.persondataapi.service.domain.PeriodeDto
 import no.nav.persondataapi.service.domain.ÅpenPeriode
 import org.slf4j.LoggerFactory
@@ -54,9 +53,9 @@ class MeldekortService(
         val response = meldekort
             .filter { meldekort -> meldekort.status == MeldekortStatus.Innsendt }
             .map { meldekort ->
-                DagpengeMeldekortDto(
+                DagpengerMeldekortDto(
                     dager = meldekort.dager.map { dag ->
-                        DagpengeMeldekortDag(
+                        DagpengerMeldekortDag(
                             dato = dag.dato,
                             aktiviteter = dag.aktiviteter.map { aktivitet ->
                                 AktivitetDto(
@@ -108,7 +107,7 @@ class MeldekortService(
         }
         val new_modell = meldekort.map {
             aapvedtak ->
-            AAPMeldekortDto(
+            AapMeldekortDto(
                 vedtakId = aapvedtak.vedtakId,
                 status = aapvedtak.status,
                 saksnummer = aapvedtak.saksnummer,
@@ -122,7 +121,7 @@ class MeldekortService(
                     val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
                     val utbetalingsgrad = utbetaling.utbetalingsgrad
 
-                    AAPMeldekortPeriode(
+                    AapMeldekortPeriode(
                         fraOgMed = utbetaling.periode.fraOgMedDato,
                         tilOgMed = utbetaling.periode.tilOgMedDato!!,
                         arbeidetTimer = arbeidetTimer,
@@ -146,14 +145,14 @@ enum class Tema {
 
 
 sealed class MeldekortResultat {
-    data class Success(val data: List<DagpengeMeldekortDto>) : MeldekortResultat()
+    data class Success(val data: List<DagpengerMeldekortDto>) : MeldekortResultat()
     data object IngenTilgang : MeldekortResultat()
     data object PersonIkkeFunnet : MeldekortResultat()
     data object FeilIBaksystem : MeldekortResultat()
 }
 
 sealed class AAPMeldekortResultat {
-    data class Success(val data: List<AAPMeldekortDto>) : AAPMeldekortResultat()
+    data class Success(val data: List<AapMeldekortDto>) : AAPMeldekortResultat()
     data object IngenTilgang : AAPMeldekortResultat()
     data object PersonIkkeFunnet : AAPMeldekortResultat()
     data object FeilIBaksystem : AAPMeldekortResultat()

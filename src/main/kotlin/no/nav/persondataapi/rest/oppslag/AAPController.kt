@@ -3,10 +3,9 @@ package no.nav.persondataapi.rest.oppslag
 
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.service.AAPMeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
-import no.nav.persondataapi.service.domain.AAPMeldekortDto
+import no.nav.persondataapi.service.domain.AapMeldekortDto
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -27,7 +26,7 @@ class AAPController(
     fun hentMeldekort(
         @RequestBody dto: OppslagRequestDto,
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<AAPMeldekortDto>>> {
+    ): ResponseEntity<OppslagResponseDto<List<AapMeldekortDto>>> {
 
         return runBlocking {
         val resultat = meldekortService.hentAAPMeldekortForPerson(personIdent = dto.ident,utvidet)
