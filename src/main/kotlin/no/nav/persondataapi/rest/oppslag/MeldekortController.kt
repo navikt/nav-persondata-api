@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
-import no.nav.persondataapi.service.MeldekortDto
 import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
 import no.nav.persondataapi.service.domain.DagpengerMeldekortDto
