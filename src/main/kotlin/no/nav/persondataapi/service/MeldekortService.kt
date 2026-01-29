@@ -72,7 +72,7 @@ class MeldekortService(
                     },
                     periode = PeriodeDto(meldekort.periode.fraOgMed, meldekort.periode.tilOgMed),
                     opprettetAv = meldekort.opprettetAv,
-                    migrert = meldekort.migrert,
+                    migrert = false,
                     kilde = KildeDto(meldekort.kilde.rolle, meldekort.kilde.ident),
                     innsendtTidspunkt = meldekort.innsendtTidspunkt,
                     registrertArbeidssoker = meldekort.registrertArbeidssoker,
