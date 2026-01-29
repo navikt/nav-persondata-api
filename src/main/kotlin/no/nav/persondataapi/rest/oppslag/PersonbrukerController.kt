@@ -1,5 +1,12 @@
 package no.nav.persondataapi.rest.oppslag
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.ExampleObject
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.modiacontextholder.client.ModiaContextHolderClient
 import no.nav.persondataapi.service.RevisjonsloggService
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/oppslag/personbruker")
+@Tag(name = "Personbruker", description = "Endepunkter for å sjekke eksistens og tilgang til en person")
 class PersonbrukerController(
     val brukertilgangService: BrukertilgangService,
     val personopplysningerService: PersonopplysningerService,
@@ -25,8 +33,48 @@ class PersonbrukerController(
     val modiaContextHolderClient: ModiaContextHolderClient
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
+
     @Protected
     @PostMapping
+    @Operation(
+        summary = "Sjekk eksistens og tilgang",
+        description = "Sjekker om en person eksisterer og om saksbehandler har tilgang til å se informasjon om personen"
+    )
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        content = [Content(
+            examples = [ExampleObject(
+                name = "Standard oppslag",
+                value = """{"ident": "12345678901"}"""
+            )]
+        )]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Person funnet og saksbehandler har tilgang",
+                content = [Content(
+                    schema = Schema(implementation = PersonbrukerResponseDto::class),
+                    examples = [ExampleObject(
+                        name = "Full tilgang",
+                        value = """{"tilgang": "FULL", "harUtvidetTilgang": true}"""
+                    )]
+                )]
+            ),
+            ApiResponse(
+                responseCode = "206",
+                description = "Person funnet, men saksbehandler har begrenset tilgang",
+                content = [Content(
+                    schema = Schema(implementation = PersonbrukerResponseDto::class),
+                    examples = [ExampleObject(
+                        name = "Begrenset tilgang",
+                        value = """{"tilgang": "BEGRENSET", "harUtvidetTilgang": false}"""
+                    )]
+                )]
+            ),
+            ApiResponse(responseCode = "404", description = "Person ikke funnet")
+        ]
+    )
     fun hentEksistensOgTilgang(@RequestBody dto: OppslagRequestDto): ResponseEntity<PersonbrukerResponseDto> {
         val token = tokenValidationContextHolder.getTokenValidationContext().firstValidToken
         val saksbehandlerIdent = token!!.jwtTokenClaims.get("NAVident").toString()
