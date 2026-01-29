@@ -1,5 +1,12 @@
 package no.nav.persondataapi.rest.admin
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.ExampleObject
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.CacheAdminService
 import no.nav.persondataapi.service.CacheFlushOppsummering
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/admin/cache")
+@Tag(name = "Admin", description = "Administrasjonsendepunkter for cache-håndtering")
 class CacheAdminController(
     private val cacheAdminService: CacheAdminService
 ) {
@@ -21,6 +29,39 @@ class CacheAdminController(
 
     @Protected
     @DeleteMapping
+    @Operation(
+        summary = "Tøm cache",
+        description = "Tømmer cache for en spesifikk person eller alle cacher hvis ingen personident er oppgitt"
+    )
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        content = [Content(
+            examples = [
+                ExampleObject(
+                    name = "Tøm for person",
+                    value = """{"personIdent": "12345678901"}"""
+                ),
+                ExampleObject(
+                    name = "Tøm alle cacher",
+                    value = """{}"""
+                )
+            ]
+        )]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Cache tømt",
+                content = [Content(
+                    schema = Schema(implementation = CacheFlushOppsummering::class),
+                    examples = [ExampleObject(
+                        name = "Vellykket respons",
+                        value = """{"antallTømt": 5, "cacher": ["pdl-person", "aareg-arbeidsforhold"]}"""
+                    )]
+                )]
+            )
+        ]
+    )
     fun flushCacher(
         @RequestBody(required = false) request: CacheFlushRequest?,
     ): ResponseEntity<CacheFlushOppsummering> {
