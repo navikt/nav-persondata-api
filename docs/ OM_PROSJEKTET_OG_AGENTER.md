@@ -23,6 +23,7 @@ Dette dokumentet gir en oversikt over retningslinjer for koding og prosjektstruk
 - Bruk objekt-wrapper mønster der det er hensiktsmessig.
 - Ved tvil om implementasjonsvalg, søk råd for å sikre konsistens
 - Oppdater relevant dokumentasjon ved større endringer i arkitektur eller integrasjoner.
+- Ved endringer i API-endepunkter, oppdater OpenAPI-annotasjonene (`@Operation`, `@ApiResponse`, `@Schema`) slik at Swagger UI-dokumentasjonen holdes oppdatert.
 
 ## Sikkerhets- og konfigurasjonstips
 - Ikke sjekk inn `.env.local.properties` eller andre filer som inneholder secrets.
