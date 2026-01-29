@@ -29,10 +29,10 @@ class OpenApiConfiguration {
     fun customOpenAPI(): OpenAPI = OpenAPI()
         .info(
             Info()
-                .title("NAV Persondata API")
+                .title("Nav Persondata API")
                 .description(
                     """
-                    API for oppslag av persondata i NAV.
+                    API for oppslag av persondata i Nav.
                     
                     Dette APIet tilbyr endepunkter for å hente:
                     - Personopplysninger (navn, adresse, kontaktinfo)
@@ -51,7 +51,6 @@ class OpenApiConfiguration {
                 .contact(
                     Contact()
                         .name("Team Holmes")
-                        .email("holmes@nav.no")
                 )
         )
         .addServersItem(
