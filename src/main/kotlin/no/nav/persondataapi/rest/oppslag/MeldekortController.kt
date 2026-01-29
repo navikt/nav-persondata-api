@@ -1,5 +1,7 @@
 package no.nav.persondataapi.rest.oppslag
 
+
+
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
@@ -8,9 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
-import no.nav.persondataapi.service.MeldekortDto
 import no.nav.persondataapi.service.MeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
+import no.nav.persondataapi.service.domain.DagpengerMeldekortDto
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -74,7 +76,7 @@ class MeldekortController(
         @RequestBody dto: OppslagRequestDto,
         @Parameter(description = "Om utvidet meldekortinformasjon skal hentes")
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<MeldekortDto>>> {
+    ): ResponseEntity<OppslagResponseDto<List<DagpengerMeldekortDto>>> {
         val resultat = meldekortService.hentDagpengeMeldekortForPerson(dto.ident, utvidet)
 
         return when (resultat) {

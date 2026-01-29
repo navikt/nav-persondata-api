@@ -10,9 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.service.AAPMeldekortResultat
 import no.nav.persondataapi.service.MeldekortService
+import no.nav.persondataapi.service.domain.AapMeldekortDto
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -77,7 +77,7 @@ class AAPController(
         @RequestBody dto: OppslagRequestDto,
         @Parameter(description = "Om utvidet meldekortinformasjon skal hentes")
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<Vedtak>>> {
+    ): ResponseEntity<OppslagResponseDto<List<AapMeldekortDto>>> {
 
         return runBlocking {
         val resultat = meldekortService.hentAAPMeldekortForPerson(personIdent = dto.ident,utvidet)

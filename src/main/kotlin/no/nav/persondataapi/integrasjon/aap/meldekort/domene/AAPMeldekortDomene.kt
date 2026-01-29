@@ -3,13 +3,13 @@ package no.nav.persondataapi.integrasjon.aap.meldekort.domene
 import java.time.LocalDate
 
 
-data class AAPMaximumRequest(
+data class AapMaximumRequest(
     val personidentifikator: String,
     val fraOgMedDato: String,
     val tilOgMedDato: String,
 )
 
-data class AAPMaximumRespons(
+data class AapMaximumRespons(
     val vedtak: List<Vedtak>
 )
 data class Vedtak(
@@ -52,7 +52,7 @@ data class Periode(
 )
 
 data class Reduksjon(
-    val annenReduksjon : String,
-    val timerArbeidet : String
+    val annenReduksjon : Float?,
+    val timerArbeidet : Double?
 
 )
