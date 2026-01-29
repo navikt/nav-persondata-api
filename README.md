@@ -14,6 +14,12 @@ Dokumentasjon er samlet i egen mappe:
 
 ## Kom raskt i gang
 
+### API-dokumentasjon
+
+Swagger UI er tilgjengelig på `/swagger-ui.html` når applikasjonen kjører. Her kan du utforske alle endepunkter, se eksempler og teste API-et direkte.
+
+OpenAPI-spesifikasjonen (JSON) er tilgjengelig på `/v3/api-docs`.
+
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
 <details>
