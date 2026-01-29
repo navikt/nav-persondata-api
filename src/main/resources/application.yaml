@@ -3,6 +3,20 @@ application:
 server:
   port: 8080
 
+# OpenAPI / Swagger UI konfigurasjon
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+  info:
+    title: NAV Persondata API
+    description: API for oppslag av persondata, inntekt, arbeidsforhold og ytelser
+    version: 1.0.0
+
 spring:
   http:
     codecs:
