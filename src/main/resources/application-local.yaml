@@ -2,6 +2,11 @@ application:
   name: nav-persondata-api
 server:
   port: 8080
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 spring:
   config:
     import: "file:./src/main/resources/.env.local.properties"
