@@ -23,6 +23,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -41,15 +42,14 @@ class PensjonsgivendeInntektClient (
 
     @Cacheable(
         value = ["pensjonsgivende-inntekt"],
-        key = "#personIdent + '_' + #utvidet",
+        key = "#personIdent + '_' + #inntektsaar",
         unless = "#result.statusCode != 200 && #result.statusCode != 404"
     )
     fun hentPensjonsgivendeInntekt(
         personIdent: PersonIdent,
         utvidet: Boolean,
+        inntektsaar: Int = 2020
     ): PensjonsgivendeInntektDataResultat {
-        val inneværendeÅr = LocalDate.now().year
-        val antallÅr: Long = if (utvidet) 10 else 3
         val oboToken = tokenService.getServiceToken(SCOPE.SIGRUN_SCOPE)
 
        /*
@@ -57,7 +57,7 @@ class PensjonsgivendeInntektClient (
        * */
 
         val requestBody = SigrunPensjongivendeInntektRequest(
-            inntektsaar = "2020",
+            inntektsaar = inntektsaar.toString(),
             personident = personIdent.value,
             rettighetspakke = "navkontroll")
 
@@ -69,23 +69,49 @@ class PensjonsgivendeInntektClient (
                     .header("Authorization", "Bearer $oboToken")
                     .bodyValue(requestBody)
                     .exchangeToMono { response ->
-                        val status = response.statusCode()
-                        if (status.is2xxSuccessful) {
-                            response.bodyToMono(String::class.java)
-                        } else {
-                            response.bodyToMono(String::class.java).map { body ->
-                                throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")
+                        when {
+                            response.statusCode().is2xxSuccessful -> {
+
+                                response.bodyToMono(SigrunPensjonsgivendeInntektResponse::class.java)
+                                    .map {
+                                        println(it)
+                                        PensjonsgivendeInntektDataResultat(
+                                            data = it,
+                                            statusCode = 200
+                                        )
+                                    }
+                            }
+
+                            response.statusCode().value() == 404 -> {
+                                Mono.just(
+                                    PensjonsgivendeInntektDataResultat(
+                                        data = SigrunPensjonsgivendeInntektResponse(inntektsaar = inntektsaar.toString(),emptyList()),
+                                        statusCode = 404,
+                                        errorMessage = null
+                                    )
+                                )
+                            }
+
+                            else -> {
+                                response.bodyToMono(String::class.java).flatMap { body ->
+                                    Mono.error(
+                                        RuntimeException(
+                                            "Feil fra Sigrun: HTTP ${response.statusCode()} – $body"
+                                        )
+                                    )
+                                }
                             }
                         }
-                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-maksimum")).block()!!
+                    }
+                    .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "sigrun"))
+                    .block()!!
 
                 responseResult
             }
         }.fold(onSuccess = { respons ->
             metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
-            println(respons)
             return PensjonsgivendeInntektDataResultat(
-                data = PensjonsgivendeInntektRespons(emptyList()),
+                data = respons.data,
                 statusCode = 200,
                 errorMessage = null
             )
@@ -99,31 +125,12 @@ class PensjonsgivendeInntektClient (
 
             metrics.counter(operationName, resultType).increment()
 
-            log.error("Feil ved henting av aap-max: ${error.message}", error)
+            log.error("Feil ved henting av sigrun: ${error.message}", error)
             return PensjonsgivendeInntektDataResultat(
                 data = null, statusCode = 500, errorMessage = error.rootCause().message
             )
         })
 
-
-        /*
-    * mock respons her
-    * */
-        val inntekter = (1..antallÅr).map { index ->
-            val år = inneværendeÅr - index
-            val beløp = BigDecimal(480000 + (index * 12000))
-
-            PensjonsgivendeInntekt(
-                innteksår = år.toString(),
-                skatteordning = Skatteordning("FASTLAND",år.toString(),listOf(Inntekt(InntektType.LØNN,beløp.toDouble())))
-            )
-        }
-
-        return PensjonsgivendeInntektDataResultat(
-            data = PensjonsgivendeInntektRespons(inntekter = inntekter),
-            statusCode = 200
-        )
-    }
 }
 
 data class PensjonsgivendeInntektRespons(
@@ -133,7 +140,7 @@ data class PensjonsgivendeInntektRespons(
 
 
 data class PensjonsgivendeInntektDataResultat(
-    val data: PensjonsgivendeInntektRespons?,
+    val data: SigrunPensjonsgivendeInntektResponse?,
     val statusCode: Int,
     val errorMessage: String? = null,
 )
@@ -148,4 +155,5 @@ private fun erTimeout(e: Throwable): Boolean = when (e.cause) {
     is ReadTimeoutException -> true
     is WriteTimeoutException -> true
     else -> false
+    }
 }

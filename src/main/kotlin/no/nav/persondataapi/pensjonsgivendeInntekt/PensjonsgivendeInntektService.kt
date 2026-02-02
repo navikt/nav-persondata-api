@@ -34,21 +34,18 @@ class PensjonsgivendeInntektService(
         * DO MAPPING HERE IF NEEDED
         * */
         var resultat = respons
-        val v = PensjonsgivendeInntekt("2014", skatteordning = Skatteordning("","2016",emptyList()))
-
-
 
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente pensjonsgivende inntekt for $personIdent. Maskerer responsen")
             resultat = maskerObjekt(resultat)
         }
 
-        return PensjonsgivendeInntektResultat.Success(resultat.data!!.inntekter)
+        return PensjonsgivendeInntektResultat.Success(listOf(resultat.data!!))
     }
 }
 
 sealed class PensjonsgivendeInntektResultat {
-    data class Success(val data: List<PensjonsgivendeInntekt>) : PensjonsgivendeInntektResultat()
+    data class Success(val data: List<SigrunPensjonsgivendeInntektResponse>) : PensjonsgivendeInntektResultat()
     data object IngenTilgang : PensjonsgivendeInntektResultat()
     data object PersonIkkeFunnet : PensjonsgivendeInntektResultat()
     data object FeilIBaksystem : PensjonsgivendeInntektResultat()

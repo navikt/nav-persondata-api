@@ -75,7 +75,7 @@ class PensjonsgivendeInntektController(
         @org.springframework.web.bind.annotation.RequestBody dto: OppslagRequestDto,
         @Parameter(description = "Om utvidet inntektsinformasjon skal hentes")
         @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<PensjonsgivendeInntekt>>> {
+    ): ResponseEntity<OppslagResponseDto<List<SigrunPensjonsgivendeInntektResponse>>> {
         return runBlocking {
             val resultat = pensjonsgivendeInntektService.hentPensjonsgivendeInntektForPerson(
                 personIdent = dto.ident,
