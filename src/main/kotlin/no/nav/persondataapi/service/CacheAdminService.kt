@@ -23,6 +23,7 @@ class CacheAdminService(
 
     private val cacherSomTømmesPåPersonFlush = setOf(
         "inntekt-historikk",
+        "pensjonsgivende-inntekt",
     )
 
     fun flushAlleCacher(): CacheFlushOppsummering {
