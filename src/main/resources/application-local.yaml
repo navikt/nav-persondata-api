@@ -74,3 +74,6 @@ DP_DATADELING_SCOPE: api://dev-gcp.teamdagpenger.dp-datadeling/.default
 
 AAP_URL: https://aap-api.intern.dev.nav.no
 AAP_SCOPE: api://dev-gcp.aap.api-intern/.default
+
+SIGRUN_URL: https://team-inntekt-proxy.dev-fss-pub.nais.io/proxy/sigrun-q2
+SIGRUN_SCOPE: api://dev-fss.team-inntekt.sigrun-q2/.default

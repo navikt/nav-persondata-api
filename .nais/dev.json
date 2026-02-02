@@ -112,6 +112,10 @@
       "value": "api://dev-gcp.aap.api-intern/.default"
     },
     {
+      "name": "SIGRUN_SCOPE",
+      "value": "api://dev-fss.team-inntekt.sigrun-q2/.default"
+    },
+    {
       "name": "JAVA_TOOL_OPTIONS",
       "value": "\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005\""
     },
