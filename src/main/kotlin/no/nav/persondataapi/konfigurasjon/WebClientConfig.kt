@@ -515,7 +515,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "token" to HttpClientKonfig(poolNavn = "token-pool"),
         "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
         "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
-        "aap" to HttpClientKonfig(poolNavn = "aap-pool")
+        "aap" to HttpClientKonfig(poolNavn = "aap-pool"),
+        "sigrun" to HttpClientKonfig(poolNavn = "sigrun-pool")
 
     )
 
