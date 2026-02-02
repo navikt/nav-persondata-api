@@ -59,7 +59,7 @@ class PensjonsgivendeInntektClient (
         val requestBody = SigrunPensjongivendeInntektRequest(
             inntektsaar = "2020",
             personident = personIdent.value,
-            rettighetspakke = "")
+            rettighetspakke = "navkontroll")
 
         return runCatching {
             metrics.timer(operationName).recordCallable {

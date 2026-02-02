@@ -94,6 +94,7 @@ spec:
           namespace: aap
         - application: sigrun-2
           namespace: team-inntekt
+          cluster: {{FSS_CLUSTER}}
       external:
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}
