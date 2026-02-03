@@ -10,9 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.pensjonsgivendeInntekt.PensjonsgivendeInntektService.PensjonsgivendeInntektResultat
 import no.nav.persondataapi.rest.oppslag.OppslagRequestDto
 import no.nav.persondataapi.rest.oppslag.OppslagResponseDto
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.PensjonsgivendeInntekt
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

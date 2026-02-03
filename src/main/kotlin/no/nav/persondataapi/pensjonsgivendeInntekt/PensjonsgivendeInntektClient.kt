@@ -7,25 +7,21 @@ import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRequest
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
-import no.nav.persondataapi.metrics.DPDatadelingMetrics
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.SigrunMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.Inntekt
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.InntektType
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.PensjonsgivendeInntekt
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.Skatteordning
+
+
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.core.ParameterizedTypeReference
+
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import java.math.BigDecimal
-import java.time.LocalDate
+
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeoutException
 
@@ -47,14 +43,9 @@ class PensjonsgivendeInntektClient (
     )
     fun hentPensjonsgivendeInntekt(
         personIdent: PersonIdent,
-        utvidet: Boolean,
-        inntektsaar: Int = 2020
+        inntektsaar:Int
     ): PensjonsgivendeInntektDataResultat {
         val oboToken = tokenService.getServiceToken(SCOPE.SIGRUN_SCOPE)
-
-       /*
-       * logikk for å hente ut data her
-       * */
 
         val requestBody = SigrunPensjongivendeInntektRequest(
             inntektsaar = inntektsaar.toString(),
@@ -63,7 +54,6 @@ class PensjonsgivendeInntektClient (
 
         return runCatching {
             metrics.timer(operationName).recordCallable {
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
                 val responseResult = webClient.post().uri("/api/v1/pensjonsgivendeinntektforfolketrygden")
                     .header("Authorization", "Bearer $oboToken")

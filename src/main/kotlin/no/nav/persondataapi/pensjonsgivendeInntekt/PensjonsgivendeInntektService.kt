@@ -1,12 +1,15 @@
 package no.nav.persondataapi.pensjonsgivendeInntekt
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import no.nav.persondataapi.service.BrukertilgangService
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.PensjonsgivendeInntekt
-import no.nav.persondataapi.service.domain.pensjonsgivendeinntekt.Skatteordning
+
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.Year
 
 @Service
 class PensjonsgivendeInntektService(
@@ -15,38 +18,63 @@ class PensjonsgivendeInntektService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
+    suspend fun `hentPenjonsgivendeInntektForÅr`(
+        personIdent: PersonIdent,
+        aar: Int,
+
+    ): AarsResultat {
+        val respons = pensjonsgivendeInntektClient
+            .hentPensjonsgivendeInntekt(personIdent, aar)
+
+        return when (respons.statusCode) {
+            200 -> AarsResultat.Ok(respons.data!!)
+            404 -> AarsResultat.IkkeFunnet
+            in 500..599 -> AarsResultat.FeilIBaksystem
+            else -> AarsResultat.FeilIBaksystem
+        }
+    }
     suspend fun hentPensjonsgivendeInntektForPerson(
         personIdent: PersonIdent,
         utvidet: Boolean = false,
-    ): PensjonsgivendeInntektResultat {
-        val respons = pensjonsgivendeInntektClient.hentPensjonsgivendeInntekt(personIdent, utvidet)
-        logger.info("Hentet pensjonsgivende inntekt for $personIdent (utvidet = $utvidet), status ${respons.statusCode}")
+    ): PensjonsgivendeInntektResultat = coroutineScope {
 
-        when (respons.statusCode) {
-            404 -> return PensjonsgivendeInntektResultat.PersonIkkeFunnet
-            403 -> return PensjonsgivendeInntektResultat.IngenTilgang
-            500 -> return PensjonsgivendeInntektResultat.FeilIBaksystem
-            !in 200..299 -> return PensjonsgivendeInntektResultat.FeilIBaksystem
+        val antallAar = if (utvidet) 10 else 3
+        val aarListe = (0 until antallAar).map { Year.now().value - it }
+
+        val deferred = aarListe.map { aar ->
+            async {
+                `hentPenjonsgivendeInntektForÅr`(personIdent, aar)
+            }
         }
 
-
-        /*
-        * DO MAPPING HERE IF NEEDED
-        * */
-        var resultat = respons
-
+        var resultater = deferred.awaitAll()
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente pensjonsgivende inntekt for $personIdent. Maskerer responsen")
-            resultat = maskerObjekt(resultat)
+            resultater = maskerObjekt(resultater)
         }
+        
+        val gyldige = resultater
+            .filterIsInstance<AarsResultat.Ok>()
+            .map { it.data }
 
-        return PensjonsgivendeInntektResultat.Success(listOf(resultat.data!!))
+        if (gyldige.isEmpty()) {
+            PensjonsgivendeInntektResultat.PersonIkkeFunnet
+        } else {
+            PensjonsgivendeInntektResultat.Success(gyldige)
+        }
+    }
+
+    sealed class AarsResultat {
+        data class Ok(val data: SigrunPensjonsgivendeInntektResponse) : AarsResultat()
+        data object IkkeFunnet : AarsResultat()
+        data object FeilIBaksystem : AarsResultat()
+    }
+
+    sealed class PensjonsgivendeInntektResultat {
+        data class Success(val data: List<SigrunPensjonsgivendeInntektResponse>) : PensjonsgivendeInntektResultat()
+        data object IngenTilgang : PensjonsgivendeInntektResultat()
+        data object PersonIkkeFunnet : PensjonsgivendeInntektResultat()
+        data object FeilIBaksystem : PensjonsgivendeInntektResultat()
     }
 }
 
-sealed class PensjonsgivendeInntektResultat {
-    data class Success(val data: List<SigrunPensjonsgivendeInntektResponse>) : PensjonsgivendeInntektResultat()
-    data object IngenTilgang : PensjonsgivendeInntektResultat()
-    data object PersonIkkeFunnet : PensjonsgivendeInntektResultat()
-    data object FeilIBaksystem : PensjonsgivendeInntektResultat()
-}
