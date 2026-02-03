@@ -61,10 +61,12 @@ class PensjonsgivendeInntektService(
             .filterIsInstance<AarsResultat.Ok>()
             .map { it.data }
 
+        val oppummering = gyldige.toPensjonsGivendeInntektOppummering()
+
         if (gyldige.isEmpty()) {
             PensjonsgivendeInntektResultat.PersonIkkeFunnet
         } else {
-            PensjonsgivendeInntektResultat.Success(gyldige)
+            PensjonsgivendeInntektResultat.Success(oppummering)
         }
     }
 
@@ -75,10 +77,16 @@ class PensjonsgivendeInntektService(
     }
 
     sealed class PensjonsgivendeInntektResultat {
-        data class Success(val data: List<SigrunPensjonsgivendeInntektResponse>) : PensjonsgivendeInntektResultat()
+        data class Success(val data: List<PensjonsGivendeInntektOppummering>) : PensjonsgivendeInntektResultat()
         data object IngenTilgang : PensjonsgivendeInntektResultat()
         data object PersonIkkeFunnet : PensjonsgivendeInntektResultat()
         data object FeilIBaksystem : PensjonsgivendeInntektResultat()
     }
 }
+
+data class PensjonsGivendeInntektOppummering(
+    val inntektsaar: String,
+    val næringsinntekt: Int =0,
+    val lønnsinntekt: Int =0,
+)
 
