@@ -9,7 +9,6 @@ import no.nav.persondataapi.service.BrukertilgangService
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.time.Year
 
 @Service
 class PensjonsgivendeInntektService(
@@ -39,8 +38,7 @@ class PensjonsgivendeInntektService(
     ): PensjonsgivendeInntektResultat = coroutineScope {
 
         val antallAar = if (utvidet) 10 else 3
-        val aarListe = (0 until antallAar).map { Year.now().value - it }
-
+        val aarListe = `HistoriskeÅrService`().`hentTidligereÅrEkskludertNåværende`(antallAar)
         val deferred = aarListe.map { aar ->
             async {
                 `hentPenjonsgivendeInntektForÅr`(personIdent, aar)

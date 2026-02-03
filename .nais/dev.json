@@ -117,7 +117,7 @@
     },
     {
       "name": "SIGRUN_URL",
-      "value": "ttps://team-inntekt-proxy.dev-fss-pub.nais.io/proxy/sigrun-q2"
+      "value": "https://team-inntekt-proxy.dev-fss-pub.nais.io/proxy/sigrun-q2"
     },
     {
       "name": "JAVA_TOOL_OPTIONS",
