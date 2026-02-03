@@ -3,6 +3,9 @@ package no.nav.persondataapi.pensjonsgivendeInntekt
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.teamLogsMarker
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import no.nav.persondataapi.service.BrukertilgangService
@@ -46,6 +49,9 @@ class PensjonsgivendeInntektService(
         }
 
         var resultater = deferred.awaitAll()
+        if (erTraceLoggingAktvert()) {
+            logger.info(teamLogsMarker,"Logging aktivert - full SIGRUN-respons for {}: {}", personIdent, JsonUtils.toJson(resultater).toPrettyString())
+        }
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente pensjonsgivende inntekt for $personIdent. Maskerer responsen")
             resultater = maskerObjekt(resultater)
