@@ -1,5 +1,6 @@
 package no.nav.persondataapi.service
 
+import net.logstash.logback.argument.StructuredArguments.kv
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
@@ -10,6 +11,7 @@ import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
+import no.nav.persondataapi.tracelogging.traceLogg
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -32,7 +34,12 @@ class InntektService(
         val inntektResponse = inntektClient.hentInntekter(personIdent = personIdent, periode = kontrollperiode)
         logger.info("Hentet inntekter for $personIdent (utvidet = $utvidet), status ${inntektResponse.statusCode}")
         if (erTraceLoggingAktvert()){
-            logger.info(teamLogsMarker,"Logging aktivert - full Inntekt-respons for {}: {}", personIdent, JsonUtils.toJson(inntektResponse).toPrettyString())
+            traceLogg(
+                logger = logger,
+                kilde = "Inntekt",
+                personIdent=personIdent,
+                unit = inntektResponse
+            )
         }
         // Håndter feil fra InntektClient
         when (inntektResponse.statusCode) {
