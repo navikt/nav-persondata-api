@@ -1,12 +1,9 @@
 package no.nav.persondataapi.service
 
-import net.logstash.logback.argument.StructuredArguments.kv
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.integrasjon.inntekt.client.KontrollPeriode
-import no.nav.persondataapi.konfigurasjon.JsonUtils
-import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent

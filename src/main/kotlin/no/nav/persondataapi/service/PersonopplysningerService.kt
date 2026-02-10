@@ -1,11 +1,8 @@
 package no.nav.persondataapi.service
 
-import net.logstash.logback.argument.StructuredArguments.kv
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
-import no.nav.persondataapi.konfigurasjon.JsonUtils
-import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
