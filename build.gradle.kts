@@ -140,6 +140,6 @@ dependencies {
 
   // Swagger UI og OpenAPI-dokumentasjon
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
-  implementation("io.swagger.core.v3:swagger-annotations:2.2.41")
-  implementation("io.swagger.core.v3:swagger-models:2.2.41")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.42")
+  implementation("io.swagger.core.v3:swagger-models:2.2.42")
 }
