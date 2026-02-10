@@ -1,6 +1,6 @@
 package no.nav.persondataapi.pensjonsgivendeInntekt
 
-fun List<SigrunPensjonsgivendeInntektResponse>.toPensjonsGivendeInntektOppummering():
+fun List<SigrunPensjonsgivendeInntektResponse>.toPensjonsgivendeInntektOppummering():
         List<PensjonsGivendeInntektOppummering> {
 
     return this

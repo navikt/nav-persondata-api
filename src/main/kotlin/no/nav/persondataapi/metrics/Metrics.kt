@@ -31,4 +31,4 @@ class AAPMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "aap
 class NomMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "nom")
 
 @Component
-class SigrunMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "dp-datadeling")
+class SigrunMetrics(registry: MeterRegistry) : BaseDownstreamMetrics(registry, "sigrun")

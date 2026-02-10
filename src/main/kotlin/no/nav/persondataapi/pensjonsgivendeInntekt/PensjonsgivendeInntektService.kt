@@ -40,9 +40,9 @@ class PensjonsgivendeInntektService(
         utvidet: Boolean = false,
     ): PensjonsgivendeInntektResultat = coroutineScope {
 
-        val antallAar = if (utvidet) 10 else 3
-        val aarListe = `HistoriskeÅrService`().`hentTidligereÅrEkskludertNåværende`(antallAar)
-        val deferred = aarListe.map { aar ->
+        val `antallÅr` = if (utvidet) 10 else 3
+        val `årListe` = `HistoriskeÅrService`().`hentTidligereÅrEkskludertNåværende`(`antallÅr`)
+        val deferred = `årListe`.map { aar ->
             async {
                 `hentPenjonsgivendeInntektForÅr`(personIdent, aar)
             }
@@ -61,12 +61,12 @@ class PensjonsgivendeInntektService(
             .filterIsInstance<AarsResultat.Ok>()
             .map { it.data }
 
-        val oppummering = gyldige.toPensjonsGivendeInntektOppummering()
+        val oppsummering = gyldige.toPensjonsgivendeInntektOppummering()
 
         if (gyldige.isEmpty()) {
             PensjonsgivendeInntektResultat.PersonIkkeFunnet
         } else {
-            PensjonsgivendeInntektResultat.Success(oppummering)
+            PensjonsgivendeInntektResultat.Success(oppsummering)
         }
     }
 
