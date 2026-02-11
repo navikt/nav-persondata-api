@@ -6,7 +6,7 @@ import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.Identtype
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {
@@ -26,14 +26,6 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer: String): String {
     }
 
 }
-
-fun Map<String, EregRespons>.orgnummerTilAdresse(orgnummer: String): String =
-    this[orgnummer]
-        ?.organisasjonDetaljer
-        ?.forretningsadresser
-        ?.firstOrNull { it.gyldighetsperiode.tom == null }
-        ?.let { "${it.adresselinje1}, ${it.postnummer}" }
-        ?: "INGEN ADRESSSE"
 
 fun Person.gjeldendeFornavn(): String {
     val navn = this.navn.firstOrNull() ?: return ""
@@ -92,11 +84,13 @@ fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse?  {
 }
 
 fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? {
-    return if (this == null || this.isEmpty()) {
-        null
-    } else {
-        this.minByOrNull { it.oppsummeringstidspunkt }!!
-    }
+
+    return this?.maxByOrNull { it.oppsummeringstidspunkt }
+}
+fun List<Inntektsinformasjon>?.eldste(): Inntektsinformasjon? {
+
+        return this?.minByOrNull { it.oppsummeringstidspunkt }!!
+
 }
 
 

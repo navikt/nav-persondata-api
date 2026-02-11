@@ -15,7 +15,7 @@ spec:
       runtime: java
   resources:
     limits:
-      memory: 512Mi
+      memory: 2Gi
     requests:
       cpu: 200m
       memory: 256Mi
@@ -26,13 +26,12 @@ spec:
     application:
       enabled: true
       allowAllUsers: false
-      tenant: trygdeetaten.no
+      tenant: {{TENANT}}
       singlePageApplication: true
       claims:
         groups:
-          - id: "b734a20d-63e3-4b44-bb77-87f7f0b7f48a" # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
-          - id: "222dedb1-a80d-48c9-b8d3-1e8149be9063" # 0000-GA-kontroll-Oppslag-Bruker-Basic
-
+          - id: {{GROUPS.EXTENDED.id}} # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
+          - id: {{GROUPS.BASIC.id}} # 0000-GA-kontroll-Oppslag-Bruker-Basic
         extra:
           - "NAVident"
           - "azp_name"
@@ -50,10 +49,10 @@ spec:
     initialDelay: 20
     timeout: 60
   ingresses:
-    - https://nav-persondata-api.intern.dev.nav.no
+    - {{INGRESS}}
   replicas:
-    min: 2
-    max: 2
+    min: {{MIN_REPLICAS}}
+    max: {{MAX_REPLICAS}}
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
@@ -64,76 +63,47 @@ spec:
       rules:
         - application: oppslag-bruker-frontend
           namespace: holmes
-          cluster: dev-gcp
+          cluster: {{GCP_CLUSTER}}
         - application: azure-token-generator
           namespace: nais
-          cluster: dev-gcp
+          cluster: {{GCP_CLUSTER}}
     outbound:
       rules:
         - application: sokos-utbetaldata
           namespace: okonomi
-          cluster: dev-fss
+          cluster: {{FSS_CLUSTER}}
         - application: ikomp-q2
           namespace: team-inntekt
-          cluster: dev-fss
+          cluster: {{FSS_CLUSTER}}
         - application: populasjonstilgangskontroll
           namespace: tilgangsmaskin
         - application: aareg-services-nais
           namespace: arbeidsforhold
-          cluster: dev-fss
+          cluster: {{FSS_CLUSTER}}
         - application: logging
           namespace: nais-system
         - application: kodeverk-api
           namespace: team-rocket
         - application: modiacontextholder
           namespace: personoversikt
+        - application: dp-datadeling
+          namespace: teamdagpenger
+        - application: nom-api
+          namespace: nom
+        - application: api-intern
+          namespace: aap
       external:
-        - host: sokos-utbetaldata.dev-fss-pub.nais.io
-        - host: pdl-api.dev-fss-pub.nais.io
-        - host: ikomp-q2.dev-fss-pub.nais.io
-        - host: tilgangsmaskin.intern.dev.nav.no
+        {{#each OUTBOUND_EXTERNAL_HOSTS}}
+        - host: {{this}}
+        {{/each}}
   env:
     - name: GRUPPER
       value: |
         [
-        { "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
-        { "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
+        { "id": "{{GROUPS.EXTENDED.id}}", "name": "{{GROUPS.EXTENDED.name}}" },
+        { "id": "{{GROUPS.BASIC.id}}", "name": "{{GROUPS.BASIC.name}}" }
         ]
-    - name: UTBETALING_SCOPE
-      value: api://dev-fss.okonomi.sokos-utbetaldata/.default
-    - name: UTBETALING_URL
-      value: https://sokos-utbetaldata.dev-fss-pub.nais.io
-
-    - name: PDL_SCOPE
-      value: api://dev-fss.pdl.pdl-api/.default
-    - name: PDL_URL
-      value: https://pdl-api.dev-fss-pub.nais.io/graphql
-
-    - name: INNTEKT_SCOPE
-      value: api://dev-fss.team-inntekt.ikomp-q2/.default
-    - name: INNTEKT_URL
-      value: https://ikomp-q2.dev-fss-pub.nais.io
-
-    - name: TILGANGMASKIN_SCOPE
-      value: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
-    - name: TILGANGMASKIN_URL
-      value: https://tilgangsmaskin.intern.dev.nav.no
-
-    - name: AAREG_SCOPE
-      value: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
-    - name: AAREG_URL
-      value: https://aareg-services.dev-fss-pub.nais.io/api
-
-    - name: EREG_URL
-      value: https://ereg-services.dev-fss-pub.nais.io/api
-
-    - name: KODEVERK_URL
-      value: http://kodeverk-api.team-rocket.svc.cluster.local
-    - name: KODEVERK_SCOPE
-      value: api://dev-gcp.team-rocket.kodeverk-api/.default
-
-    - name: MODIA_CONTEXT_HOLDER_URL
-      value: http://modiacontextholder.personoversikt
-
-    - name: MODIA_CONTEXT_HOLDER_SCOPE
-      value: api://dev-gcp.personoversikt.modiacontextholder/.default
+    {{#each ENVS}}
+    - name: {{name}}
+      value: {{{value}}}
+    {{/each}}

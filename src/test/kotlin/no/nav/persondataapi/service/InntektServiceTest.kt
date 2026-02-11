@@ -14,11 +14,16 @@ import no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato
 import no.nav.persondataapi.integrasjon.ereg.client.PeriodeTid
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektDataResultat
+import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.rest.domene.PersonIdent
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ClassPathResource
+import org.springframework.util.StreamUtils
 import java.math.BigDecimal
+import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
@@ -254,11 +259,11 @@ class InntektServiceTest {
             versjoner = listOf(
                 lagInntektsinformasjon(
                     oppsummeringstidspunkt = OffsetDateTime.parse("2024-02-01T12:00:00+01:00"),
-                    inntektListe = listOf(eldre)
+                    inntektListe = listOf(nyere)
                 ),
                 lagInntektsinformasjon(
                     oppsummeringstidspunkt = OffsetDateTime.parse("2024-01-01T12:00:00+01:00"),
-                    inntektListe = listOf(nyere)
+                    inntektListe = listOf(eldre)
                 )
             )
         )
@@ -282,6 +287,36 @@ class InntektServiceTest {
         assertEquals(BigDecimal("50000"), data.lønnsinntekt[0].beløp)
     }
 
+    @Test
+    fun `skal velge nyeste versjon av inntektsinformasjon også der inntekt er borte i nyeste versjon`() = runBlocking {
+        val brukertilgangService = mockk<BrukertilgangService>()
+        val inntektClient = mockk<InntektClient>()
+        val eregClient = mockk<EregClient>()
+
+        val jsonString = readJsonFromFile("testrespons/InntektResponMedSlettedeHisoriskeInnslag.json")
+        val inntekt: InntektshistorikkApiUt = JsonUtils.fromJson(jsonString)
+        every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+        every { inntektClient.hentInntekter(any(), any()) } returns InntektDataResultat(
+            data = InntektshistorikkApiUt(data = inntekt.data),
+            statusCode = 200,
+            errorMessage = null
+        )
+        every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", null)
+
+        val service = InntektService(inntektClient, eregClient, brukertilgangService)
+        val resultat = service.hentInntekterForPerson(PersonIdent("12345678901"))
+
+        assertTrue(resultat is InntektResultat.Success)
+        val data = (resultat as InntektResultat.Success).data
+        //finn 2025-2
+        //Vi vet at det er registrert ny informasjon om inntekt i o 2025-02.
+        // Det var ny registrert inntekt og oppdatering fjerner inntekten
+        val periode = data.lønnsinntekt.find { it.periode=="2025-02" }
+
+        Assertions.assertNotNull(periode)
+        
+        assertEquals(BigDecimal.ZERO, periode!!.beløp)
+    }
     @Test
     fun `skal håndtere flere historikkperioder for samme person`() = runBlocking {
         val brukertilgangService = mockk<BrukertilgangService>()
@@ -380,6 +415,12 @@ private fun lagHistorikkData(
     )
 }
 
+private fun readJsonFromFile(filename: String): String {
+    val resource = ClassPathResource(filename)
+    val inputStream = resource.inputStream
+    return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8)
+}
+
 private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
     return EregRespons(
         organisasjonsnummer = orgnummer,
@@ -392,7 +433,5 @@ private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
                 gyldighetsperiode = PeriodeDato(fom = LocalDate.now())
             )
         } else null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }

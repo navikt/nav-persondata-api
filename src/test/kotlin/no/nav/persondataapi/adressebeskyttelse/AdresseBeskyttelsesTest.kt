@@ -1,11 +1,11 @@
 package no.nav.persondataapi.adressebeskyttelse
 
 
-import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
-import no.nav.persondataapi.generated.hentperson.Adressebeskyttelse
-import no.nav.persondataapi.generated.hentperson.Folkeregistermetadata
-import no.nav.persondataapi.generated.hentperson.Metadata
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.pdl.hentperson.Adressebeskyttelse
+import no.nav.persondataapi.generated.pdl.hentperson.Folkeregistermetadata
+import no.nav.persondataapi.generated.pdl.hentperson.Metadata
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.service.nåværendeAdresseBeskyttelse
 import org.junit.jupiter.api.Assertions

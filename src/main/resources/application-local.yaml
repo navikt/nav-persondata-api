@@ -2,6 +2,11 @@ application:
   name: nav-persondata-api
 server:
   port: 8080
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 spring:
   config:
     import: "file:./src/main/resources/.env.local.properties"
@@ -34,6 +39,8 @@ NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:7164/api/v1/token/exchange
 AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/oauth2/v2.0/token
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io/graphql
+NOM_SCOPE: api://dev-gcp.nom.nom-api/.default
+NOM_URL: https://nom-api.intern.dev.nav.no/graphql
 UTBETALING_SCOPE: api://dev-fss.okonomi.sokos-utbetaldata/.default
 UTBETALING_URL: https://sokos-utbetaldata.dev-fss-pub.nais.io
 
@@ -59,3 +66,11 @@ KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 
 MODIA_CONTEXT_HOLDER_URL: https://modiacontextholder.intern.dev.nav.no
 MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.default
+
+NORG2_URL: https://norg2.dev-fss-pub.nais.io/norg2
+
+DP_DATADELING_URL: https://dp-datadeling.intern.dev.nav.no
+DP_DATADELING_SCOPE: api://dev-gcp.teamdagpenger.dp-datadeling/.default
+
+AAP_URL: https://aap-api.intern.dev.nav.no
+AAP_SCOPE: api://dev-gcp.aap.api-intern/.default

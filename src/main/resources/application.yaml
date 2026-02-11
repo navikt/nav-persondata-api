@@ -3,9 +3,22 @@ application:
 server:
   port: 8080
 
+# OpenAPI / Swagger UI konfigurasjon
+springdoc:
+  api-docs:
+    enabled: false
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+
 spring:
-  codec:
-    max-in-memory-size: 5MB
+  http:
+    codecs:
+      max-in-memory-size: 5MB
   data:
     redis:
       host: ${VALKEY_HOST_NAV_PERSONDATA_API}
@@ -37,7 +50,7 @@ cache:
     kodeverk-landkoder:
       expiration: 1h
       maximum-size: 100
-    kodeverk-poststeder:
+    kodeverk-postnummer:
       expiration: 1d
       maximum-size: 1000
 management:

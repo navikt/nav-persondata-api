@@ -1,0 +1,123 @@
+{
+  "TENANT": "trygdeetaten.no",
+  "INGRESS": "https://nav-persondata-api.intern.dev.nav.no",
+  "MIN_REPLICAS": 1,
+  "MAX_REPLICAS": 1,
+  "GCP_CLUSTER": "dev-gcp",
+  "FSS_CLUSTER": "dev-fss",
+  "OUTBOUND_EXTERNAL_HOSTS": [
+    "sokos-utbetaldata.dev-fss-pub.nais.io",
+    "pdl-api.dev-fss-pub.nais.io",
+    "ikomp-q2.dev-fss-pub.nais.io",
+    "tilgangsmaskin.intern.dev.nav.no",
+    "norg2.dev-fss-pub.nais.io"
+  ],
+  "GROUPS": {
+    "BASIC": {
+      "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Basic"
+    },
+    "EXTENDED": {
+      "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a",
+      "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    }
+  },
+  "ENVS": [
+    {
+      "name": "UTBETALING_SCOPE",
+      "value": "api://dev-fss.okonomi.sokos-utbetaldata/.default"
+    },
+    {
+      "name": "UTBETALING_URL",
+      "value": "https://sokos-utbetaldata.dev-fss-pub.nais.io"
+    },
+    {
+      "name": "PDL_SCOPE",
+      "value": "api://dev-fss.pdl.pdl-api/.default"
+    },
+    {
+      "name": "PDL_URL",
+      "value": "https://pdl-api.dev-fss-pub.nais.io/graphql"
+    },
+    {
+      "name": "NOM_SCOPE",
+      "value": "api://dev-gcp.nom.nom-api/.default"
+    },
+    {
+      "name": "NOM_URL",
+      "value": "https://nom-api.intern.dev.nav.no/graphql"
+    },
+    {
+      "name": "INNTEKT_SCOPE",
+      "value": "api://dev-fss.team-inntekt.ikomp-q2/.default"
+    },
+    {
+      "name": "INNTEKT_URL",
+      "value": "https://ikomp-q2.dev-fss-pub.nais.io"
+    },
+    {
+      "name": "TILGANGMASKIN_SCOPE",
+      "value": "api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default"
+    },
+    {
+      "name": "TILGANGMASKIN_URL",
+      "value": "https://tilgangsmaskin.intern.dev.nav.no"
+    },
+    {
+      "name": "AAREG_SCOPE",
+      "value": "api://dev-fss.arbeidsforhold.aareg-services-nais/.default"
+    },
+    {
+      "name": "AAREG_URL",
+      "value": "https://aareg-services.dev-fss-pub.nais.io/api"
+    },
+    {
+      "name": "EREG_URL",
+      "value": "https://ereg-services.dev-fss-pub.nais.io/api"
+    },
+    {
+      "name": "KODEVERK_SCOPE",
+      "value": "api://dev-gcp.team-rocket.kodeverk-api/.default"
+    },
+    {
+      "name": "KODEVERK_URL",
+      "value": "http://kodeverk-api.team-rocket.svc.cluster.local"
+    },
+    {
+      "name": "MODIA_CONTEXT_HOLDER_SCOPE",
+      "value": "api://dev-gcp.personoversikt.modiacontextholder/.default"
+    },
+    {
+      "name": "MODIA_CONTEXT_HOLDER_URL",
+      "value": "http://modiacontextholder.personoversikt"
+    },
+    {
+      "name": "NORG2_URL",
+      "value": "https://norg2.dev-fss-pub.nais.io/norg2"
+    },
+    {
+      "name": "DP_DATADELING_URL",
+      "value": "https://dp-datadeling.intern.dev.nav.no"
+    },
+    {
+      "name": "DP_DATADELING_SCOPE",
+      "value": "api://dev-gcp.teamdagpenger.dp-datadeling/.default"
+    },
+    {
+      "name": "AAP_URL",
+      "value": "https://aap-api.intern.dev.nav.no"
+    },
+    {
+      "name": "AAP_SCOPE",
+      "value": "api://dev-gcp.aap.api-intern/.default"
+    },
+    {
+      "name": "JAVA_TOOL_OPTIONS",
+      "value": "\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005\""
+    },
+    {
+      "name": "SPRING_PROFILES_ACTIVE",
+      "value": "dev"
+    }
+  ]
+}

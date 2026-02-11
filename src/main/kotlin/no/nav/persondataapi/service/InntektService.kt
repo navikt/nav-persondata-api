@@ -3,11 +3,15 @@ package no.nav.persondataapi.service
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
+import no.nav.persondataapi.integrasjon.inntekt.client.KontrollPeriode
 import no.nav.persondataapi.rest.domene.InntektInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.time.LocalDate
 
 @Service
 class InntektService(
@@ -17,11 +21,20 @@ class InntektService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    suspend fun hentInntekterForPerson(personIdent: PersonIdent): InntektResultat {
+    suspend fun hentInntekterForPerson(personIdent: PersonIdent, utvidet: Boolean = false): InntektResultat {
+        val kontrollperiode = KontrollPeriode(
+            LocalDate.now().minusYears(if (utvidet) 10 else 5),
+            LocalDate.now()
+        )
         // Hent inntekter fra InntektClient
-        val inntektResponse = inntektClient.hentInntekter(personIdent)
-        logger.info("Hentet inntekter for $personIdent, status ${inntektResponse.statusCode}")
-
+        val inntektResponse = inntektClient.hentInntekter(personIdent = personIdent, periode = kontrollperiode)
+        logger.info("Hentet inntekter for $personIdent (utvidet = $utvidet), status ${inntektResponse.statusCode}")
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "Inntekt",
+            personIdent=personIdent,
+            unit = inntektResponse
+        )
         // Håndter feil fra InntektClient
         when (inntektResponse.statusCode) {
             404 -> return InntektResultat.PersonIkkeFunnet
@@ -34,14 +47,16 @@ class InntektService(
         val lønnsinntekt = inntektResponse.data?.data
             .orEmpty()
             .flatMap { historikk ->
-                val arbeidsgiver = eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) {
+                    eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                } else null
 
-                historikk.versjoner.nyeste()
+                var respons = historikk.versjoner.nyeste()
                     ?.inntektListe
                     ?.filterIsInstance<Loennsinntekt>()
                     ?.map { loenn ->
                         InntektInformasjon.Lønnsdetaljer(
-                            arbeidsgiver = arbeidsgiver.navn?.sammensattnavn,
+                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
                             periode = historikk.maaned,
                             arbeidsforhold = "",
                             stillingsprosent = "",
@@ -52,6 +67,21 @@ class InntektService(
                         )
                     }
                     .orEmpty()
+                if (respons.isEmpty() && historikk.versjoner.eldste()?.inntektListe
+                        ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
+
+                    respons = listOf(InntektInformasjon.Lønnsdetaljer(
+                        arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
+                        periode = historikk.maaned,
+                        arbeidsforhold = "",
+                        stillingsprosent = "",
+                        lønnstype = historikk.versjoner.eldste()?.inntektListe?.first()?.type,
+                        antall = null,
+                        beløp = BigDecimal.ZERO,
+                        harFlereVersjoner = true
+                    ))
+                }
+                respons
             }
 
         logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $personIdent")

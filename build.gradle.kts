@@ -1,20 +1,22 @@
+import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val tokenSupportVersion = "5.0.30"
 val graphQLKotlinVersion = "9.0.0-alpha.8"
-val springBootVersion = "3.5.7"
+val springBootVersion = "4.0.1"
 val jacksonVersion = "2.17.1"
 val kotlinVersion = "2.2.20"
 val coroutinesVersion = "1.10.2"
 
 
 plugins {
-  kotlin("jvm") version "2.2.21"
-  id("org.springframework.boot") version "3.5.7"
+  kotlin("jvm") version "2.3.0"
+  id("org.springframework.boot") version "4.0.2"
   id("io.spring.dependency-management") version "1.1.7"
-  kotlin("plugin.spring") version "2.2.21"
+  kotlin("plugin.spring") version "2.3.0"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
-  id("org.openapi.generator") version "7.17.0"
+  id("org.openapi.generator") version "7.18.0"
 }
 
 openApiGenerate {
@@ -33,13 +35,18 @@ openApiGenerate {
   )
 }
 
-graphql {
-  client {
-    packageName = "no.nav.persondataapi.generated"
-    // For statiske spørringer
-    queryFileDirectory = "src/main/resources/graphql/queries"
-    schemaFile = file("src/main/resources/graphql/schema/pdl-api-sdl.graphqls")
-  }
+val graphqlGeneratePdlClient by tasks.registering(GraphQLGenerateClientTask::class) {
+  packageName.set("no.nav.persondataapi.generated.pdl")
+  schemaFile.set(file("src/main/resources/graphql/schema/pdl/pdl-api-sdl.graphqls"))
+  queryFileDirectory.set(file("src/main/resources/graphql/queries/pdl"))
+  allowDeprecatedFields.set(false)
+}
+
+val graphqlGenerateNomClient by tasks.registering(GraphQLGenerateClientTask::class) {
+  packageName.set("no.nav.persondataapi.generated.nom")
+  schemaFile.set(file("src/main/resources/graphql/schema/nom/nom-api.graphqls"))
+  queryFileDirectory.set(file("src/main/resources/graphql/queries/nom"))
+  allowDeprecatedFields.set(false)
 }
 
 repositories {
@@ -57,8 +64,11 @@ sourceSets["main"].kotlin.srcDirs(
   "build/generate-resources/main/src/main/kotlin"
 )
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-  compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+tasks.withType<KotlinCompile>().configureEach {
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_21)
+    freeCompilerArgs.add("-Xannotation-default-target=param-property")
+  }
 }
 
 tasks.named<Jar>("bootJar") {
@@ -70,7 +80,7 @@ tasks.withType<Test> {
 }
 
 tasks.named("compileKotlin") {
-  dependsOn("graphqlGenerateClient", "openApiGenerate")
+  dependsOn(graphqlGeneratePdlClient, graphqlGenerateNomClient, "openApiGenerate")
 }
 
 // Generer en markdown-fil med versjoner av viktige avhengigheter
@@ -108,15 +118,14 @@ dependencies {
     because("Fixes CVE-2025-48924")
   }
 
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-  implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+  implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
 
   // Tracing (Micrometer → OpenTelemetry)
   implementation("io.micrometer:micrometer-tracing-bridge-otel")
   runtimeOnly("io.opentelemetry:opentelemetry-exporter-otlp")
 
   // Strukturerte JSON-logger (til stdout -> NAIS logger)
-  implementation("net.logstash.logback:logstash-logback-encoder:8.1")
+  implementation("net.logstash.logback:logstash-logback-encoder:9.0")
 
   implementation("io.projectreactor.netty:reactor-netty-http")
   implementation("org.springframework.boot:spring-boot-starter-web")
@@ -134,7 +143,7 @@ dependencies {
   }
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-  testImplementation("io.mockk:mockk:1.14.6")
+  testImplementation("io.mockk:mockk:1.14.7")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   implementation("io.micrometer:micrometer-registry-prometheus")
 
@@ -155,6 +164,8 @@ dependencies {
   implementation("com.expediagroup:graphql-kotlin-client:$graphQLKotlinVersion")
   implementation("com.expediagroup:graphql-kotlin-spring-client:$graphQLKotlinVersion")
 
-  implementation("io.swagger.core.v3:swagger-annotations:2.2.40")
-  implementation("io.swagger.core.v3:swagger-models:2.2.40")
+  // Swagger UI og OpenAPI-dokumentasjon
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.42")
+  implementation("io.swagger.core.v3:swagger-models:2.2.42")
 }

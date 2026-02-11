@@ -22,10 +22,14 @@ class BrukertilgangService(
         val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)
         val beregnetStatus = tilgangService.beregnStatus(resultat)
         val harUtvidetTilgang = tilgangService.harUtvidetTilgang(groups)
+        // Geografisk tilgang skal overstyres, ellers hør på tilgangsmaskinen
+        val tilgang = if (resultat.data?.title == "AVVIST_GEOGRAFISK") "OK"
+        else if (resultat.data?.title == null) "OK"
+        else resultat.data.title
 
         return BrukertilgangVurdering(
             status = if (harUtvidetTilgang) 200 else beregnetStatus,
-            tilgang = resultat.data?.title ?: "OK",
+            tilgang = tilgang,
             harUtvidetTilgang = harUtvidetTilgang
         )
     }

@@ -1,0 +1,10 @@
+query RessursQuery($navIdent: String!) {
+    ressurs(where: { navident: $navIdent }) {
+        navident
+        orgTilknytninger {
+            orgEnhet {
+                navn
+            }
+        }
+    }
+}

@@ -1,10 +1,8 @@
 # Arkitektur
 
-## Oversikt
-- Spring Boot-applikasjon skrevet i Kotlin med caching aktivert globalt (`src/main/kotlin/no/nav/persondataapi/Application.kt:7`). Cache-manager konfigureres med Caffeine og styres via `application.yaml` (`src/main/kotlin/no/nav/persondataapi/konfigurasjon/CacheConfiguration.kt:16`).
-- REST-API-laget tilbyr beskyttede POST-endepunkter for personopplysninger, arbeidsforhold, inntekt og stønader. Controllerne blokkerer inn i koroutines for å kalle suspenderende tjenester (`src/main/kotlin/no/nav/persondataapi/rest/oppslag/PersonopplysningerController.kt:15`, `ArbeidsforholdController.kt:15`, `InntektController.kt:15`, `StønadController.kt:14`).
-- Tjenestene aggregerer, beriker og maskerer data før svar returneres (`src/main/kotlin/no/nav/persondataapi/service/PersonopplysningerService.kt:26`, `ArbeidsforholdService.kt:21`, `InntektService.kt:21`, `StønadService.kt:17`).
-- Domeneobjekter i `rest/domene` markerer sensitive felter med `@Maskert`, mens `MaskeringUtil` traverserer objekter rekursivt og erstatter verdier ved behov (`src/main/kotlin/no/nav/persondataapi/rest/domene/PersonInformasjon.kt:5`, `src/main/kotlin/no/nav/persondataapi/rest/oppslag/Maskert.kt:21`, `MaskeringUtil.kt:15`).
+## Formål og kontekst
+- API-et gir saksbehandlere et helhetlig oppslag på persondata (personopplysninger, arbeidsforhold, inntekt, ytelser) med innebygget maskering og logging.
+- Applikasjonen er en Spring Boot 3.5-applikasjon skrevet i Kotlin, med caching aktivert fra oppstarten (`Application.kt`).
 
 ## Integrasjoner og dataflyt
 
@@ -24,17 +22,32 @@ A[Persondata-api] -->|Oppslag| H[Tilgangsmaskinen]
 - Inntekt, arbeidsforhold og utbetalinger konsumeres via egne klienter og mappes til interne domeneobjekter (`src/main/kotlin/no/nav/persondataapi/integrasjon/inntekt/client/InntektClient.kt:28`, `integrasjon/aareg/client/AaregClient.kt:28`, `integrasjon/utbetaling/client/UtbetalingClient.kt:23`).
 - Tilgangskontroll mot Tilgangsmaskinen evalueres og brukes til å bestemme maskering, kombinert med lokale AD-grupper (`src/main/kotlin/no/nav/persondataapi/integrasjon/tilgangsmaskin/client/TilgangsmaskinClient.kt:25`, `service/TilgangService.kt:21`, `domene/Grupper.kt:14`).
 
-## Sikkerhet og observabilitet
-- JWT-validering er aktivert gjennom `SecurityConfiguration`, med issuer og audience konfigurert i `application.yaml` (og overrides i `application-local.yaml`) (`src/main/kotlin/no/nav/persondataapi/konfigurasjon/SecurityConfiguration.kt:7`, `src/main/resources/application.yaml:49`).
-- `BrukertilgangService` kombinerer token-claims, Tilgangsmaskin-respons og AD-grupper for å avgjøre tilgangsstatus (`src/main/kotlin/no/nav/persondataapi/service/BrukertilgangService.kt:12`, `TilgangService.kt:21`).
-- Alle oppslag auditeres via `AuditService`, og `NavCallIdServletFilter` sørger for korrelasjons-ID i MDC og utgående kall (`src/main/kotlin/no/nav/persondataapi/service/AuditService.kt:21`, `konfigurasjon/CallIdConfig.kt:20`).
-- Aktuatorendepunkter og Prometheus-metrikker eksponeres via `application.yaml`, og WebClient-observasjoner tagges per nedstrømsystem (`src/main/resources/application.yaml:32`, `src/main/kotlin/no/nav/persondataapi/konfigurasjon/ClientMetricsConfig.kt:26`).
+## Dataflyt ved et oppslag
+1. **Innkommende kall**: `NavCallIdServletFilter` setter `Nav-Call-Id`, saksbehandlerens NAV-ident og valgfritt `logg`-flagg i MDC.
+2. **Tilgangsvurdering**: Controlleren bruker `BrukertilgangService`/`TilgangService` som kombinerer Tilgangsmaskin-respons med AD-grupper for utvidet tilgang.
+3. **Innhenting**: Tjenesten kaller integrasjonsklienter med korrelerte tokens og systemspesifikke headers (f.eks. Behandlingsnummer/Tema mot PDL). Standard WebClient-timeouts er satt i `WebClientConfig`.
+4. **Beriking og maskering**: Kodeverk- og organisasjonsdata legges til, og `maskerObjekt` brukes dersom tilgangsavslag eller skjermingsnivå krever det.
+5. **Sporbarhet**: Vellykkede personoppslag audit-logges via `RevisjonsloggService` (CEF-format), og tracing kan utløses ved å sende headeren `logg=true`.
 
 ## Bygg og konfig
 - <!-- versions --> GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
 - Avhengighetstre inkluderer WebFlux, Micrometer tracing, NAV token-support og logstash-encoder. Genererte kilder legges til som egne source directories (`build.gradle.kts:92`, `build.gradle.kts:54`).
 - Lokal profil importerer hemmeligheter fra `.env.local.properties` og definerer alle scope- og URL-variabler for integrasjoner (`src/main/resources/application-local.yaml:7`).
 
-## Naturlige neste steg
-1. Kjør `./gradlew build` for å verifisere at generatorene og byggløpet fungerer i miljøet ditt.
-2. Vurder å supplere dokumentasjonen med kontekst- eller sekvensdiagram dersom arkitekturen skal presenteres for nye teammedlemmer.
+## Ytelse og robusthet
+- Cache-laget bruker Valkey/Redis i alle miljøer unntatt `local`, der Caffeine benyttes (`CacheConfiguration`). TTL og størrelse styres per cache i `application.yaml`, og `CacheAdminService` kan flushe alle eller per personident.
+- GraphQL- og REST-kall caches selektivt (f.eks. `pdl-person`, `aareg-arbeidsforhold`, `inntekt-historikk`, `utbetaling-bruker`, `kodeverk-*`).
+- WebClient-instansene har tidsavbrudd og lav-kardinalitet observasjonskonvensjoner satt i `WebClientConfig` og `ClientMetricsConfig` for å unngå metrikksstøy.
+- `BaseDownstreamMetrics` tilbyr standard timere og tellere per integrasjon, eksponert via Prometheus/Actuator.
+
+## Teknologistack og byggløp
+- Kotlin 2.2, Spring Boot 3.5, Micrometer-tracing (OTLP), Reactor Netty, Caffeine/Redis/Valkey.
+- Klienter genereres i byggløpet: GraphQL-klient for PDL fra `src/main/resources/graphql`, og OpenAPI-klient for inntekt fra `src/main/resources/openapi`. Genererte kilder legges til som egne `sourceSets`.
+- Bygg og tester kjøres med `./gradlew clean build`. Lokal kjøring bruker profilen `local` og henter hemmeligheter via `./get-secrets.sh`.
+
+## Arkitekturelle hovedvalg
+- **Lagdelt Spring-arkitektur** med tydelig separasjon mellom controller, tjeneste, integrasjon og domene gjør det enkelt å teste og bytte ut eksterne avhengigheter.
+- **GraphQL mot PDL** gir presise felthentinger, mens øvrige systemer benytter standard REST/OpenAPI for enkel klientgenerering.
+- **Deklarativ maskering** gjennom `@Maskert` og objekt-innpakninger (f.eks. `PersonIdent`) reduserer risiko for utilsiktet logging og eksponering.
+- **Delt cache-backend** via Valkey i sky og Caffeine lokalt balanserer ytelse, kost og enkel feilsøking.
+- **Korrelerbarhet og audit** er bygget inn fra filteret til auditlogger, slik at alle oppslag kan spores på tvers av tjenester.

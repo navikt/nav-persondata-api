@@ -23,7 +23,6 @@ import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Collections
 
 
 class AaregParseResponsTest {
@@ -32,7 +31,7 @@ class AaregParseResponsTest {
     fun kanLeseAaregResponsFraProduksjon() =runBlocking {
 
 
-        val jsonString = readJsonFromFile("testrespons/aaregGrunnlagsdataResponsSample.json")
+        val jsonString = lesJsonFraFil("testrespons/aaregGrunnlagsdataResponsSample.json")
         val aaregRespons: AaregDataResultat = JsonUtils.fromJson(jsonString)
 
         val brukertilgangService = mockk<BrukertilgangService>()
@@ -62,7 +61,7 @@ class AaregParseResponsTest {
 
     }
 }
-private fun readJsonFromFile(filename: String): String {
+private fun lesJsonFraFil(filename: String): String {
     val resource = ClassPathResource(filename)
     val inputStream = resource.inputStream
     return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8)
@@ -79,7 +78,5 @@ private fun lagEregRespons(orgnummer: String, navn: String?): EregRespons {
                 gyldighetsperiode = no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato(fom = LocalDate.now())
             )
         } else null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }

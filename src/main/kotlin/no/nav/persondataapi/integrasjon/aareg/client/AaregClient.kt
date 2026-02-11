@@ -2,7 +2,14 @@ package no.nav.persondataapi.integrasjon.aareg.client
 
 
 import com.fasterxml.jackson.core.type.TypeReference
+import io.netty.handler.timeout.ReadTimeoutException
+import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.persondataapi.konfigurasjon.JsonUtils
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
+import no.nav.persondataapi.konfigurasjon.rootCause
+import no.nav.persondataapi.metrics.AaregMetrics
+import no.nav.persondataapi.metrics.DownstreamResult
+import no.nav.persondataapi.metrics.InntektMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
 
 import no.nav.persondataapi.service.SCOPE
@@ -15,24 +22,34 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
 import java.util.UUID
+import java.util.concurrent.TimeoutException
 
 @Component
 class AaregClient(
     private val tokenService: TokenService,
     @param:Qualifier("aaregWebClient")
     private val webClient: WebClient,
+    private val metrics: AaregMetrics,
 ) {
 
     // Jackson for parsing etter at vi har logget rå-body
     private val log = LoggerFactory.getLogger(javaClass)
     private val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")
-
-    @Cacheable(value = ["aareg-arbeidsforhold"], key = "#personIdent")
+    private val operationName = "arbeidsforhold"
+    @Cacheable(
+        value = ["aareg-arbeidsforhold"],
+        key = "#personIdent",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentArbeidsforhold(personIdent: PersonIdent): AaregDataResultat {
         return runCatching {
+            metrics
+                .timer(operationName)
+                .recordCallable {
             val oboToken = tokenService.getServiceToken(SCOPE.AAREG_SCOPE)
+            val responsePair: Pair<Int, List<Arbeidsforhold>> =
 
-            val responsePair: Pair<Int, List<Arbeidsforhold>> = webClient.get()
+                webClient.get()
                 .uri { uriBuilder ->
                     uriBuilder
                         .path("/v2/arbeidstaker/arbeidsforhold")
@@ -69,6 +86,7 @@ class AaregClient(
                             }
                         }
                 }
+                .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Aareg-arbeidsforhold"))
                 .block()!!
 
             AaregDataResultat(
@@ -76,24 +94,38 @@ class AaregClient(
                 statusCode = responsePair.first,
                 errorMessage = ""
             )
+        }   //insert here
         }.getOrElse { error ->
+            val resultType = when {
+                erTimeout(error) -> DownstreamResult.TIMEOUT
+                error.message?.contains("ikke tilgang", ignoreCase = true) == true ->
+                    DownstreamResult.CLIENT_ERROR
+                else -> DownstreamResult.UNEXPECTED
+            }
+            metrics.counter(operationName, resultType).increment()
             if (error is HttpStatusException) {
                 AaregDataResultat(
                     data = emptyList(),
                     statusCode = error.statusCode,
-                    errorMessage = error.message ?: "Feil fra Aareg"
+                    errorMessage = error.rootCause().message ?: "Feil fra Aareg"
                 )
             } else {
                 AaregDataResultat(
                     data = emptyList(),
                     statusCode = 500,
-                    errorMessage = "Teknisk feil: ${error.message}"
+                    errorMessage = "Teknisk feil: ${error.rootCause().message}"
                 )
             }
         }
     }
 }
-
+private fun erTimeout(e: Throwable): Boolean =
+    when (e.rootCause()) {
+        is TimeoutException -> true
+        is ReadTimeoutException -> true
+        is WriteTimeoutException -> true
+        else -> false
+    }
 data class AaregDataResultat(
     val data: List<Arbeidsforhold> = emptyList(),
     val statusCode: Int?,               // f.eks. 200, 401, 500

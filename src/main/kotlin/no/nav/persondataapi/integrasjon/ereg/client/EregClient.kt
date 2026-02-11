@@ -1,6 +1,8 @@
 package no.nav.persondataapi.integrasjon.ereg.client
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.json.JsonMapper
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
+import no.nav.persondataapi.metrics.EregMetrics
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
@@ -11,13 +13,21 @@ import org.springframework.web.reactive.function.client.WebClient
 class EregClient(
     @param:Qualifier("eregWebClient")
     private val webClient: WebClient,
-    private val objectMapper: ObjectMapper // injiseres automatisk av Spring Boot
+    private val jsonMapper: JsonMapper,
+    private val metrics: EregMetrics
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val operationName = "organisasjon"
 
-    @Cacheable(value = ["ereg-organisasjon"], key = "#orgnummer")
+    @Cacheable(
+        value = ["ereg-organisasjon"],
+        key = "#orgnummer"
+    )
     fun hentOrganisasjon(orgnummer: String): EregRespons {
         val rawJson: String = try {
+            metrics
+                .timer(operationName)
+                .recordCallable {
             webClient.get()
                 .uri { uriBuilder ->
                     uriBuilder
@@ -28,14 +38,16 @@ class EregClient(
                 }
                 .retrieve()
                 .bodyToMono(String::class.java)
+                .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "ereg-organisasjon"))
                 .block()!!
+            }
         } catch (ex: Exception) {
             logger.error("Klarte ikke å hente data fra Ereg for orgnummer=$orgnummer", ex)
             return fallback(orgnummer)
         }
 
         return try {
-            objectMapper.readValue(rawJson, EregRespons::class.java)
+            jsonMapper.readValue(rawJson, EregRespons::class.java)
         } catch (ex: Exception) {
             logger.error("Klarte ikke å parse Ereg-respons for orgnummer=$orgnummer. Rå JSON:\n$rawJson", ex)
             fallback(orgnummer)
@@ -46,7 +58,5 @@ class EregClient(
         organisasjonsnummer = orgnummer,
         type = "",
         navn = null,
-        organisasjonDetaljer = null,
-        virksomhetDetaljer = null
     )
 }

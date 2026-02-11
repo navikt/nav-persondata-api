@@ -1,15 +1,13 @@
 package no.nav.persondataapi.service
 
-import no.nav.persondataapi.generated.enums.AdressebeskyttelseGradering
-import no.nav.persondataapi.generated.hentperson.Person
+import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
+import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
-import no.nav.persondataapi.konfigurasjon.JsonUtils
-import no.nav.persondataapi.konfigurasjon.teamLogsMarker
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
-import org.slf4j.MarkerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -19,6 +17,7 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
+    private val navTilhørighetService: NavTilhørighetService
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -34,9 +33,19 @@ class PersonopplysningerService(
 
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
-        if (responsLog) {
-            logger.info(teamLogsMarker,"Logging aktivert - full PDL-respons for {}: {}", personIdent, JsonUtils.toJson(pdlResponse).toPrettyString())
-        }
+        val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "PDL hentPerson",
+            personIdent = personIdent,
+            unit = pdlResponse
+        )
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "PDL lokalKontor",
+            personIdent = personIdent,
+            unit = lokalKontor
+        )
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
         // Håndter feil fra PdlClient
@@ -51,7 +60,7 @@ class PersonopplysningerService(
 
         // Mappe familie og sivilstand
         val foreldreOgBarn = pdlData.forelderBarnRelasjon.associate {
-            Pair(it.relatertPersonsIdent!!, it.relatertPersonsRolle.name)
+            Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
         }
         val statsborgerskap = pdlData.statsborgerskap.map { it.land }
         val ektefelle = pdlData.sivilstand
@@ -72,11 +81,17 @@ class PersonopplysningerService(
             adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
             statsborgerskap = statsborgerskap,
             sivilstand = pdlData.gjeldendeSivilStand(),
-            alder = pdlData.foedselsdato.first().foedselsdato?.let {
+            alder = pdlData.foedselsdato.firstOrNull()?.foedselsdato?.let {
                 Period.between(LocalDate.parse(it), LocalDate.now()).years
             } ?: -1,
-            fødselsdato = pdlData.foedselsdato.first().foedselsdato ?: "",
+            fødselsdato = pdlData.foedselsdato.firstOrNull()?.foedselsdato ?: "",
             dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
+            navKontor = PersonInformasjon.NavKontor(
+                enhetId = lokalKontor.enhetId,
+                navn = lokalKontor.navn,
+                enhetNr = lokalKontor.enhetNr,
+                type = lokalKontor.type
+            ),
         )
 
         // Berik med kodeverkdata

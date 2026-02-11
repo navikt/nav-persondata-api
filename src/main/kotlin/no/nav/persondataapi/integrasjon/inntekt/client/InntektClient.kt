@@ -1,7 +1,12 @@
 package no.nav.persondataapi.integrasjon.inntekt.client
 
+import io.netty.handler.timeout.ReadTimeoutException
+import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.inntekt.generated.model.InntektshistorikkApiInn
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
+import no.nav.persondataapi.konfigurasjon.RetryPolicy
+import no.nav.persondataapi.metrics.DownstreamResult
+import no.nav.persondataapi.metrics.InntektMetrics
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -14,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.UUID
+import java.util.concurrent.TimeoutException
 
 
 @Component
@@ -21,27 +27,37 @@ class InntektClient(
     private val tokenService: TokenService,
     @param:Qualifier("inntektWebClient")
     private val webClient: WebClient,
+    private val metrics: InntektMetrics,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+    private val operationName = "inntektshistorikk"
 
 
-    @Cacheable(value = ["inntekt-historikk"], key = "#personIdent + '_' + #kontrollPeriode.fom + '_' + #kontrollPeriode.tom")
+    @Cacheable(
+        value = ["inntekt-historikk"],
+        key = "#personIdent + '_' + #periode.fom + '_' + #periode.tom",
+        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+    )
     fun hentInntekter(
         personIdent: PersonIdent,
-        kontrollPeriode: KontrollPeriode = KontrollPeriode(
+        periode: KontrollPeriode = KontrollPeriode(
             LocalDate.now().minusYears(5),
             LocalDate.now()
         )
     ): InntektDataResultat {
         return runCatching {
+            metrics
+                .timer(operationName)
+                .recordCallable {
+
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
             val requestBody = InntektshistorikkApiInn(
                 personident = personIdent.value,
                 filter = "NAVKontrollA-Inntekt",
                 formaal = "NAVKontroll",
-                maanedFom = kontrollPeriode.fom.format(formatter),
-                maanedTom = kontrollPeriode.tom.format(formatter),
+                maanedFom = periode.fom.format(formatter),
+                maanedTom = periode.tom.format(formatter),
             )
             val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
 
@@ -60,10 +76,15 @@ class InntektClient(
                             throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
                         }
                     }
-                }.block()!!
+                }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Inntektshistorikk"))
+                .block()!!
+
             responseResult
+                }
         }.fold(
-            onSuccess = { inntekt ->
+            onSuccess = {
+                inntekt ->
+                metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
                 InntektDataResultat(
                     data = inntekt,
                     statusCode = 200,
@@ -71,7 +92,16 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                log.error("Feil ved henting av utbetalinger : ${error.message}", error)
+                val resultType = when {
+                    erTimeout(error) -> DownstreamResult.TIMEOUT
+                    error.message?.contains("ikke tilgang", ignoreCase = true) == true ->
+                        DownstreamResult.CLIENT_ERROR
+                    else -> DownstreamResult.UNEXPECTED
+                }
+
+                metrics.counter(operationName, resultType).increment()
+
+                log.error("Feil ved henting av inntekter : ${error.message}", error)
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,
@@ -80,6 +110,14 @@ class InntektClient(
             }
         )
     }
+
+    private fun erTimeout(e: Throwable): Boolean =
+        when (e.cause) {
+            is TimeoutException -> true
+            is ReadTimeoutException -> true
+            is WriteTimeoutException -> true
+            else -> false
+        }
 }
 
 data class InntektDataResultat(
