@@ -1,6 +1,5 @@
 package no.nav.persondataapi.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.env.Environment
 import org.springframework.core.env.get
