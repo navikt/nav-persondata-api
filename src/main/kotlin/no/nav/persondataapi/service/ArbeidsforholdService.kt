@@ -5,11 +5,10 @@ import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.hentIdenter
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.ArbeidsgiverInformasjon
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
-import no.nav.persondataapi.tracelogging.traceLogg
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -26,15 +25,13 @@ class ArbeidsforholdService(
     suspend fun hentArbeidsforholdForPerson(personIdent: PersonIdent): ArbeidsforholdResultat {
         // Hent arbeidsforhold fra Aareg
         val aaregRespons = aaregClient.hentArbeidsforhold(personIdent = personIdent)
-        if (erTraceLoggingAktvert()) {
-            traceLogg(
-                logger = logger,
-                kilde = "AAREG",
-                personIdent = personIdent,
-                unit = aaregRespons
-            )
-        }
         logger.info("Hentet arbeidsforhold for $personIdent, status ${aaregRespons.statusCode}")
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "AAREG",
+            personIdent = personIdent,
+            unit = aaregRespons
+        )
 
         // Håndter feil fra Aareg
         when (aaregRespons.statusCode) {

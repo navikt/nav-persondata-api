@@ -3,11 +3,10 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
-import no.nav.persondataapi.tracelogging.traceLogg
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -35,21 +34,18 @@ class PersonopplysningerService(
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
-        if (erTraceLoggingAktvert()) {
-            traceLogg(
-                logger = logger,
-                kilde = "PDL hentPerson",
-                personIdent = personIdent,
-                unit = pdlResponse
-            )
-            traceLogg(
-                logger = logger,
-                kilde = "PDL lokalKontor",
-                personIdent = personIdent,
-                unit = lokalKontor
-            )
-
-        }
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "PDL hentPerson",
+            personIdent = personIdent,
+            unit = pdlResponse
+        )
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "PDL lokalKontor",
+            personIdent = personIdent,
+            unit = lokalKontor
+        )
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
         // Håndter feil fra PdlClient

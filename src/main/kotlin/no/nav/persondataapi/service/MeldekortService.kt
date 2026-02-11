@@ -16,7 +16,7 @@ import no.nav.persondataapi.service.domain.KildeDto
 import no.nav.persondataapi.service.domain.AapMeldekortPeriode
 import no.nav.persondataapi.service.domain.PeriodeDto
 import no.nav.persondataapi.service.domain.ÅpenPeriode
-import no.nav.persondataapi.tracelogging.traceLogg
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -32,7 +32,7 @@ class MeldekortService(
         val meldekortRespons = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
         logger.info("Hentet ${if (utvidet) "utvidet " else ""} dagpenger-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
         if (erTraceLoggingAktvert()){
-            traceLogg(
+            traceLoggHvisAktivert(
                 logger = logger,
                 kilde = "Dagpenger",
                 personIdent=personIdent,

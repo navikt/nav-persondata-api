@@ -5,9 +5,8 @@ import no.nav.persondataapi.generated.pdl.hentgeografisktilknytning.GeografiskTi
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.norg2.client.Norg2Client
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
-import no.nav.persondataapi.tracelogging.traceLogg
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -19,14 +18,12 @@ class NavTilhørighetService(
 
     suspend fun finnLokalKontorForPersonIdent(personIdent: PersonIdent): NavLokalKontor {
         val geografiskTilknytning = pdlClient.hentGeografiskTilknytning(personIdent)
-        if (erTraceLoggingAktvert()) {
-            traceLogg(
-                logger = logger,
-                kilde = "PDL geografisk-tilknytning",
-                personIdent=personIdent,
-                unit = geografiskTilknytning
-            )
-        }
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "PDL geografisk-tilknytning",
+            personIdent=personIdent,
+            unit = geografiskTilknytning
+        )
         val norgIdent = geografiskTilknytning.data?.hentNorgIdent()
         if (norgIdent == null) {
             return NavLokalKontor(
