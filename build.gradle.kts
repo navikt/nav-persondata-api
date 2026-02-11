@@ -83,6 +83,32 @@ tasks.named("compileKotlin") {
   dependsOn(graphqlGeneratePdlClient, graphqlGenerateNomClient, "openApiGenerate")
 }
 
+// Generer en markdown-fil med versjoner av viktige avhengigheter
+// Før kjøring/regenerering, slett docks/versions.md hvis den finnes
+// kjør ./gradlew generateVersionInfo
+tasks.register("generateVersionInfo") {
+  doLast {
+    val javaVersion = java.toolchain.languageVersion.get().asInt()
+    val gradleVersion = gradle.gradleVersion
+
+    val versions = mapOf(
+      "Java" to javaVersion,
+      "Gradle" to gradleVersion,
+      "Spring Boot" to springBootVersion,
+      "Kotlin" to kotlinVersion,
+      "Jackson" to jacksonVersion,
+      "Coroutines" to coroutinesVersion,
+      "Token Support" to tokenSupportVersion,
+      "GraphQL Kotlin" to graphQLKotlinVersion
+    )
+
+    val content = versions.entries.joinToString("\n") { "- ${it.key}: ${it.value}" }
+
+    file("docs/versions.md").writeText(content)
+  }
+}
+
+
 dependencies {
   // Jackson - BOM handles transitive versions
   implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
