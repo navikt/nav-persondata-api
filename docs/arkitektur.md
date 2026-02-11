@@ -4,11 +4,23 @@
 - API-et gir saksbehandlere et helhetlig oppslag på persondata (personopplysninger, arbeidsforhold, inntekt, ytelser) med innebygget maskering og logging.
 - Applikasjonen er en Spring Boot 3.5-applikasjon skrevet i Kotlin, med caching aktivert fra oppstarten (`Application.kt`).
 
-## Lagdelt oppbygning
-- **REST-lag** (`rest/oppslag`): Beskyttede POST-endepunkter per fagområde. Controllerne bruker `runBlocking` for å kalle suspenderende tjenestemetoder og returnerer typesikre DTO-er.
-- **Tjenestelag** (`service`): Orkestrerer kall mot eksterne systemer, beriker data (kodeverk, NAV-kontor), håndterer feil og maskering. Eksempler: `PersonopplysningerService`, `ArbeidsforholdService`, `InntektService`, `YtelseService`.
-- **Integrasjonslag** (`integrasjon/...`): WebClient-baserte klienter per system. PDL hentes med GraphQL-klienten, mens inntekt, Aareg, utbetaling, Ereg, kodeverk, Norg2 og Tilgangsmaskinen bruker REST/OpenAPI. `TokenService` leverer OBO- og client-credentials-tokens. Les mer om disse i `docs/integrasjoner.md`
-- **Domene** (`rest/domene`): Objekt-innpakninger som `PersonIdent` sikrer riktig maskering i `toString`, og felter annoteres med `@Maskert`. `MaskeringUtil` traverserer datastrukturer for å erstatte maskerte felt.
+## Integrasjoner og dataflyt
+
+graph TD
+
+A[Persondata-api] -->|REST API| B[OBO-veksling og client-credentials]
+A[Persondata-api] -->|DOMENE| C[Personoppslag]
+A[Persondata-api] -->|GraphQL| D[PDL]
+A[Persondata-api] -->|Oppslag| E[Inntekt]
+A[Persondata-api] -->|Oppslag| F[Arbeidsforhold]
+A[Persondata-api] -->|Oppslag| G[Utbetalinger]
+A[Persondata-api] -->|Oppslag| H[Tilgangsmaskinen]
+
+- WebClient-instansene konfigureres sentralt med Call-ID-filter, Micrometer-merking og systemspesifikke observation-konvensjoner (`src/main/kotlin/no/nav/persondataapi/konfigurasjon/WebClientConfig.kt:42`, `ClientMetricsConfig.kt:19`).
+- `TokenService` håndterer både OBO-veksling og client-credentials mot NAVs sikkerhetsplattform basert på miljøvariabler (`src/main/kotlin/no/nav/persondataapi/service/TokenService.kt:19`).
+- PDL-data hentes via GraphQL med caching og tilpassede headers (`src/main/kotlin/no/nav/persondataapi/integrasjon/pdl/client/PdlClient.kt:22`); kodeverk- og organisasjonsdata hentes og brukes til beriking (`src/main/kotlin/no/nav/persondataapi/service/KodeverkService.kt:4`, `integrasjon/kodeverk/client/KodeverkClient.kt:27`, `integrasjon/ereg/client/EregClient.kt:16`).
+- Inntekt, arbeidsforhold og utbetalinger konsumeres via egne klienter og mappes til interne domeneobjekter (`src/main/kotlin/no/nav/persondataapi/integrasjon/inntekt/client/InntektClient.kt:28`, `integrasjon/aareg/client/AaregClient.kt:28`, `integrasjon/utbetaling/client/UtbetalingClient.kt:23`).
+- Tilgangskontroll mot Tilgangsmaskinen evalueres og brukes til å bestemme maskering, kombinert med lokale AD-grupper (`src/main/kotlin/no/nav/persondataapi/integrasjon/tilgangsmaskin/client/TilgangsmaskinClient.kt:25`, `service/TilgangService.kt:21`, `domene/Grupper.kt:14`).
 
 ## Dataflyt ved et oppslag
 1. **Innkommende kall**: `NavCallIdServletFilter` setter `Nav-Call-Id`, saksbehandlerens NAV-ident og valgfritt `logg`-flagg i MDC.
@@ -17,11 +29,10 @@
 4. **Beriking og maskering**: Kodeverk- og organisasjonsdata legges til, og `maskerObjekt` brukes dersom tilgangsavslag eller skjermingsnivå krever det.
 5. **Sporbarhet**: Vellykkede personoppslag audit-logges via `RevisjonsloggService` (CEF-format), og tracing kan utløses ved å sende headeren `logg=true`.
 
-## Sikkerhet og personvern
-- Tokenvalidering håndteres av `SecurityConfiguration` med Azure AD-issuer og audience fra konfigurasjon. Alle eksterne dataforespørsler signeres med systemtoken eller OBO-token fra `TokenService`.
-- Tilgangskontroll bygger på Tilgangsmaskinen, med AD-grupper for utvidet tilgang og geografisk overstyring for å unngå falske avslag.
-- Maskering er deklarativ via `@Maskert` og brukes bredt på identifiserende felter. Høy skjerming eller manglende tilgang fører til maskert eller avvist svar.
-- Audit-logg skrives i CEF-format mot egen logger for alle godkjente oppslag i `PersonbrukerController`.
+## Bygg og konfig
+- <!-- versions --> GraphQL- og OpenAPI-klienter genereres som del av kompilasjonsløpet (`build.gradle.kts:6`, `build.gradle.kts:16`, `build.gradle.kts:33`).
+- Avhengighetstre inkluderer WebFlux, Micrometer tracing, NAV token-support og logstash-encoder. Genererte kilder legges til som egne source directories (`build.gradle.kts:92`, `build.gradle.kts:54`).
+- Lokal profil importerer hemmeligheter fra `.env.local.properties` og definerer alle scope- og URL-variabler for integrasjoner (`src/main/resources/application-local.yaml:7`).
 
 ## Ytelse og robusthet
 - Cache-laget bruker Valkey/Redis i alle miljøer unntatt `local`, der Caffeine benyttes (`CacheConfiguration`). TTL og størrelse styres per cache i `application.yaml`, og `CacheAdminService` kan flushe alle eller per personident.

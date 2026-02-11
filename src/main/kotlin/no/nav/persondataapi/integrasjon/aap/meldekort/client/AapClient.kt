@@ -2,8 +2,8 @@ package no.nav.persondataapi.integrasjon.aap.meldekort.client
 
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AAPMaximumRespons
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AAPMaximumRequest
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRequest
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
@@ -47,7 +47,7 @@ class AapClient(
             metrics.timer(operationName).recordCallable {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-                val requestBody = AAPMaximumRequest(
+                val requestBody = AapMaximumRequest(
                     personidentifikator = personIdent.value,
                     fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
                     tilOgMedDato = LocalDate.now().format(formatter),
@@ -59,7 +59,7 @@ class AapClient(
                     .exchangeToMono { response ->
                         val status = response.statusCode()
                         if (status.is2xxSuccessful) {
-                            response.bodyToMono(object : ParameterizedTypeReference<AAPMaximumRespons>() {})
+                            response.bodyToMono(object : ParameterizedTypeReference<AapMaximumRespons>() {})
                         } else {
                             response.bodyToMono(String::class.java).map { body ->
                                 throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")

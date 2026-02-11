@@ -1,11 +1,36 @@
 # nav-persondata-api
-API for uthenting av persondata for Borger eller innbygger i Norge med Nav tilknytning.
+API for uthenting av persondata og ytelses informasjon for Borger eller innbygger i Norge med Nav tilknytning.
 
-## Komme i gang
+Dokumentasjon er samlet i egen mappe:
+<details>
+  <summary>Vis alle sider</summary>
+
+- [Om prosjektet og agenter](docs/ OM_PROSJEKTET_OG_AGENTER.md)
+- [Integrasjoner](docs/Integrasjoner.md)
+- [Arkitektur](docs/arkitektur.md)
+
+
+</details>
+
+## Kom raskt i gang
+
+### API-dokumentasjon
+
+Swagger UI er tilgjengelig på `/swagger-ui.html` når applikasjonen kjører. Her kan du utforske alle endepunkter, se eksempler og teste API-et direkte.
+
+OpenAPI-spesifikasjonen (JSON) er tilgjengelig på `/v3/api-docs`.
 
 ### Bygging og testing
 Du kan bygge og teste applikasjonen med `gradle build`, eller via `./gradlew build` om du ikke har gradle installert.
-Se [AGENTS.md Bygg, test og utvikling](../path/to/AGENTS.md#L42) for mer detaljer.
+<details>
+  <summary>Andre kommandoer:</summary>
+
+- `./get-secrets.sh` fetches NAIS credentials into the local env file; run once per session when targeting secure backends.
+- `./gradlew clean build` compiles sources, runs generators (`openApiGenerate`, `graphqlGenerateClient`) and executes the full test suite.
+- `./gradlew test` is the fastest loop for unit and integration tests.
+- `./gradlew bootRun --args='--spring.profiles.active=local'` starts the Spring Boot app locally with the `local` profile.
+
+</details>
 
 ### Henting av secrets
 

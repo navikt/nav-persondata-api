@@ -23,7 +23,6 @@ data class Meldekort(
     val kanSendesFra: LocalDate,
     val sisteFristForTrekk: LocalDate?,
     val opprettetAv: String,
-    val migrert: Boolean,
     val kilde: Kilde = Kilde(ident = "Ukjent", rolle = "Ukjent"),
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
