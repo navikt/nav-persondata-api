@@ -4,6 +4,7 @@ import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
 import no.nav.persondataapi.integrasjon.dagpenger.datadeling.DagpengerDatadelingClient
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStatus
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import no.nav.persondataapi.service.domain.AapMeldekortDto
@@ -15,6 +16,7 @@ import no.nav.persondataapi.service.domain.KildeDto
 import no.nav.persondataapi.service.domain.AapMeldekortPeriode
 import no.nav.persondataapi.service.domain.PeriodeDto
 import no.nav.persondataapi.service.domain.ÅpenPeriode
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -28,8 +30,15 @@ class MeldekortService(
 
     fun hentDagpengeMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): MeldekortResultat {
         val meldekortRespons = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
-        logger.info("Hentet ${if (utvidet) "utvidete " else ""} dagpenge-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
-
+        logger.info("Hentet ${if (utvidet) "utvidet " else ""} dagpenger-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
+        if (erTraceLoggingAktvert()){
+            traceLoggHvisAktivert(
+                logger = logger,
+                kilde = "Dagpenger",
+                personIdent=personIdent,
+                unit = meldekortRespons
+            )
+        }
         when (meldekortRespons.statusCode) {
             404 -> return MeldekortResultat.PersonIkkeFunnet
             403, 401 -> return MeldekortResultat.IngenTilgang

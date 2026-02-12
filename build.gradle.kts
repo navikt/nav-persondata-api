@@ -12,7 +12,7 @@ val coroutinesVersion = "1.10.2"
 
 plugins {
   kotlin("jvm") version "2.3.0"
-  id("org.springframework.boot") version "4.0.1"
+  id("org.springframework.boot") version "4.0.2"
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.3.0"
   id("com.expediagroup.graphql") version "9.0.0-alpha.8"
@@ -83,6 +83,32 @@ tasks.named("compileKotlin") {
   dependsOn(graphqlGeneratePdlClient, graphqlGenerateNomClient, "openApiGenerate")
 }
 
+// Generer en markdown-fil med versjoner av viktige avhengigheter
+// Før kjøring/regenerering, slett docks/versions.md hvis den finnes
+// kjør ./gradlew generateVersionInfo
+tasks.register("generateVersionInfo") {
+  doLast {
+    val javaVersion = java.toolchain.languageVersion.get().asInt()
+    val gradleVersion = gradle.gradleVersion
+
+    val versions = mapOf(
+      "Java" to javaVersion,
+      "Gradle" to gradleVersion,
+      "Spring Boot" to springBootVersion,
+      "Kotlin" to kotlinVersion,
+      "Jackson" to jacksonVersion,
+      "Coroutines" to coroutinesVersion,
+      "Token Support" to tokenSupportVersion,
+      "GraphQL Kotlin" to graphQLKotlinVersion
+    )
+
+    val content = versions.entries.joinToString("\n") { "- ${it.key}: ${it.value}" }
+
+    file("docs/versions.md").writeText(content)
+  }
+}
+
+
 dependencies {
   // Jackson - BOM handles transitive versions
   implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
@@ -92,7 +118,7 @@ dependencies {
     because("Fixes CVE-2025-48924")
   }
 
-  implementation("tools.jackson.module:jackson-module-kotlin:3.0.3")
+  implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
 
   // Tracing (Micrometer → OpenTelemetry)
   implementation("io.micrometer:micrometer-tracing-bridge-otel")
@@ -140,6 +166,6 @@ dependencies {
 
   // Swagger UI og OpenAPI-dokumentasjon
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
-  implementation("io.swagger.core.v3:swagger-annotations:2.2.41")
-  implementation("io.swagger.core.v3:swagger-models:2.2.41")
+  implementation("io.swagger.core.v3:swagger-annotations:2.2.42")
+  implementation("io.swagger.core.v3:swagger-models:2.2.42")
 }

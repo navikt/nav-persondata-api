@@ -1,12 +1,10 @@
 package no.nav.persondataapi.service
 
 import no.nav.persondataapi.integrasjon.utbetaling.client.UtbetalingClient
-import no.nav.persondataapi.konfigurasjon.JsonUtils
-import no.nav.persondataapi.konfigurasjon.teamLogsMarker
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.Ytelse
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -20,9 +18,12 @@ class YtelseService(
     fun hentYtelserForPerson(personIdent: PersonIdent, utvidet: Boolean): YtelserResultat {
         val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(personIdent, utvidet)
         logger.info("Hentet ${if (utvidet) "utvidete " else ""}ytelser for $personIdent, status ${utbetalingResponse.statusCode}")
-        if (erTraceLoggingAktvert()){
-            logger.info(teamLogsMarker,"Logging aktivert - full ytelser-respons for {}: {}", personIdent, JsonUtils.toJson(utbetalingResponse).toPrettyString())
-        }
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "Utbetaling",
+            personIdent = personIdent,
+            unit = utbetalingResponse
+        )
         when (utbetalingResponse.statusCode) {
             404 -> return YtelserResultat.PersonIkkeFunnet
             403, 401 -> return YtelserResultat.IngenTilgang
