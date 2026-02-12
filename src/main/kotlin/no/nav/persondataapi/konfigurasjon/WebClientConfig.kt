@@ -78,6 +78,9 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Value("\${AAP_URL}")
     lateinit var aapURL: String
 
+    @Value("\${SIGRUN_URL}")
+    lateinit var sigrunURL: String
+
 
     /**
      * HttpClient for tokenutveksling med pool.
@@ -240,6 +243,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun dpdatadelingHttpClient(): HttpClient = httpClientFor("dpDatadeling")
 
     @Bean
+    @Qualifier("sigrunHttpClient")
+    fun sigrunHttpClient(): HttpClient = httpClientFor("sigrun")
+
+
+    @Bean
     @Qualifier("aapHttpClient")
     fun aapHttpClient(): HttpClient = httpClientFor("aap")
 
@@ -273,6 +281,22 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
                 it.contentType = MediaType.APPLICATION_JSON
             }
             .clientConnector(ReactorClientHttpConnector(dpDatadelingHttpClient))
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    fun sigrunClient(
+        builder: WebClient.Builder,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("sigrunHttpClient") sigrunHttpClient: HttpClient
+    ): WebClient =
+        builder
+            .baseUrl(sigrunURL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }
+            .clientConnector(ReactorClientHttpConnector(sigrunHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -491,7 +515,8 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         "token" to HttpClientKonfig(poolNavn = "token-pool"),
         "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
         "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
-        "aap" to HttpClientKonfig(poolNavn = "aap-pool")
+        "aap" to HttpClientKonfig(poolNavn = "aap-pool"),
+        "sigrun" to HttpClientKonfig(poolNavn = "sigrun-pool")
 
     )
 

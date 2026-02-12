@@ -110,6 +110,14 @@
     {
       "name": "AAP_SCOPE",
       "value": "api://prod-gcp.aap.api-intern/.default"
+    },
+    {
+      "name": "SIGRUN_SCOPE",
+      "value": "api://prod-fss.team-inntekt.sigrun/.default"
+    },
+    {
+      "name": "SIGRUN_URL",
+      "value": "https://team-inntekt-proxy.prod-fss-pub.nais.io/proxy/sigrun"
     }
   ]
 }

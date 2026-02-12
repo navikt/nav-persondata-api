@@ -44,6 +44,9 @@ cache:
     inntekt-historikk:
       expiration: 1h
       maximum-size: 1000
+    pensjonsgivende-inntekt:
+      expiration: 1h
+      maximum-size: 1000
     utbetaling-bruker:
       expiration: 1h
       maximum-size: 1000

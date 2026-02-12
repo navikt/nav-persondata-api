@@ -1,5 +1,5 @@
 # nav-persondata-api
-API for uthenting av persondata og ytelses informasjon for Borger eller innbygger i Norge med Nav tilknytning.
+API for uthenting av persondata og ytelsesinformasjon for Borger eller innbygger i Norge med Nav tilknytning.
 
 Dokumentasjon er samlet i egen mappe:
 <details>
