@@ -20,7 +20,7 @@ class MappingLogicTest {
         )
         val nymodell = listOf<SigrunPensjonsgivendeInntektResponse>(sigrunModell).toPensjonsgivendeInntektOppummering()
         Assertions.assertEquals(1, nymodell.size,"Feil antall objekter i ny modell")
-        Assertions.assertEquals("2020",nymodell.first().inntektsaar,"Inntekt år er mappet feil")
+        Assertions.assertEquals("2020",nymodell.first().`inntektsår`,"Inntekt år er mappet feil")
         Assertions.assertEquals(1000000, nymodell.first().lønnsinntekt,"Lønns inntekt er ikke summert korrekt")
         Assertions.assertEquals(200, nymodell.first().næringsinntekt,"Næringsinntekt er ikke summert korrekt")
     }
@@ -50,7 +50,7 @@ class MappingLogicTest {
         )
         val nymodell = listOf<SigrunPensjonsgivendeInntektResponse>(sigrunModell).toPensjonsgivendeInntektOppummering()
         Assertions.assertEquals(1, nymodell.size,"Feil antall objekter i ny modell")
-        Assertions.assertEquals("2020",nymodell.first().inntektsaar,"Inntekt år er mappet feil")
+        Assertions.assertEquals("2020",nymodell.first().`inntektsår`,"Inntekt år er mappet feil")
         Assertions.assertEquals(2000000, nymodell.first().lønnsinntekt,"Lønns inntekt er ikke summert korrekt")
         Assertions.assertEquals(400, nymodell.first().næringsinntekt,"Næringsinntekt er ikke summert korrekt")
     }
@@ -100,11 +100,11 @@ class MappingLogicTest {
         )
         val nymodell = listOf<SigrunPensjonsgivendeInntektResponse>(sigrunModell2020,sigrunModell2021).toPensjonsgivendeInntektOppummering()
         Assertions.assertEquals(2, nymodell.size,"Feil antall objekter i ny modell")
-        Assertions.assertEquals("2020",nymodell.first().inntektsaar,"Inntekt år er mappet feil")
+        Assertions.assertEquals("2020",nymodell.first().`inntektsår`,"Inntekt år er mappet feil")
         Assertions.assertEquals(2000000, nymodell.first().lønnsinntekt,"Lønns inntekt er ikke summert korrekt")
         Assertions.assertEquals(400, nymodell.first().næringsinntekt,"Næringsinntekt er ikke summert korrekt")
 
-        Assertions.assertEquals("2021",nymodell.last().inntektsaar,"Inntekt år er mappet feil")
+        Assertions.assertEquals("2021",nymodell.last().`inntektsår`,"Inntekt år er mappet feil")
         Assertions.assertEquals(2000000, nymodell.last().lønnsinntekt,"Lønns inntekt er ikke summert korrekt")
         Assertions.assertEquals(400, nymodell.last().næringsinntekt,"Næringsinntekt er ikke summert korrekt")
     }

@@ -3,12 +3,10 @@ package no.nav.persondataapi.pensjonsgivendeInntekt
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import no.nav.persondataapi.konfigurasjon.JsonUtils
-import no.nav.persondataapi.konfigurasjon.teamLogsMarker
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 import no.nav.persondataapi.service.BrukertilgangService
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -49,9 +47,12 @@ class PensjonsgivendeInntektService(
         }
 
         var resultater = deferred.awaitAll()
-        if (erTraceLoggingAktvert()) {
-            logger.info(teamLogsMarker,"Logging aktivert - full SIGRUN-respons for {}: {}", personIdent, JsonUtils.toJson(resultater).toPrettyString())
-        }
+        traceLoggHvisAktivert(
+            logger = logger,
+            personIdent = personIdent,
+            kilde = "Sigrun",
+            unit = resultater
+        )
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente pensjonsgivende inntekt for $personIdent. Maskerer responsen")
             resultater = maskerObjekt(resultater)
@@ -85,7 +86,7 @@ class PensjonsgivendeInntektService(
 }
 
 data class PensjonsGivendeInntektOppummering(
-    val inntektsaar: String,
+    val `inntektsår`: String,
     val næringsinntekt: Int =0,
     val lønnsinntekt: Int =0,
 )

@@ -21,7 +21,7 @@ fun List<SigrunPensjonsgivendeInntektResponse>.toPensjonsgivendeInntektOppummeri
             }
 
             PensjonsGivendeInntektOppummering(
-                inntektsaar = inntektsaar,
+                `inntektsår` = inntektsaar,
                 lønnsinntekt = lonnsinntekt,
                 næringsinntekt = naeringsinntekt
             )
