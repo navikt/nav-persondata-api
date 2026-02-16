@@ -165,7 +165,7 @@ dependencies {
   implementation("com.expediagroup:graphql-kotlin-spring-client:$graphQLKotlinVersion")
 
   // Swagger UI og OpenAPI-dokumentasjon
-  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1")
   implementation("io.swagger.core.v3:swagger-annotations:2.2.42")
   implementation("io.swagger.core.v3:swagger-models:2.2.42")
 }
