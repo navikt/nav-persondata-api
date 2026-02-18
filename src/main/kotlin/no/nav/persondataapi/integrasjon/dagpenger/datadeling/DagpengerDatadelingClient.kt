@@ -8,9 +8,11 @@ import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
 import no.nav.persondataapi.metrics.DPDatadelingMetrics
 import no.nav.persondataapi.metrics.DownstreamResult
+import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
+import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
@@ -52,6 +54,14 @@ class DagpengerDatadelingClient(
                     fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
                     tilOgMedDato = LocalDate.now().format(formatter),
                 )
+                if (erTraceLoggingAktvert()){
+                    traceLoggHvisAktivert(
+                        logger = log,
+                        kilde = "Dagpenger - request",
+                        personIdent=personIdent,
+                        unit = requestBody
+                    )
+                }
 
                 val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
                     .header("Authorization", "Bearer $oboToken")
