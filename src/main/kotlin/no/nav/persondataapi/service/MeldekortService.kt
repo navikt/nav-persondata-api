@@ -31,14 +31,13 @@ class MeldekortService(
     fun hentDagpengeMeldekortForPerson(personIdent: PersonIdent, utvidet: Boolean): MeldekortResultat {
         val meldekortRespons = dpDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet)
         logger.info("Hentet ${if (utvidet) "utvidet " else ""} dagpenger-meldekort for $personIdent, status ${meldekortRespons.statusCode}")
-        if (erTraceLoggingAktvert()){
-            traceLoggHvisAktivert(
-                logger = logger,
-                kilde = "Dagpenger",
-                personIdent=personIdent,
-                unit = meldekortRespons
-            )
-        }
+        traceLoggHvisAktivert(
+            logger = logger,
+            kilde = "Dagpenger",
+            personIdent=personIdent,
+            unit = meldekortRespons
+        )
+
         when (meldekortRespons.statusCode) {
             404 -> return MeldekortResultat.PersonIkkeFunnet
             403, 401 -> return MeldekortResultat.IngenTilgang
