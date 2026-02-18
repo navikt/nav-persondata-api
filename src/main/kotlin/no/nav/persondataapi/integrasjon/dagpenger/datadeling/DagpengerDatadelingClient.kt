@@ -60,7 +60,7 @@ class DagpengerDatadelingClient(
                     personIdent=personIdent,
                     unit = requestBody
                 )
-
+                
 
                 val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
                     .header("Authorization", "Bearer $oboToken")
