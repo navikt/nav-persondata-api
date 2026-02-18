@@ -9,7 +9,7 @@ import org.slf4j.Logger
 
 fun traceLoggHvisAktivert(logger: Logger, kilde:String, personIdent: PersonIdent, unit: Any){
     if (erTraceLoggingAktvert()) {
-        logger.info(teamLogsMarker,"Trace-logging aktivert for{} - $kilde", personIdent,
+        logger.info(teamLogsMarker,"Trace-logging aktivert for {} - $kilde", personIdent,
         kv("kilde",kilde),
         kv("personIdent",personIdent.value),
         kv("json", JsonUtils.toJson(unit).toPrettyString())

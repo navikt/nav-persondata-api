@@ -54,14 +54,13 @@ class DagpengerDatadelingClient(
                     fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
                     tilOgMedDato = LocalDate.now().format(formatter),
                 )
-                if (erTraceLoggingAktvert()){
-                    traceLoggHvisAktivert(
-                        logger = log,
-                        kilde = "Dagpenger - request",
-                        personIdent=personIdent,
-                        unit = requestBody
-                    )
-                }
+                traceLoggHvisAktivert(
+                    logger = log,
+                    kilde = "Dagpenger - request",
+                    personIdent=personIdent,
+                    unit = requestBody
+                )
+
 
                 val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
                     .header("Authorization", "Bearer $oboToken")
