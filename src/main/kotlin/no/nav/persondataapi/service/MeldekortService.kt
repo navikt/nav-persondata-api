@@ -52,7 +52,7 @@ class MeldekortService(
 
         var meldekort = meldekortRespons.data
         val antallInnsendt = meldekort.filter { meldekort -> meldekort.status == MeldekortStatus.Innsendt }.size
-        logger.info("Fant ${meldekort.size} meldekort for $personIdent", "hvorav $antallInnsendt har status Innsendt")
+        logger.info("Fant ${meldekort.size} meldekort for $personIdent hvorav $antallInnsendt har status Innsendt")
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente meldekort for $personIdent. Maskerer responsen")
             meldekort = maskerObjekt(meldekort)
