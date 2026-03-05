@@ -34,7 +34,7 @@ class MeldekortService(
         traceLoggHvisAktivert(
             logger = logger,
             kilde = "Dagpenger",
-            personIdent=personIdent,
+            personIdent = personIdent,
             unit = meldekortRespons
         )
 
