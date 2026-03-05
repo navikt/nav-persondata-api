@@ -24,7 +24,7 @@ SECRETS_FILE="src/main/resources/.env.local.properties"
 NAMESPACE="holmes"
 
 AZURE_SECRET_PREFIX="azure-nav-persondata-api"
-VALKEY_SECRET_PREFIX="aiven-valkey-nav-persondata-api-nav-persondat"
+VALKEY_SECRET_PREFIX="aiven-valkey-nav-persondata-api-nav-personda"
 
 AZURE_VARS=(
   AZURE_APP_CLIENT_ID
@@ -105,4 +105,3 @@ if ! grep -q "^$SECRETS_FILE$" .gitignore 2>/dev/null; then
 fi
 
 echo "🎉 Done!"
-
