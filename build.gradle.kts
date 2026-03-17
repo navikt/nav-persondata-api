@@ -15,7 +15,7 @@ plugins {
   id("org.springframework.boot") version "4.0.3"
   id("io.spring.dependency-management") version "1.1.7"
   kotlin("plugin.spring") version "2.3.10"
-  id("com.expediagroup.graphql") version "9.0.0-alpha.8"
+  id("com.expediagroup.graphql") version "9.0.0"
   id("org.openapi.generator") version "7.19.0"
 }
 
