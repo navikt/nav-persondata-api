@@ -1,14 +1,13 @@
 package no.nav.persondataapi.rest.domene
 
-
 import no.nav.persondataapi.rest.oppslag.Maskert
 
 data class PersonInformasjon(
     val aktørId: String?,
-    val familemedlemmer : Map<String,String> = emptyMap<String, String>(),
+    val familemedlemmer: Map<String, String> = emptyMap<String, String>(),
     val statsborgerskap: List<String> = emptyList(),
     val navn: Navn,
-    val adresse: Bostedsadresse? =null,
+    val adresse: Bostedsadresse? = null,
     val sivilstand: String? = null,
     val alder: Int,
     val adresseBeskyttelse: Skjerming = Skjerming.UGRADERT,
@@ -24,9 +23,10 @@ data class PersonInformasjon(
         @Maskert
         val etternavn: String,
     )
+
     data class Bostedsadresse(
         val norskAdresse: NorskAdresse?,
-        val utenlandskAdresse: UtenlandskAdresse?
+        val utenlandskAdresse: UtenlandskAdresse?,
     )
 
     data class NorskAdresse(
@@ -36,11 +36,10 @@ data class PersonInformasjon(
         val husnummer: String?,
         @Maskert("*")
         val husbokstav: String?,
-
         @Maskert("****")
         val postnummer: String?,
         @Maskert
-        val kommunenummer:String?,
+        val kommunenummer: String?,
         @Maskert
         val poststed: String?,
     )
@@ -59,7 +58,7 @@ data class PersonInformasjon(
         @Maskert
         val regionDistriktOmråde: String?,
         @Maskert
-        val landkode: String
+        val landkode: String,
     )
 
     data class NavKontor(
@@ -71,11 +70,11 @@ data class PersonInformasjon(
         val enhetNr: String,
         val type: String,
     )
+
     enum class Skjerming {
         UGRADERT,
         FORTROLIG,
         STRENGT_FORTROLIG,
-        STRENGT_FORTROLIG_UTLAND
+        STRENGT_FORTROLIG_UTLAND,
     }
-
 }

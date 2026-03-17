@@ -25,49 +25,52 @@ import java.time.Duration
 class NomClient(
     private val tokenService: TokenService,
     private val metrics: NomMetrics,
-
     @param:Value("\${NOM_URL}")
     private val nomUrl: String,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-
-    fun createTimeoutHttpClient(): HttpClient {
-        return HttpClient.create()
+    fun createTimeoutHttpClient(): HttpClient =
+        HttpClient
+            .create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
             .responseTimeout(Duration.ofSeconds(5))
             .doOnConnected { conn ->
                 conn.addHandlerLast(ReadTimeoutHandler(5))
                 conn.addHandlerLast(WriteTimeoutHandler(5))
             }
-    }
 
     @Cacheable(
         value = ["nom-ressurs"],
         key = "#navIdent",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     suspend fun hentSaksbehandlerTilhørighet(navIdent: String): SaksbehandlerTilhørighetResultat {
         val token = tokenService.getServiceToken(SCOPE.NOM_SCOPE)
 
         val httpClient = createTimeoutHttpClient()
 
-        val client = GraphQLWebClient(
-            url = nomUrl,
-            builder = WebClient.builder()
-                .clientConnector(ReactorClientHttpConnector(httpClient))
-        )
-        val query = RessursQuery(
-            RessursQuery.Variables(
-                navIdent = navIdent,
+        val client =
+            GraphQLWebClient(
+                url = nomUrl,
+                builder =
+                    WebClient
+                        .builder()
+                        .clientConnector(ReactorClientHttpConnector(httpClient)),
             )
-        )
+        val query =
+            RessursQuery(
+                RessursQuery.Variables(
+                    navIdent = navIdent,
+                ),
+            )
         try {
-            val response = coroutineRetry(kilde = "NOM-Ressurs") {
-                client.execute(query) {
-                    header("Authorization", "Bearer $token")
+            val response =
+                coroutineRetry(kilde = "NOM-Ressurs") {
+                    client.execute(query) {
+                        header("Authorization", "Bearer $token")
+                    }
                 }
-            }
 
             val errors = response.errors.orEmpty()
             if (errors.isNotEmpty()) {
@@ -75,16 +78,17 @@ class NomClient(
                 return SaksbehandlerTilhørighetResultat(
                     data = null,
                     statusCode = status,
-                    errorMessage = message
+                    errorMessage = message,
                 )
             }
 
-            val ressurs = response.data?.ressurs
-                ?: return SaksbehandlerTilhørighetResultat(
-                    data = null,
-                    statusCode = 404,
-                    errorMessage = "Fant ikke ressurs"
-                )
+            val ressurs =
+                response.data?.ressurs
+                    ?: return SaksbehandlerTilhørighetResultat(
+                        data = null,
+                        statusCode = 404,
+                        errorMessage = "Fant ikke ressurs",
+                    )
 
             return SaksbehandlerTilhørighetResultat(
                 data = mapTilDomenemodell(ressurs),
@@ -100,24 +104,30 @@ class NomClient(
         val firstError = errors.first()
         val code = firstError.extensions?.get("code") as? String
 
-        val status = when (code) {
-            "not_found" -> {
-                log.info("Feil i kall mot NOM : ${firstError.message}")
-                404
+        val status =
+            when (code) {
+                "not_found" -> {
+                    log.info("Feil i kall mot NOM : ${firstError.message}")
+                    404
+                }
+
+                else -> {
+                    log.error("Feil i kall mot NOM : ${firstError.message}")
+                    500
+                }
             }
-            else -> {
-                log.error("Feil i kall mot NOM : ${firstError.message}")
-                500
-            }
-        }
         return status to firstError.message
     }
 
-    private fun handleNomException(e: Exception, operasjon: String): SaksbehandlerTilhørighetResultat {
+    private fun handleNomException(
+        e: Exception,
+        operasjon: String,
+    ): SaksbehandlerTilhørighetResultat {
         when (e) {
             is java.util.concurrent.TimeoutException,
             is io.netty.handler.timeout.ReadTimeoutException,
-            is io.netty.handler.timeout.WriteTimeoutException -> {
+            is io.netty.handler.timeout.WriteTimeoutException,
+            -> {
                 metrics.counter(operasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot NOM ($operasjon)", e)
                 return SaksbehandlerTilhørighetResultat(null, 504, "Timeout mot NOM")
@@ -131,21 +141,20 @@ class NomClient(
         }
     }
 
-    private fun mapTilDomenemodell(resultat: Ressurs): SaksbehandlerTilhørighet {
-        return SaksbehandlerTilhørighet(
+    private fun mapTilDomenemodell(resultat: Ressurs): SaksbehandlerTilhørighet =
+        SaksbehandlerTilhørighet(
             navIdent = resultat.navident,
-            organisasjoner = resultat.orgTilknytninger.map { it.orgEnhet.navn }
+            organisasjoner = resultat.orgTilknytninger.map { it.orgEnhet.navn },
         )
-    }
 }
 
 data class SaksbehandlerTilhørighet(
     val navIdent: String,
-    val organisasjoner: List<String>
+    val organisasjoner: List<String>,
 )
 
 data class SaksbehandlerTilhørighetResultat(
     val data: SaksbehandlerTilhørighet?,
-    val statusCode: Int,               // f.eks. 200, 401, 500
-    val errorMessage: String? = null
+    val statusCode: Int, // f.eks. 200, 401, 500
+    val errorMessage: String? = null,
 )

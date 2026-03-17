@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test
 import org.slf4j.MDC
 
 class TokenUtilitiesTest {
-
     @Test
     fun `ingen navident skal returnere ukjent`() {
         val ident = hentNavIdent()
         Assertions.assertNotNull(ident)
         Assertions.assertEquals("ukjent", ident)
     }
+
     @Test
     fun `om navIdent er satt på MDC navident skal returneres`() {
         val eksempelNavIdent = "Z12345"

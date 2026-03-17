@@ -8,21 +8,19 @@ data class BegrunnelseRequestDto(
     @field:Schema(
         description = "Fødselsnummer eller D-nummer for personen",
         example = "12345678901",
-        required = true
+        required = true,
     )
     val ident: PersonIdent,
-
     @field:Schema(
         description = "Saksbehandlers begrunnelse for tilgangen",
         example = "Vurderer søknad om dagpenger",
-        required = true
+        required = true,
     )
     val begrunnelse: String,
-
     @field:Schema(
         description = "Type mangel eller årsak til begrunnet tilgang",
         example = "Mangler vedtak",
-        required = true
+        required = true,
     )
-    val mangel: String
+    val mangel: String,
 )

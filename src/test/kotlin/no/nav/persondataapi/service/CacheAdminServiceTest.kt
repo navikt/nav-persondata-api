@@ -9,22 +9,22 @@ import org.junit.jupiter.api.Test
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager
 
 class CacheAdminServiceTest {
-
     private lateinit var cacheManager: ConcurrentMapCacheManager
     private lateinit var service: CacheAdminService
 
     @BeforeEach
     fun setup() {
-        cacheManager = ConcurrentMapCacheManager(
-            "pdl-person",
-            "pdl-geografisktilknytning",
-            "aareg-arbeidsforhold",
-            "utbetaling-bruker",
-            "inntekt-historikk",
-            "kodeverk-landkoder",
-            "kodeverk-postnummer",
-            "norg2-lokalKontor",
-        )
+        cacheManager =
+            ConcurrentMapCacheManager(
+                "pdl-person",
+                "pdl-geografisktilknytning",
+                "aareg-arbeidsforhold",
+                "utbetaling-bruker",
+                "inntekt-historikk",
+                "kodeverk-landkoder",
+                "kodeverk-postnummer",
+                "norg2-lokalKontor",
+            )
         service = CacheAdminService(cacheManager)
     }
 
@@ -39,12 +39,12 @@ class CacheAdminServiceTest {
             val cache = cacheManager.getCache(cacheName)!!
             assertTrue(
                 cache.nativeCacheAsMap().isEmpty(),
-                "Cache $cacheName skal være tom"
+                "Cache $cacheName skal være tom",
             )
         }
         assertEquals(
             cacheManager.cacheNames.map { it }.sorted(),
-            summary.flushedeCacher
+            summary.flushedeCacher,
         )
         assertEquals(CacheFlushScope.ALLE, summary.scope)
         assertNull(summary.personIdent)
@@ -76,7 +76,7 @@ class CacheAdminServiceTest {
         }
         assertTrue(
             cacheManager.getCache("inntekt-historikk")!!.nativeCacheAsMap().isEmpty(),
-            "inntekt-historikk skal være tømt"
+            "inntekt-historikk skal være tømt",
         )
         // øvrige cache skal fortsatt ha verdi
         val kodeverkCache = cacheManager.getCache("kodeverk-landkoder")!!
@@ -87,14 +87,17 @@ class CacheAdminServiceTest {
 
         assertEquals(CacheFlushScope.PERSON, oppsummering.scope)
         assertEquals("123456*****", oppsummering.personIdent)
-        assertEquals(listOf(
-            "aareg-arbeidsforhold",
-            "inntekt-historikk",
-            "norg2-lokalKontor",
-            "pdl-geografisktilknytning",
-            "pdl-person",
-            "utbetaling-bruker",
-            ), oppsummering.flushedeCacher)
+        assertEquals(
+            listOf(
+                "aareg-arbeidsforhold",
+                "inntekt-historikk",
+                "norg2-lokalKontor",
+                "pdl-geografisktilknytning",
+                "pdl-person",
+                "utbetaling-bruker",
+            ),
+            oppsummering.flushedeCacher,
+        )
     }
 
     @Suppress("UNCHECKED_CAST")

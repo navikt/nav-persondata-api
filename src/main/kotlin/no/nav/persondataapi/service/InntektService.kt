@@ -17,23 +17,27 @@ import java.time.LocalDate
 class InntektService(
     private val inntektClient: InntektClient,
     private val eregClient: EregClient,
-    private val brukertilgangService: BrukertilgangService
+    private val brukertilgangService: BrukertilgangService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    suspend fun hentInntekterForPerson(personIdent: PersonIdent, utvidet: Boolean = false): InntektResultat {
-        val kontrollperiode = KontrollPeriode(
-            LocalDate.now().minusYears(if (utvidet) 10 else 5),
-            LocalDate.now()
-        )
+    suspend fun hentInntekterForPerson(
+        personIdent: PersonIdent,
+        utvidet: Boolean = false,
+    ): InntektResultat {
+        val kontrollperiode =
+            KontrollPeriode(
+                LocalDate.now().minusYears(if (utvidet) 10 else 5),
+                LocalDate.now(),
+            )
         // Hent inntekter fra InntektClient
         val inntektResponse = inntektClient.hentInntekter(personIdent = personIdent, periode = kontrollperiode)
         logger.info("Hentet inntekter for $personIdent (utvidet = $utvidet), status ${inntektResponse.statusCode}")
         traceLoggHvisAktivert(
             logger = logger,
             kilde = "Inntekt",
-            personIdent=personIdent,
-            unit = inntektResponse
+            personIdent = personIdent,
+            unit = inntektResponse,
         )
         // Håndter feil fra InntektClient
         when (inntektResponse.statusCode) {
@@ -44,45 +48,63 @@ class InntektService(
         }
 
         // Prosesser lønnsinntekt
-        val lønnsinntekt = inntektResponse.data?.data
-            .orEmpty()
-            .flatMap { historikk ->
-                val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) {
-                    eregClient.hentOrganisasjon(historikk.opplysningspliktig)
-                } else null
+        val lønnsinntekt =
+            inntektResponse.data
+                ?.data
+                .orEmpty()
+                .flatMap { historikk ->
+                    val arbeidsgiver =
+                        if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) {
+                            eregClient.hentOrganisasjon(historikk.opplysningspliktig)
+                        } else {
+                            null
+                        }
 
-                var respons = historikk.versjoner.nyeste()
-                    ?.inntektListe
-                    ?.filterIsInstance<Loennsinntekt>()
-                    ?.map { loenn ->
-                        InntektInformasjon.Lønnsdetaljer(
-                            arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
-                            periode = historikk.maaned,
-                            arbeidsforhold = "",
-                            stillingsprosent = "",
-                            lønnstype = loenn.beskrivelse,
-                            antall = loenn.antall,
-                            beløp = loenn.beloep,
-                            harFlereVersjoner = historikk.harHistorikkPåNormallønn()
-                        )
+                    var respons =
+                        historikk.versjoner
+                            .nyeste()
+                            ?.inntektListe
+                            ?.filterIsInstance<Loennsinntekt>()
+                            ?.map { loenn ->
+                                InntektInformasjon.Lønnsdetaljer(
+                                    arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
+                                    periode = historikk.maaned,
+                                    arbeidsforhold = "",
+                                    stillingsprosent = "",
+                                    lønnstype = loenn.beskrivelse,
+                                    antall = loenn.antall,
+                                    beløp = loenn.beloep,
+                                    harFlereVersjoner = historikk.harHistorikkPåNormallønn(),
+                                )
+                            }.orEmpty()
+                    if (respons.isEmpty() &&
+                        historikk.versjoner
+                            .eldste()
+                            ?.inntektListe
+                            ?.filterIsInstance<Loennsinntekt>()
+                            ?.isEmpty() == false
+                    ) {
+                        respons =
+                            listOf(
+                                InntektInformasjon.Lønnsdetaljer(
+                                    arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
+                                    periode = historikk.maaned,
+                                    arbeidsforhold = "",
+                                    stillingsprosent = "",
+                                    lønnstype =
+                                        historikk.versjoner
+                                            .eldste()
+                                            ?.inntektListe
+                                            ?.first()
+                                            ?.type,
+                                    antall = null,
+                                    beløp = BigDecimal.ZERO,
+                                    harFlereVersjoner = true,
+                                ),
+                            )
                     }
-                    .orEmpty()
-                if (respons.isEmpty() && historikk.versjoner.eldste()?.inntektListe
-                        ?.filterIsInstance<Loennsinntekt>()?.isEmpty() == false) {
-
-                    respons = listOf(InntektInformasjon.Lønnsdetaljer(
-                        arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn,
-                        periode = historikk.maaned,
-                        arbeidsforhold = "",
-                        stillingsprosent = "",
-                        lønnstype = historikk.versjoner.eldste()?.inntektListe?.first()?.type,
-                        antall = null,
-                        beløp = BigDecimal.ZERO,
-                        harFlereVersjoner = true
-                    ))
+                    respons
                 }
-                respons
-            }
 
         logger.info("Fant ${lønnsinntekt.size} lønnsinntekt(er) for $personIdent")
 
@@ -90,7 +112,7 @@ class InntektService(
 
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
             logger.info("Saksbehandler har ikke tilgang til å hente inntekter for $personIdent. Maskerer responsen")
-           respons = maskerObjekt(respons)
+            respons = maskerObjekt(respons)
         }
 
         return InntektResultat.Success(respons)
@@ -98,8 +120,13 @@ class InntektService(
 }
 
 sealed class InntektResultat {
-    data class Success(val data: InntektInformasjon) : InntektResultat()
+    data class Success(
+        val data: InntektInformasjon,
+    ) : InntektResultat()
+
     data object IngenTilgang : InntektResultat()
+
     data object PersonIkkeFunnet : InntektResultat()
+
     data object FeilIBaksystem : InntektResultat()
 }

@@ -7,11 +7,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 @Schema(
     description = "Fødselsnummer eller D-nummer for en person",
     example = "12345678901",
-    type = "string"
+    type = "string",
 )
 @JvmInline
-value class PersonIdent @JsonCreator(mode = JsonCreator.Mode.DELEGATING) constructor(
-    @get:JsonValue val value: String
-) {
-    override fun toString(): String = value.replaceRange(6, 11, "*****")
-}
+value class PersonIdent
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    constructor(
+        @get:JsonValue val value: String,
+    ) {
+        override fun toString(): String = value.replaceRange(6, 11, "*****")
+    }

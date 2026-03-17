@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class CacheConfigurationTest {
-
     @Test
     fun `redis serializer round-trips PersonDataResultat`() {
         val serializer = CacheConfiguration.createRedisSerializer()
-        val original = PersonDataResultat(
-            data = null,
-            statusCode = 200,
-            errorMessage = "feilmelding"
-        )
+        val original =
+            PersonDataResultat(
+                data = null,
+                statusCode = 200,
+                errorMessage = "feilmelding",
+            )
 
         val bytes = serializer.serialize(original)
         val restored = serializer.deserialize(bytes)

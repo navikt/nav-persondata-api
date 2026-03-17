@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration
 @EnableJwtTokenValidation(
     ignore = [
         "org.springdoc",
-        "org.springframework"
-    ]
+        "org.springframework",
+    ],
 )
 @Configuration
 class SecurityConfiguration

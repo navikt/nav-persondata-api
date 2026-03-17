@@ -9,15 +9,14 @@ import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
 
 class PdlParseResponsTest {
-
     @Test
     fun `Skal returnere OK fra PDL`() {
         val jsonString = lesJsonFraFil("testrespons/PdlResponsSample.json")
         val person: Person = JsonUtils.fromJson(jsonString)
         person.nåværendeBostedsadresse()
     }
-
 }
+
 private fun lesJsonFraFil(filename: String): String {
     val resource = ClassPathResource(filename)
     val inputStream = resource.inputStream

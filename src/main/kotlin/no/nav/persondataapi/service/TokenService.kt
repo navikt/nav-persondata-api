@@ -13,20 +13,26 @@ class TokenService(
     private val tokenWebClient: WebClient,
     @param:Qualifier("azuretokenWebClient")
     private val azuretokenWebClient: WebClient,
-    private val environment: Environment
+    private val environment: Environment,
 ) {
-    fun exchangeToken(userToken: String, scope: SCOPE): String {
+    fun exchangeToken(
+        userToken: String,
+        scope: SCOPE,
+    ): String {
         val target = environment[scope.toString()]
-        val requestBody = mapOf(
-            "identity_provider" to "azuread",
-            "target" to target,
-            "user_token" to userToken
-        )
-        val response = tokenWebClient.post()
-            .bodyValue(requestBody)
-            .retrieve()
-            .bodyToMono(TokenResponse::class.java)
-            .block() // Bruk `awaitSingle()` hvis du er i `suspend`-verden
+        val requestBody =
+            mapOf(
+                "identity_provider" to "azuread",
+                "target" to target,
+                "user_token" to userToken,
+            )
+        val response =
+            tokenWebClient
+                .post()
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(TokenResponse::class.java)
+                .block() // Bruk `awaitSingle()` hvis du er i `suspend`-verden
 
         return response?.access_token
             ?: throw IllegalStateException("Access token mangler i token-respons")
@@ -36,17 +42,18 @@ class TokenService(
         val target = environment[scope.toString()]
         val clientId = environment["AZURE_APP_CLIENT_ID"]
         val clientSecret = environment["AZURE_APP_CLIENT_SECRET"]
-        val response = azuretokenWebClient.post()
-            .body(
-                BodyInserters.fromFormData("client_id", clientId!!)
-                    .with("scope", target!!)
-                    .with("client_secret", clientSecret!!)
-                    .with("grant_type", "client_credentials")
-            )
-
-            .retrieve()
-            .bodyToMono(TokenResponse::class.java)
-            .block() // Bruk `awaitSingle()` hvis du er i `suspend`-verden
+        val response =
+            azuretokenWebClient
+                .post()
+                .body(
+                    BodyInserters
+                        .fromFormData("client_id", clientId!!)
+                        .with("scope", target!!)
+                        .with("client_secret", clientSecret!!)
+                        .with("grant_type", "client_credentials"),
+                ).retrieve()
+                .bodyToMono(TokenResponse::class.java)
+                .block() // Bruk `awaitSingle()` hvis du er i `suspend`-verden
 
         return response?.access_token
             ?: throw IllegalStateException("Access token mangler i token-respons")
@@ -56,7 +63,7 @@ class TokenService(
 data class TokenResponse(
     val access_token: String,
     val expires_in: Int,
-    val token_type: String
+    val token_type: String,
 )
 
 enum class SCOPE {
@@ -70,5 +77,5 @@ enum class SCOPE {
     MODIA_CONTEXT_HOLDER_SCOPE,
     DP_DATADELING_SCOPE,
     AAP_SCOPE,
-    SIGRUN_SCOPE
+    SIGRUN_SCOPE,
 }

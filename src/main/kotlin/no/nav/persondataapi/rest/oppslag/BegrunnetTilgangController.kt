@@ -18,30 +18,40 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping("/oppslag/begrunnet-tilgang")
 @Tag(name = "Begrunnet tilgang", description = "Endepunkter for logging av begrunnet tilgang til personopplysninger")
 class BegrunnetTilgangController(
-    private val begrunnetTilgangService: BegrunnetTilgangService
+    private val begrunnetTilgangService: BegrunnetTilgangService,
 ) {
-
     @Protected
     @PostMapping
     @Operation(
         summary = "Logg begrunnet tilgang",
-        description = "Logger at saksbehandler har begrunnet sin tilgang til en persons opplysninger"
+        description = "Logger at saksbehandler har begrunnet sin tilgang til en persons opplysninger",
     )
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
-        content = [Content(
-            examples = [ExampleObject(
-                name = "Begrunnelse for tilgang",
-                value = """{"ident": "12345678901", "begrunnelse": "Vurderer søknad om dagpenger", "mangel": "Mangler dokumentasjon"}"""
-            )]
-        )]
+        content = [
+            Content(
+                examples = [
+                    ExampleObject(
+                        name = "Begrunnelse for tilgang",
+                        value =
+                            """{"ident": "12345678901", "begrunnelse": "Søknad"}""",
+                    ),
+                ],
+            ),
+        ],
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "202", description = "Begrunnelse registrert")
-        ]
+            ApiResponse(responseCode = "202", description = "Begrunnelse registrert"),
+        ],
     )
-    fun loggBegrunnetTilgang(@RequestBody dto: BegrunnelseRequestDto): ResponseEntity<Void> {
-        begrunnetTilgangService.loggBegrunnetTilgang(personIdent = dto.ident, begrunnelse = dto.begrunnelse, mangel = dto.mangel)
+    fun loggBegrunnetTilgang(
+        @RequestBody dto: BegrunnelseRequestDto,
+    ): ResponseEntity<Void> {
+        begrunnetTilgangService.loggBegrunnetTilgang(
+            personIdent = dto.ident,
+            begrunnelse = dto.begrunnelse,
+            mangel = dto.mangel,
+        )
         return ResponseEntity.accepted().build()
     }
 }

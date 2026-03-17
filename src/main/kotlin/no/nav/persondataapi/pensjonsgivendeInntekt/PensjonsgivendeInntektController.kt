@@ -31,56 +31,74 @@ class PensjonsgivendeInntektController(
     @PostMapping
     @Operation(
         summary = "Hent pensjonsgivende inntekt",
-        description = "Henter pensjonsgivende inntekt for en person"
+        description = "Henter pensjonsgivende inntekt for en person",
     )
     @RequestBody(
-        content = [Content(
-            examples = [ExampleObject(
-                name = "Standard oppslag",
-                value = """{"ident": "12345678901"}"""
-            )]
-        )]
+        content = [
+            Content(
+                examples = [
+                    ExampleObject(
+                        name = "Standard oppslag",
+                        value = """{"ident": "12345678901"}""",
+                    ),
+                ],
+            ),
+        ],
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "Pensjonsgivende inntekt hentet",
-                content = [Content(
-                    schema = Schema(implementation = OppslagResponseDto::class),
-                    examples = [ExampleObject(
-                        name = "Vellykket respons",
-                        value = """{"data": {"inntekter": [{"år": 2024, "beløp": 520000, "kilde": "FiktivKilde"}]}, "error": null}"""
-                    )]
-                )]
+                content = [
+                    Content(
+                        schema = Schema(implementation = OppslagResponseDto::class),
+                        examples = [
+                            ExampleObject(
+                                name = "Vellykket respons",
+                                value =
+                                    """{"data": [{"år": 2024, "beløp": 520000}]}""",
+                            ),
+                        ],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "403",
                 description = "Ingen tilgang til personen",
-                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Ingen tilgang"}""")])]
+                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Ingen tilgang"}""")])],
             ),
             ApiResponse(
                 responseCode = "404",
                 description = "Person ikke funnet",
-                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Person ikke funnet"}""")])]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Person ikke funnet"}""")],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "502",
                 description = "Feil i baksystem",
-                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Feil i baksystem"}""")])]
-            )
-        ]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Feil i baksystem"}""")],
+                    ),
+                ],
+            ),
+        ],
     )
     fun hentPensjonsgivendeInntekt(
         @org.springframework.web.bind.annotation.RequestBody dto: OppslagRequestDto,
         @Parameter(description = "Om utvidet inntektsinformasjon skal hentes")
-        @RequestParam(required = false, defaultValue = "false") utvidet: Boolean
-    ): ResponseEntity<OppslagResponseDto<List<PensjonsGivendeInntektOppummering>>> {
-        return runBlocking {
-            val resultat = pensjonsgivendeInntektService.hentPensjonsgivendeInntektForPerson(
-                personIdent = dto.ident,
-                utvidet = utvidet
-            )
+        @RequestParam(required = false, defaultValue = "false") utvidet: Boolean,
+    ): ResponseEntity<OppslagResponseDto<List<PensjonsGivendeInntektOppummering>>> =
+        runBlocking {
+            val resultat =
+                pensjonsgivendeInntektService.hentPensjonsgivendeInntektForPerson(
+                    personIdent = dto.ident,
+                    utvidet = utvidet,
+                )
 
             when (resultat) {
                 is PensjonsgivendeInntektResultat.Success -> {
@@ -90,24 +108,23 @@ class PensjonsgivendeInntektController(
                 is PensjonsgivendeInntektResultat.IngenTilgang -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Ingen tilgang", data = null),
-                        HttpStatus.FORBIDDEN
+                        HttpStatus.FORBIDDEN,
                     )
                 }
 
                 is PensjonsgivendeInntektResultat.PersonIkkeFunnet -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Person ikke funnet", data = null),
-                        HttpStatus.NOT_FOUND
+                        HttpStatus.NOT_FOUND,
                     )
                 }
 
                 is PensjonsgivendeInntektResultat.FeilIBaksystem -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Feil i baksystem", data = null),
-                        HttpStatus.BAD_GATEWAY
+                        HttpStatus.BAD_GATEWAY,
                     )
                 }
             }
         }
-    }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class PdlClientTest {
-
     private val tokenService = mockk<TokenService>()
     private val metrics = mockk<PdlMetrics>(relaxed = true)
     private val pdlUrl = "http://test-pdl"

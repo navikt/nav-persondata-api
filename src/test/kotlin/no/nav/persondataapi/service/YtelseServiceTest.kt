@@ -18,28 +18,29 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 class YtelseServiceTest {
-
     @Test
     fun `skal maskere data når saksbehandler ikke har tilgang`() {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val ytelse = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31),
-            bilagsnummer = "12345"
-        )
+        val ytelse =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+                bilagsnummer = "12345",
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -58,11 +59,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = null,
-            statusCode = 404,
-            errorMessage = "Not found"
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = null,
+                statusCode = 404,
+                errorMessage = "Not found",
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -76,11 +78,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = null,
-            statusCode = 403,
-            errorMessage = "Forbidden"
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = null,
+                statusCode = 403,
+                errorMessage = "Forbidden",
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -94,11 +97,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = null,
-            statusCode = 401,
-            errorMessage = "Unauthorized"
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = null,
+                statusCode = 401,
+                errorMessage = "Unauthorized",
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -112,11 +116,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = null,
-            statusCode = 500,
-            errorMessage = "Internal server error"
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = null,
+                statusCode = 500,
+                errorMessage = "Internal server error",
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -130,11 +135,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = null,
-            statusCode = 502,
-            errorMessage = "Bad gateway"
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = null,
+                statusCode = 502,
+                errorMessage = "Bad gateway",
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -148,11 +154,12 @@ class YtelseServiceTest {
         val utbetalingClient = mockk<UtbetalingClient>()
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = emptyList()),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = emptyList()),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -167,22 +174,24 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val ytelse = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31),
-            bilagsnummer = "12345"
-        )
+        val ytelse =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+                bilagsnummer = "12345",
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -202,28 +211,31 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val ytelse1 = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val ytelse1 =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
-        val ytelse2 = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10500"),
-            fom = LocalDate.of(2024, 2, 1),
-            tom = LocalDate.of(2024, 2, 29)
-        )
+        val ytelse2 =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10500"),
+                fom = LocalDate.of(2024, 2, 1),
+                tom = LocalDate.of(2024, 2, 29),
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(ytelse1, ytelse2))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -240,28 +252,31 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val dagpenger = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val dagpenger =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
-        val sykepenger = lagYtelse(
-            ytelsestype = "Sykepenger",
-            beløp = BigDecimal("15000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val sykepenger =
+            lagYtelse(
+                ytelsestype = "Sykepenger",
+                beløp = BigDecimal("15000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(dagpenger, sykepenger))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -278,28 +293,31 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val medType = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val medType =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
-        val utenType = lagYtelse(
-            ytelsestype = null,
-            beløp = BigDecimal("5000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val utenType =
+            lagYtelse(
+                ytelsestype = null,
+                beløp = BigDecimal("5000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(medType, utenType))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -316,29 +334,32 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val ytelse1 = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val ytelse1 =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
-        val ytelse2 = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10500"),
-            fom = LocalDate.of(2024, 2, 1),
-            tom = LocalDate.of(2024, 2, 29)
-        )
+        val ytelse2 =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10500"),
+                fom = LocalDate.of(2024, 2, 1),
+                tom = LocalDate.of(2024, 2, 29),
+            )
 
         val utbetaling1 = lagUtbetaling(ytelseListe = listOf(ytelse1))
         val utbetaling2 = lagUtbetaling(ytelseListe = listOf(ytelse2))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling1, utbetaling2)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling1, utbetaling2)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -355,28 +376,31 @@ class YtelseServiceTest {
         val brukertilgangService = mockk<BrukertilgangService>()
         val utbetalingClient = mockk<UtbetalingClient>()
 
-        val dagpenger = lagYtelse(
-            ytelsestype = "Dagpenger",
-            beløp = BigDecimal("10000"),
-            fom = LocalDate.of(2024, 1, 1),
-            tom = LocalDate.of(2024, 1, 31)
-        )
+        val dagpenger =
+            lagYtelse(
+                ytelsestype = "Dagpenger",
+                beløp = BigDecimal("10000"),
+                fom = LocalDate.of(2024, 1, 1),
+                tom = LocalDate.of(2024, 1, 31),
+            )
 
-        val feriepenger = lagYtelse(
-            ytelsestype = "Feriepenger",
-            beløp = BigDecimal("5000"),
-            fom = LocalDate.of(2024, 6, 1),
-            tom = LocalDate.of(2024, 6, 30)
-        )
+        val feriepenger =
+            lagYtelse(
+                ytelsestype = "Feriepenger",
+                beløp = BigDecimal("5000"),
+                fom = LocalDate.of(2024, 6, 1),
+                tom = LocalDate.of(2024, 6, 30),
+            )
 
         val utbetaling = lagUtbetaling(ytelseListe = listOf(dagpenger, feriepenger))
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
-        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns UtbetalingResultat(
-            data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
-            statusCode = 200,
-            errorMessage = null
-        )
+        every { utbetalingClient.hentUtbetalingerForBruker(any(), any()) } returns
+            UtbetalingResultat(
+                data = UtbetalingRespons(utbetalinger = listOf(utbetaling)),
+                statusCode = 200,
+                errorMessage = null,
+            )
 
         val service = YtelseService(utbetalingClient, brukertilgangService)
         val resultat = service.hentYtelserForPerson(PersonIdent("12345678901"), false)
@@ -395,13 +419,14 @@ private fun lagYtelse(
     beløp: BigDecimal,
     fom: LocalDate,
     tom: LocalDate,
-    bilagsnummer: String? = null
+    bilagsnummer: String? = null,
 ): Ytelse {
-    val rettighetshaver = Aktoer(
-        aktoertype = Aktoertype.PERSON,
-        ident = "12345678901",
-        navn = "Test Testesen"
-    )
+    val rettighetshaver =
+        Aktoer(
+            aktoertype = Aktoertype.PERSON,
+            ident = "12345678901",
+            navn = "Test Testesen",
+        )
 
     return Ytelse(
         ytelsestype = ytelsestype,
@@ -415,16 +440,17 @@ private fun lagYtelse(
         trekkListe = null,
         ytelseskomponentListe = null,
         bilagsnummer = bilagsnummer,
-        refundertForOrg = null
+        refundertForOrg = null,
     )
 }
 
 private fun lagUtbetaling(ytelseListe: List<Ytelse>): Utbetaling {
-    val utbetaltTil = Aktoer(
-        aktoertype = Aktoertype.PERSON,
-        ident = "12345678901",
-        navn = "Test Testesen"
-    )
+    val utbetaltTil =
+        Aktoer(
+            aktoertype = Aktoertype.PERSON,
+            ident = "12345678901",
+            navn = "Test Testesen",
+        )
 
     return Utbetaling(
         utbetaltTil = utbetaltTil,
@@ -436,6 +462,6 @@ private fun lagUtbetaling(ytelseListe: List<Ytelse>): Utbetaling {
         utbetalingNettobeloep = BigDecimal.ZERO,
         utbetalingsmelding = null,
         utbetaltTilKonto = null,
-        ytelseListe = ytelseListe
+        ytelseListe = ytelseListe,
     )
 }

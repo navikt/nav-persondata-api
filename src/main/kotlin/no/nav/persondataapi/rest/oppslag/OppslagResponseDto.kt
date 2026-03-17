@@ -7,13 +7,12 @@ data class OppslagResponseDto<T>(
     @field:Schema(
         description = "Feilmelding hvis oppslaget feilet",
         example = "Ingen tilgang",
-        nullable = true
+        nullable = true,
     )
     val error: String? = null,
-
     @field:Schema(
         description = "Resultatdata fra oppslaget",
-        nullable = true
+        nullable = true,
     )
     val data: T? = null,
 )

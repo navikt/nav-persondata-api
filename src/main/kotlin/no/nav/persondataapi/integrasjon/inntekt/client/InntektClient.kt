@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 import java.util.concurrent.TimeoutException
 
-
 @Component
 class InntektClient(
     private val tokenService: TokenService,
@@ -32,72 +31,82 @@ class InntektClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "inntektshistorikk"
 
-
     @Cacheable(
         value = ["inntekt-historikk"],
         key = "#personIdent + '_' + #periode.fom + '_' + #periode.tom",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     fun hentInntekter(
         personIdent: PersonIdent,
-        periode: KontrollPeriode = KontrollPeriode(
-            LocalDate.now().minusYears(5),
-            LocalDate.now()
-        )
-    ): InntektDataResultat {
-        return runCatching {
+        periode: KontrollPeriode =
+            KontrollPeriode(
+                LocalDate.now().minusYears(5),
+                LocalDate.now(),
+            ),
+    ): InntektDataResultat =
+        runCatching {
             metrics
                 .timer(operationName)
                 .recordCallable {
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
 
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
+                    val requestBody =
+                        InntektshistorikkApiInn(
+                            personident = personIdent.value,
+                            filter = "NAVKontrollA-Inntekt",
+                            formaal = "NAVKontroll",
+                            maanedFom = periode.fom.format(formatter),
+                            maanedTom = periode.tom.format(formatter),
+                        )
+                    val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
 
-            val requestBody = InntektshistorikkApiInn(
-                personident = personIdent.value,
-                filter = "NAVKontrollA-Inntekt",
-                formaal = "NAVKontroll",
-                maanedFom = periode.fom.format(formatter),
-                maanedTom = periode.tom.format(formatter),
-            )
-            val oboToken = tokenService.getServiceToken(SCOPE.INNTEKT_SCOPE)
+                    val responseResult =
+                        webClient
+                            .post()
+                            .uri("/rest/v2/inntektshistorikk")
+                            .header("Authorization", "Bearer $oboToken")
+                            .header("Nav-Call-Id", UUID.randomUUID().toString())
+                            .bodyValue(requestBody)
+                            .exchangeToMono { response ->
+                                val status = response.statusCode()
+                                if (status.is2xxSuccessful) {
+                                    response.bodyToMono(
+                                        object : ParameterizedTypeReference<InntektshistorikkApiUt>() {},
+                                    )
+                                } else {
+                                    response.bodyToMono(String::class.java).map { body ->
+                                        throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
+                                    }
+                                }
+                            }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Inntektshistorikk"))
+                            .block()!!
 
-
-            val responseResult = webClient.post()
-                .uri("/rest/v2/inntektshistorikk")
-                .header("Authorization", "Bearer $oboToken")
-                .header("Nav-Call-Id", UUID.randomUUID().toString())
-                .bodyValue(requestBody)
-                .exchangeToMono { response ->
-                    val status = response.statusCode()
-                    if (status.is2xxSuccessful) {
-                        response.bodyToMono(object : ParameterizedTypeReference<InntektshistorikkApiUt>() {})
-                    } else {
-                        response.bodyToMono(String::class.java).map { body ->
-                            throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")
-                        }
-                    }
-                }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Inntektshistorikk"))
-                .block()!!
-
-            responseResult
+                    responseResult
                 }
         }.fold(
-            onSuccess = {
-                inntekt ->
+            onSuccess = { inntekt ->
                 metrics.counter(operationName, DownstreamResult.SUCCESS).increment()
                 InntektDataResultat(
                     data = inntekt,
                     statusCode = 200,
-                    ""
+                    "",
                 )
             },
             onFailure = { error ->
-                val resultType = when {
-                    erTimeout(error) -> DownstreamResult.TIMEOUT
-                    error.message?.contains("ikke tilgang", ignoreCase = true) == true ->
-                        DownstreamResult.CLIENT_ERROR
-                    else -> DownstreamResult.UNEXPECTED
-                }
+                val resultType =
+                    when {
+                        erTimeout(error) -> {
+                            DownstreamResult.TIMEOUT
+                        }
+
+                        error.message?.contains("ikke tilgang", ignoreCase = true) == true -> {
+                            DownstreamResult.CLIENT_ERROR
+                        }
+
+                        else -> {
+                            DownstreamResult.UNEXPECTED
+                        }
+                    }
 
                 metrics.counter(operationName, resultType).increment()
 
@@ -105,11 +114,10 @@ class InntektClient(
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,
-                    errorMessage = "Feil ved lesing: ${error.message}"
+                    errorMessage = "Feil ved lesing: ${error.message}",
                 )
-            }
+            },
         )
-    }
 
     private fun erTimeout(e: Throwable): Boolean =
         when (e.cause) {
@@ -122,10 +130,11 @@ class InntektClient(
 
 data class InntektDataResultat(
     val data: InntektshistorikkApiUt?,
-    val statusCode: Int?,               // f.eks. 200, 401, 500
-    val errorMessage: String? = null
+    val statusCode: Int?, // f.eks. 200, 401, 500
+    val errorMessage: String? = null,
 )
 
 data class KontrollPeriode(
-    val fom: LocalDate, val tom: LocalDate
+    val fom: LocalDate,
+    val tom: LocalDate,
 )

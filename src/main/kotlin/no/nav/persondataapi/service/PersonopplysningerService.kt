@@ -17,7 +17,7 @@ class PersonopplysningerService(
     private val pdlClient: PdlClient,
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
-    private val navTilhørighetService: NavTilhørighetService
+    private val navTilhørighetService: NavTilhørighetService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -28,9 +28,8 @@ class PersonopplysningerService(
 
     suspend fun hentPersonopplysningerForPerson(
         personIdent: PersonIdent,
-        responsLog: Boolean = false
+        responsLog: Boolean = false,
     ): PersonopplysningerResultat {
-
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
@@ -38,13 +37,13 @@ class PersonopplysningerService(
             logger = logger,
             kilde = "PDL hentPerson",
             personIdent = personIdent,
-            unit = pdlResponse
+            unit = pdlResponse,
         )
         traceLoggHvisAktivert(
             logger = logger,
             kilde = "PDL lokalKontor",
             personIdent = personIdent,
-            unit = lokalKontor
+            unit = lokalKontor,
         )
         logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
 
@@ -59,40 +58,46 @@ class PersonopplysningerService(
         val pdlData = pdlResponse.data ?: return PersonopplysningerResultat.PersonIkkeFunnet
 
         // Mappe familie og sivilstand
-        val foreldreOgBarn = pdlData.forelderBarnRelasjon.associate {
-            Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
-        }
+        val foreldreOgBarn =
+            pdlData.forelderBarnRelasjon.associate {
+                Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
+            }
         val statsborgerskap = pdlData.statsborgerskap.map { it.land }
-        val ektefelle = pdlData.sivilstand
-            .filter { it.relatertVedSivilstand != null }
-            .associate { Pair(it.relatertVedSivilstand!!, it.type.name) }
+        val ektefelle =
+            pdlData.sivilstand
+                .filter { it.relatertVedSivilstand != null }
+                .associate { Pair(it.relatertVedSivilstand!!, it.type.name) }
         val familiemedlemmer = foreldreOgBarn + ektefelle
 
         // Mappe personopplysninger
-        val personopplysninger = PersonInformasjon(
-            navn = PersonInformasjon.Navn(
-                pdlData.gjeldendeFornavn(),
-                mellomnavn = pdlData.gjeldendeMellomnavn(),
-                etternavn = pdlData.gjeldendeEtternavn(),
-            ),
-            aktørId = personIdent.value,
-            adresse = pdlData.nåværendeBostedsadresse(),
-            familemedlemmer = familiemedlemmer,
-            adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
-            statsborgerskap = statsborgerskap,
-            sivilstand = pdlData.gjeldendeSivilStand(),
-            alder = pdlData.foedselsdato.firstOrNull()?.foedselsdato?.let {
-                Period.between(LocalDate.parse(it), LocalDate.now()).years
-            } ?: -1,
-            fødselsdato = pdlData.foedselsdato.firstOrNull()?.foedselsdato ?: "",
-            dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
-            navKontor = PersonInformasjon.NavKontor(
-                enhetId = lokalKontor.enhetId,
-                navn = lokalKontor.navn,
-                enhetNr = lokalKontor.enhetNr,
-                type = lokalKontor.type
-            ),
-        )
+        val personopplysninger =
+            PersonInformasjon(
+                navn =
+                    PersonInformasjon.Navn(
+                        pdlData.gjeldendeFornavn(),
+                        mellomnavn = pdlData.gjeldendeMellomnavn(),
+                        etternavn = pdlData.gjeldendeEtternavn(),
+                    ),
+                aktørId = personIdent.value,
+                adresse = pdlData.nåværendeBostedsadresse(),
+                familemedlemmer = familiemedlemmer,
+                adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
+                statsborgerskap = statsborgerskap,
+                sivilstand = pdlData.gjeldendeSivilStand(),
+                alder =
+                    pdlData.foedselsdato.firstOrNull()?.foedselsdato?.let {
+                        Period.between(LocalDate.parse(it), LocalDate.now()).years
+                    } ?: -1,
+                fødselsdato = pdlData.foedselsdato.firstOrNull()?.foedselsdato ?: "",
+                dødsdato = pdlData.doedsfall.firstOrNull()?.doedsdato,
+                navKontor =
+                    PersonInformasjon.NavKontor(
+                        enhetId = lokalKontor.enhetId,
+                        navn = lokalKontor.navn,
+                        enhetNr = lokalKontor.enhetNr,
+                        type = lokalKontor.type,
+                    ),
+            )
 
         // Berik med kodeverkdata
         var beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
@@ -100,34 +105,43 @@ class PersonopplysningerService(
         logger.info("Hentet og mappet personopplysninger for $personIdent")
 
         if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info("Saksbehandler har ikke tilgang til å hente personopplysninger for $personIdent. Maskerer responsen")
+            logger.info(
+                "Saksbehandler har ikke tilgang til å hente personopplysninger for $personIdent. Maskerer responsen",
+            )
             beriketPersonopplysninger = maskerObjekt(beriketPersonopplysninger)
         }
 
         return PersonopplysningerResultat.Success(beriketPersonopplysninger)
     }
 
-    private fun berikMedKodeverkData(input: PersonInformasjon): PersonInformasjon {
-        return input.copy(
+    private fun berikMedKodeverkData(input: PersonInformasjon): PersonInformasjon =
+        input.copy(
             statsborgerskap = input.statsborgerskap.map { kodeverkService.mapLandkodeTilLandnavn(it) },
-            adresse = input.adresse?.let { adresse ->
-                adresse.copy(
-                    norskAdresse = adresse.norskAdresse?.copy(
-                        poststed = kodeverkService.mapPostnummerTilPoststed(adresse.norskAdresse.postnummer)
-                    ),
-                    utenlandskAdresse = adresse.utenlandskAdresse?.copy(
-                        landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode)
+            adresse =
+                input.adresse?.let { adresse ->
+                    adresse.copy(
+                        norskAdresse =
+                            adresse.norskAdresse?.copy(
+                                poststed = kodeverkService.mapPostnummerTilPoststed(adresse.norskAdresse.postnummer),
+                            ),
+                        utenlandskAdresse =
+                            adresse.utenlandskAdresse?.copy(
+                                landkode = kodeverkService.mapLandkodeTilLandnavn(adresse.utenlandskAdresse.landkode),
+                            ),
                     )
-                )
-            }
+                },
         )
-    }
 }
 
 sealed class PersonopplysningerResultat {
-    data class Success(val data: PersonInformasjon) : PersonopplysningerResultat()
+    data class Success(
+        val data: PersonInformasjon,
+    ) : PersonopplysningerResultat()
+
     data object IngenTilgang : PersonopplysningerResultat()
+
     data object PersonIkkeFunnet : PersonopplysningerResultat()
+
     data object FeilIBaksystem : PersonopplysningerResultat()
 }
 

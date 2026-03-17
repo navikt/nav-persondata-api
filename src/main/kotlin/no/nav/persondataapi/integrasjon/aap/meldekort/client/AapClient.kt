@@ -2,8 +2,8 @@ package no.nav.persondataapi.integrasjon.aap.meldekort.client
 
 import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
-import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRequest
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
@@ -31,11 +31,10 @@ class AapClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "max"
 
-
     @Cacheable(
         value = ["aap"],
         key = "#personIdent + '_' + #utvidet",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     fun hentAapMax(
         personIdent: PersonIdent,
@@ -47,25 +46,30 @@ class AapClient(
             metrics.timer(operationName).recordCallable {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-                val requestBody = AapMaximumRequest(
-                    personidentifikator = personIdent.value,
-                    fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
-                    tilOgMedDato = LocalDate.now().format(formatter),
-                )
+                val requestBody =
+                    AapMaximumRequest(
+                        personidentifikator = personIdent.value,
+                        fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
+                        tilOgMedDato = LocalDate.now().format(formatter),
+                    )
 
-                val responseResult = webClient.post().uri("/maksimum")
-                    .header("Authorization", "Bearer $oboToken")
-                    .bodyValue(requestBody)
-                    .exchangeToMono { response ->
-                        val status = response.statusCode()
-                        if (status.is2xxSuccessful) {
-                            response.bodyToMono(object : ParameterizedTypeReference<AapMaximumRespons>() {})
-                        } else {
-                            response.bodyToMono(String::class.java).map { body ->
-                                throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")
+                val responseResult =
+                    webClient
+                        .post()
+                        .uri("/maksimum")
+                        .header("Authorization", "Bearer $oboToken")
+                        .bodyValue(requestBody)
+                        .exchangeToMono { response ->
+                            val status = response.statusCode()
+                            if (status.is2xxSuccessful) {
+                                response.bodyToMono(object : ParameterizedTypeReference<AapMaximumRespons>() {})
+                            } else {
+                                response.bodyToMono(String::class.java).map { body ->
+                                    throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")
+                                }
                             }
-                        }
-                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-maksimum")).block()!!
+                        }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-maksimum"))
+                        .block()!!
 
                 responseResult
             }
@@ -74,34 +78,38 @@ class AapClient(
             AapMeldekortRespons(
                 data = respons.vedtak,
                 statusCode = 200,
-                message = null
+                message = null,
             )
         }, onFailure = { error ->
-            val resultType = when {
-                erTimeout(error) -> DownstreamResult.TIMEOUT
-                error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
-                else -> DownstreamResult.UNEXPECTED
-            }
+            val resultType =
+                when {
+                    erTimeout(error) -> DownstreamResult.TIMEOUT
+                    error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
+                    else -> DownstreamResult.UNEXPECTED
+                }
 
             metrics.counter(operationName, resultType).increment()
 
             log.error("Feil ved henting av aap-max: ${error.message}", error)
             return AapMeldekortRespons(
-                data = null, statusCode = 500, message = error.rootCause().message
+                data = null,
+                statusCode = 500,
+                message = error.rootCause().message,
             )
         })
     }
 
-    private fun erTimeout(e: Throwable): Boolean = when (e.cause) {
-        is TimeoutException -> true
-        is ReadTimeoutException -> true
-        is WriteTimeoutException -> true
-        else -> false
-    }
+    private fun erTimeout(e: Throwable): Boolean =
+        when (e.cause) {
+            is TimeoutException -> true
+            is ReadTimeoutException -> true
+            is WriteTimeoutException -> true
+            else -> false
+        }
 }
 
 data class AapMeldekortRespons(
     val data: List<Vedtak>? = null,
     val statusCode: Int,
-    val message: String?
+    val message: String?,
 )

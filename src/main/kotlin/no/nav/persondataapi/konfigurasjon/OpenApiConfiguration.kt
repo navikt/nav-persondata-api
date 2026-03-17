@@ -21,59 +21,58 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration
 class OpenApiConfiguration {
-
     @Value("\${application.name:nav-persondata-api}")
     private lateinit var applicationName: String
 
     @Bean
-    fun customOpenAPI(): OpenAPI = OpenAPI()
-        .info(
-            Info()
-                .title("Nav Persondata API")
-                .description(
-                    """
-                    API for oppslag av persondata i Nav.
-                    
-                    Dette APIet tilbyr endepunkter for å hente:
-                    - Personopplysninger (navn, adresse, kontaktinfo)
-                    - Inntektshistorikk
-                    - Arbeidsforhold
-                    - Ytelser og utbetalinger
-                    - AAP-data
-                    - Meldekort
-                    
-                    ## Autentisering
-                    Alle endepunkter krever gyldig Azure AD-token med riktige tilganger.
-                    Bruk OAuth 2.0 Authorization Code flow eller On-Behalf-Of flow.
-                    """.trimIndent()
-                )
-                .version("1.0.0")
-                .contact(
-                    Contact()
-                        .name("Team Holmes")
-                )
-        )
-        .addServersItem(
-            Server()
-                .url("/")
-                .description("Nåværende miljø")
-        )
-        .components(
-            Components()
-                .addSecuritySchemes(
-                    "azure-ad",
-                    SecurityScheme()
-                        .type(SecurityScheme.Type.OAUTH2)
-                        .description("Azure AD autentisering. Krever gyldig NAV-bruker med riktige tilganger.")
-                        .flows(
-                            OAuthFlows()
-                                .authorizationCode(
-                                    OAuthFlow()
-                                        .authorizationUrl("https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize")
-                                        .tokenUrl("https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token")
-                                )
-                        )
-                )
-        )
-        .addSecurityItem(SecurityRequirement().addList("azure-ad"))
+    fun customOpenAPI(): OpenAPI =
+        OpenAPI()
+            .info(
+                Info()
+                    .title("Nav Persondata API")
+                    .description(
+                        """
+                        API for oppslag av persondata i Nav.
+                        
+                        Dette APIet tilbyr endepunkter for å hente:
+                        - Personopplysninger (navn, adresse, kontaktinfo)
+                        - Inntektshistorikk
+                        - Arbeidsforhold
+                        - Ytelser og utbetalinger
+                        - AAP-data
+                        - Meldekort
+                        
+                        ## Autentisering
+                        Alle endepunkter krever gyldig Azure AD-token med riktige tilganger.
+                        Bruk OAuth 2.0 Authorization Code flow eller On-Behalf-Of flow.
+                        """.trimIndent(),
+                    ).version("1.0.0")
+                    .contact(
+                        Contact()
+                            .name("Team Holmes"),
+                    ),
+            ).addServersItem(
+                Server()
+                    .url("/")
+                    .description("Nåværende miljø"),
+            ).components(
+                Components()
+                    .addSecuritySchemes(
+                        "azure-ad",
+                        SecurityScheme()
+                            .type(SecurityScheme.Type.OAUTH2)
+                            .description("Azure AD autentisering. Krever gyldig NAV-bruker med riktige tilganger.")
+                            .flows(
+                                OAuthFlows()
+                                    .authorizationCode(
+                                        OAuthFlow()
+                                            .authorizationUrl(
+                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize",
+                                            ).tokenUrl(
+                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token",
+                                            ),
+                                    ),
+                            ),
+                    ),
+            ).addSecurityItem(SecurityRequirement().addList("azure-ad"))
 }

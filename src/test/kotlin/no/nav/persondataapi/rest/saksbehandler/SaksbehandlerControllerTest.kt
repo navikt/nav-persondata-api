@@ -10,20 +10,21 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
 class SaksbehandlerControllerTest {
-
     private val saksbehandlerService = mockk<SaksbehandlerService>()
     private val controller = SaksbehandlerController(saksbehandlerService)
 
     @Test
     fun `hentSaksbehandler skal returnere saksbehandlerdata`() {
-        val resultat = SaksbehandlerTilhørighetResultat(
-            data = SaksbehandlerTilhørighet(
-                navIdent = "Z12345",
-                organisasjoner = listOf("Enhet A", "Enhet B")
-            ),
-            statusCode = 200,
-            errorMessage = null
-        )
+        val resultat =
+            SaksbehandlerTilhørighetResultat(
+                data =
+                    SaksbehandlerTilhørighet(
+                        navIdent = "Z12345",
+                        organisasjoner = listOf("Enhet A", "Enhet B"),
+                    ),
+                statusCode = 200,
+                errorMessage = null,
+            )
         coEvery { saksbehandlerService.hentSaksbehandler() } returns resultat
 
         val response = controller.hentSaksbehandler()
@@ -36,11 +37,12 @@ class SaksbehandlerControllerTest {
 
     @Test
     fun `hentSaksbehandler skal returnere feilmelding ved NOM-feil`() {
-        val resultat = SaksbehandlerTilhørighetResultat(
-            data = null,
-            statusCode = 404,
-            errorMessage = "Fant ikke ressurs"
-        )
+        val resultat =
+            SaksbehandlerTilhørighetResultat(
+                data = null,
+                statusCode = 404,
+                errorMessage = "Fant ikke ressurs",
+            )
         coEvery { saksbehandlerService.hentSaksbehandler() } returns resultat
 
         val response = controller.hentSaksbehandler()

@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 data class Ytelse(
     val stonadType: String,
-    val perioder : List<PeriodeInformasjon>
+    val perioder: List<PeriodeInformasjon>,
 ) {
     data class PeriodeInformasjon(
         val periode: Periode,
@@ -13,8 +13,7 @@ data class Ytelse(
         val kilde: String,
         val info: String?,
         val bruttoBeløp: BigDecimal? = null,
-        val refundertForOrg: String? = null
-
+        val refundertForOrg: String? = null,
     )
 
     data class Periode(
