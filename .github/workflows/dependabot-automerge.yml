@@ -41,11 +41,14 @@ jobs:
             const pr = context.payload.pull_request;
             if (!pr) return;
             const text = `:warning: Major version bump blokkert for review: <${pr.html_url}|${pr.title}>`;
-            await fetch(process.env.SLACK_WEBHOOK_URL, {
+            const resp = await fetch(process.env.SLACK_WEBHOOK_URL, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ text })
             });
+            if (!resp.ok) {
+              throw new Error(`Slack webhook feilet: ${resp.status} ${await resp.text()}`);
+            }
 
       - name: Aktiver automerge
         if: success()
@@ -69,8 +72,11 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const text = `:white_check_mark: Dependabot PR merget til main: <${pr.html_url}|${pr.title}>`;
-            await fetch(process.env.SLACK_WEBHOOK_URL, {
+            const resp = await fetch(process.env.SLACK_WEBHOOK_URL, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ text })
             });
+            if (!resp.ok) {
+              throw new Error(`Slack webhook feilet: ${resp.status} ${await resp.text()}`);
+            }
