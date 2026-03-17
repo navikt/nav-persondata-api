@@ -1,12 +1,14 @@
-name: Bygg pull request
+name: Kodekvalitet
 
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
 
 jobs:
-  bygg:
-    name: Bygg prosjekt
+  ktlint:
+    name: Kotlin linting (ktlint)
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +25,5 @@ jobs:
       - name: Gjør Gradle kjørbar
         run: chmod +x ./gradlew
 
-      - name: Kjør bygg
-        run: ./gradlew build
+      - name: Kjør ktlint
+        run: ./gradlew spotlessCheck
