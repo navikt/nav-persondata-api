@@ -5,12 +5,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class KodeverkService(
-    val kodeverkClient: KodeverkClient
+    val kodeverkClient: KodeverkClient,
 ) {
     fun mapLandkodeTilLandnavn(landkode: String?): String =
         kodeverkClient.hentLandkoder().find { landkode == it.landkode }?.land ?: "Ukjent"
 
     fun mapPostnummerTilPoststed(postnummer: String?): String =
         kodeverkClient.hentPostnummer().find { postnummer == it.postnummer }?.poststed ?: "Ukjent"
-
 }

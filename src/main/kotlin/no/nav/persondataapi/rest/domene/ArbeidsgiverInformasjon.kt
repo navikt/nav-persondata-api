@@ -5,7 +5,7 @@ import java.time.YearMonth
 
 data class ArbeidsgiverInformasjon(
     val løpendeArbeidsforhold: List<ArbeidsgiverData>,
-    val historikk: List<ArbeidsgiverData>
+    val historikk: List<ArbeidsgiverData>,
 ) {
     data class ArbeidsgiverData(
         @Maskert
@@ -21,7 +21,7 @@ data class ArbeidsgiverInformasjon(
         val stillingsprosent: Double?,
         val antallTimerPrUke: Double?,
         val periode: ÅpenPeriode,
-        val yrke: String? = null
+        val yrke: String? = null,
     )
 
     data class ÅpenPeriode(

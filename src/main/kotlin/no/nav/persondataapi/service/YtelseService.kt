@@ -11,18 +11,23 @@ import org.springframework.stereotype.Service
 @Service
 class YtelseService(
     private val utbetalingClient: UtbetalingClient,
-    private val brukertilgangService: BrukertilgangService
+    private val brukertilgangService: BrukertilgangService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun hentYtelserForPerson(personIdent: PersonIdent, utvidet: Boolean): YtelserResultat {
+    fun hentYtelserForPerson(
+        personIdent: PersonIdent,
+        utvidet: Boolean,
+    ): YtelserResultat {
         val utbetalingResponse = utbetalingClient.hentUtbetalingerForBruker(personIdent, utvidet)
-        logger.info("Hentet ${if (utvidet) "utvidete " else ""}ytelser for $personIdent, status ${utbetalingResponse.statusCode}")
+        logger.info(
+            "Hentet ${if (utvidet) "utvidete " else ""}ytelser for $personIdent, status ${utbetalingResponse.statusCode}",
+        )
         traceLoggHvisAktivert(
             logger = logger,
             kilde = "Utbetaling",
             personIdent = personIdent,
-            unit = utbetalingResponse
+            unit = utbetalingResponse,
         )
         when (utbetalingResponse.statusCode) {
             404 -> return YtelserResultat.PersonIkkeFunnet
@@ -37,29 +42,31 @@ class YtelseService(
         }
 
         val utbetalinger = utbetalingResponse.data.utbetalinger
-        var ytelser: List<Ytelse> = utbetalinger
-            .asSequence()
-            .flatMap { it.ytelseListe.asSequence() }
-            .filter { it.ytelsestype != null }
-            .filter { it.ytelsestype != "Feriepenger" }
-            .groupBy { it.ytelsestype }
-            .map { (type, liste) ->
-                val perioder = liste.map { ytelse ->
-                    Ytelse.PeriodeInformasjon(
-                        periode = Ytelse.Periode(
-                            fom = ytelse.ytelsesperiode.fom,
-                            tom = ytelse.ytelsesperiode.tom
-                        ),
-                        beløp = ytelse.ytelseNettobeloep,
-                        bruttoBeløp = ytelse.ytelseskomponentersum,
-                        refundertForOrg = ytelse.refundertForOrg?.ident ?: "UKJENT",
-                        kilde = "SOKOS",
-                        info = ytelse.bilagsnummer
-                    )
-                }
-                Ytelse(stonadType = type!!, perioder)
-            }
-            .toList()
+        var ytelser: List<Ytelse> =
+            utbetalinger
+                .asSequence()
+                .flatMap { it.ytelseListe.asSequence() }
+                .filter { it.ytelsestype != null }
+                .filter { it.ytelsestype != "Feriepenger" }
+                .groupBy { it.ytelsestype }
+                .map { (type, liste) ->
+                    val perioder =
+                        liste.map { ytelse ->
+                            Ytelse.PeriodeInformasjon(
+                                periode =
+                                    Ytelse.Periode(
+                                        fom = ytelse.ytelsesperiode.fom,
+                                        tom = ytelse.ytelsesperiode.tom,
+                                    ),
+                                beløp = ytelse.ytelseNettobeloep,
+                                bruttoBeløp = ytelse.ytelseskomponentersum,
+                                refundertForOrg = ytelse.refundertForOrg?.ident ?: "UKJENT",
+                                kilde = "SOKOS",
+                                info = ytelse.bilagsnummer,
+                            )
+                        }
+                    Ytelse(stonadType = type!!, perioder)
+                }.toList()
 
         logger.info("Fant ${ytelser.size} ytelse(r) for $personIdent")
 
@@ -73,8 +80,13 @@ class YtelseService(
 }
 
 sealed class YtelserResultat {
-    data class Success(val data: List<Ytelse>) : YtelserResultat()
+    data class Success(
+        val data: List<Ytelse>,
+    ) : YtelserResultat()
+
     data object IngenTilgang : YtelserResultat()
+
     data object PersonIkkeFunnet : YtelserResultat()
+
     data object FeilIBaksystem : YtelserResultat()
 }

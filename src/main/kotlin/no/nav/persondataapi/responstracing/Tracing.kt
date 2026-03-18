@@ -5,7 +5,4 @@ import kotlin.text.toBoolean
 
 const val LOGG_HEADER = "logg"
 
-
-fun erTraceLoggingAktvert():Boolean {
-    return MDC.get(LOGG_HEADER)?.toBoolean() ?: false
-}
+fun erTraceLoggingAktvert(): Boolean = MDC.get(LOGG_HEADER)?.toBoolean() ?: false

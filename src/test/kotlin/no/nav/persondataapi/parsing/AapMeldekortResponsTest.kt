@@ -8,21 +8,21 @@ import java.nio.charset.StandardCharsets
 import kotlin.test.Test
 
 class AapMeldekortResponsTest {
-
     @Test
-    fun KanLese2025Respons(){
+    fun kanLese2025Respons() {
         val jsonString = lesJsonFraFil("testrespons/AAPMaxRepons2025.json")
         val aapMeldekortRespons: AapMaximumRespons = JsonUtils.fromJson(jsonString)
         println()
     }
+
     @Test
-    fun KanLese2026Respons(){
+    fun kanLese2026Respons() {
         val jsonString = lesJsonFraFil("testrespons/AAPMaxRespons2026.json")
         val aapMeldekortRespons: AapMaximumRespons = JsonUtils.fromJson(jsonString)
         println()
     }
-
 }
+
 private fun lesJsonFraFil(filename: String): String {
     val resource = ClassPathResource(filename)
     val inputStream = resource.inputStream

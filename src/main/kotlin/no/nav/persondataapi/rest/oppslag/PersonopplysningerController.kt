@@ -25,63 +25,78 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping("/oppslag/personopplysninger")
 @Tag(name = "Personopplysninger", description = "Endepunkter for oppslag av personopplysninger")
 class PersonopplysningerController(
-    private val personopplysningerService: PersonopplysningerService
+    private val personopplysningerService: PersonopplysningerService,
 ) {
     @Protected
     @PostMapping
     @Operation(
         summary = "Hent personopplysninger",
-        description = "Henter personopplysninger for en person basert på fødselsnummer eller annen identifikator"
+        description = "Henter personopplysninger for en person basert på fødselsnummer eller annen identifikator",
     )
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
-        content = [Content(
-            examples = [ExampleObject(
-                name = "Standard oppslag",
-                value = """{"ident": "12345678901"}"""
-            )]
-        )]
+        content = [
+            Content(
+                examples = [
+                    ExampleObject(
+                        name = "Standard oppslag",
+                        value = """{"ident": "12345678901"}""",
+                    ),
+                ],
+            ),
+        ],
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "Personopplysninger hentet",
-                content = [Content(
-                    schema = Schema(implementation = OppslagResponseDto::class),
-                    examples = [ExampleObject(
-                        name = "Vellykket respons",
-                        value = """{"data": {"navn": "Ola Nordmann", "fodselsdato": "1990-01-15"}, "error": null}"""
-                    )]
-                )]
+                content = [
+                    Content(
+                        schema = Schema(implementation = OppslagResponseDto::class),
+                        examples = [
+                            ExampleObject(
+                                name = "Vellykket respons",
+                                value =
+                                    """{"data": {"navn": "Ola Nordmann"}, "error": null}""",
+                            ),
+                        ],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "403",
                 description = "Ingen tilgang til personen",
-                content = [Content(
-                    examples = [ExampleObject(value = """{"data": null, "error": "Ingen tilgang"}""")]
-                )]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Ingen tilgang"}""")],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "404",
                 description = "Person ikke funnet",
-                content = [Content(
-                    examples = [ExampleObject(value = """{"data": null, "error": "Person ikke funnet"}""")]
-                )]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Person ikke funnet"}""")],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "502",
                 description = "Feil i baksystem",
-                content = [Content(
-                    examples = [ExampleObject(value = """{"data": null, "error": "Feil i baksystem"}""")]
-                )]
-            )
-        ]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Feil i baksystem"}""")],
+                    ),
+                ],
+            ),
+        ],
     )
     fun hentPersonopplysninger(
         @RequestBody dto: OppslagRequestDto,
-        @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?
-    ): ResponseEntity<OppslagResponseDto<PersonInformasjon>> {
-        return runBlocking {
+        @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?,
+    ): ResponseEntity<OppslagResponseDto<PersonInformasjon>> =
+        runBlocking {
             val logResponsAktivert = traceHeader?.toBoolean() ?: false
             val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
 
@@ -89,26 +104,27 @@ class PersonopplysningerController(
                 is PersonopplysningerResultat.Success -> {
                     ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
                 }
+
                 is PersonopplysningerResultat.IngenTilgang -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Ingen tilgang", data = null),
-                        HttpStatus.FORBIDDEN
+                        HttpStatus.FORBIDDEN,
                     )
                 }
+
                 is PersonopplysningerResultat.PersonIkkeFunnet -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Person ikke funnet", data = null),
-                        HttpStatus.NOT_FOUND
+                        HttpStatus.NOT_FOUND,
                     )
                 }
+
                 is PersonopplysningerResultat.FeilIBaksystem -> {
                     ResponseEntity(
                         OppslagResponseDto(error = "Feil i baksystem", data = null),
-                        HttpStatus.BAD_GATEWAY
+                        HttpStatus.BAD_GATEWAY,
                     )
                 }
             }
         }
-    }
-
 }

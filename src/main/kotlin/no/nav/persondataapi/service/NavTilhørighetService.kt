@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class NavTilhørighetService(
-    private val pdlClient: PdlClient, private val norg2Client: Norg2Client
+    private val pdlClient: PdlClient,
+    private val norg2Client: Norg2Client,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -21,26 +22,27 @@ class NavTilhørighetService(
         traceLoggHvisAktivert(
             logger = logger,
             kilde = "PDL geografisk-tilknytning",
-            personIdent=personIdent,
-            unit = geografiskTilknytning
+            personIdent = personIdent,
+            unit = geografiskTilknytning,
         )
         val norgIdent = geografiskTilknytning.data?.hentNorgIdent()
         if (norgIdent == null) {
             return NavLokalKontor(
-                -1, "Uklart", "", ""
+                -1,
+                "Uklart",
+                "",
+                "",
             )
         }
         return norg2Client.hentLokalNavKontor(norgIdent)
-
     }
 }
 
-fun GeografiskTilknytning.hentNorgIdent(): String? {
-    return when (this.gtType) {
+fun GeografiskTilknytning.hentNorgIdent(): String? =
+    when (this.gtType) {
         GtType.BYDEL -> this.gtBydel
         GtType.KOMMUNE -> this.gtKommune
         GtType.UTLAND -> null
         GtType.UDEFINERT -> null
         GtType.__UNKNOWN_VALUE -> null
     }
-}

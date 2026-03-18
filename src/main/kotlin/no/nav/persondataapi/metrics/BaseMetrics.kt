@@ -9,7 +9,7 @@ enum class DownstreamResult {
     TIMEOUT,
     CLIENT_ERROR,
     SERVER_ERROR,
-    UNEXPECTED
+    UNEXPECTED,
 }
 
 /**
@@ -28,32 +28,39 @@ abstract class BaseDownstreamMetrics(
     private val registry: MeterRegistry,
     private val systemName: String,
 ) {
-
     /**
      * Timer for tidsbruk per operasjon mot et nedstrøms system.
      * Alle timere deler navnet `downstream_tid` og taggene (system, operation).
      */
     fun timer(operation: String): Timer =
-        Timer.builder("downstream_tid")
+        Timer
+            .builder("downstream_tid")
             .description("Tidsbruk for kall mot nedstrøms systemer")
             .tags(
-                "system", systemName,
-                "operation", operation,
-            )
-            .publishPercentileHistogram()
+                "system",
+                systemName,
+                "operation",
+                operation,
+            ).publishPercentileHistogram()
             .register(registry)
 
     /**
      * Counter for kall per operasjon og resultat (success/timeout/feil).
      * Alle counters deler navnet `downstream_kall_total` og taggene (system, operation, result).
      */
-    fun counter(operation: String, result: DownstreamResult): Counter =
-        Counter.builder("downstream_kall_total")
+    fun counter(
+        operation: String,
+        result: DownstreamResult,
+    ): Counter =
+        Counter
+            .builder("downstream_kall_total")
             .description("Antall kall mot nedstrøms systemer")
             .tags(
-                "system", systemName,
-                "operation", operation,
-                "result", result.name.lowercase(), // f.eks. success, timeout
-            )
-            .register(registry)
+                "system",
+                systemName,
+                "operation",
+                operation,
+                "result",
+                result.name.lowercase(), // f.eks. success, timeout
+            ).register(registry)
 }

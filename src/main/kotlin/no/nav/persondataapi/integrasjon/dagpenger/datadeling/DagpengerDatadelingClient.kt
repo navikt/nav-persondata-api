@@ -8,7 +8,6 @@ import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
 import no.nav.persondataapi.metrics.DPDatadelingMetrics
 import no.nav.persondataapi.metrics.DownstreamResult
-import no.nav.persondataapi.responstracing.erTraceLoggingAktvert
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.UUID
 import java.util.concurrent.TimeoutException
 
 @Component
@@ -33,11 +31,10 @@ class DagpengerDatadelingClient(
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "meldekort"
 
-
     @Cacheable(
         value = ["meldekort"],
         key = "#personIdent + '_' + #utvidet",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     fun hentDagpengeMeldekort(
         personIdent: PersonIdent,
@@ -49,32 +46,36 @@ class DagpengerDatadelingClient(
             metrics.timer(operationName).recordCallable {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-                val requestBody = MeldekortRequest(
-                    personIdent = personIdent.value,
-                    fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
-                    tilOgMedDato = LocalDate.now().format(formatter),
-                )
+                val requestBody =
+                    MeldekortRequest(
+                        personIdent = personIdent.value,
+                        fraOgMedDato = LocalDate.now().minusYears(antallÅr).format(formatter),
+                        tilOgMedDato = LocalDate.now().format(formatter),
+                    )
                 traceLoggHvisAktivert(
                     logger = log,
                     kilde = "Dagpenger - request",
-                    personIdent=personIdent,
-                    unit = requestBody
+                    personIdent = personIdent,
+                    unit = requestBody,
                 )
-                
 
-                val responseResult = webClient.post().uri("/dagpenger/datadeling/v1/meldekort")
-                    .header("Authorization", "Bearer $oboToken")
-                    .bodyValue(requestBody)
-                    .exchangeToMono { response ->
-                        val status = response.statusCode()
-                        if (status.is2xxSuccessful) {
-                            response.bodyToMono(object : ParameterizedTypeReference<List<Meldekort>>() {})
-                        } else {
-                            response.bodyToMono(String::class.java).map { body ->
-                                throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body")
+                val responseResult =
+                    webClient
+                        .post()
+                        .uri("/dagpenger/datadeling/v1/meldekort")
+                        .header("Authorization", "Bearer $oboToken")
+                        .bodyValue(requestBody)
+                        .exchangeToMono { response ->
+                            val status = response.statusCode()
+                            if (status.is2xxSuccessful) {
+                                response.bodyToMono(object : ParameterizedTypeReference<List<Meldekort>>() {})
+                            } else {
+                                response.bodyToMono(String::class.java).map { body ->
+                                    throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body")
+                                }
                             }
-                        }
-                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "meldekort")).block()!!
+                        }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "meldekort"))
+                        .block()!!
 
                 responseResult
             }
@@ -83,34 +84,38 @@ class DagpengerDatadelingClient(
             DagpengerMeldekortRespons(
                 data = inntekt,
                 statusCode = 200,
-                message = null
+                message = null,
             )
         }, onFailure = { error ->
-            val resultType = when {
-                erTimeout(error) -> DownstreamResult.TIMEOUT
-                error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
-                else -> DownstreamResult.UNEXPECTED
-            }
+            val resultType =
+                when {
+                    erTimeout(error) -> DownstreamResult.TIMEOUT
+                    error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
+                    else -> DownstreamResult.UNEXPECTED
+                }
 
             metrics.counter(operationName, resultType).increment()
 
             log.error("Feil ved henting av dagpenger-meldekort: ${error.message}", error)
             return DagpengerMeldekortRespons(
-                data = null, statusCode = 500, message = error.rootCause().message
+                data = null,
+                statusCode = 500,
+                message = error.rootCause().message,
             )
         })
     }
 
-    private fun erTimeout(e: Throwable): Boolean = when (e.cause) {
-        is TimeoutException -> true
-        is ReadTimeoutException -> true
-        is WriteTimeoutException -> true
-        else -> false
-    }
+    private fun erTimeout(e: Throwable): Boolean =
+        when (e.cause) {
+            is TimeoutException -> true
+            is ReadTimeoutException -> true
+            is WriteTimeoutException -> true
+            else -> false
+        }
 }
 
 data class DagpengerMeldekortRespons(
     val data: List<Meldekort>? = null,
     val statusCode: Int,
-    val message: String?
+    val message: String?,
 )

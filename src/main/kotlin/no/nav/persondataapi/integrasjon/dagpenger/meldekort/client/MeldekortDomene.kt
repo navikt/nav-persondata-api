@@ -4,7 +4,6 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-
 data class MeldekortRequest(
     val personIdent: String,
     val fraOgMedDato: String,
@@ -26,12 +25,12 @@ data class Meldekort(
     val kilde: Kilde = Kilde(ident = "Ukjent", rolle = "Ukjent"),
     val innsendtTidspunkt: LocalDateTime?,
     val registrertArbeidssoker: Boolean?,
-    val meldedato: LocalDate?
+    val meldedato: LocalDate?,
 )
 
 enum class MeldekortStatus {
     Innsendt,
-    TilUtfylling
+    TilUtfylling,
 }
 
 enum class MeldekortType {
@@ -42,20 +41,20 @@ enum class MeldekortType {
 
 data class Periode(
     val fraOgMed: LocalDate,
-    val tilOgMed: LocalDate
+    val tilOgMed: LocalDate,
 )
 
 data class Dag(
     val dato: LocalDate,
     val aktiviteter: List<Aktivitet>,
-    val dagIndex: Int
+    val dagIndex: Int,
 )
 
 data class Aktivitet(
     val id: String,
     val type: AktivitetType,
     val timer: String?,
-    val dato: LocalDate?
+    val dato: LocalDate?,
 )
 
 fun Aktivitet.timerAsDouble(): Double? {
@@ -72,10 +71,10 @@ enum class AktivitetType {
     Arbeid,
     Fravaer,
     Syk,
-    Utdanning
+    Utdanning,
 }
 
 data class Kilde(
     val rolle: String,
-    val ident: String
+    val ident: String,
 )

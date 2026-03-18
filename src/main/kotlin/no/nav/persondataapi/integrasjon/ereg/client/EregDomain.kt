@@ -17,16 +17,16 @@ data class Navn(
     val navnelinje4: String? = null,
     val navnelinje5: String? = null,
     val bruksperiode: PeriodeTid,
-    val gyldighetsperiode: PeriodeDato
+    val gyldighetsperiode: PeriodeDato,
 )
 
 /** Perioder */
 data class PeriodeTid(
     val fom: LocalDateTime,
-    val tom: LocalDateTime? = null
+    val tom: LocalDateTime? = null,
 )
 
 data class PeriodeDato(
     val fom: LocalDate,
-    val tom: LocalDate? = null
+    val tom: LocalDate? = null,
 )

@@ -21,64 +21,73 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping("/saksbehandler")
 @Tag(name = "Saksbehandler", description = "Endepunkter for informasjon om innlogget saksbehandler")
 class SaksbehandlerController(
-    private val saksbehandlerService: SaksbehandlerService
+    private val saksbehandlerService: SaksbehandlerService,
 ) {
     @Protected
     @GetMapping
     @Operation(
         summary = "Hent saksbehandlerinformasjon",
-        description = "Henter informasjon om innlogget saksbehandler, inkludert organisasjonstilhørighet"
+        description = "Henter informasjon om innlogget saksbehandler, inkludert organisasjonstilhørighet",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "Saksbehandlerinformasjon hentet",
-                content = [Content(
-                    schema = Schema(implementation = OppslagResponseDto::class),
-                    examples = [ExampleObject(
-                        name = "Vellykket respons",
-                        value = """{"data": {"navIdent": "Z123456", "organisasjoner": ["NAV Arbeid og ytelser", "NAV Kontaktsenter"]}, "error": null}"""
-                    )]
-                )]
+                content = [
+                    Content(
+                        schema = Schema(implementation = OppslagResponseDto::class),
+                        examples = [
+                            ExampleObject(
+                                name = "Vellykket respons",
+                                value =
+                                    """{"data": {"navIdent": "Z123456"}, "error": null}""",
+                            ),
+                        ],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "401",
                 description = "Ikke autentisert",
-                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Ikke autentisert"}""")])]
+                content = [
+                    Content(
+                        examples = [ExampleObject(value = """{"data": null, "error": "Ikke autentisert"}""")],
+                    ),
+                ],
             ),
             ApiResponse(
                 responseCode = "500",
                 description = "Intern feil",
-                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Intern feil"}""")])]
-            )
-        ]
+                content = [Content(examples = [ExampleObject(value = """{"data": null, "error": "Intern feil"}""")])],
+            ),
+        ],
     )
-    fun hentSaksbehandler(): ResponseEntity<OppslagResponseDto<SaksbehandlerResponsDto>> {
-        return runBlocking {
+    fun hentSaksbehandler(): ResponseEntity<OppslagResponseDto<SaksbehandlerResponsDto>> =
+        runBlocking {
             val resultat = saksbehandlerService.hentSaksbehandler()
 
             if (resultat.data == null) {
                 val feilmelding = resultat.errorMessage ?: "Ukjent feil"
                 ResponseEntity(
                     OppslagResponseDto(error = feilmelding),
-                    HttpStatus.valueOf(resultat.statusCode)
+                    HttpStatus.valueOf(resultat.statusCode),
                 )
             } else {
                 ResponseEntity.ok(
                     OppslagResponseDto(
-                        data = SaksbehandlerResponsDto(
-                            navIdent = resultat.data.navIdent,
-                            organisasjoner = resultat.data.organisasjoner
-                        )
-                    )
+                        data =
+                            SaksbehandlerResponsDto(
+                                navIdent = resultat.data.navIdent,
+                                organisasjoner = resultat.data.organisasjoner,
+                            ),
+                    ),
                 )
             }
         }
-    }
 
     data class SaksbehandlerResponsDto(
         val navIdent: String,
-        val organisasjoner: List<String>
+        val organisasjoner: List<String>,
     )
 }

@@ -9,7 +9,6 @@ import org.springframework.util.StreamUtils
 import java.nio.charset.StandardCharsets
 
 class MeldekortParseResponsTest {
-
     @Test
     fun `Skal parse respons fra meldekort`() {
         val jsonString = lesJsonFraFil("testrespons/DagpengerMeldekortSample.json")

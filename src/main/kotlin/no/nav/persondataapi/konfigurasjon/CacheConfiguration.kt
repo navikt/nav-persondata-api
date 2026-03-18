@@ -1,6 +1,5 @@
 package no.nav.persondataapi.konfigurasjon
 
-import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -15,12 +14,12 @@ import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator
 import java.time.Duration
 
 @Configuration
 @EnableCaching
 class CacheConfiguration {
-
     private val logger = LoggerFactory.getLogger(CacheConfiguration::class.java)
 
     @Bean
@@ -32,11 +31,13 @@ class CacheConfiguration {
         logger.info("Konfigurerer cache manager med Valkey/Redis backend")
 
         val defaultConfig = redisCacheConfiguration(cacheProperties.defaultExpiration)
-        val cacheConfigurations = cacheProperties.caches.mapValues { (_, config) ->
-            redisCacheConfiguration(config.expiration)
-        }
+        val cacheConfigurations =
+            cacheProperties.caches.mapValues { (_, config) ->
+                redisCacheConfiguration(config.expiration)
+            }
 
-        return RedisCacheManager.builder(redisConnectionFactory)
+        return RedisCacheManager
+            .builder(redisConnectionFactory)
             .cacheDefaults(defaultConfig)
             .withInitialCacheConfigurations(cacheConfigurations)
             .build()
@@ -49,18 +50,20 @@ class CacheConfiguration {
 
         val cacheManager = CaffeineCacheManager()
         cacheManager.setCaffeine(
-            Caffeine.newBuilder()
+            Caffeine
+                .newBuilder()
                 .expireAfterWrite(cacheProperties.defaultExpiration)
-                .maximumSize(cacheProperties.maximumSize)
+                .maximumSize(cacheProperties.maximumSize),
         )
 
         cacheProperties.caches.forEach { (cacheName, config) ->
             cacheManager.registerCustomCache(
                 cacheName,
-                Caffeine.newBuilder()
+                Caffeine
+                    .newBuilder()
                     .expireAfterWrite(config.expiration)
                     .maximumSize(config.maximumSize ?: cacheProperties.maximumSize)
-                    .build()
+                    .build(),
             )
         }
 
@@ -69,12 +72,12 @@ class CacheConfiguration {
 
     private fun redisCacheConfiguration(ttl: Duration): RedisCacheConfiguration {
         val serializer = createRedisSerializer()
-        return RedisCacheConfiguration.defaultCacheConfig()
+        return RedisCacheConfiguration
+            .defaultCacheConfig()
             .entryTtl(ttl)
             .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(serializer)
-            )
-            .disableCachingNullValues()
+                RedisSerializationContext.SerializationPair.fromSerializer(serializer),
+            ).disableCachingNullValues()
     }
 
     @Bean
@@ -83,14 +86,16 @@ class CacheConfiguration {
 
     companion object {
         internal fun createRedisSerializer(): GenericJacksonJsonRedisSerializer {
-            val typeValidator = BasicPolymorphicTypeValidator.builder()
-                .allowIfSubType("no.nav")
-                .allowIfSubType("java.time")
-                .allowIfSubType("java.math")
-                .allowIfSubType("java.util.ArrayList")
-                .allowIfBaseType(Collection::class.java)
-                .allowIfBaseType(Map::class.java)
-                .build()
+            val typeValidator =
+                BasicPolymorphicTypeValidator
+                    .builder()
+                    .allowIfSubType("no.nav")
+                    .allowIfSubType("java.time")
+                    .allowIfSubType("java.math")
+                    .allowIfSubType("java.util.ArrayList")
+                    .allowIfBaseType(Collection::class.java)
+                    .allowIfBaseType(Map::class.java)
+                    .build()
 
             return GenericJacksonJsonRedisSerializer
                 .builder()
@@ -103,10 +108,10 @@ class CacheConfiguration {
 data class CacheProperties(
     var defaultExpiration: Duration = Duration.ofHours(1),
     var maximumSize: Long = 1000,
-    var caches: Map<String, CacheConfig> = emptyMap()
+    var caches: Map<String, CacheConfig> = emptyMap(),
 )
 
 data class CacheConfig(
     var expiration: Duration = Duration.ofHours(1),
-    var maximumSize: Long? = null
+    var maximumSize: Long? = null,
 )

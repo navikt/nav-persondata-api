@@ -8,38 +8,40 @@ import org.springframework.stereotype.Service
 
 @Service
 class CacheAdminService(
-    private val cacheManager: CacheManager
+    private val cacheManager: CacheManager,
 ) {
-
     private val logger = LoggerFactory.getLogger(CacheAdminService::class.java)
 
-    private val personIdentCacher = setOf(
-        "pdl-person",
-        "pdl-geografisktilknytning",
-        "aareg-arbeidsforhold",
-        "utbetaling-bruker",
-        "norg2-lokalKontor",
-    )
+    private val personIdentCacher =
+        setOf(
+            "pdl-person",
+            "pdl-geografisktilknytning",
+            "aareg-arbeidsforhold",
+            "utbetaling-bruker",
+            "norg2-lokalKontor",
+        )
 
-    private val cacherSomTømmesPåPersonFlush = setOf(
-        "inntekt-historikk",
-        "pensjonsgivende-inntekt",
-    )
+    private val cacherSomTømmesPåPersonFlush =
+        setOf(
+            "inntekt-historikk",
+            "pensjonsgivende-inntekt",
+        )
 
     fun flushAlleCacher(): CacheFlushOppsummering {
-        val tømteCacher = cacheManager.cacheNames
-            .mapNotNull { name ->
-                cacheManager.getCache(name)
-                    ?.also { it.clear() }
-                    ?.let { name }
-            }
-            .sorted()
+        val tømteCacher =
+            cacheManager.cacheNames
+                .mapNotNull { name ->
+                    cacheManager
+                        .getCache(name)
+                        ?.also { it.clear() }
+                        ?.let { name }
+                }.sorted()
 
         logger.info("Flushet alle cacher: {}", tømteCacher)
 
         return CacheFlushOppsummering(
             flushedeCacher = tømteCacher,
-            scope = CacheFlushScope.ALLE
+            scope = CacheFlushScope.ALLE,
         )
     }
 
@@ -54,24 +56,27 @@ class CacheAdminService(
             cacheManager.tøm(cacheName)?.let { flushede.add(cacheName) }
         }
 
-        val oppsummering = CacheFlushOppsummering(
-            flushedeCacher = flushede.toList().sorted(),
-            scope = CacheFlushScope.PERSON,
-            personIdent = personIdent.toString()
-        )
+        val oppsummering =
+            CacheFlushOppsummering(
+                flushedeCacher = flushede.toList().sorted(),
+                scope = CacheFlushScope.PERSON,
+                personIdent = personIdent.toString(),
+            )
 
         logger.info("Flushet cacher for {}: {}", personIdent, oppsummering.flushedeCacher)
 
         return oppsummering
     }
 
-    private fun CacheManager.fjernFraCache(cacheName: String, key: Any): Cache? =
+    private fun CacheManager.fjernFraCache(
+        cacheName: String,
+        key: Any,
+    ): Cache? =
         getCache(cacheName)?.also { cache ->
             cache.evict(key)
         }
 
-    private fun CacheManager.tøm(cacheName: String): Cache? =
-        getCache(cacheName)?.also(Cache::clear)
+    private fun CacheManager.tøm(cacheName: String): Cache? = getCache(cacheName)?.also(Cache::clear)
 }
 
 data class CacheFlushOppsummering(

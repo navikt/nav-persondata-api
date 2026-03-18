@@ -5,57 +5,57 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 
 class MaskeringUtilTest {
-
     // Test data classes
     data class EnkelPerson(
         @Maskert
         val navn: String,
-        val alder: Int
+        val alder: Int,
     )
 
     data class PersonMedCustomMaskering(
         @Maskert(maskertVerdi = "SKJULT")
         val navn: String,
-        val epost: String
+        val epost: String,
     )
 
     data class PersonUtenMaskering(
         val navn: String,
-        val adresse: String
+        val adresse: String,
     )
 
     data class NestedPerson(
         @Maskert
         val navn: String,
-        val kontaktinfo: Kontaktinfo
+        val kontaktinfo: Kontaktinfo,
     )
 
     data class Kontaktinfo(
         @Maskert
         val telefon: String,
-        val epost: String
+        val epost: String,
     )
 
     data class PersonMedListe(
         @Maskert
         val navn: String,
-        val adresser: List<Adresse>
+        val adresser: List<Adresse>,
     )
 
     data class Adresse(
         @Maskert
         val gate: String,
-        val postnummer: String
+        val postnummer: String,
     )
 
     enum class Status {
-        AKTIV, INAKTIV
+        AKTIV,
+        INAKTIV,
     }
 
     data class PersonMedEnum(
         @Maskert
         val navn: String,
-        val status: Status
+        val status: Status,
     )
 
     @Test
@@ -90,10 +90,11 @@ class MaskeringUtilTest {
 
     @Test
     fun `skal maskere felt i nestede objekter`() {
-        val person = NestedPerson(
-            navn = "Line Berg",
-            kontaktinfo = Kontaktinfo(telefon = "12345678", epost = "line@example.com")
-        )
+        val person =
+            NestedPerson(
+                navn = "Line Berg",
+                kontaktinfo = Kontaktinfo(telefon = "12345678", epost = "line@example.com"),
+            )
 
         val maskertPerson = maskerObjekt(person)
 
@@ -104,13 +105,15 @@ class MaskeringUtilTest {
 
     @Test
     fun `skal maskere felt i lister med objekter`() {
-        val person = PersonMedListe(
-            navn = "Erik Johansen",
-            adresser = listOf(
-                Adresse(gate = "Bakkeveien 2", postnummer = "0123"),
-                Adresse(gate = "Fjellgata 5", postnummer = "0456")
+        val person =
+            PersonMedListe(
+                navn = "Erik Johansen",
+                adresser =
+                    listOf(
+                        Adresse(gate = "Bakkeveien 2", postnummer = "0123"),
+                        Adresse(gate = "Fjellgata 5", postnummer = "0456"),
+                    ),
             )
-        )
 
         val maskertPerson = maskerObjekt(person)
 
@@ -155,10 +158,11 @@ class MaskeringUtilTest {
 
     @Test
     fun `skal håndtere map med objekter`() {
-        val map = mapOf(
-            "person1" to EnkelPerson(navn = "Test1", alder = 25),
-            "person2" to EnkelPerson(navn = "Test2", alder = 30)
-        )
+        val map =
+            mapOf(
+                "person1" to EnkelPerson(navn = "Test1", alder = 25),
+                "person2" to EnkelPerson(navn = "Test2", alder = 30),
+            )
 
         val maskertMap = maskerObjekt(map)
 

@@ -27,8 +27,9 @@ import java.time.Duration
 import java.util.UUID
 
 @Configuration
-class WebClientConfig(private val observationRegistry: ObservationRegistry) {
-
+class WebClientConfig(
+    private val observationRegistry: ObservationRegistry,
+) {
     @Bean
     fun webClientBuilder(strategies: ExchangeStrategies): WebClient.Builder =
         WebClient.builder().exchangeStrategies(strategies)
@@ -39,7 +40,7 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         val responseTimeout: Duration = Duration.ofSeconds(30),
         val readTimeout: Duration = Duration.ofSeconds(50),
         val resolver: AddressResolverGroup<InetSocketAddress>? = null,
-        val uriTagger: (String) -> String = { it }
+        val uriTagger: (String) -> String = { it },
     )
 
     @Value("\${NAIS_TOKEN_EXCHANGE_ENDPOINT}")
@@ -81,7 +82,6 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Value("\${SIGRUN_URL}")
     lateinit var sigrunURL: String
 
-
     /**
      * HttpClient for tokenutveksling med pool.
      */
@@ -92,14 +92,13 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Bean
     fun tokenWebClient(
         builder: WebClient.Builder,
-        @Qualifier("tokenHttpClient") tokenHttpClient: HttpClient
+        @Qualifier("tokenHttpClient") tokenHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(tokenExchangeUrl)
             .defaultHeader("Content-Type", "application/json")
             .clientConnector(ReactorClientHttpConnector(tokenHttpClient))
             .build()
-
 
     /**
      * HttpClient for Azure token-endepunktet med pool.
@@ -108,18 +107,16 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("azureTokenHttpClient")
     fun azureTokenHttpClient(): HttpClient = httpClientFor("azure-token")
 
-
     @Bean
     fun azuretokenWebClient(
         builder: WebClient.Builder,
-        @Qualifier("azureTokenHttpClient") azureTokenHttpClient: HttpClient
+        @Qualifier("azureTokenHttpClient") azureTokenHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(azureTokenEndpointUrl)
             .defaultHeader("Content-Type", "application/json")
             .clientConnector(ReactorClientHttpConnector(azureTokenHttpClient))
             .build()
-
 
     /**
      * HttpClient for utbetaling med pool og tidsavbrudd.
@@ -128,27 +125,23 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("utbetalingHttpClient")
     fun utbetalingHttpClient(): HttpClient = httpClientFor("utbetaling")
 
-
     @Bean
     fun utbetalingWebClient(
         builder: WebClient.Builder,
         @Qualifier("utbetalingObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("utbetalingHttpClient") utbetalingHttpClient: HttpClient
-    ): WebClient {
-
-        return builder
+        @Qualifier("utbetalingHttpClient") utbetalingHttpClient: HttpClient,
+    ): WebClient =
+        builder
             .baseUrl("$utbetalingURL/utbetaldata/api/v2/hent-utbetalingsinformasjon/intern")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(utbetalingHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(utbetalingHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
-    }
 
     /**
      * HttpClient for inntektsklienten med navngitt pool og keep-alive.
@@ -163,19 +156,17 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         @Qualifier("inntektObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("inntektHttpClient") inntektHttpClient: HttpClient
+        @Qualifier("inntektHttpClient") inntektHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(inntektURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(inntektHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(inntektHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
-
 
     /**
      * HttpClient for tilgangsmaskin med pool.
@@ -184,24 +175,21 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("tilgangHttpClient")
     fun tilgangHttpClient(): HttpClient = httpClientFor("tilgang")
 
-
     @Bean
     fun tilgangWebClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("tilgangHttpClient") tilgangHttpClient: HttpClient
+        @Qualifier("tilgangHttpClient") tilgangHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(tilgangmaskinURL)
-            //.defaultHeader("Content-Type", "application/json")
+            // .defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(tilgangHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(tilgangHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
-
 
     /**
      * HttpClient for Aareg-klienten med pool.
@@ -210,23 +198,21 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("aaregHttpClient")
     fun aaregHttpClient(): HttpClient = httpClientFor("aareg")
 
-
     @Bean
     fun aaregWebClient(
         builder: WebClient.Builder,
         @Qualifier("aaregObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("aaregHttpClient") aaregHttpClient: HttpClient
+        @Qualifier("aaregHttpClient") aaregHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(aaregURL)
-            //.defaultHeader("Content-Type", "application/json")
+            // .defaultHeader("Content-Type", "application/json")
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(aaregHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(aaregHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -246,25 +232,22 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("sigrunHttpClient")
     fun sigrunHttpClient(): HttpClient = httpClientFor("sigrun")
 
-
     @Bean
     @Qualifier("aapHttpClient")
     fun aapHttpClient(): HttpClient = httpClientFor("aap")
-
 
     @Bean
     fun eregWebClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("eregHttpClient") eregHttpClient: HttpClient
+        @Qualifier("eregHttpClient") eregHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(eregURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(eregHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(eregHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -272,15 +255,14 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun dpDatadelingClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("dpDatadelingHttpClient") dpDatadelingHttpClient: HttpClient
+        @Qualifier("dpDatadelingHttpClient") dpDatadelingHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(dpDatadelingURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(dpDatadelingHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(dpDatadelingHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -288,15 +270,14 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun sigrunClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("sigrunHttpClient") sigrunHttpClient: HttpClient
+        @Qualifier("sigrunHttpClient") sigrunHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(sigrunURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(sigrunHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(sigrunHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -304,18 +285,16 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun aapWebClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("aapHttpClient") aapHttpClient: HttpClient
+        @Qualifier("aapHttpClient") aapHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(aapURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(aapHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(aapHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
-
 
     /**
      * HttpClient for PDL-klienten med pool og resolver for DNS.
@@ -331,14 +310,14 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         @Qualifier("pdlObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("pdlHttpClient") pdlHttpClient: HttpClient
+        @Qualifier("pdlHttpClient") pdlHttpClient: HttpClient,
     ): WebClient =
-        base.clone()
+        base
+            .clone()
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(pdlHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(pdlHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -347,11 +326,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("pdlGraphQLClient")
     fun pdlGraphQLClient(
         @Qualifier("pdlWebClient") webClient: WebClient,
-        @Value("\${PDL_URL}") pdlUrl: String
+        @Value("\${PDL_URL}") pdlUrl: String,
     ): GraphQLWebClient =
         GraphQLWebClient(
             url = pdlUrl,
-            builder = webClient.mutate() // arver connector + observation
+            builder = webClient.mutate(), // arver connector + observation
         )
 
     /**
@@ -368,14 +347,14 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
         @Qualifier("nomObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("nomHttpClient") nomHttpClient: HttpClient
+        @Qualifier("nomHttpClient") nomHttpClient: HttpClient,
     ): WebClient =
-        base.clone()
+        base
+            .clone()
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(nomHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(nomHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -384,11 +363,11 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("nomGraphQLClient")
     fun nomGraphQLClient(
         @Qualifier("nomWebClient") webClient: WebClient,
-        @Value("\${NOM_URL}") nomUrl: String
+        @Value("\${NOM_URL}") nomUrl: String,
     ): GraphQLWebClient =
         GraphQLWebClient(
             url = nomUrl,
-            builder = webClient.mutate() // arver connector + observation
+            builder = webClient.mutate(), // arver connector + observation
         )
 
     /**
@@ -398,22 +377,20 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("kodeverkHttpClient")
     fun kodeverkHttpClient(): HttpClient = httpClientFor("kodeverk")
 
-
     @Bean
     fun kodeverkWebClient(
         builder: WebClient.Builder,
         @Qualifier("kodeverkObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("kodeverkHttpClient") kodeverkHttpClient: HttpClient
+        @Qualifier("kodeverkHttpClient") kodeverkHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(kodeverkURL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(kodeverkHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(kodeverkHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -425,22 +402,20 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("norg2HttpClient")
     fun norg2HttpClient(): HttpClient = httpClientFor("norg2")
 
-
     @Bean
     fun norg2WebClient(
         builder: WebClient.Builder,
         @Qualifier("norg2Observation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("norg2HttpClient") norg2HttpClient: HttpClient
+        @Qualifier("norg2HttpClient") norg2HttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(norg2URL)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(norg2HttpClient))
+            }.clientConnector(ReactorClientHttpConnector(norg2HttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -452,22 +427,20 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     @Qualifier("modiaContextHolderHttpClient")
     fun modiaContextHolderHttpClient(): HttpClient = httpClientFor("modia-context-holder")
 
-
     @Bean
     fun modiaContextHolderWebClient(
         builder: WebClient.Builder,
         @Qualifier("modiaContextHolderObservation")
         convention: ClientRequestObservationConvention,
         navCallIdHeaderFilter: ExchangeFilterFunction,
-        @Qualifier("modiaContextHolderHttpClient") modiaContextHolderHttpClient: HttpClient
+        @Qualifier("modiaContextHolderHttpClient") modiaContextHolderHttpClient: HttpClient,
     ): WebClient =
         builder
             .baseUrl(modiaContextHolderUrl)
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
-            }
-            .clientConnector(ReactorClientHttpConnector(modiaContextHolderHttpClient))
+            }.clientConnector(ReactorClientHttpConnector(modiaContextHolderHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
             .build()
@@ -476,78 +449,89 @@ class WebClientConfig(private val observationRegistry: ObservationRegistry) {
     fun navCallIdHeaderFilter(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { req ->
             Mono.deferContextual { ctx ->
-                val callId: String = ctx.getOrDefault<String>(CallId.CTX_KEY, null)
-                    ?: (MDC.get(CallId.HEADER) ?: UUID.randomUUID().toString())
-                val mutated = ClientRequest.from(req)
-                    .header(CallId.HEADER, callId)
-                    .build()
+                val callId: String =
+                    ctx.getOrDefault<String>(CallId.CTX_KEY, null)
+                        ?: (MDC.get(CallId.HEADER) ?: UUID.randomUUID().toString())
+                val mutated =
+                    ClientRequest
+                        .from(req)
+                        .header(CallId.HEADER, callId)
+                        .build()
                 Mono.just(mutated)
             }
         }
 
-    private val httpClientKonfigurasjoner = mapOf(
-        "utbetaling" to HttpClientKonfig(
-            poolNavn = "utbetaling-pool",
-            readTimeout = Duration.ofSeconds(10),
-            responseTimeout = Duration.ofSeconds(10),
-            ),
-        "inntekt" to HttpClientKonfig(
-            poolNavn = "inntekt-pool",
-            readTimeout = Duration.ofSeconds(10),
-            responseTimeout = Duration.ofSeconds(10),
-        ),
-        "aareg" to HttpClientKonfig(poolNavn = "aareg-pool"),
-        "ereg" to HttpClientKonfig(poolNavn = "ereg-pool"),
-        "pdl" to HttpClientKonfig(
-            poolNavn = "pdl-pool",
-            resolver = DefaultAddressResolverGroup.INSTANCE,
-            uriTagger = { "/graphql" }
-        ),
-        "nom" to HttpClientKonfig(
-            poolNavn = "nom-pool",
-            resolver = DefaultAddressResolverGroup.INSTANCE,
-            uriTagger = { "/graphql" }
-        ),
-        "norg2" to HttpClientKonfig(poolNavn = "norg2-pool"),
-        "tilgang" to HttpClientKonfig(poolNavn = "tilgang-pool"),
-        "kodeverk" to HttpClientKonfig(poolNavn = "kodeverk-pool"),
-        "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
-        "token" to HttpClientKonfig(poolNavn = "token-pool"),
-        "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
-        "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
-        "aap" to HttpClientKonfig(poolNavn = "aap-pool"),
-        "sigrun" to HttpClientKonfig(poolNavn = "sigrun-pool")
-
-    )
+    private val httpClientKonfigurasjoner =
+        mapOf(
+            "utbetaling" to
+                HttpClientKonfig(
+                    poolNavn = "utbetaling-pool",
+                    readTimeout = Duration.ofSeconds(10),
+                    responseTimeout = Duration.ofSeconds(10),
+                ),
+            "inntekt" to
+                HttpClientKonfig(
+                    poolNavn = "inntekt-pool",
+                    readTimeout = Duration.ofSeconds(10),
+                    responseTimeout = Duration.ofSeconds(10),
+                ),
+            "aareg" to HttpClientKonfig(poolNavn = "aareg-pool"),
+            "ereg" to HttpClientKonfig(poolNavn = "ereg-pool"),
+            "pdl" to
+                HttpClientKonfig(
+                    poolNavn = "pdl-pool",
+                    resolver = DefaultAddressResolverGroup.INSTANCE,
+                    uriTagger = { "/graphql" },
+                ),
+            "nom" to
+                HttpClientKonfig(
+                    poolNavn = "nom-pool",
+                    resolver = DefaultAddressResolverGroup.INSTANCE,
+                    uriTagger = { "/graphql" },
+                ),
+            "norg2" to HttpClientKonfig(poolNavn = "norg2-pool"),
+            "tilgang" to HttpClientKonfig(poolNavn = "tilgang-pool"),
+            "kodeverk" to HttpClientKonfig(poolNavn = "kodeverk-pool"),
+            "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
+            "token" to HttpClientKonfig(poolNavn = "token-pool"),
+            "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
+            "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
+            "aap" to HttpClientKonfig(poolNavn = "aap-pool"),
+            "sigrun" to HttpClientKonfig(poolNavn = "sigrun-pool"),
+        )
 
     private fun httpClientFor(navn: String): HttpClient = httpClientMedPool(httpClientKonfigurasjoner.getValue(navn))
 
     private fun httpClientMedPool(konfig: HttpClientKonfig): HttpClient {
-        val connectionProvider = ConnectionProvider.builder(konfig.poolNavn)
-            .maxConnections(30)
-            // Brannmuren mellom FSS og GCP dropper idle connections etter 60 minutter
-            .maxIdleTime(Duration.ofMinutes(55))
-            .maxLifeTime(Duration.ofMinutes(59))
-            .evictInBackground(Duration.ofMinutes(5))
-            .build()
+        val connectionProvider =
+            ConnectionProvider
+                .builder(konfig.poolNavn)
+                .maxConnections(30)
+                // Brannmuren mellom FSS og GCP dropper idle connections etter 60 minutter
+                .maxIdleTime(Duration.ofMinutes(55))
+                .maxLifeTime(Duration.ofMinutes(59))
+                .evictInBackground(Duration.ofMinutes(5))
+                .build()
 
-        val httpClient = HttpClient.create(connectionProvider)
-            .keepAlive(true)
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, konfig.connectTimeout.toMillis().toInt())
-            .responseTimeout(konfig.responseTimeout)
-            .doOnConnected { conn ->
-                conn.addHandlerLast(ReadTimeoutHandler(konfig.readTimeout.toSeconds().toInt()))
-            }
-            .metrics(true, java.util.function.Function<String, String> { uri -> konfig.uriTagger(uri) })
+        val httpClient =
+            HttpClient
+                .create(connectionProvider)
+                .keepAlive(true)
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, konfig.connectTimeout.toMillis().toInt())
+                .responseTimeout(konfig.responseTimeout)
+                .doOnConnected { conn ->
+                    conn.addHandlerLast(ReadTimeoutHandler(konfig.readTimeout.toSeconds().toInt()))
+                }.metrics(true, java.util.function.Function<String, String> { uri -> konfig.uriTagger(uri) })
 
         return konfig.resolver?.let { httpClient.resolver(it) } ?: httpClient
     }
 
     @Bean
     fun exchangeStrategies(
-        @Value("\${spring.http.codecs.max-in-memory-size:256KB}") max: DataSize
+        @Value("\${spring.http.codecs.max-in-memory-size:256KB}") max: DataSize,
     ): ExchangeStrategies =
-        ExchangeStrategies.builder()
+        ExchangeStrategies
+            .builder()
             .codecs { it.defaultCodecs().maxInMemorySize(max.toBytes().toInt()) }
             .build()
 }

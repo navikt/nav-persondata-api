@@ -1,6 +1,5 @@
 package no.nav.persondataapi.integrasjon.pdl.client
 
-
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
 import io.netty.channel.ChannelOption
@@ -29,53 +28,55 @@ import java.time.Duration
 class PdlClient(
     private val tokenService: TokenService,
     private val metrics: PdlMetrics,
-
     @param:Value("\${PDL_URL}")
     private val pdlUrl: String,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-
-    fun createTimeoutHttpClient(): HttpClient {
-        return HttpClient.create()
+    fun createTimeoutHttpClient(): HttpClient =
+        HttpClient
+            .create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
             .responseTimeout(Duration.ofSeconds(5))
             .doOnConnected { conn ->
                 conn.addHandlerLast(ReadTimeoutHandler(5))
                 conn.addHandlerLast(WriteTimeoutHandler(5))
             }
-    }
 
     @Cacheable(
         value = ["pdl-person"],
         key = "#personIdent",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
         val httpClient = createTimeoutHttpClient()
 
-        val client = GraphQLWebClient(
-            url = pdlUrl,
-            builder = WebClient.builder()
-                .clientConnector(ReactorClientHttpConnector(httpClient))
-        )
-        val query = HentPerson(
-            HentPerson.Variables(
-                ident = personIdent.value,
-                historikk = false,
+        val client =
+            GraphQLWebClient(
+                url = pdlUrl,
+                builder =
+                    WebClient
+                        .builder()
+                        .clientConnector(ReactorClientHttpConnector(httpClient)),
             )
-        )
+        val query =
+            HentPerson(
+                HentPerson.Variables(
+                    ident = personIdent.value,
+                    historikk = false,
+                ),
+            )
         try {
-
-            val response = coroutineRetry(kilde = "PDL-HentPerson") {
-                client.execute(query) {
-                    header("Authorization", "Bearer $token")
-                    header(Behandlingsnummer, "B634")
-                    header(Tema, "KTR")
+            val response =
+                coroutineRetry(kilde = "PDL-HentPerson") {
+                    client.execute(query) {
+                        header("Authorization", "Bearer $token")
+                        header(BEHANDLINGSNUMMER, "B634")
+                        header(TEMA, "KTR")
+                    }
                 }
-            }
 
             val errors = response.errors.orEmpty()
             if (errors.isNotEmpty()) {
@@ -83,7 +84,7 @@ class PdlClient(
                 return PersonDataResultat(
                     data = null,
                     statusCode = status,
-                    errorMessage = message
+                    errorMessage = message,
                 )
             }
 
@@ -100,31 +101,36 @@ class PdlClient(
     @Cacheable(
         value = ["pdl-geografisktilknytning"],
         key = "#personIdent",
-        unless = "#result.statusCode != 200 && #result.statusCode != 404"
+        unless = "#result.statusCode != 200 && #result.statusCode != 404",
     )
     suspend fun hentGeografiskTilknytning(personIdent: PersonIdent): GeografiskTilknytningResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
         val httpClient = createTimeoutHttpClient()
 
-        val client = GraphQLWebClient(
-            url = pdlUrl,
-            builder = WebClient.builder()
-                .clientConnector(ReactorClientHttpConnector(httpClient))
-        )
-        val query = HentGeografiskTilknytning(
-            HentGeografiskTilknytning.Variables(
-                ident = personIdent.value,
+        val client =
+            GraphQLWebClient(
+                url = pdlUrl,
+                builder =
+                    WebClient
+                        .builder()
+                        .clientConnector(ReactorClientHttpConnector(httpClient)),
             )
-        )
+        val query =
+            HentGeografiskTilknytning(
+                HentGeografiskTilknytning.Variables(
+                    ident = personIdent.value,
+                ),
+            )
         try {
-            val response = coroutineRetry(kilde = "PDL-Geografisktilknytning") {
-                client.execute(query) {
-                    header("Authorization", "Bearer $token")
-                    header(Behandlingsnummer, "B634")
-                    header(Tema, "KTR")
+            val response =
+                coroutineRetry(kilde = "PDL-Geografisktilknytning") {
+                    client.execute(query) {
+                        header("Authorization", "Bearer $token")
+                        header(BEHANDLINGSNUMMER, "B634")
+                        header(TEMA, "KTR")
+                    }
                 }
-            }
 
             val errors = response.errors.orEmpty()
             if (errors.isNotEmpty()) {
@@ -132,7 +138,7 @@ class PdlClient(
                 return GeografiskTilknytningResultat(
                     data = null,
                     statusCode = status,
-                    errorMessage = message
+                    errorMessage = message,
                 )
             }
 
@@ -144,36 +150,41 @@ class PdlClient(
         } catch (ex: Exception) {
             return handlePdlExceptionGeo(ex, "HentGeografiskTilknytning")
         }
-
     }
 
     companion object CustomHeaders {
-        const val Behandlingsnummer = "behandlingsnummer"
-        const val Tema = "TEMA"
+        const val BEHANDLINGSNUMMER = "behandlingsnummer"
+        const val TEMA = "TEMA"
     }
 
     internal fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
         val firstError = errors.first()
         val code = firstError.extensions?.get("code") as? String
 
-        val status = when (code) {
-            "not_found" -> {
-                log.info("Feil i kall mot PDL : ${firstError.message}")
-                404
+        val status =
+            when (code) {
+                "not_found" -> {
+                    log.info("Feil i kall mot PDL : ${firstError.message}")
+                    404
+                }
+
+                else -> {
+                    log.error("Feil i kall mot PDL : ${firstError.message}")
+                    500
+                }
             }
-            else -> {
-                log.error("Feil i kall mot PDL : ${firstError.message}")
-                500
-            }
-        }
         return status to firstError.message
     }
 
-    private fun handlePdlException(e: Exception, opperasjon: String): PersonDataResultat {
+    private fun handlePdlException(
+        e: Exception,
+        opperasjon: String,
+    ): PersonDataResultat {
         when (e) {
             is java.util.concurrent.TimeoutException,
             is io.netty.handler.timeout.ReadTimeoutException,
-            is io.netty.handler.timeout.WriteTimeoutException -> {
+            is io.netty.handler.timeout.WriteTimeoutException,
+            -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
                 return PersonDataResultat(null, 504, "Timeout mot PDL")
@@ -187,11 +198,15 @@ class PdlClient(
         }
     }
 
-    private fun handlePdlExceptionGeo(e: Exception, opperasjon: String): GeografiskTilknytningResultat {
+    private fun handlePdlExceptionGeo(
+        e: Exception,
+        opperasjon: String,
+    ): GeografiskTilknytningResultat {
         when (e) {
             is java.util.concurrent.TimeoutException,
             is io.netty.handler.timeout.ReadTimeoutException,
-            is io.netty.handler.timeout.WriteTimeoutException -> {
+            is io.netty.handler.timeout.WriteTimeoutException,
+            -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
                 return GeografiskTilknytningResultat(null, 504, "Timeout mot PDL")
@@ -208,12 +223,12 @@ class PdlClient(
 
 data class PersonDataResultat(
     val data: Person?,
-    val statusCode: Int,               // f.eks. 200, 401, 500
-    val errorMessage: String? = null
+    val statusCode: Int, // f.eks. 200, 401, 500
+    val errorMessage: String? = null,
 )
 
 data class GeografiskTilknytningResultat(
     val data: GeografiskTilknytning?,
-    val statusCode: Int,               // f.eks. 200, 401, 500
-    val errorMessage: String? = null
+    val statusCode: Int, // f.eks. 200, 401, 500
+    val errorMessage: String? = null,
 )

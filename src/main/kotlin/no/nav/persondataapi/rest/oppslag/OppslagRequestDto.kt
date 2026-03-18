@@ -8,7 +8,7 @@ data class OppslagRequestDto(
     @field:Schema(
         description = "Fødselsnummer eller D-nummer for personen det skal gjøres oppslag på",
         example = "12345678901",
-        required = true
+        required = true,
     )
-    val ident: PersonIdent
+    val ident: PersonIdent,
 )

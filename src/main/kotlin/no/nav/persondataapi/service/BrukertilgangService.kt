@@ -9,9 +9,8 @@ class BrukertilgangService(
     val tokenValidationContextHolder: TokenValidationContextHolder,
     val tilgangService: TilgangService,
 ) {
-    fun harSaksbehandlerTilgangTilPersonIdent(personIdent: PersonIdent): Boolean {
-        return hentTilgangsvurdering(personIdent).status == 200
-    }
+    fun harSaksbehandlerTilgangTilPersonIdent(personIdent: PersonIdent): Boolean =
+        hentTilgangsvurdering(personIdent).status == 200
 
     fun hentTilgangsvurdering(personIdent: PersonIdent): BrukertilgangVurdering {
         val context = tokenValidationContextHolder.getTokenValidationContext()
@@ -23,14 +22,19 @@ class BrukertilgangService(
         val beregnetStatus = tilgangService.beregnStatus(resultat)
         val harUtvidetTilgang = tilgangService.harUtvidetTilgang(groups)
         // Geografisk tilgang skal overstyres, ellers hør på tilgangsmaskinen
-        val tilgang = if (resultat.data?.title == "AVVIST_GEOGRAFISK") "OK"
-        else if (resultat.data?.title == null) "OK"
-        else resultat.data.title
+        val tilgang =
+            if (resultat.data?.title == "AVVIST_GEOGRAFISK") {
+                "OK"
+            } else if (resultat.data?.title == null) {
+                "OK"
+            } else {
+                resultat.data.title
+            }
 
         return BrukertilgangVurdering(
             status = if (harUtvidetTilgang) 200 else beregnetStatus,
             tilgang = tilgang,
-            harUtvidetTilgang = harUtvidetTilgang
+            harUtvidetTilgang = harUtvidetTilgang,
         )
     }
 }

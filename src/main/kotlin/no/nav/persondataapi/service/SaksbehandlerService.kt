@@ -11,7 +11,6 @@ class SaksbehandlerService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val nomClient: NomClient,
 ) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**
@@ -25,9 +24,11 @@ class SaksbehandlerService(
         val resultat = nomClient.hentSaksbehandlerTilhørighet(navIdent)
 
         if (resultat.errorMessage == null && resultat.data != null) {
-            logger.info("Saksbehandler $navIdent i ${resultat.data.organisasjoner.joinToString(", ")} lastet applikasjonen")
+            logger.info(
+                "Saksbehandler $navIdent i ${resultat.data.organisasjoner.joinToString(", ")} lastet applikasjonen",
+            )
         } else {
-            logger.warn("Feil ved henting av organisasjonstilhørighet for ${navIdent}: ${resultat.errorMessage}")
+            logger.warn("Feil ved henting av organisasjonstilhørighet for $navIdent: ${resultat.errorMessage}")
         }
         return resultat
     }
