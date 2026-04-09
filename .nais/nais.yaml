@@ -67,6 +67,9 @@ spec:
         - application: azure-token-generator
           namespace: nais
           cluster: {{GCP_CLUSTER}}
+        - application: watson-admin-api
+          namespace: holmes
+          cluster: {{GCP_CLUSTER}}
     outbound:
       rules:
         - application: sokos-utbetaldata
