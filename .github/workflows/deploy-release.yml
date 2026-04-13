@@ -57,7 +57,7 @@ jobs:
           VARS: .nais/prod.json
           IMAGE: ${{ needs.build_and_push.outputs.image }}
           TELEMETRY: ${{ needs.build_and_push.outputs.telemetry }}
-      - uses: actions/github-script@v8
+      - uses: actions/github-script@v9
         name: Post Slack-melding om prodsetting
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
