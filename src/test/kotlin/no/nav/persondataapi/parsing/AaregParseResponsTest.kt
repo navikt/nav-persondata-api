@@ -63,8 +63,8 @@ class AaregParseResponsTest {
 
             val json = JsonUtils.toJson(data).toString()
 
-            assertTrue(Regex(""""fom":"\d{4}-\d{2}"""").containsMatchIn(json))
-            assertTrue(Regex(""""tom":"\d{4}-\d{2}"""").containsMatchIn(json))
+            assertTrue(Regex(""""fom":"\d{4}-\d{2}-\d{2}"""").containsMatchIn(json))
+            assertTrue(Regex(""""tom":"\d{4}-\d{2}-\d{2}"""").containsMatchIn(json))
         }
 }
 

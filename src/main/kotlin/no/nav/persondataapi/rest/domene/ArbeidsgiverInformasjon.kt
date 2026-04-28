@@ -1,7 +1,7 @@
 package no.nav.persondataapi.rest.domene
 
 import no.nav.persondataapi.rest.oppslag.Maskert
-import java.time.YearMonth
+import java.time.LocalDate
 
 data class ArbeidsgiverInformasjon(
     val løpendeArbeidsforhold: List<ArbeidsgiverData>,
@@ -25,7 +25,7 @@ data class ArbeidsgiverInformasjon(
     )
 
     data class ÅpenPeriode(
-        val fom: YearMonth,
-        var tom: YearMonth?,
+        val fom: LocalDate,
+        var tom: LocalDate?,
     )
 }

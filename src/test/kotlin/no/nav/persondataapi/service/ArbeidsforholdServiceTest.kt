@@ -448,7 +448,7 @@ class ArbeidsforholdServiceTest {
         }
 
     @Test
-    fun `skal bruke rapporteringsmaaneder til naar den finnes`() =
+    fun `skal bruke sluttdato fra ansettelsesperiode selv om rapporteringsmaaneder til finnes`() =
         runBlocking {
             val brukertilgangService = mockk<BrukertilgangService>()
             val aaregClient = mockk<AaregClient>()
@@ -477,7 +477,7 @@ class ArbeidsforholdServiceTest {
             val data = (resultat as ArbeidsforholdResultat.Success).data
             assertEquals(1, data.historikk.size)
             assertEquals(
-                YearMonth.of(2024, 3),
+                LocalDate.of(2024, 4, 30),
                 data.historikk[0]
                     .ansettelsesDetaljer[0]
                     .periode.tom,
@@ -515,7 +515,7 @@ class ArbeidsforholdServiceTest {
             assertEquals(1, data.løpendeArbeidsforhold.size)
             assertTrue(data.historikk.isEmpty())
             assertEquals(
-                YearMonth.of(2024, 3),
+                null,
                 data.løpendeArbeidsforhold[0]
                     .ansettelsesDetaljer[0]
                     .periode.tom,
@@ -523,7 +523,7 @@ class ArbeidsforholdServiceTest {
         }
 
     @Test
-    fun `skal bruke sluttdato som fallback naar rapporteringsmaaneder til mangler`() =
+    fun `skal bruke startdato fra ansettelsesperiode selv om rapporteringsmaaneder bare har månedsnivå`() =
         runBlocking {
             val brukertilgangService = mockk<BrukertilgangService>()
             val aaregClient = mockk<AaregClient>()
@@ -532,6 +532,7 @@ class ArbeidsforholdServiceTest {
             val arbeidsforhold =
                 lagArbeidsforhold(
                     orgnummer = "999888777",
+                    startdato = LocalDate.of(2024, 1, 15),
                     sluttdato = LocalDate.of(2024, 4, 30),
                     rapporteringsmaanederTil = null,
                 )
@@ -552,10 +553,10 @@ class ArbeidsforholdServiceTest {
             val data = (resultat as ArbeidsforholdResultat.Success).data
             assertEquals(1, data.historikk.size)
             assertEquals(
-                YearMonth.of(2024, 4),
+                LocalDate.of(2024, 1, 15),
                 data.historikk[0]
                     .ansettelsesDetaljer[0]
-                    .periode.tom,
+                    .periode.fom,
             )
         }
 
@@ -603,6 +604,7 @@ class ArbeidsforholdServiceTest {
 // Hjelpefunksjoner for å lage testdata
 private fun lagArbeidsforhold(
     orgnummer: String,
+    startdato: LocalDate = LocalDate.of(2020, 1, 1),
     sluttdato: LocalDate?,
     ansettelsesType: String = "Ordinær",
     stillingsprosent: Double? = 100.0,
@@ -650,7 +652,7 @@ private fun lagArbeidsforhold(
             ),
         ansettelsesperiode =
             Ansettelsesperiode(
-                startdato = LocalDate.of(2020, 1, 1),
+                startdato = startdato,
                 sluttdato = sluttdato,
                 sluttaarsak = null,
                 varsling = null,
