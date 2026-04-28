@@ -107,6 +107,11 @@ class ArbeidsforholdService(
         return ArbeidsgiverInformasjon.ArbeidsgiverData(
             arbeidsgiver = eregDataRespons.orgNummerTilOrgNavn(orgnummer),
             organisasjonsnummer = orgnummer,
+            ansettelsesperiode =
+                ArbeidsgiverInformasjon.DatoPeriode(
+                    fom = periodeForArbeidsforhold.startdato,
+                    tom = periodeForArbeidsforhold.sluttdato,
+                ),
             id = saltedOrgNummer,
             ansettelsesDetaljer =
                 arbeidsforhold.ansettelsesdetaljer.map { ansettelsesdetaljer ->
@@ -116,8 +121,8 @@ class ArbeidsforholdService(
                         antallTimerPrUke = ansettelsesdetaljer.antallTimerPrUke,
                         periode =
                             ArbeidsgiverInformasjon.ÅpenPeriode(
-                                fom = periodeForArbeidsforhold.startdato,
-                                tom = periodeForArbeidsforhold.sluttdato,
+                                fom = ansettelsesdetaljer.rapporteringsmaaneder.fra,
+                                tom = ansettelsesdetaljer.rapporteringsmaaneder.til,
                             ),
                         yrke = ansettelsesdetaljer.yrke.beskrivelse,
                     )

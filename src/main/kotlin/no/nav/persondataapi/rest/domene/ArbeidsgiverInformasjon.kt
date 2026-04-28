@@ -2,6 +2,7 @@ package no.nav.persondataapi.rest.domene
 
 import no.nav.persondataapi.rest.oppslag.Maskert
 import java.time.LocalDate
+import java.time.YearMonth
 
 data class ArbeidsgiverInformasjon(
     val løpendeArbeidsforhold: List<ArbeidsgiverData>,
@@ -12,6 +13,7 @@ data class ArbeidsgiverInformasjon(
         val arbeidsgiver: String,
         @Maskert
         val organisasjonsnummer: String,
+        val ansettelsesperiode: DatoPeriode,
         val ansettelsesDetaljer: List<AnsettelsesDetalj>,
         val id: String,
     )
@@ -24,8 +26,13 @@ data class ArbeidsgiverInformasjon(
         val yrke: String? = null,
     )
 
-    data class ÅpenPeriode(
+    data class DatoPeriode(
         val fom: LocalDate,
         var tom: LocalDate?,
+    )
+
+    data class ÅpenPeriode(
+        val fom: YearMonth,
+        var tom: YearMonth?,
     )
 }

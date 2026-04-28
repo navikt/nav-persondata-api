@@ -478,6 +478,10 @@ class ArbeidsforholdServiceTest {
             assertEquals(1, data.historikk.size)
             assertEquals(
                 LocalDate.of(2024, 4, 30),
+                data.historikk[0].ansettelsesperiode.tom,
+            )
+            assertEquals(
+                YearMonth.of(2024, 3),
                 data.historikk[0]
                     .ansettelsesDetaljer[0]
                     .periode.tom,
@@ -516,6 +520,10 @@ class ArbeidsforholdServiceTest {
             assertTrue(data.historikk.isEmpty())
             assertEquals(
                 null,
+                data.løpendeArbeidsforhold[0].ansettelsesperiode.tom,
+            )
+            assertEquals(
+                YearMonth.of(2024, 3),
                 data.løpendeArbeidsforhold[0]
                     .ansettelsesDetaljer[0]
                     .periode.tom,
@@ -554,9 +562,65 @@ class ArbeidsforholdServiceTest {
             assertEquals(1, data.historikk.size)
             assertEquals(
                 LocalDate.of(2024, 1, 15),
+                data.historikk[0].ansettelsesperiode.fom,
+            )
+            assertEquals(
+                YearMonth.of(2020, 1),
                 data.historikk[0]
                     .ansettelsesDetaljer[0]
                     .periode.fom,
+            )
+        }
+
+    @Test
+    fun `skal eksponere både ansettelsesperiode og rapporteringsperiode`() =
+        runBlocking {
+            val brukertilgangService = mockk<BrukertilgangService>()
+            val aaregClient = mockk<AaregClient>()
+            val eregClient = mockk<EregClient>()
+
+            val arbeidsforhold =
+                lagArbeidsforhold(
+                    orgnummer = "999888777",
+                    startdato = LocalDate.of(2024, 1, 15),
+                    sluttdato = LocalDate.of(2024, 4, 30),
+                    rapporteringsmaanederTil = YearMonth.of(2024, 3),
+                )
+
+            every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+            every { aaregClient.hentArbeidsforhold(any()) } returns
+                AaregDataResultat(
+                    data = listOf(arbeidsforhold),
+                    statusCode = 200,
+                    errorMessage = null,
+                )
+            every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+            val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+            val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is ArbeidsforholdResultat.Success)
+            val data = (resultat as ArbeidsforholdResultat.Success).data
+            assertEquals(1, data.historikk.size)
+            assertEquals(
+                LocalDate.of(2024, 1, 15),
+                data.historikk[0].ansettelsesperiode.fom,
+            )
+            assertEquals(
+                LocalDate.of(2024, 4, 30),
+                data.historikk[0].ansettelsesperiode.tom,
+            )
+            assertEquals(
+                YearMonth.of(2020, 1),
+                data.historikk[0]
+                    .ansettelsesDetaljer[0]
+                    .periode.fom,
+            )
+            assertEquals(
+                YearMonth.of(2024, 3),
+                data.historikk[0]
+                    .ansettelsesDetaljer[0]
+                    .periode.tom,
             )
         }
 
