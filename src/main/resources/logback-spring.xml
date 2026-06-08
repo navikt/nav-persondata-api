@@ -1,27 +1,28 @@
 <configuration>
-    <appender name="team-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>team-logs.nais-system:5170</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${NAIS_POD_NAME}","nais_container_name":"${NAIS_APP_NAME}"}</customFields>
-            <includeContext>false</includeContext>
-        </encoder>
-        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-            <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
-                <marker>TEAM_LOGS</marker>
-            </evaluator>
-            <OnMatch>ACCEPT</OnMatch>
-            <OnMismatch>DENY</OnMismatch>
-        </filter>
-    </appender>
-    <!-- Sporbarhetslog -->
-    <appender name="AuditLogger" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>audit.nais:6514</destination>
-        <writeBufferSize>128000</writeBufferSize>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${HOSTNAME} ${NAIS_APP_NAME}: %msg%n</pattern>
-        </encoder>
-    </appender>
-
+    <springProfile name="!local">
+        <appender name="team-logs" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>team-logs.nais-system:5170</destination>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <customFields>{"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${NAIS_POD_NAME}","nais_container_name":"${NAIS_APP_NAME}"}</customFields>
+                <includeContext>false</includeContext>
+            </encoder>
+            <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+                <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                    <marker>TEAM_LOGS</marker>
+                </evaluator>
+                <OnMatch>ACCEPT</OnMatch>
+                <OnMismatch>DENY</OnMismatch>
+            </filter>
+        </appender>
+        <!-- Sporbarhetslog -->
+        <appender name="AuditLogger" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>audit.nais:6514</destination>
+            <writeBufferSize>128000</writeBufferSize>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${HOSTNAME} ${NAIS_APP_NAME}: %msg%n</pattern>
+            </encoder>
+        </appender>
+    </springProfile>
 
     <appender name="default-json" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
@@ -36,16 +37,19 @@
 
     <root level="INFO">
         <appender-ref ref="default-json" />
-        <appender-ref ref="team-logs" />
+        <springProfile name="!local">
+            <appender-ref ref="team-logs" />
+        </springProfile>
     </root>
     <logger name="io.lettuce.core.protocol.ConnectionWatchdog" level="WARN" />
     <logger name="io.lettuce.core.protocol.ReconnectionHandler" level="WARN" />
     <!-- Only audit logs goes to AuditLogger (naudit) -->
-    <logger name="audit" level="info">
-        <appender-ref ref="AuditLogger" />
-    </logger>
-
-    <logger name="team-logs-logger" level="INFO" additivity="false">
-        <appender-ref ref="team-logs" />
-    </logger>
+    <springProfile name="!local">
+        <logger name="audit" level="info">
+            <appender-ref ref="AuditLogger" />
+        </logger>
+        <logger name="team-logs-logger" level="INFO" additivity="false">
+            <appender-ref ref="team-logs" />
+        </logger>
+    </springProfile>
 </configuration>

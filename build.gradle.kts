@@ -2,21 +2,14 @@ import com.expediagroup.graphql.plugin.gradle.tasks.GraphQLGenerateClientTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val tokenSupportVersion = "5.0.30"
-val graphQLKotlinVersion = "9.0.0"
-val springBootVersion = "4.0.3"
-val jacksonVersion = "2.17.1"
-val kotlinVersion = "2.2.20"
-val coroutinesVersion = "1.10.2"
-
 plugins {
-    kotlin("jvm") version "2.3.20"
-    id("org.springframework.boot") version "4.0.3"
-    id("io.spring.dependency-management") version "1.1.7"
-    kotlin("plugin.spring") version "2.3.10"
-    id("com.expediagroup.graphql") version "9.0.0"
-    id("org.openapi.generator") version "7.19.0"
-    id("com.diffplug.spotless") version "8.3.0"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.graphql.kotlin)
+    alias(libs.plugins.openapi.generator)
+    alias(libs.plugins.spotless)
 }
 
 spotless {
@@ -88,6 +81,11 @@ tasks.named<Jar>("bootJar") {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+    doFirst {
+        val agentJar = configurations.testRuntimeClasspath.get().find { it.name.contains("byte-buddy-agent") }
+        jvmArgs("-javaagent:$agentJar")
+    }
 }
 
 tasks.named("compileKotlin") {
@@ -95,26 +93,29 @@ tasks.named("compileKotlin") {
 }
 
 // Generer en markdown-fil med versjoner av viktige avhengigheter
-// Før kjøring/regenerering, slett docks/versions.md hvis den finnes
+// Før kjøring/regenerering, slett docs/versions.md hvis den finnes
 // kjør ./gradlew generateVersionInfo
 tasks.register("generateVersionInfo") {
     doLast {
-        val javaVersion =
-            java.toolchain.languageVersion
-                .get()
-                .asInt()
-        val gradleVersion = gradle.gradleVersion
+        val catalog = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+        fun ver(alias: String) = catalog.findVersion(alias).get().requiredVersion
 
         val versions =
             mapOf(
-                "Java" to javaVersion,
-                "Gradle" to gradleVersion,
-                "Spring Boot" to springBootVersion,
-                "Kotlin" to kotlinVersion,
-                "Jackson" to jacksonVersion,
-                "Coroutines" to coroutinesVersion,
-                "Token Support" to tokenSupportVersion,
-                "GraphQL Kotlin" to graphQLKotlinVersion,
+                "Java" to
+                    java.toolchain.languageVersion
+                        .get()
+                        .asInt()
+                        .toString(),
+                "Gradle" to gradle.gradleVersion,
+                "Spring Boot" to ver("spring-boot"),
+                "Kotlin" to ver("kotlin"),
+                "Coroutines" to ver("coroutines"),
+                "Token Support" to ver("token-support"),
+                "GraphQL Kotlin" to ver("graphql-kotlin"),
+                "WireMock" to ver("wiremock"),
+                "Springdoc" to ver("springdoc"),
             )
 
         val content = versions.entries.joinToString("\n") { "- ${it.key}: ${it.value}" }
@@ -124,62 +125,64 @@ tasks.register("generateVersionInfo") {
 }
 
 dependencies {
-    // Jackson - BOM handles transitive versions
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
+    // BOM styrer transitive versjoner for Spring Boot-avhengigheter
+    implementation(platform(libs.spring.boot.bom))
 
-    implementation("org.apache.commons:commons-lang3") {
+    implementation(libs.commons.lang3) {
         version { strictly("3.18.0") }
         because("Fixes CVE-2025-48924")
     }
 
-    implementation("tools.jackson.module:jackson-module-kotlin:3.0.4")
+    implementation(libs.jackson.module.kotlin)
 
     // Tracing (Micrometer → OpenTelemetry)
-    implementation("io.micrometer:micrometer-tracing-bridge-otel")
-    runtimeOnly("io.opentelemetry:opentelemetry-exporter-otlp")
+    implementation(libs.micrometer.tracing.otel)
+    runtimeOnly(libs.opentelemetry.otlp)
 
     // Strukturerte JSON-logger (til stdout -> NAIS logger)
-    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
+    implementation(libs.logstash.encoder)
 
-    implementation("io.projectreactor.netty:reactor-netty-http")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-cache")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
+    implementation(libs.reactor.netty)
+    implementation(libs.spring.boot.web)
+    implementation(libs.spring.boot.actuator)
+    implementation(libs.spring.boot.cache)
+    implementation(libs.spring.boot.data.redis)
+    implementation(libs.caffeine)
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlinx.coroutines.reactor)
+    implementation(libs.kotlinx.coroutines.slf4j)
+    implementation(libs.micrometer.prometheus)
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    testImplementation(libs.spring.boot.test) {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("io.mockk:mockk:1.14.9")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    implementation("io.micrometer:micrometer-registry-prometheus")
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.mockk)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    // WireMock for HTTP boundary stubbing in tests
+    testImplementation(libs.wiremock)
 
   /*
   WebFlux
   Dette gir deg WebClient, men ikke hele WebFlux runtime.
 🔸  Ingen Netty, ingen Reactor context, og ingen konflikt med Spring MVC
    */
-    implementation("org.springframework:spring-webflux")
+    implementation(libs.spring.webflux)
   /*
    * Sikkerhet
    * */
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
-    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
-    implementation(kotlin("stdlib"))
-    implementation("com.expediagroup:graphql-kotlin-client-jackson:$graphQLKotlinVersion")
-    implementation("com.expediagroup:graphql-kotlin-client:$graphQLKotlinVersion")
-    implementation("com.expediagroup:graphql-kotlin-spring-client:$graphQLKotlinVersion")
+    implementation(libs.spring.boot.validation)
+    implementation(libs.token.validation.spring)
+    implementation(libs.token.client.spring)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.graphql.client.jackson)
+    implementation(libs.graphql.client)
+    implementation(libs.graphql.spring.client)
 
     // Swagger UI og OpenAPI-dokumentasjon
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.43")
-    implementation("io.swagger.core.v3:swagger-models:2.2.43")
+    implementation(libs.springdoc.openapi)
+    implementation(libs.swagger.annotations)
+    implementation(libs.swagger.models)
 }
