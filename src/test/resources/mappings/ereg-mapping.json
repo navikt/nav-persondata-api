@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/v2/organisasjon/.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json;charset=UTF-8" },
+    "bodyFileName": "ereg-response.json"
+  }
+}

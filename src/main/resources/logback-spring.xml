@@ -37,10 +37,14 @@
 
     <root level="INFO">
         <appender-ref ref="default-json" />
-        <springProfile name="!local">
-            <appender-ref ref="team-logs" />
-        </springProfile>
     </root>
+
+    <springProfile name="!local">
+        <root level="INFO">
+            <appender-ref ref="default-json" />
+            <appender-ref ref="team-logs" />
+        </root>
+    </springProfile>
     <logger name="io.lettuce.core.protocol.ConnectionWatchdog" level="WARN" />
     <logger name="io.lettuce.core.protocol.ReconnectionHandler" level="WARN" />
     <!-- Only audit logs goes to AuditLogger (naudit) -->

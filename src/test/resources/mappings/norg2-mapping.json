@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/api/v1/enhet/navkontor/.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json;charset=UTF-8" },
+    "bodyFileName": "norg2-response.json"
+  }
+}
