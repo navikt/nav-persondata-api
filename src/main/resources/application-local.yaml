@@ -9,6 +9,8 @@ springdoc:
     enabled: true
 spring:
   config:
+    # .env.local.properties kan brukes for å overstyre enkeltverdier lokalt (f.eks. ekte PDL-URL).
+    # Filen er git-ignorert. Ikke nødvendig for WireMock-basert lokal kjøring.
     import: "optional:file:./src/main/resources/.env.local.properties"
   codec:
     max-in-memory-size: 5MB

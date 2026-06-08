@@ -177,14 +177,16 @@ class LocalWireMockSmokeTest {
                     .urlPathEqualTo("/api/context"),
             ),
         )
-        // Token endpoints
+        // Token endpoints — flere klienter kaller token-endepunktene, verifiser minst ett kall
         WireMock.verify(
+            WireMock.moreThanOrExactly(1),
             WireMock.postRequestedFor(
                 WireMock
                     .urlPathEqualTo("/oauth2/token"),
             ),
         )
         WireMock.verify(
+            WireMock.moreThanOrExactly(1),
             WireMock.postRequestedFor(
                 WireMock
                     .urlPathEqualTo("/api/v1/token/exchange"),
