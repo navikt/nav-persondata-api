@@ -48,9 +48,9 @@ jobs:
 
       - name: Kjør bygg
         run: |
-            for attempt in 1 2 3; do
-              ./gradlew build && exit 0
-              echo "Attempt $attempt failed. Waiting 30s before retry..."
-              sleep 30
-            done
-            exit 1
+          for attempt in 1 2 3; do
+            ./gradlew build && exit 0
+            echo "Attempt $attempt failed. Waiting 30s before retry..."
+            sleep 30
+          done
+          exit 1
