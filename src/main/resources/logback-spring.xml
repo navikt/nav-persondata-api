@@ -35,6 +35,24 @@
         </filter>
     </appender>
 
+    <!-- Lokal console-appender som viser team-logs og audit lesbart -->
+    <springProfile name="local">
+        <appender name="local-console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="local-console" />
+        </root>
+        <logger name="audit" level="INFO" additivity="false">
+            <appender-ref ref="local-console" />
+        </logger>
+        <logger name="team-logs-logger" level="INFO" additivity="false">
+            <appender-ref ref="local-console" />
+        </logger>
+    </springProfile>
+
     <root level="INFO">
         <appender-ref ref="default-json" />
     </root>
