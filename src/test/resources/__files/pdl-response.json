@@ -1,0 +1,59 @@
+{
+  "data": {
+    "hentPerson": {
+      "falskIdentitet": null,
+      "bostedsadresse": [],
+      "oppholdsadresse": [],
+      "deltBosted": [],
+      "forelderBarnRelasjon": [],
+      "kontaktadresse": [],
+      "kontaktinformasjonForDoedsbo": [],
+      "utenlandskIdentifikasjonsnummer": [],
+      "adressebeskyttelse": [],
+      "foedested": [],
+      "foedselsdato": [
+        {
+          "foedselsaar": 1980,
+          "foedselsdato": null,
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "doedsfall": [],
+      "kjoenn": [],
+      "navn": [
+        {
+          "fornavn": "Test",
+          "mellomnavn": null,
+          "etternavn": "Bruker",
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "folkeregisterpersonstatus": [],
+      "identitetsgrunnlag": [],
+      "tilrettelagtKommunikasjon": [],
+      "folkeregisteridentifikator": [],
+      "navspersonidentifikator": [],
+      "statsborgerskap": [],
+      "sikkerhetstiltak": [],
+      "opphold": [],
+      "sivilstand": [],
+      "telefonnummer": [],
+      "innflyttingTilNorge": [],
+      "utflyttingFraNorge": [],
+      "vergemaalEllerFremtidsfullmakt": [],
+      "foreldreansvar": [],
+      "rettsligHandleevne": [],
+      "doedfoedtBarn": []
+    }
+  }
+}

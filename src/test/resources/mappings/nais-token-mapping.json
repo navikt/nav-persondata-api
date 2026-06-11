@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/v1/token"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json;charset=UTF-8" },
+    "body": "{\"access_token\": \"test-nais-token\", \"expires_in\": 3600, \"token_type\": \"Bearer\"}"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "organisasjonsnummer": "123456789",
+  "type": "AS",
+  "navn": {
+    "sammensattnavn": "Test AS",
+    "navnelinje1": "Test AS"
+  }
+}

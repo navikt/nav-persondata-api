@@ -9,7 +9,9 @@ springdoc:
     enabled: true
 spring:
   config:
-    import: "file:./src/main/resources/.env.local.properties"
+    # .env.local.properties kan brukes for å overstyre enkeltverdier lokalt (f.eks. ekte PDL-URL).
+    # Filen er git-ignorert. Ikke nødvendig for WireMock-basert lokal kjøring.
+    import: "optional:file:./src/main/resources/.env.local.properties"
   codec:
     max-in-memory-size: 5MB
 management:
@@ -33,27 +35,35 @@ no.nav.security.jwt:
       discoveryurl: "https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration"
       accepted_audience: "f99254b7-a630-48fe-a21a-21989eca6f4b"
 
-NAIS_TOKEN_ENDPOINT: http://127.0.0.1:7164/api/v1/token
-NAIS_TOKEN_INTROSPECTION_ENDPOINT : http://127.0.0.1:7164/api/v1/introspect
-NAIS_TOKEN_EXCHANGE_ENDPOINT: http://127.0.0.1:7164/api/v1/token/exchange
-AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/oauth2/v2.0/token
+VALKEY_HOST_NAV_PERSONDATA_API: localhost
+VALKEY_PORT_NAV_PERSONDATA_API: 6379
+VALKEY_USERNAME_NAV_PERSONDATA_API: ""
+VALKEY_PASSWORD_NAV_PERSONDATA_API: ""
+
+AZURE_APP_CLIENT_ID: dummy-test-client-id
+AZURE_APP_CLIENT_SECRET: dummy-test-client-secret
+
+NAIS_TOKEN_ENDPOINT: http://localhost:${WIREMOCK_PORT:7164}/api/v1/token
+NAIS_TOKEN_INTROSPECTION_ENDPOINT: http://localhost:${WIREMOCK_PORT:7164}/api/v1/introspect
+NAIS_TOKEN_EXCHANGE_ENDPOINT: http://localhost:${WIREMOCK_PORT:7164}/api/v1/token/exchange
+AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: http://localhost:${WIREMOCK_PORT:7164}/oauth2/token
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
-PDL_URL: https://pdl-api.dev-fss-pub.nais.io/graphql
+PDL_URL: http://localhost:${WIREMOCK_PORT:7164}/pdl/graphql
 NOM_SCOPE: api://dev-gcp.nom.nom-api/.default
-NOM_URL: https://nom-api.intern.dev.nav.no/graphql
+NOM_URL: http://localhost:${WIREMOCK_PORT:7164}/nom/graphql
 UTBETALING_SCOPE: api://dev-fss.okonomi.sokos-utbetaldata/.default
-UTBETALING_URL: https://sokos-utbetaldata.dev-fss-pub.nais.io
+UTBETALING_URL: http://localhost:${WIREMOCK_PORT:7164}
 
 INNTEKT_SCOPE: api://dev-fss.team-inntekt.ikomp-q2/.default
-INNTEKT_URL: https://ikomp-q2.dev-fss-pub.nais.io
+INNTEKT_URL: http://localhost:${WIREMOCK_PORT:7164}
 
 TILGANGMASKIN_SCOPE: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
-TILGANGMASKIN_URL: https://tilgangsmaskin.intern.dev.nav.no
+TILGANGMASKIN_URL: http://localhost:${WIREMOCK_PORT:7164}
 
 AAREG_SCOPE: api://dev-fss.arbeidsforhold.aareg-services-nais/.default
-AAREG_URL: https://aareg-services.dev-fss-pub.nais.io/api
+AAREG_URL: http://localhost:${WIREMOCK_PORT:7164}
 
-EREG_URL: https://ereg-services.dev.intern.nav.no/api
+EREG_URL: http://localhost:${WIREMOCK_PORT:7164}
 
 GRUPPER: |
   [
@@ -61,19 +71,19 @@ GRUPPER: |
       { "id": "222dedb1-a80d-48c9-b8d3-1e8149be9063", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" }
   ]
 
-KODEVERK_URL: https://kodeverk-api.nav.no
+KODEVERK_URL: http://localhost:${WIREMOCK_PORT:7164}
 KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 
-MODIA_CONTEXT_HOLDER_URL: https://modiacontextholder.intern.dev.nav.no
+MODIA_CONTEXT_HOLDER_URL: http://localhost:${WIREMOCK_PORT:7164}
 MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.default
 
-NORG2_URL: https://norg2.dev-fss-pub.nais.io/norg2
+NORG2_URL: http://localhost:${WIREMOCK_PORT:7164}
 
-DP_DATADELING_URL: https://dp-datadeling.intern.dev.nav.no
+DP_DATADELING_URL: http://localhost:${WIREMOCK_PORT:7164}
 DP_DATADELING_SCOPE: api://dev-gcp.teamdagpenger.dp-datadeling/.default
 
-AAP_URL: https://aap-api.intern.dev.nav.no
+AAP_URL: http://localhost:${WIREMOCK_PORT:7164}
 AAP_SCOPE: api://dev-gcp.aap.api-intern/.default
 
-SIGRUN_URL: https://team-inntekt-proxy.dev-fss-pub.nais.io/proxy/sigrun-q2
+SIGRUN_URL: http://localhost:${WIREMOCK_PORT:7164}
 SIGRUN_SCOPE: api://dev-fss.team-inntekt.sigrun-q2/.default

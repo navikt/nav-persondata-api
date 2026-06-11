@@ -1,0 +1,84 @@
+[versions]
+kotlin = "2.3.20"
+spring-boot = "4.0.3"
+spring-dependency-management = "1.1.7"
+graphql-kotlin = "9.0.0"
+openapi-generator = "7.19.0"
+spotless = "8.3.0"
+token-support = "5.0.30"
+coroutines = "1.10.2"
+jackson-module-kotlin = "3.0.4"
+logstash = "9.0"
+caffeine = "3.2.3"
+mockk = "1.14.9"
+wiremock = "3.13.0"
+springdoc = "3.0.2"
+swagger = "2.2.43"
+commons-lang3 = "3.18.0"
+
+[libraries]
+# BOM
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+
+# Spring Boot starters (versjon styrt av BOM)
+spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-cache = { module = "org.springframework.boot:spring-boot-starter-cache" }
+spring-boot-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
+spring-boot-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-webflux = { module = "org.springframework:spring-webflux" }
+
+# Jackson
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin", version.ref = "jackson-module-kotlin" }
+
+# Kotlin (versjon styrt av kotlin-jvm-plugin)
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor" }
+kotlinx-coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# Observability
+micrometer-tracing-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel" }
+micrometer-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+opentelemetry-otlp = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
+logstash-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version.ref = "logstash" }
+
+# Nettverk
+reactor-netty = { module = "io.projectreactor.netty:reactor-netty-http" }
+
+# Cache
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
+
+# Nav Token Support
+token-validation-spring = { module = "no.nav.security:token-validation-spring", version.ref = "token-support" }
+token-client-spring = { module = "no.nav.security:token-client-spring", version.ref = "token-support" }
+
+# GraphQL
+graphql-client-jackson = { module = "com.expediagroup:graphql-kotlin-client-jackson", version.ref = "graphql-kotlin" }
+graphql-client = { module = "com.expediagroup:graphql-kotlin-client", version.ref = "graphql-kotlin" }
+graphql-spring-client = { module = "com.expediagroup:graphql-kotlin-spring-client", version.ref = "graphql-kotlin" }
+
+# OpenAPI / Swagger
+springdoc-openapi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger" }
+swagger-models = { module = "io.swagger.core.v3:swagger-models", version.ref = "swagger" }
+
+# Commons
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
+
+# Test
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+wiremock = { module = "org.wiremock:wiremock-standalone", version.ref = "wiremock" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+graphql-kotlin = { id = "com.expediagroup.graphql", version.ref = "graphql-kotlin" }
+openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
