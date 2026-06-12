@@ -4,7 +4,7 @@ import no.nav.persondataapi.rest.oppslag.Maskert
 
 data class PersonInformasjon(
     val aktørId: String?,
-    val familemedlemmer: Map<String, String> = emptyMap<String, String>(),
+    val familemedlemmer: List<Familiemedlem> = emptyList(),
     val statsborgerskap: List<String> = emptyList(),
     val navn: Navn,
     val adresse: Bostedsadresse? = null,
@@ -15,6 +15,16 @@ data class PersonInformasjon(
     val dødsdato: String? = null,
     val navKontor: NavKontor? = null,
 ) {
+    data class Familiemedlem(
+        val ident: String,
+        val rolle: String,
+        @Maskert val fornavn: String? = null,
+        @Maskert val mellomnavn: String? = null,
+        @Maskert val etternavn: String? = null,
+        val fødselsdato: String? = null,
+        val adresseBeskyttelse: Skjerming = Skjerming.UGRADERT,
+    )
+
     data class Navn(
         @Maskert
         val fornavn: String,

@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
@@ -57,17 +58,12 @@ class PersonopplysningerService(
 
         val pdlData = pdlResponse.data ?: return PersonopplysningerResultat.PersonIkkeFunnet
 
+        // Hent navn for familiemedlemmer via ett bolk-kall
+        val familiemedlemmerMedRolle: Map<String, String> = byggFamiliemedlemmerMedRolle(pdlData)
+        val familiemedlemmer = berikFamiliemedlemmerMedNavn(familiemedlemmerMedRolle)
+
         // Mappe familie og sivilstand
-        val foreldreOgBarn =
-            pdlData.forelderBarnRelasjon.associate {
-                Pair(it.relatertPersonsIdent ?: "Ukjent", it.relatertPersonsRolle?.name ?: "Ukjent")
-            }
         val statsborgerskap = pdlData.statsborgerskap.map { it.land }
-        val ektefelle =
-            pdlData.sivilstand
-                .filter { it.relatertVedSivilstand != null }
-                .associate { Pair(it.relatertVedSivilstand!!, it.type.name) }
-        val familiemedlemmer = foreldreOgBarn + ektefelle
 
         // Mappe personopplysninger
         val personopplysninger =
@@ -113,6 +109,58 @@ class PersonopplysningerService(
 
         return PersonopplysningerResultat.Success(beriketPersonopplysninger)
     }
+
+    private fun byggFamiliemedlemmerMedRolle(pdlData: Person): Map<String, String> {
+        val foreldreOgBarn =
+            pdlData.forelderBarnRelasjon
+                .filter { it.relatertPersonsIdent != null }
+                .associate { it.relatertPersonsIdent!! to (it.relatertPersonsRolle?.name ?: "Ukjent") }
+        val ektefelle =
+            pdlData.sivilstand
+                .filter { it.relatertVedSivilstand != null }
+                .associate { it.relatertVedSivilstand!! to it.type.name }
+        return foreldreOgBarn + ektefelle
+    }
+
+    private suspend fun berikFamiliemedlemmerMedNavn(
+        familiemedlemmerMedRolle: Map<String, String>,
+    ): List<PersonInformasjon.Familiemedlem> {
+        if (familiemedlemmerMedRolle.isEmpty()) return emptyList()
+
+        val identer = familiemedlemmerMedRolle.keys.map { PersonIdent(it) }
+        val bolkResultat = pdlClient.hentPersonBolk(identer)
+
+        val navnPerIdent: Map<String, HentPersonBolkResult> =
+            bolkResultat.data
+                .filter { it.code == "ok" && it.person != null }
+                .associateBy { it.ident }
+
+        return familiemedlemmerMedRolle.map { (ident, rolle) ->
+            val bolk = navnPerIdent[ident]
+            val navn = bolk?.person?.navn?.firstOrNull()
+            val fødselsdato = bolk?.person?.foedselsdato?.firstOrNull()?.foedselsdato
+            val gradering =
+                bolk?.person?.adressebeskyttelse?.firstOrNull()?.gradering
+                    ?: AdressebeskyttelseGradering.UGRADERT
+            PersonInformasjon.Familiemedlem(
+                ident = ident,
+                rolle = rolle,
+                fornavn = navn?.fornavn,
+                mellomnavn = navn?.mellomnavn,
+                etternavn = navn?.etternavn,
+                fødselsdato = fødselsdato,
+                adresseBeskyttelse = gradering.tilSkjerming(),
+            )
+        }
+    }
+
+    private fun AdressebeskyttelseGradering.tilSkjerming(): PersonInformasjon.Skjerming =
+        when (this) {
+            AdressebeskyttelseGradering.FORTROLIG -> PersonInformasjon.Skjerming.FORTROLIG
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> PersonInformasjon.Skjerming.STRENGT_FORTROLIG_UTLAND
+            else -> PersonInformasjon.Skjerming.UGRADERT
+        }
 
     private fun berikMedKodeverkData(input: PersonInformasjon): PersonInformasjon =
         input.copy(

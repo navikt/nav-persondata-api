@@ -17,6 +17,7 @@ import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
+import no.nav.persondataapi.integrasjon.pdl.client.PersonBolkResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PersonDataResultat
 import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -58,6 +59,7 @@ class PersonopplysningerServiceTest {
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
         coEvery { pdlClient.hentPerson(any()) } returns personResultat
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
+        coEvery { pdlClient.hentPersonBolk(any()) } returns PersonBolkResultat(data = emptyList(), statusCode = 200)
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent(any()) } returns lokalKontor
 
         return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService, navTilhørigetService)
@@ -238,8 +240,8 @@ class PersonopplysningerServiceTest {
             assertEquals("Nordmann", data.navn.mellomnavn)
             assertEquals("Testesen", data.navn.etternavn)
             assertEquals(2, data.familemedlemmer.size)
-            assertEquals("BARN", data.familemedlemmer["11111111111"])
-            assertEquals("GIFT", data.familemedlemmer["22222222222"])
+            assertEquals("BARN", data.familemedlemmer.first { it.ident == "11111111111" }.rolle)
+            assertEquals("GIFT", data.familemedlemmer.first { it.ident == "22222222222" }.rolle)
             assertEquals(1, data.statsborgerskap.size)
             assertEquals("Norge", data.statsborgerskap[0])
         }
