@@ -62,3 +62,6 @@ Spørsmål knyttet til koden eller repositoryet kan stilles som issues her på G
 ### For Nav-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen [#team-holmes](https://nav-it.slack.com/archives/C08CZLL2QKE)
+
+### Confused deputy
+Hvem er dependabot nå?
