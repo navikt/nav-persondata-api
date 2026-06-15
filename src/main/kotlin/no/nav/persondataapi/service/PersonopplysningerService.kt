@@ -138,9 +138,18 @@ class PersonopplysningerService(
         return familiemedlemmerMedRolle.map { (ident, rolle) ->
             val bolk = navnPerIdent[ident]
             val navn = bolk?.person?.navn?.firstOrNull()
-            val fødselsdato = bolk?.person?.foedselsdato?.firstOrNull()?.foedselsdato
+            val fødselsdato =
+                bolk
+                    ?.person
+                    ?.foedselsdato
+                    ?.firstOrNull()
+                    ?.foedselsdato
             val gradering =
-                bolk?.person?.adressebeskyttelse?.firstOrNull()?.gradering
+                bolk
+                    ?.person
+                    ?.adressebeskyttelse
+                    ?.firstOrNull()
+                    ?.gradering
                     ?: AdressebeskyttelseGradering.UGRADERT
             PersonInformasjon.Familiemedlem(
                 ident = ident,
