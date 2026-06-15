@@ -5,6 +5,7 @@ spring-dependency-management = "1.1.7"
 graphql-kotlin = "10.0.0"
 openapi-generator = "7.19.0"
 spotless = "8.3.0"
+sonarqube = "6.0.1.5171"
 token-support = "5.0.30"
 coroutines = "1.10.2"
 jackson-module-kotlin = "3.0.4"
@@ -82,3 +83,4 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 graphql-kotlin = { id = "com.expediagroup.graphql", version.ref = "graphql-kotlin" }
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
