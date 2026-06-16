@@ -10,10 +10,6 @@ query($identer: [ID!]!) {
             }
             foedselsdato {
                 foedselsdato
-                foedselsaar
-            }
-            kjoenn(historikk: false) {
-                kjoenn
             }
             adressebeskyttelse(historikk: false) {
                 gradering

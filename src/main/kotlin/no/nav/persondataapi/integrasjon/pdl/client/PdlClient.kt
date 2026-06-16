@@ -187,10 +187,14 @@ class PdlClient(
                 return PersonBolkResultat(data = emptyList(), statusCode = status, errorMessage = message)
             }
 
-            PersonBolkResultat(
-                data = response.data?.hentPersonBolk ?: emptyList(),
-                statusCode = 200,
-            )
+            val hentPersonBolk =
+                response.data?.hentPersonBolk
+                    ?: return PersonBolkResultat(
+                        data = emptyList(),
+                        statusCode = 502,
+                        errorMessage = "PDL returnerte tom data for hentPersonBolk",
+                    )
+            PersonBolkResultat(data = hentPersonBolk, statusCode = 200)
         } catch (e: Exception) {
             when (e) {
                 is java.util.concurrent.TimeoutException,

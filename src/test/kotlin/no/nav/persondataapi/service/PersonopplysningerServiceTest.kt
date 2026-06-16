@@ -240,8 +240,8 @@ class PersonopplysningerServiceTest {
             assertEquals("Nordmann", data.navn.mellomnavn)
             assertEquals("Testesen", data.navn.etternavn)
             assertEquals(2, data.familemedlemmer.size)
-            assertEquals("BARN", data.familemedlemmer.first { it.ident == "11111111111" }.rolle)
-            assertEquals("GIFT", data.familemedlemmer.first { it.ident == "22222222222" }.rolle)
+            assertEquals("BARN", data.familemedlemmer.firstOrNull { it.ident == "11111111111" }?.rolle)
+            assertEquals("GIFT", data.familemedlemmer.firstOrNull { it.ident == "22222222222" }?.rolle)
             assertEquals(1, data.statsborgerskap.size)
             assertEquals("Norge", data.statsborgerskap[0])
         }
