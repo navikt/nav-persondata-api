@@ -203,7 +203,7 @@ class PdlClient(
                 -> {
                     metrics.counter("HentPersonBolk", DownstreamResult.TIMEOUT).increment()
                     log.error("Timeout mot PDL (HentPersonBolk)", e)
-                    PersonBolkResultat(data = emptyList(), statusCode = 504, errorMessage = "Timeout mot PDL")
+                    PersonBolkResultat(data = emptyList(), statusCode = 504, errorMessage = TIMEOUT_MOT_PDL)
                 }
 
                 else -> {
@@ -218,6 +218,7 @@ class PdlClient(
     companion object CustomHeaders {
         const val BEHANDLINGSNUMMER = "behandlingsnummer"
         const val TEMA = "TEMA"
+        const val TIMEOUT_MOT_PDL = "Timeout mot PDL"
     }
 
     internal fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
@@ -250,7 +251,7 @@ class PdlClient(
             -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
-                return PersonDataResultat(null, 504, "Timeout mot PDL")
+                return PersonDataResultat(null, 504, TIMEOUT_MOT_PDL)
             }
 
             else -> {
@@ -272,7 +273,7 @@ class PdlClient(
             -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
-                return GeografiskTilknytningResultat(null, 504, "Timeout mot PDL")
+                return GeografiskTilknytningResultat(null, 504, TIMEOUT_MOT_PDL)
             }
 
             else -> {
