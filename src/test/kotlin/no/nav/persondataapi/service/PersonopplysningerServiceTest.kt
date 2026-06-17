@@ -5,6 +5,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.enums.ForelderBarnRelasjonRolle
 import no.nav.persondataapi.generated.pdl.enums.Sivilstandstype
 import no.nav.persondataapi.generated.pdl.hentperson.Foedselsdato
@@ -14,17 +15,23 @@ import no.nav.persondataapi.generated.pdl.hentperson.Navn
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentperson.Sivilstand
 import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.pdl.client.PersonBolkResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PersonDataResultat
 import no.nav.persondataapi.rest.domene.PersonIdent
+import no.nav.persondataapi.rest.domene.PersonInformasjon
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.Adressebeskyttelse as BolkAdressebeskyttelse
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.Foedselsdato as BolkFoedselsdato
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.Navn as BolkNavn
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.Person as BolkPerson
 
 class PersonopplysningerServiceTest {
     val brukertilgangService = mockk<BrukertilgangService>()
@@ -46,6 +53,7 @@ class PersonopplysningerServiceTest {
                 statusCode = 200,
                 errorMessage = null,
             ),
+        bolkResultat: PersonBolkResultat = PersonBolkResultat(data = emptyList(), statusCode = 200),
         lokalKontor: NavLokalKontor =
             NavLokalKontor(
                 enhetId = 1,
@@ -59,7 +67,7 @@ class PersonopplysningerServiceTest {
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
         coEvery { pdlClient.hentPerson(any()) } returns personResultat
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
-        coEvery { pdlClient.hentPersonBolk(any()) } returns PersonBolkResultat(data = emptyList(), statusCode = 200)
+        coEvery { pdlClient.hentPersonBolk(any()) } returns bolkResultat
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent(any()) } returns lokalKontor
 
         return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService, navTilhørigetService)
@@ -402,6 +410,139 @@ class PersonopplysningerServiceTest {
             assertTrue(data.familemedlemmer.isEmpty())
             assertNotNull(data.sivilstand)
         }
+
+    @Test
+    fun `skal berike familiemedlemmer med navn fra hentPersonBolk`() =
+        runBlocking {
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    forelderBarnRelasjon =
+                        listOf(
+                            lagForelderBarnRelasjon("11111111111", ForelderBarnRelasjonRolle.BARN),
+                        ),
+                )
+
+            val bolkResultat =
+                PersonBolkResultat(
+                    statusCode = 200,
+                    data =
+                        listOf(
+                            lagBolkResultat(
+                                ident = "11111111111",
+                                fornavn = "Barn",
+                                etternavn = "Testesen",
+                                foedselsdato = "2015-03-10",
+                            ),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                    bolkResultat = bolkResultat,
+                )
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
+            assertNotNull(barn)
+            assertEquals("Barn", barn?.fornavn)
+            assertEquals("Testesen", barn?.etternavn)
+            assertEquals("2015-03-10", barn?.fødselsdato)
+        }
+
+    @Test
+    fun `skal returnere familiemedlem med null-navn når bolk-kode ikke er ok`() =
+        runBlocking {
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    forelderBarnRelasjon =
+                        listOf(
+                            lagForelderBarnRelasjon("11111111111", ForelderBarnRelasjonRolle.BARN),
+                        ),
+                )
+
+            val bolkResultat =
+                PersonBolkResultat(
+                    statusCode = 200,
+                    data =
+                        listOf(
+                            HentPersonBolkResult(ident = "11111111111", code = "not-found", person = null),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                    bolkResultat = bolkResultat,
+                )
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
+            assertNotNull(barn)
+            assertNull(barn?.fornavn)
+            assertNull(barn?.etternavn)
+        }
+
+    @Test
+    fun `skal sette adressebeskyttelse FORTROLIG på familiemedlem fra bolk`() =
+        runBlocking {
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    forelderBarnRelasjon =
+                        listOf(
+                            lagForelderBarnRelasjon("11111111111", ForelderBarnRelasjonRolle.BARN),
+                        ),
+                )
+
+            val bolkResultat =
+                PersonBolkResultat(
+                    statusCode = 200,
+                    data =
+                        listOf(
+                            lagBolkResultat(
+                                ident = "11111111111",
+                                fornavn = "Skjult",
+                                etternavn = "Person",
+                                gradering = AdressebeskyttelseGradering.FORTROLIG,
+                            ),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                    bolkResultat = bolkResultat,
+                )
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
+            assertNotNull(barn)
+            assertEquals(PersonInformasjon.Skjerming.FORTROLIG, barn?.adresseBeskyttelse)
+        }
 }
 
 // Hjelpefunksjoner for å lage testdata
@@ -521,3 +662,22 @@ private fun lagSivilstand(
         folkeregistermetadata = null,
     )
 }
+
+private fun lagBolkResultat(
+    ident: String,
+    fornavn: String,
+    etternavn: String,
+    mellomnavn: String? = null,
+    foedselsdato: String? = null,
+    gradering: AdressebeskyttelseGradering = AdressebeskyttelseGradering.UGRADERT,
+): HentPersonBolkResult =
+    HentPersonBolkResult(
+        ident = ident,
+        code = "ok",
+        person =
+            BolkPerson(
+                navn = listOf(BolkNavn(fornavn = fornavn, mellomnavn = mellomnavn, etternavn = etternavn)),
+                foedselsdato = listOf(BolkFoedselsdato(foedselsdato = foedselsdato)),
+                adressebeskyttelse = listOf(BolkAdressebeskyttelse(gradering = gradering)),
+            ),
+    )
