@@ -75,8 +75,8 @@ class PdlClient(
                 coroutineRetry(kilde = "PDL-HentPerson") {
                     client.execute(query) {
                         header("Authorization", "Bearer $token")
-                        header(BEHANDLINGSNUMMER, "B634")
-                        header(TEMA, "KTR")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
                     }
                 }
 
@@ -129,8 +129,8 @@ class PdlClient(
                 coroutineRetry(kilde = "PDL-Geografisktilknytning") {
                     client.execute(query) {
                         header("Authorization", "Bearer $token")
-                        header(BEHANDLINGSNUMMER, "B634")
-                        header(TEMA, "KTR")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
                     }
                 }
 
@@ -176,8 +176,8 @@ class PdlClient(
                 coroutineRetry(kilde = "PDL-HentPersonBolk") {
                     client.execute(query) {
                         header("Authorization", "Bearer $token")
-                        header(BEHANDLINGSNUMMER, "B634")
-                        header(TEMA, "KTR")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
                     }
                 }
 
@@ -218,6 +218,8 @@ class PdlClient(
     companion object CustomHeaders {
         const val BEHANDLINGSNUMMER = "behandlingsnummer"
         const val TEMA = "TEMA"
+        const val BEHANDLINGSNUMMER_VERDI = "B634"
+        const val TEMA_VERDI = "KTR"
         const val TIMEOUT_MOT_PDL = "Timeout mot PDL"
     }
 
