@@ -77,7 +77,7 @@ class PersonopplysningerService(
                 aktørId = personIdent.value,
                 adresse = pdlData.nåværendeBostedsadresse(),
                 familemedlemmer = familiemedlemmer,
-                adresseBeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
+                adressebeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
                 statsborgerskap = statsborgerskap,
                 sivilstand = pdlData.gjeldendeSivilStand(),
                 alder =
@@ -158,7 +158,7 @@ class PersonopplysningerService(
                 mellomnavn = navn?.mellomnavn,
                 etternavn = navn?.etternavn,
                 fødselsdato = fødselsdato,
-                adresseBeskyttelse = gradering.tilSkjerming(),
+                adressebeskyttelse = gradering.tilSkjerming(),
             )
         }
     }

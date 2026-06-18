@@ -10,7 +10,7 @@ data class PersonInformasjon(
     val adresse: Bostedsadresse? = null,
     val sivilstand: String? = null,
     val alder: Int,
-    val adresseBeskyttelse: Skjerming = Skjerming.UGRADERT,
+    val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,
     val fødselsdato: String,
     val dødsdato: String? = null,
     val navKontor: NavKontor? = null,
@@ -22,7 +22,7 @@ data class PersonInformasjon(
         @Maskert val mellomnavn: String? = null,
         @Maskert val etternavn: String? = null,
         val fødselsdato: String? = null,
-        val adresseBeskyttelse: Skjerming = Skjerming.UGRADERT,
+        val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,
     )
 
     data class Navn(

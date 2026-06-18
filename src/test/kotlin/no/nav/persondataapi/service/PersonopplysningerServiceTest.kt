@@ -541,7 +541,7 @@ class PersonopplysningerServiceTest {
 
             val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
             assertNotNull(barn)
-            assertEquals(PersonInformasjon.Skjerming.FORTROLIG, barn?.adresseBeskyttelse)
+            assertEquals(PersonInformasjon.Skjerming.FORTROLIG, barn?.adressebeskyttelse)
         }
 }
 
