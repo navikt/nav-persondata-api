@@ -1,0 +1,14 @@
+apiVersion: unleash.nais.io/v1
+kind: ApiToken
+metadata:
+  name: nav-persondata-api
+  namespace: holmes
+  labels:
+    team: holmes
+spec:
+  unleashInstance:
+    apiVersion: unleash.nais.io/v1
+    kind: RemoteUnleash
+    name: holmes
+  secretName: nav-persondata-api-unleash-api-token
+  environment: {{UNLEASH_ENVIRONMENT}}

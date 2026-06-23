@@ -99,6 +99,7 @@ spec:
           namespace: team-inntekt
           cluster: {{FSS_CLUSTER}}
       external:
+        - host: holmes-unleash-api.nav.cloud.nais.io
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
         - host: {{this}}
         {{/each}}
@@ -113,3 +114,5 @@ spec:
     - name: {{name}}
       value: {{{value}}}
     {{/each}}
+  envFrom:
+    - secret: nav-persondata-api-unleash-api-token

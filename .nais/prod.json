@@ -5,6 +5,7 @@
   "MAX_REPLICAS": 2,
   "GCP_CLUSTER": "prod-gcp",
   "FSS_CLUSTER": "prod-fss",
+  "UNLEASH_ENVIRONMENT": "production",
   "OUTBOUND_EXTERNAL_HOSTS": [
     "sokos-utbetaldata.prod-fss-pub.nais.io",
     "pdl-api.prod-fss-pub.nais.io",
