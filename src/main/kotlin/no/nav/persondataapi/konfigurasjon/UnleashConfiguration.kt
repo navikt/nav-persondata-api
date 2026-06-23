@@ -11,6 +11,7 @@ import no.nav.persondataapi.unleash.FeatureToggleService
 import no.nav.persondataapi.unleash.UnleashFeatureToggleService
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -19,12 +20,12 @@ class UnleashConfiguration {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Bean
-    fun unleash(): Unleash {
-        val apiUrl = System.getenv("UNLEASH_SERVER_API_URL")
-        val apiToken = System.getenv("UNLEASH_SERVER_API_TOKEN")
-
-        if (apiUrl.isNullOrBlank() || apiToken.isNullOrBlank()) {
-            log.info("UNLEASH_SERVER_API_URL ikke satt — bruker FakeUnleash (alle toggles false)")
+    fun unleash(
+        @Value("\${UNLEASH_SERVER_API_URL:}") apiUrl: String,
+        @Value("\${UNLEASH_SERVER_API_TOKEN:}") apiToken: String,
+    ): Unleash {
+        if (apiUrl.isBlank() || apiToken.isBlank()) {
+            log.info("UNLEASH_SERVER_API_URL eller UNLEASH_SERVER_API_TOKEN ikke satt — bruker FakeUnleash (alle toggles false)")
             return FakeUnleash()
         }
 

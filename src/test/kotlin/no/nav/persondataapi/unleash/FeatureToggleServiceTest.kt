@@ -1,6 +1,7 @@
 package no.nav.persondataapi.unleash
 
 import io.getunleash.FakeUnleash
+import no.nav.persondataapi.unleash.Toggle.WATSON_SOK_V_1_2
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -10,18 +11,14 @@ class FeatureToggleServiceTest {
     private val service: FeatureToggleService = UnleashFeatureToggleService(fakeUnleash)
 
     @Test
-    fun `isEnabled returnerer false for ukjente toggles`() {
-        // Siden Toggle-enum er tom, verifiserer vi indirekte via en FakeUnleash
-        // der ingen toggles er aktivert
+    fun `isEnabled returnerer false når toggle er av`() {
         fakeUnleash.disableAll()
-        // Ingen Toggle-verdier å sjekke ennå — testen validerer at FakeUnleash
-        // integrerer korrekt og returnerer false som standard
-        assertFalse(fakeUnleash.isEnabled("ukjent-toggle"))
+        assertFalse(service.isEnabled(WATSON_SOK_V_1_2))
     }
 
     @Test
-    fun `isEnabled returnerer true naar toggle er skrudd paa i FakeUnleash`() {
-        fakeUnleash.enableAll()
-        assertTrue(fakeUnleash.isEnabled("hvilken-som-helst-toggle"))
+    fun `isEnabled returnerer true når toggle er på`() {
+        fakeUnleash.enable(WATSON_SOK_V_1_2.toggleName)
+        assertTrue(service.isEnabled(WATSON_SOK_V_1_2))
     }
 }
