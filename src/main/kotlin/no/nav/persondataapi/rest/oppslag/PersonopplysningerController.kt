@@ -10,8 +10,11 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.responstracing.LOGG_HEADER
 import no.nav.persondataapi.rest.domene.PersonInformasjon
+import no.nav.persondataapi.rest.domene.tilV1Format
 import no.nav.persondataapi.service.PersonopplysningerResultat
 import no.nav.persondataapi.service.PersonopplysningerService
+import no.nav.persondataapi.unleash.FeatureToggleService
+import no.nav.persondataapi.unleash.Toggle
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Tag(name = "Personopplysninger", description = "Endepunkter for oppslag av personopplysninger")
 class PersonopplysningerController(
     private val personopplysningerService: PersonopplysningerService,
+    private val featureToggleService: FeatureToggleService,
 ) {
     @Protected
     @PostMapping
@@ -95,14 +99,16 @@ class PersonopplysningerController(
     fun hentPersonopplysninger(
         @RequestBody dto: OppslagRequestDto,
         @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?,
-    ): ResponseEntity<OppslagResponseDto<PersonInformasjon>> =
+    ): ResponseEntity<*> =
         runBlocking {
             val logResponsAktivert = traceHeader?.toBoolean() ?: false
             val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
 
             when (resultat) {
                 is PersonopplysningerResultat.Success -> {
-                    ResponseEntity.ok(OppslagResponseDto(data = resultat.data))
+                    val nyStruktur = featureToggleService.isEnabled(Toggle.WATSON_SOK_V_1_2)
+                    val data = if (nyStruktur) resultat.data else resultat.data.tilV1Format()
+                    ResponseEntity.ok(OppslagResponseDto(data = data))
                 }
 
                 is PersonopplysningerResultat.IngenTilgang -> {
