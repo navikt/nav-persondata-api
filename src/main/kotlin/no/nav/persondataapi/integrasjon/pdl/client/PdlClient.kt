@@ -7,8 +7,10 @@ import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
 import no.nav.persondataapi.generated.pdl.HentGeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.HentPerson
+import no.nav.persondataapi.generated.pdl.HentPersonBolk
 import no.nav.persondataapi.generated.pdl.hentgeografisktilknytning.GeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.hentperson.Person
+import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
 import no.nav.persondataapi.konfigurasjon.RetryPolicy.coroutineRetry
 import no.nav.persondataapi.metrics.DownstreamResult
 import no.nav.persondataapi.metrics.PdlMetrics
@@ -73,8 +75,8 @@ class PdlClient(
                 coroutineRetry(kilde = "PDL-HentPerson") {
                     client.execute(query) {
                         header("Authorization", "Bearer $token")
-                        header(BEHANDLINGSNUMMER, "B634")
-                        header(TEMA, "KTR")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
                     }
                 }
 
@@ -127,8 +129,8 @@ class PdlClient(
                 coroutineRetry(kilde = "PDL-Geografisktilknytning") {
                     client.execute(query) {
                         header("Authorization", "Bearer $token")
-                        header(BEHANDLINGSNUMMER, "B634")
-                        header(TEMA, "KTR")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
                     }
                 }
 
@@ -152,9 +154,73 @@ class PdlClient(
         }
     }
 
+    suspend fun hentPersonBolk(personIdenter: List<PersonIdent>): PersonBolkResultat {
+        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
+        val httpClient = createTimeoutHttpClient()
+        val client =
+            GraphQLWebClient(
+                url = pdlUrl,
+                builder =
+                    WebClient
+                        .builder()
+                        .clientConnector(ReactorClientHttpConnector(httpClient)),
+            )
+        val query =
+            HentPersonBolk(
+                HentPersonBolk.Variables(
+                    identer = personIdenter.map { it.value },
+                ),
+            )
+        return try {
+            val response =
+                coroutineRetry(kilde = "PDL-HentPersonBolk") {
+                    client.execute(query) {
+                        header("Authorization", "Bearer $token")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
+                    }
+                }
+
+            val errors = response.errors.orEmpty()
+            if (errors.isNotEmpty()) {
+                val (status, message) = håndterPdlFeil(errors)
+                return PersonBolkResultat(data = emptyList(), statusCode = status, errorMessage = message)
+            }
+
+            val hentPersonBolk =
+                response.data?.hentPersonBolk
+                    ?: return PersonBolkResultat(
+                        data = emptyList(),
+                        statusCode = 502,
+                        errorMessage = "PDL returnerte tom data for hentPersonBolk",
+                    )
+            PersonBolkResultat(data = hentPersonBolk, statusCode = 200)
+        } catch (e: Exception) {
+            when (e) {
+                is java.util.concurrent.TimeoutException,
+                is io.netty.handler.timeout.ReadTimeoutException,
+                is io.netty.handler.timeout.WriteTimeoutException,
+                -> {
+                    metrics.counter("HentPersonBolk", DownstreamResult.TIMEOUT).increment()
+                    log.error("Timeout mot PDL (HentPersonBolk)", e)
+                    PersonBolkResultat(data = emptyList(), statusCode = 504, errorMessage = TIMEOUT_MOT_PDL)
+                }
+
+                else -> {
+                    metrics.counter("HentPersonBolk", DownstreamResult.UNEXPECTED).increment()
+                    log.error("Uventet feil mot PDL (HentPersonBolk)", e)
+                    PersonBolkResultat(data = emptyList(), statusCode = 500, errorMessage = e.message)
+                }
+            }
+        }
+    }
+
     companion object CustomHeaders {
         const val BEHANDLINGSNUMMER = "behandlingsnummer"
         const val TEMA = "TEMA"
+        const val BEHANDLINGSNUMMER_VERDI = "B634"
+        const val TEMA_VERDI = "KTR"
+        const val TIMEOUT_MOT_PDL = "Timeout mot PDL"
     }
 
     internal fun håndterPdlFeil(errors: List<GraphQLClientError>): Pair<Int, String?> {
@@ -187,7 +253,7 @@ class PdlClient(
             -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
-                return PersonDataResultat(null, 504, "Timeout mot PDL")
+                return PersonDataResultat(null, 504, TIMEOUT_MOT_PDL)
             }
 
             else -> {
@@ -209,7 +275,7 @@ class PdlClient(
             -> {
                 metrics.counter(opperasjon, DownstreamResult.TIMEOUT).increment()
                 log.error("Timeout mot PDL ($opperasjon)", e)
-                return GeografiskTilknytningResultat(null, 504, "Timeout mot PDL")
+                return GeografiskTilknytningResultat(null, 504, TIMEOUT_MOT_PDL)
             }
 
             else -> {
@@ -220,6 +286,12 @@ class PdlClient(
         }
     }
 }
+
+data class PersonBolkResultat(
+    val data: List<HentPersonBolkResult>,
+    val statusCode: Int,
+    val errorMessage: String? = null,
+)
 
 data class PersonDataResultat(
     val data: Person?,

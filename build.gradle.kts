@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.graphql.kotlin)
     alias(libs.plugins.openapi.generator)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.sonarqube)
+    jacoco
 }
 
 spotless {
@@ -85,6 +87,30 @@ tasks.withType<Test> {
     doFirst {
         val agentJar = configurations.testRuntimeClasspath.get().find { it.name.contains("byte-buddy-agent") }
         jvmArgs("-javaagent:$agentJar")
+    }
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.withType<Test>())
+    reports {
+        xml.required.set(true)
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "navikt_nav-persondata-api")
+        property("sonar.organization", "navikt")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.sources", "src/main/kotlin")
+        property("sonar.tests", "src/test/kotlin")
+        property("sonar.exclusions", "build/generated/**")
     }
 }
 
@@ -180,6 +206,9 @@ dependencies {
     implementation(libs.graphql.client.jackson)
     implementation(libs.graphql.client)
     implementation(libs.graphql.spring.client)
+
+    // Feature toggles
+    implementation("io.getunleash:unleash-client-java:10.0.0")
 
     // Swagger UI og OpenAPI-dokumentasjon
     implementation(libs.springdoc.openapi)

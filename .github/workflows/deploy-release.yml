@@ -50,6 +50,13 @@ jobs:
         with:
           ref: ${{ env.TARGET_REF }}
       - uses: nais/deploy/actions/deploy@v2
+        name: Deploy Unleash API-token
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/unleash-api-token.yaml
+          VARS: .nais/prod.json
+      - uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
