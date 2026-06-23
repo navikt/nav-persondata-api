@@ -3,8 +3,8 @@ package no.nav.persondataapi.konfigurasjon
 import io.getunleash.FakeUnleash
 import no.nav.persondataapi.tokenutilities.NAV_IDENT
 import no.nav.persondataapi.unleash.UnleashFeatureToggleService
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
