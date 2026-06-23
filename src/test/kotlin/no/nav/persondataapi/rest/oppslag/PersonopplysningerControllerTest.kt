@@ -54,7 +54,7 @@ class PersonopplysningerControllerTest {
             val respons = controller.hentPersonopplysninger(OppslagRequestDto(PersonIdent("12345678901")), null)
 
             assertEquals(HttpStatus.OK, respons.statusCode)
-            val data = (respons.body as OppslagResponseDto<*>).data
+            val data = respons.body?.data
             assertInstanceOf(PersonInformasjon::class.java, data)
             val personInfo = data as PersonInformasjon
             assertEquals(1, personInfo.familemedlemmer.size)
@@ -73,7 +73,7 @@ class PersonopplysningerControllerTest {
             val respons = controller.hentPersonopplysninger(OppslagRequestDto(PersonIdent("12345678901")), null)
 
             assertEquals(HttpStatus.OK, respons.statusCode)
-            val data = (respons.body as OppslagResponseDto<*>).data
+            val data = respons.body?.data
             assertInstanceOf(PersonInformasjonV1Dto::class.java, data)
             val v1Dto = data as PersonInformasjonV1Dto
             assertEquals(mapOf("11111111111" to "BARN"), v1Dto.familemedlemmer)

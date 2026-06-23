@@ -3,8 +3,8 @@ package no.nav.persondataapi.rest.domene
 /**
  * V1-responsformat for personopplysninger — brukes når feature-flagget watson-sok-v-1-2 er AV.
  *
- * Tilsvarer PersonInformasjon, men familemedlemmer er representert som Map<ident, rolle>
- * istedenfor List<Familiemedlem>.
+ * Tilsvarer PersonInformasjon, men `familemedlemmer` er representert som `Map<String, String>` (ident → rolle)
+ * istedenfor `List<Familiemedlem>`.
  */
 data class PersonInformasjonV1Dto(
     val aktørId: String?,

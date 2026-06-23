@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.responstracing.LOGG_HEADER
-import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.domene.tilV1Format
 import no.nav.persondataapi.service.PersonopplysningerResultat
 import no.nav.persondataapi.service.PersonopplysningerService
@@ -99,7 +98,7 @@ class PersonopplysningerController(
     fun hentPersonopplysninger(
         @RequestBody dto: OppslagRequestDto,
         @RequestHeader(name = LOGG_HEADER, required = false) traceHeader: String?,
-    ): ResponseEntity<*> =
+    ): ResponseEntity<OppslagResponseDto<Any>> =
         runBlocking {
             val logResponsAktivert = traceHeader?.toBoolean() ?: false
             val resultat = personopplysningerService.hentPersonopplysningerForPerson(dto.ident, logResponsAktivert)
@@ -107,26 +106,26 @@ class PersonopplysningerController(
             when (resultat) {
                 is PersonopplysningerResultat.Success -> {
                     val nyStruktur = featureToggleService.isEnabled(Toggle.WATSON_SOK_V_1_2)
-                    val data = if (nyStruktur) resultat.data else resultat.data.tilV1Format()
+                    val data: Any = if (nyStruktur) resultat.data else resultat.data.tilV1Format()
                     ResponseEntity.ok(OppslagResponseDto(data = data))
                 }
 
                 is PersonopplysningerResultat.IngenTilgang -> {
-                    ResponseEntity(
+                    ResponseEntity<OppslagResponseDto<Any>>(
                         OppslagResponseDto(error = "Ingen tilgang", data = null),
                         HttpStatus.FORBIDDEN,
                     )
                 }
 
                 is PersonopplysningerResultat.PersonIkkeFunnet -> {
-                    ResponseEntity(
+                    ResponseEntity<OppslagResponseDto<Any>>(
                         OppslagResponseDto(error = "Person ikke funnet", data = null),
                         HttpStatus.NOT_FOUND,
                     )
                 }
 
                 is PersonopplysningerResultat.FeilIBaksystem -> {
-                    ResponseEntity(
+                    ResponseEntity<OppslagResponseDto<Any>>(
                         OppslagResponseDto(error = "Feil i baksystem", data = null),
                         HttpStatus.BAD_GATEWAY,
                     )
