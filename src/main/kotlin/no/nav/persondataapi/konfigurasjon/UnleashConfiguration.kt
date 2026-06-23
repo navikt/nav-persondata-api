@@ -39,7 +39,7 @@ class UnleashConfiguration {
                 .unleashAPI("$apiUrl/api")
                 .apiKey(apiToken)
                 .unleashContextProvider(NavIdentUnleashContextProvider())
-                .synchronousFetchOnInitialisation(true)
+                .synchronousFetchOnInitialisation(false)
                 .build()
 
         return DefaultUnleash(config)

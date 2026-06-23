@@ -3,6 +3,7 @@ package no.nav.persondataapi.konfigurasjon
 import io.getunleash.FakeUnleash
 import no.nav.persondataapi.tokenutilities.NAV_IDENT
 import no.nav.persondataapi.unleash.UnleashFeatureToggleService
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
@@ -29,6 +30,16 @@ class UnleashConfigurationTest {
     fun `unleash() med FakeUnleash har alle toggles aktivert`() {
         val unleash = config.unleash(apiUrl = "", apiToken = "") as FakeUnleash
         assertTrue(unleash.isEnabled("hvilken-som-helst-toggle"))
+    }
+
+    @Test
+    fun `unleash() returnerer DefaultUnleash når URL og token er satt`() {
+        val unleash = config.unleash(apiUrl = "https://unleash.example.com", apiToken = "token")
+        try {
+            assertFalse(unleash is FakeUnleash)
+        } finally {
+            unleash.shutdown()
+        }
     }
 
     @Test
