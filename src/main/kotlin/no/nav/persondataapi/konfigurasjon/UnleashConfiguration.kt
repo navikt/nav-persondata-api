@@ -25,8 +25,8 @@ class UnleashConfiguration {
         @Value("\${UNLEASH_SERVER_API_TOKEN:}") apiToken: String,
     ): Unleash {
         if (apiUrl.isBlank() || apiToken.isBlank()) {
-            log.info("UNLEASH_SERVER_API_URL eller UNLEASH_SERVER_API_TOKEN ikke satt — bruker FakeUnleash (alle toggles false)")
-            return FakeUnleash()
+            log.info("UNLEASH_SERVER_API_URL eller UNLEASH_SERVER_API_TOKEN ikke satt — bruker FakeUnleash (alle toggles true)")
+            return FakeUnleash().also { it.enableAll() }
         }
 
         val config =
