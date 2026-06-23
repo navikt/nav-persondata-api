@@ -49,7 +49,7 @@ class UnleashConfiguration {
     fun featureToggleService(unleash: Unleash): FeatureToggleService = UnleashFeatureToggleService(unleash)
 }
 
-private class NavIdentUnleashContextProvider : UnleashContextProvider {
+internal class NavIdentUnleashContextProvider : UnleashContextProvider {
     override fun getContext(): UnleashContext =
         UnleashContext
             .builder()
