@@ -178,4 +178,3 @@ class PdlClientTest {
             assertTrue(resultat.data.isEmpty())
         }
 }
-
