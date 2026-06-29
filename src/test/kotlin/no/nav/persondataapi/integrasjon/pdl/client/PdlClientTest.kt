@@ -40,7 +40,7 @@ class PdlClientTest {
     }
 
     private fun pdlGraphQLClient(baseUrl: String = "http://localhost:${wireMock.port()}/graphql") =
-        GraphQLWebClient(url = baseUrl, builder = WebClient.builder().mutate())
+        GraphQLWebClient(url = baseUrl, builder = WebClient.builder())
 
     @Test
     fun `håndterPdlFeil skal returnere 404 når error code er not_found`() {
