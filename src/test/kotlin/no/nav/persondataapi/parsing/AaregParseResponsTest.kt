@@ -46,20 +46,38 @@ class AaregParseResponsTest {
             assertEquals(1, data.løpendeArbeidsforhold.size)
             assertEquals(3, data.historikk.size)
 
-            // sjekk at kun en ansattDetalj under løpende har null til og med dato
-            val alleAnsattdetaljer =
-                data.løpendeArbeidsforhold.flatMap { it.ansettelsesDetaljer }.filter {
-                    it.periode.tom ==
+            val løpendeArbeidsforholdUtenSluttdato =
+                data.løpendeArbeidsforhold.filter {
+                    it.ansettelsesperiode.tom ==
                         null
                 }
-            assertEquals(1, alleAnsattdetaljer.size)
-            // sjekk at ingenansattDetalj under historisk har null til og med dato
-            val alleAnsattdetaljerHistoriske =
-                data.historikk.flatMap { it.ansettelsesDetaljer }.filter {
-                    it.periode.tom ==
+            assertEquals(1, løpendeArbeidsforholdUtenSluttdato.size)
+            val historiskeArbeidsforholdUtenSluttdato =
+                data.historikk.filter {
+                    it.ansettelsesperiode.tom ==
                         null
                 }
-            assertTrue(alleAnsattdetaljerHistoriske.isEmpty())
+            assertTrue(historiskeArbeidsforholdUtenSluttdato.isEmpty())
+
+            val json = JsonUtils.toJson(data)
+            val historiskeArbeidsforhold = json.get("historikk")
+            val harAnsettelsesperiodeMedDagnivå =
+                historiskeArbeidsforhold.any {
+                    requireNotNull(it.get("ansettelsesperiode").get("fom").textValue())
+                        .matches(Regex("""\d{4}-\d{2}-\d{2}""")) &&
+                        requireNotNull(it.get("ansettelsesperiode").get("tom").textValue())
+                            .matches(Regex("""\d{4}-\d{2}-\d{2}"""))
+                }
+            val harRapporteringsperiodeMedMånedsnivå =
+                historiskeArbeidsforhold
+                    .flatMap { it.get("ansettelsesDetaljer") }
+                    .any {
+                        requireNotNull(it.get("periode").get("fom").textValue())
+                            .matches(Regex("""\d{4}-\d{2}"""))
+                    }
+
+            assertTrue(harAnsettelsesperiodeMedDagnivå)
+            assertTrue(harRapporteringsperiodeMedMånedsnivå)
         }
 }
 
