@@ -1,5 +1,6 @@
 package no.nav.persondataapi.integrasjon.pdl.client
 
+import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
@@ -18,11 +19,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.web.reactive.function.client.WebClient
 
 class PdlClientTest {
     private val tokenService = mockk<TokenService>()
     private val metrics = mockk<PdlMetrics>(relaxed = true)
-    private val pdlUrl = "http://test-pdl"
 
     private lateinit var wireMock: WireMockServer
 
@@ -38,11 +39,12 @@ class PdlClientTest {
         wireMock.stop()
     }
 
-    private fun pdlUrl() = "http://localhost:${wireMock.port()}/graphql"
+    private fun pdlGraphQLClient(baseUrl: String = "http://localhost:${wireMock.port()}/graphql") =
+        GraphQLWebClient(url = baseUrl, builder = WebClient.builder())
 
     @Test
     fun `håndterPdlFeil skal returnere 404 når error code er not_found`() {
-        val pdlClient = PdlClient(tokenService, metrics, pdlUrl)
+        val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient())
 
         val error = mockk<GraphQLClientError>()
         every { error.message } returns "Fant ikke person"
@@ -56,7 +58,7 @@ class PdlClientTest {
 
     @Test
     fun `håndterPdlFeil skal returnere 500 når error code ikke er not_found`() {
-        val pdlClient = PdlClient(tokenService, metrics, pdlUrl)
+        val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient())
 
         val error = mockk<GraphQLClientError>()
         every { error.message } returns "Noe gikk galt"
@@ -99,7 +101,7 @@ class PdlClientTest {
                     ),
             )
 
-            val pdlClient = PdlClient(tokenService, metrics, pdlUrl())
+            val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient())
             val resultat = pdlClient.hentPersonBolk(listOf(PersonIdent("11111111111")))
 
             assertEquals(200, resultat.statusCode)
@@ -128,7 +130,7 @@ class PdlClientTest {
                     ),
             )
 
-            val pdlClient = PdlClient(tokenService, metrics, pdlUrl())
+            val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient())
             val resultat = pdlClient.hentPersonBolk(listOf(PersonIdent("11111111111")))
 
             assertEquals(502, resultat.statusCode)
@@ -159,7 +161,7 @@ class PdlClientTest {
                     ),
             )
 
-            val pdlClient = PdlClient(tokenService, metrics, pdlUrl())
+            val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient())
             val resultat = pdlClient.hentPersonBolk(listOf(PersonIdent("11111111111")))
 
             assertEquals(404, resultat.statusCode)
@@ -169,7 +171,7 @@ class PdlClientTest {
     @Test
     fun `hentPersonBolk skal returnere 500 ved uventet feil`() =
         runBlocking {
-            val pdlClient = PdlClient(tokenService, metrics, "http://localhost:1")
+            val pdlClient = PdlClient(tokenService, metrics, pdlGraphQLClient("http://localhost:1/graphql"))
             val resultat = pdlClient.hentPersonBolk(listOf(PersonIdent("11111111111")))
 
             assertEquals(500, resultat.statusCode)

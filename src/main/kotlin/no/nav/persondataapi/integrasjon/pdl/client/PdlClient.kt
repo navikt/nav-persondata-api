@@ -2,9 +2,6 @@ package no.nav.persondataapi.integrasjon.pdl.client
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
-import io.netty.channel.ChannelOption
-import io.netty.handler.timeout.ReadTimeoutHandler
-import io.netty.handler.timeout.WriteTimeoutHandler
 import no.nav.persondataapi.generated.pdl.HentGeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.HentPerson
 import no.nav.persondataapi.generated.pdl.HentPersonBolk
@@ -18,32 +15,18 @@ import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.http.client.reactive.ReactorClientHttpConnector
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.WebClient
-import reactor.netty.http.client.HttpClient
-import java.time.Duration
 
 @Service
 class PdlClient(
     private val tokenService: TokenService,
     private val metrics: PdlMetrics,
-    @param:Value("\${PDL_URL}")
-    private val pdlUrl: String,
+    @param:Qualifier("pdlGraphQLClient")
+    private val graphQLClient: GraphQLWebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
-
-    fun createTimeoutHttpClient(): HttpClient =
-        HttpClient
-            .create()
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-            .responseTimeout(Duration.ofSeconds(5))
-            .doOnConnected { conn ->
-                conn.addHandlerLast(ReadTimeoutHandler(5))
-                conn.addHandlerLast(WriteTimeoutHandler(5))
-            }
 
     @Cacheable(
         value = ["pdl-person"],
@@ -53,16 +36,6 @@ class PdlClient(
     suspend fun hentPerson(personIdent: PersonIdent): PersonDataResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
-        val httpClient = createTimeoutHttpClient()
-
-        val client =
-            GraphQLWebClient(
-                url = pdlUrl,
-                builder =
-                    WebClient
-                        .builder()
-                        .clientConnector(ReactorClientHttpConnector(httpClient)),
-            )
         val query =
             HentPerson(
                 HentPerson.Variables(
@@ -73,7 +46,7 @@ class PdlClient(
         try {
             val response =
                 coroutineRetry(kilde = "PDL-HentPerson") {
-                    client.execute(query) {
+                    graphQLClient.execute(query) {
                         header("Authorization", "Bearer $token")
                         header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
                         header(TEMA, TEMA_VERDI)
@@ -108,16 +81,6 @@ class PdlClient(
     suspend fun hentGeografiskTilknytning(personIdent: PersonIdent): GeografiskTilknytningResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
 
-        val httpClient = createTimeoutHttpClient()
-
-        val client =
-            GraphQLWebClient(
-                url = pdlUrl,
-                builder =
-                    WebClient
-                        .builder()
-                        .clientConnector(ReactorClientHttpConnector(httpClient)),
-            )
         val query =
             HentGeografiskTilknytning(
                 HentGeografiskTilknytning.Variables(
@@ -127,7 +90,7 @@ class PdlClient(
         try {
             val response =
                 coroutineRetry(kilde = "PDL-Geografisktilknytning") {
-                    client.execute(query) {
+                    graphQLClient.execute(query) {
                         header("Authorization", "Bearer $token")
                         header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
                         header(TEMA, TEMA_VERDI)
@@ -156,15 +119,6 @@ class PdlClient(
 
     suspend fun hentPersonBolk(personIdenter: List<PersonIdent>): PersonBolkResultat {
         val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
-        val httpClient = createTimeoutHttpClient()
-        val client =
-            GraphQLWebClient(
-                url = pdlUrl,
-                builder =
-                    WebClient
-                        .builder()
-                        .clientConnector(ReactorClientHttpConnector(httpClient)),
-            )
         val query =
             HentPersonBolk(
                 HentPersonBolk.Variables(
@@ -174,7 +128,7 @@ class PdlClient(
         return try {
             val response =
                 coroutineRetry(kilde = "PDL-HentPersonBolk") {
-                    client.execute(query) {
+                    graphQLClient.execute(query) {
                         header("Authorization", "Bearer $token")
                         header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
                         header(TEMA, TEMA_VERDI)
