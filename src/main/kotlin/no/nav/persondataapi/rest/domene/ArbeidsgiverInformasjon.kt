@@ -13,7 +13,15 @@ data class ArbeidsgiverInformasjon(
         @Maskert
         val organisasjonsnummer: String,
         val ansettelsesDetaljer: List<AnsettelsesDetalj>,
+        val timerMedTimeloenn: List<TimerMedTimeloennDto>,
         val id: String,
+    )
+
+    data class TimerMedTimeloennDto(
+        val antall: Double,
+        val startdato: String?,
+        val sluttdato: String?,
+        val rapporteringsmaaneder: ÅpenPeriode?,
     )
 
     data class AnsettelsesDetalj(
