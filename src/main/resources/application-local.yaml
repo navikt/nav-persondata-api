@@ -32,7 +32,7 @@ management:
 no.nav.security.jwt:
   issuer:
     azuread:
-      discoveryurl: http://localhost:8090/azuread/.well-known/openid-configuration
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL:http://localhost:8090/azuread/.well-known/openid-configuration}
       accepted_audience: nav-persondata-api
 
 VALKEY_HOST_NAV_PERSONDATA_API: localhost
