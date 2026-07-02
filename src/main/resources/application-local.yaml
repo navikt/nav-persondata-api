@@ -32,8 +32,8 @@ management:
 no.nav.security.jwt:
   issuer:
     azuread:
-      discoveryurl: "https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration"
-      accepted_audience: "f99254b7-a630-48fe-a21a-21989eca6f4b"
+      discoveryurl: http://localhost:8090/azuread/.well-known/openid-configuration
+      accepted_audience: nav-persondata-api
 
 VALKEY_HOST_NAV_PERSONDATA_API: localhost
 VALKEY_PORT_NAV_PERSONDATA_API: 6379
