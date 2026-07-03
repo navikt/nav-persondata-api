@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.runBlocking
 import no.nav.inntekt.generated.model.HistorikkData
 import no.nav.inntekt.generated.model.InntektshistorikkApiUt
@@ -14,6 +15,7 @@ import no.nav.persondataapi.integrasjon.ereg.client.PeriodeDato
 import no.nav.persondataapi.integrasjon.ereg.client.PeriodeTid
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektDataResultat
+import no.nav.persondataapi.integrasjon.inntekt.client.KontrollPeriode
 import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.rest.domene.PersonIdent
 import org.junit.jupiter.api.Assertions
@@ -397,6 +399,29 @@ class InntektServiceTest {
             assertEquals(2, data.lønnsinntekt.size)
             assertEquals("2024-01", data.lønnsinntekt[0].periode)
             assertEquals("2024-02", data.lønnsinntekt[1].periode)
+        }
+
+    @Test
+    fun `skal bruke 13 år som startdato når utvidet er true`() =
+        runBlocking {
+            val brukertilgangService = mockk<BrukertilgangService>()
+            val inntektClient = mockk<InntektClient>()
+            val eregClient = mockk<EregClient>()
+            val periodSlot = slot<KontrollPeriode>()
+
+            every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+            every { inntektClient.hentInntekter(any(), capture(periodSlot)) } returns
+                InntektDataResultat(
+                    data = InntektshistorikkApiUt(data = emptyList()),
+                    statusCode = 200,
+                    errorMessage = null,
+                )
+            every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+            val service = InntektService(inntektClient, eregClient, brukertilgangService)
+            service.hentInntekterForPerson(PersonIdent("12345678901"), utvidet = true)
+
+            assertEquals(LocalDate.now().minusYears(13), periodSlot.captured.fom)
         }
 }
 
