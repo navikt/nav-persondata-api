@@ -46,6 +46,10 @@ class LocalWireMockSmokeTest {
                             ),
                         ),
                 )
+                stubFor(
+                    WireMock.get(WireMock.urlPathEqualTo("/azuread/jwks"))
+                        .willReturn(WireMock.okJson("""{"keys":[]}""")),
+                )
             }
 
         @JvmStatic
