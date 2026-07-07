@@ -1,1 +1,112 @@
-[]
+[
+  {
+    "id": "abc123",
+    "type": { "kode": "ordinaertArbeidsforhold", "beskrivelse": "Ordinært arbeidsforhold" },
+    "arbeidstaker": {
+      "identer": [
+        { "type": "FOLKEREGISTERIDENT", "ident": "12345678901", "gjeldende": true }
+      ]
+    },
+    "arbeidssted": {
+      "type": "Underenhet",
+      "identer": [
+        { "type": "ORGANISASJONSNUMMER", "ident": "810007842", "gjeldende": true }
+      ]
+    },
+    "opplysningspliktig": {
+      "type": "Hovedenhet",
+      "identer": [
+        { "type": "ORGANISASJONSNUMMER", "ident": "810007702", "gjeldende": true }
+      ]
+    },
+    "ansettelsesperiode": {
+      "startdato": "2020-01-01",
+      "sluttdato": null,
+      "sluttaarsak": null,
+      "varsling": null,
+      "sporingsinformasjon": null
+    },
+    "ansettelsesdetaljer": [
+      {
+        "type": "Ordinaer",
+        "arbeidstidsordning": { "kode": "ikkeSkift", "beskrivelse": "Ikke skift" },
+        "ansettelsesform": { "kode": "fast", "beskrivelse": "Fast ansettelse" },
+        "yrke": { "kode": "3112105", "beskrivelse": "Systemutvikler" },
+        "antallTimerPrUke": 37.5,
+        "avtaltStillingsprosent": 100.0,
+        "sisteStillingsprosentendring": null,
+        "sisteLoennsendring": "2023-01-01",
+        "rapporteringsmaaneder": { "fra": "2020-01", "til": null },
+        "sporingsinformasjon": null
+      }
+    ],
+    "permisjoner": [],
+    "permitteringer": [],
+    "timerMedTimeloenn": [],
+    "idHistorikk": [],
+    "varsler": [],
+    "rapporteringsordning": { "kode": "A-ordningen", "beskrivelse": "A-ordningen" },
+    "navArbeidsforholdId": 1001,
+    "navVersjon": 1,
+    "navUuid": "11111111-1111-1111-1111-111111111111",
+    "opprettet": "2020-01-01T00:00:00",
+    "sistBekreftet": "2024-01-01T00:00:00",
+    "bruksperiode": { "fom": "2020-01-01T00:00:00", "tom": null },
+    "sporingsinformasjon": null
+  },
+  {
+    "id": "def456",
+    "type": { "kode": "ordinaertArbeidsforhold", "beskrivelse": "Ordinært arbeidsforhold" },
+    "arbeidstaker": {
+      "identer": [
+        { "type": "FOLKEREGISTERIDENT", "ident": "12345678901", "gjeldende": true }
+      ]
+    },
+    "arbeidssted": {
+      "type": "Underenhet",
+      "identer": [
+        { "type": "ORGANISASJONSNUMMER", "ident": "923609016", "gjeldende": true }
+      ]
+    },
+    "opplysningspliktig": {
+      "type": "Hovedenhet",
+      "identer": [
+        { "type": "ORGANISASJONSNUMMER", "ident": "923609016", "gjeldende": true }
+      ]
+    },
+    "ansettelsesperiode": {
+      "startdato": "2015-03-01",
+      "sluttdato": "2019-12-31",
+      "sluttaarsak": { "kode": "arbeidstakerHarSagtOppSelv", "beskrivelse": "Arbeidstaker har sagt opp selv" },
+      "varsling": null,
+      "sporingsinformasjon": null
+    },
+    "ansettelsesdetaljer": [
+      {
+        "type": "Ordinaer",
+        "arbeidstidsordning": { "kode": "ikkeSkift", "beskrivelse": "Ikke skift" },
+        "ansettelsesform": { "kode": "fast", "beskrivelse": "Fast ansettelse" },
+        "yrke": { "kode": "2512104", "beskrivelse": "IT-konsulent" },
+        "antallTimerPrUke": 37.5,
+        "avtaltStillingsprosent": 100.0,
+        "sisteStillingsprosentendring": null,
+        "sisteLoennsendring": "2018-01-01",
+        "rapporteringsmaaneder": { "fra": "2015-03", "til": "2019-12" },
+        "sporingsinformasjon": null
+      }
+    ],
+    "permisjoner": [],
+    "permitteringer": [],
+    "timerMedTimeloenn": [],
+    "idHistorikk": [],
+    "varsler": [],
+    "rapporteringsordning": { "kode": "A-ordningen", "beskrivelse": "A-ordningen" },
+    "navArbeidsforholdId": 1002,
+    "navVersjon": 1,
+    "navUuid": "22222222-2222-2222-2222-222222222222",
+    "opprettet": "2015-03-01T00:00:00",
+    "sistBekreftet": "2020-01-01T00:00:00",
+    "bruksperiode": { "fom": "2015-03-01T00:00:00", "tom": "2020-01-01T00:00:00" },
+    "sporingsinformasjon": null
+  }
+]

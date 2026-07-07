@@ -1,4 +1,14 @@
 {
   "inntektsaar": "2024",
-  "pensjonsgivendeInntekt": []
+  "pensjonsgivendeInntekt": [
+    {
+      "datoForFastsetting": "2025-03-01",
+      "pensjonsgivendeInntektAvLoennsinntekt": 780000,
+      "pensjonsgivendeInntektAvLoennsinntektBarePensjonsdel": 0,
+      "pensjonsgivendeInntektAvNaeringsinntekt": 0,
+      "pensjonsgivendeInntektAvNaeringsinntektFraFiskeFangstEllerFamiliebarnehage": 0,
+      "skatteordning": "FASTLAND",
+      "inntektsaar": "2024"
+    }
+  ]
 }
