@@ -44,7 +44,7 @@ class UtbetalingClient(
                 metrics
                     .timer(operationName)
                     .recordCallable {
-                        val antallÅr: Long = if (utvidet) 10 else 3
+                        val antallÅr: Long = if (utvidet) 13 else 3
                         val requestBody =
                             RequestBody(
                                 ident = personIdent.value,

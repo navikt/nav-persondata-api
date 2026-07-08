@@ -38,7 +38,7 @@ class PensjonsgivendeInntektService(
         utvidet: Boolean = false,
     ): PensjonsgivendeInntektResultat =
         coroutineScope {
-            val antallÅr = if (utvidet) 10 else 3
+            val antallÅr = if (utvidet) 13 else 3
             val årListe = HistoriskeÅrService().hentTidligereÅrEkskludertNåværende(antallÅr)
             val deferred =
                 årListe.map { aar ->

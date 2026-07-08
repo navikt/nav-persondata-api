@@ -25,4 +25,13 @@ class `SisteXÅrServiceTest` {
         Assertions.assertFalse(response.contains(detteÅret))
         println(response)
     }
+
+    @Test
+    fun skalKunneHenteUt13År() {
+        val detteÅret = Year.now().value
+        val response = HistoriskeÅrService().hentTidligereÅrEkskludertNåværende(13)
+        Assertions.assertNotNull(response)
+        Assertions.assertTrue(response.contains(detteÅret - 13))
+        Assertions.assertFalse(response.contains(detteÅret))
+    }
 }

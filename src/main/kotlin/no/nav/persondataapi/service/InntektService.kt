@@ -27,7 +27,7 @@ class InntektService(
     ): InntektResultat {
         val kontrollperiode =
             KontrollPeriode(
-                LocalDate.now().minusYears(if (utvidet) 10 else 5),
+                LocalDate.now().minusYears(if (utvidet) 13 else 5),
                 LocalDate.now(),
             )
         // Hent inntekter fra InntektClient
