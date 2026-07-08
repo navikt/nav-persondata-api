@@ -1,8 +1,16 @@
 {
-  "organisasjonsnummer": "123456789",
+  "organisasjonsnummer": "810007842",
   "type": "AS",
   "navn": {
-    "sammensattnavn": "Test AS",
-    "navnelinje1": "Test AS"
+    "sammensattnavn": "Nav Testbedrift AS",
+    "navnelinje1": "Nav Testbedrift AS",
+    "bruksperiode": {
+      "fom": "2010-01-01T00:00:00",
+      "tom": null
+    },
+    "gyldighetsperiode": {
+      "fom": "2010-01-01",
+      "tom": null
+    }
   }
 }
