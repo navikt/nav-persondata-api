@@ -42,6 +42,20 @@ class LocalWireMockSmokeTest {
                 WireMockConfiguration.wireMockConfig().dynamicPort().usingFilesUnderDirectory("src/test/resources"),
             ).apply {
                 start()
+                stubFor(
+                    WireMock
+                        .get(WireMock.urlPathEqualTo("/azuread/.well-known/openid-configuration"))
+                        .willReturn(
+                            WireMock.okJson(
+                                """{"issuer":"http://localhost:${port()}/azuread","jwks_uri":"http://localhost:${port()}/azuread/jwks","token_endpoint":"http://localhost:${port()}/azuread/token","authorization_endpoint":"http://localhost:${port()}/azuread/authorize","response_types_supported":["code"],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"]}""",
+                            ),
+                        ),
+                )
+                stubFor(
+                    WireMock
+                        .get(WireMock.urlPathEqualTo("/azuread/jwks"))
+                        .willReturn(WireMock.okJson("""{"keys":[]}""")),
+                )
             }
 
         @JvmStatic
@@ -49,6 +63,9 @@ class LocalWireMockSmokeTest {
         fun props(registry: DynamicPropertyRegistry) {
             val port = wiremock.port()
             registry.add("WIREMOCK_PORT") { port.toString() }
+            registry.add(
+                "AZURE_APP_WELL_KNOWN_URL",
+            ) { "http://localhost:$port/azuread/.well-known/openid-configuration" }
             registry.add("AZURE_OPENID_CONFIG_TOKEN_ENDPOINT") { "http://localhost:$port/oauth2/token" }
             registry.add("NAIS_TOKEN_EXCHANGE_ENDPOINT") { "http://localhost:$port/api/v1/token/exchange" }
             registry.add("PDL_URL") { "http://localhost:$port/pdl/graphql" }

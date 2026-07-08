@@ -125,6 +125,19 @@ class ArbeidsforholdService(
                         yrke = ansettelsesdetaljer.yrke.beskrivelse,
                     )
                 },
+            timerMedTimeloenn =
+                arbeidsforhold.timerMedTimeloenn
+                    ?.map { timer ->
+                        ArbeidsgiverInformasjon.TimerMedTimeloennDto(
+                            antall = timer.antall,
+                            startdato = timer.startdato,
+                            sluttdato = timer.sluttdato,
+                            rapporteringsmaaneder =
+                                timer.rapporteringsmaaneder?.let {
+                                    ArbeidsgiverInformasjon.ÅpenPeriode(fom = it.fra, tom = it.til)
+                                },
+                        )
+                    } ?: emptyList(),
         )
     }
 }
