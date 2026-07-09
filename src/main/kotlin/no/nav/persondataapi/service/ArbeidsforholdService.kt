@@ -12,7 +12,6 @@ import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.time.YearMonth
 
 @Service
 class ArbeidsforholdService(
@@ -117,10 +116,8 @@ class ArbeidsforholdService(
                         antallTimerPrUke = ansettelsesdetaljer.antallTimerPrUke,
                         periode =
                             ArbeidsgiverInformasjon.ÅpenPeriode(
-                                fom = ansettelsesdetaljer.rapporteringsmaaneder.fra,
-                                tom =
-                                    ansettelsesdetaljer.rapporteringsmaaneder.til
-                                        ?: sluttdatoForArbeidsforhold?.let { YearMonth.from(it) },
+                                fom = arbeidsforhold.ansettelsesperiode.startdato,
+                                tom = sluttdatoForArbeidsforhold,
                             ),
                         yrke = ansettelsesdetaljer.yrke.beskrivelse,
                     )
@@ -134,7 +131,7 @@ class ArbeidsforholdService(
                             sluttdato = timer.sluttdato,
                             rapporteringsmaaneder =
                                 timer.rapporteringsmaaneder?.let {
-                                    ArbeidsgiverInformasjon.ÅpenPeriode(fom = it.fra, tom = it.til)
+                                    ArbeidsgiverInformasjon.Rapporteringsperiode(fom = it.fra, tom = it.til)
                                 },
                         )
                     } ?: emptyList(),
