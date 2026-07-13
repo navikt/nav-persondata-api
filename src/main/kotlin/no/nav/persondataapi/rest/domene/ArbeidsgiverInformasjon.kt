@@ -45,4 +45,3 @@ data class ArbeidsgiverInformasjon(
         var tom: YearMonth?,
     )
 }
-
