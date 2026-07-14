@@ -94,18 +94,26 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
-                val erKjentSkatteetatenFeil = error.message?.contains(kjentSkatteetatenFeilkode, ignoreCase = true) == true
+                val erKjentSkatteetatenFeil =
+                    error.message?.contains(kjentSkatteetatenFeilkode, ignoreCase = true) == true
                 val resultType =
                     when {
                         erTimeout(error) -> DownstreamResult.TIMEOUT
-                        error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
+
+                        error.message?.contains(
+                            "ikke tilgang",
+                            ignoreCase = true,
+                        ) == true -> DownstreamResult.CLIENT_ERROR
+
                         else -> DownstreamResult.UNEXPECTED
                     }
 
                 metrics.counter(operationName, resultType).increment()
 
                 if (erKjentSkatteetatenFeil) {
-                    log.warn("Inntekt utilgjengelig — kjent Skatteetaten-feil ($kjentSkatteetatenFeilkode): ${error.message}")
+                    log.warn(
+                        "Inntekt utilgjengelig — kjent Skatteetaten-feil ($kjentSkatteetatenFeilkode): ${error.message}",
+                    )
                 } else {
                     log.error("Feil ved henting av inntekter: ${error.message}", error)
                 }
