@@ -42,7 +42,12 @@
     ],
     "permisjoner": [],
     "permitteringer": [],
-    "timerMedTimeloenn": [],
+    "timerMedTimeloenn": [
+      { "antall": 37.5, "startdato": "2024-04-01", "sluttdato": "2024-04-30" },
+      { "antall": 37.5, "startdato": "2024-05-01", "sluttdato": "2024-05-31" },
+      { "antall": 37.5, "startdato": "2024-06-01", "sluttdato": "2024-06-30" },
+      { "antall": 37.5, "startdato": "2025-01-01", "sluttdato": null }
+    ],
     "idHistorikk": [],
     "varsler": [],
     "rapporteringsordning": { "kode": "A-ordningen", "beskrivelse": "A-ordningen" },
