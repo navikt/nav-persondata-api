@@ -1,0 +1,10 @@
+{
+  "personident": "12345678901",
+  "aktiv": true,
+  "kanVarsles": true,
+  "reservert": false,
+  "epostadresse": "test.bruker@example.com",
+  "epostadresseOppdatert": "2024-01-15",
+  "mobiltelefonnummer": "99988777",
+  "mobiltelefonnummerOppdatert": "2024-01-15"
+}

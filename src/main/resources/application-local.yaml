@@ -87,3 +87,5 @@ AAP_SCOPE: api://dev-gcp.aap.api-intern/.default
 
 SIGRUN_URL: http://localhost:${WIREMOCK_PORT:7164}
 SIGRUN_SCOPE: api://dev-fss.team-inntekt.sigrun-q2/.default
+KRR_URL: http://localhost:${WIREMOCK_PORT:7164}
+KRR_SCOPE: api://dev-gcp.team-rocket.krr-proxy/.default

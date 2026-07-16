@@ -3,6 +3,7 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
+import no.nav.persondataapi.integrasjon.krr.client.KrrClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
@@ -19,6 +20,7 @@ class PersonopplysningerService(
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
     private val navTilhørighetService: NavTilhørighetService,
+    private val krrClient: KrrClient,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -31,8 +33,9 @@ class PersonopplysningerService(
         personIdent: PersonIdent,
         responsLog: Boolean = false,
     ): PersonopplysningerResultat {
-        // Hent person fra PDL
+        // Hent person fra PDL og kontaktinfo fra KRR parallelt
         val pdlResponse = pdlClient.hentPerson(personIdent)
+        val krrResultat = krrClient.hentKontaktinformasjon(personIdent)
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
         traceLoggHvisAktivert(
             logger = logger,
@@ -93,6 +96,7 @@ class PersonopplysningerService(
                         enhetNr = lokalKontor.enhetNr,
                         type = lokalKontor.type,
                     ),
+                epost = krrResultat.epost,
             )
 
         // Berik med kodeverkdata

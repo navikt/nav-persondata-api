@@ -16,6 +16,8 @@ import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentperson.Sivilstand
 import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
+import no.nav.persondataapi.integrasjon.krr.client.KrrClient
+import no.nav.persondataapi.integrasjon.krr.client.KrrDataResultat
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
@@ -38,6 +40,7 @@ class PersonopplysningerServiceTest {
     val pdlClient = mockk<PdlClient>()
     val kodeverkService = mockk<KodeverkService>()
     val navTilhørigetService = mockk<NavTilhørighetService>()
+    val krrClient = mockk<KrrClient>()
 
     private fun lagServiceMedStandardMocks(
         harTilgang: Boolean = true,
@@ -69,8 +72,15 @@ class PersonopplysningerServiceTest {
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
         coEvery { pdlClient.hentPersonBolk(any()) } returns bolkResultat
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent(any()) } returns lokalKontor
+        every { krrClient.hentKontaktinformasjon(any()) } returns KrrDataResultat(epost = null)
 
-        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService, navTilhørigetService)
+        return PersonopplysningerService(
+            pdlClient,
+            brukertilgangService,
+            kodeverkService,
+            navTilhørigetService,
+            krrClient,
+        )
     }
 
     @Test

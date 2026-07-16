@@ -82,6 +82,9 @@ class WebClientConfig(
     @Value("\${SIGRUN_URL}")
     lateinit var sigrunURL: String
 
+    @Value("\${KRR_URL}")
+    lateinit var krrURL: String
+
     /**
      * HttpClient for tokenutveksling med pool.
      */
@@ -237,6 +240,10 @@ class WebClientConfig(
     fun aapHttpClient(): HttpClient = httpClientFor("aap")
 
     @Bean
+    @Qualifier("krrHttpClient")
+    fun krrHttpClient(): HttpClient = httpClientFor("krr")
+
+    @Bean
     fun eregWebClient(
         builder: WebClient.Builder,
         navCallIdHeaderFilter: ExchangeFilterFunction,
@@ -293,6 +300,21 @@ class WebClientConfig(
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
             }.clientConnector(ReactorClientHttpConnector(aapHttpClient))
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
+    @Qualifier("krrWebClient")
+    fun krrWebClient(
+        builder: WebClient.Builder,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("krrHttpClient") krrHttpClient: HttpClient,
+    ): WebClient =
+        builder
+            .baseUrl(krrURL)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+            }.clientConnector(ReactorClientHttpConnector(krrHttpClient))
             .filter(navCallIdHeaderFilter)
             .build()
 
@@ -498,6 +520,12 @@ class WebClientConfig(
             "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),
             "aap" to HttpClientKonfig(poolNavn = "aap-pool"),
             "sigrun" to HttpClientKonfig(poolNavn = "sigrun-pool"),
+            "krr" to
+                HttpClientKonfig(
+                    poolNavn = "krr-pool",
+                    readTimeout = Duration.ofSeconds(5),
+                    responseTimeout = Duration.ofSeconds(5),
+                ),
         )
 
     private fun httpClientFor(navn: String): HttpClient = httpClientMedPool(httpClientKonfigurasjoner.getValue(navn))

@@ -98,6 +98,8 @@ spec:
         - application: sigrun-2
           namespace: team-inntekt
           cluster: {{FSS_CLUSTER}}
+        - application: krr-proxy
+          namespace: team-rocket
       external:
         - host: holmes-unleash-api.nav.cloud.nais.io
         {{#each OUTBOUND_EXTERNAL_HOSTS}}
