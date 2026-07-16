@@ -119,8 +119,7 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
         .filter { adresse ->
             val tilDato = adresse.gyldigTilOgMed?.let { LocalDate.parse(it) }
             tilDato == null || tilDato.isAfter(cutoff)
-        }
-        .mapNotNull { adresse ->
+        }.mapNotNull { adresse ->
             val vegadresse = adresse.vegadresse
             val utenlandskAdresse = adresse.utenlandskAdresse
 
