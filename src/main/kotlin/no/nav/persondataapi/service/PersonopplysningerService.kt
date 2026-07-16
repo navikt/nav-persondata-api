@@ -1,8 +1,12 @@
 package no.nav.persondataapi.service
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
+import no.nav.persondataapi.integrasjon.krr.client.KrrClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
@@ -19,6 +23,7 @@ class PersonopplysningerService(
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
     private val navTilhørighetService: NavTilhørighetService,
+    private val krrClient: KrrClient,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -31,8 +36,13 @@ class PersonopplysningerService(
         personIdent: PersonIdent,
         responsLog: Boolean = false,
     ): PersonopplysningerResultat {
-        // Hent person fra PDL
-        val pdlResponse = pdlClient.hentPerson(personIdent)
+        // Hent person fra PDL og kontaktinfo fra KRR parallelt
+        val (pdlResponse, krrResultat) =
+            coroutineScope {
+                val pdlDeferred = async { pdlClient.hentPerson(personIdent) }
+                val krrDeferred = async(Dispatchers.IO) { krrClient.hentKontaktinformasjon(personIdent) }
+                pdlDeferred.await() to krrDeferred.await()
+            }
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
         traceLoggHvisAktivert(
             logger = logger,
@@ -93,6 +103,7 @@ class PersonopplysningerService(
                         enhetNr = lokalKontor.enhetNr,
                         type = lokalKontor.type,
                     ),
+                epost = krrResultat.epost,
             )
 
         // Berik med kodeverkdata

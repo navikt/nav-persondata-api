@@ -78,4 +78,5 @@ enum class SCOPE {
     DP_DATADELING_SCOPE,
     AAP_SCOPE,
     SIGRUN_SCOPE,
+    KRR_SCOPE,
 }

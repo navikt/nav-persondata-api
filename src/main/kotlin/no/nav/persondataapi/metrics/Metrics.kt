@@ -52,3 +52,8 @@ class NomMetrics(
 class SigrunMetrics(
     registry: MeterRegistry,
 ) : BaseDownstreamMetrics(registry, "sigrun")
+
+@Component
+class KrrMetrics(
+    registry: MeterRegistry,
+) : BaseDownstreamMetrics(registry, "krr")

@@ -121,6 +121,14 @@
       "value": "https://team-inntekt-proxy.dev-fss-pub.nais.io/proxy/sigrun-q2"
     },
     {
+      "name": "KRR_URL",
+      "value": "https://krr-proxy.intern.dev.nav.no"
+    },
+    {
+      "name": "KRR_SCOPE",
+      "value": "api://dev-gcp.team-rocket.krr-proxy/.default"
+    },
+    {
       "name": "JAVA_TOOL_OPTIONS",
       "value": "\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005\""
     },

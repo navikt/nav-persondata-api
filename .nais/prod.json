@@ -119,6 +119,14 @@
     {
       "name": "SIGRUN_URL",
       "value": "https://team-inntekt-proxy.prod-fss-pub.nais.io/proxy/sigrun"
+    },
+    {
+      "name": "KRR_URL",
+      "value": "https://krr-proxy.intern.nav.no"
+    },
+    {
+      "name": "KRR_SCOPE",
+      "value": "api://prod-gcp.team-rocket.krr-proxy/.default"
     }
   ]
 }
