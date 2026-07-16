@@ -67,7 +67,7 @@ class PdlClient(
             HentPerson(
                 HentPerson.Variables(
                     ident = personIdent.value,
-                    historikk = false,
+                    historikk = true,
                 ),
             )
         try {

@@ -8,6 +8,7 @@ import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.Identtype
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
 import no.nav.persondataapi.rest.domene.PersonInformasjon
+import java.time.LocalDate
 
 fun Arbeidsforhold.hentOrgNummerTilArbeidssted(): String {
     val identOrgNummer = this.arbeidssted.identer.firstOrNull { it.type == Identtype.ORGANISASJONSNUMMER }
@@ -98,4 +99,60 @@ fun HistorikkData.harHistorikkPåNormallønn(): Boolean {
         if (antall > 0) count++
     }
     return count > 1
+}
+
+fun Person.telefonnummer(): List<PersonInformasjon.Telefonnummer> =
+    this.telefonnummer
+        .filter { !it.metadata.historisk }
+        .sortedBy { it.prioritet }
+        .map {
+            PersonInformasjon.Telefonnummer(
+                landskode = it.landskode,
+                nummer = it.nummer,
+                prioritet = it.prioritet,
+            )
+        }
+
+fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse> {
+    val cutoff = LocalDate.now().minusYears(5)
+    return this.bostedsadresse
+        .filter { adresse ->
+            val tilDato = adresse.gyldigTilOgMed?.let { LocalDate.parse(it) }
+            tilDato == null || tilDato.isAfter(cutoff)
+        }.mapNotNull { adresse ->
+            val vegadresse = adresse.vegadresse
+            val utenlandskAdresse = adresse.utenlandskAdresse
+
+            val norskAdresse =
+                vegadresse?.let {
+                    PersonInformasjon.NorskAdresse(
+                        adressenavn = it.adressenavn,
+                        husnummer = it.husnummer,
+                        husbokstav = it.husbokstav,
+                        postnummer = it.postnummer,
+                        kommunenummer = it.kommunenummer,
+                        poststed = it.postnummer,
+                    )
+                }
+            val utlandAdresse =
+                utenlandskAdresse?.let {
+                    PersonInformasjon.UtenlandskAdresse(
+                        adressenavnNummer = it.adressenavnNummer,
+                        bygningEtasjeLeilighet = it.bygningEtasjeLeilighet,
+                        postboksNummerNavn = it.postboksNummerNavn,
+                        postkode = it.postkode,
+                        bySted = it.bySted,
+                        regionDistriktOmråde = it.regionDistriktOmraade,
+                        landkode = it.landkode,
+                    )
+                }
+
+            if (norskAdresse == null && utlandAdresse == null) return@mapNotNull null
+
+            PersonInformasjon.HistoriskAdresse(
+                adresse = PersonInformasjon.Bostedsadresse(norskAdresse, utlandAdresse),
+                gyldigFraOgMed = adresse.gyldigFraOgMed,
+                gyldigTilOgMed = adresse.gyldigTilOgMed,
+            )
+        }
 }

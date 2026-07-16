@@ -76,6 +76,8 @@ class PersonopplysningerService(
                     ),
                 aktørId = personIdent.value,
                 adresse = pdlData.nåværendeBostedsadresse(),
+                adresseHistorikk = pdlData.adresseHistorikkSiste5År(),
+                telefonnummer = pdlData.telefonnummer(),
                 familemedlemmer = familiemedlemmer,
                 adressebeskyttelse = pdlData.nåværendeAdresseBeskyttelse(),
                 statsborgerskap = statsborgerskap,

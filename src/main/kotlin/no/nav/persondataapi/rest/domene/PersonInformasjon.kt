@@ -8,6 +8,8 @@ data class PersonInformasjon(
     val statsborgerskap: List<String> = emptyList(),
     val navn: Navn,
     val adresse: Bostedsadresse? = null,
+    val adresseHistorikk: List<HistoriskAdresse> = emptyList(),
+    val telefonnummer: List<Telefonnummer> = emptyList(),
     val sivilstand: String? = null,
     val alder: Int,
     val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,
@@ -79,6 +81,18 @@ data class PersonInformasjon(
         @Maskert
         val enhetNr: String,
         val type: String,
+    )
+
+    data class Telefonnummer(
+        val landskode: String,
+        val nummer: String,
+        val prioritet: Int,
+    )
+
+    data class HistoriskAdresse(
+        val adresse: Bostedsadresse,
+        val gyldigFraOgMed: String?,
+        val gyldigTilOgMed: String?,
     )
 
     enum class Skjerming {
