@@ -1,5 +1,8 @@
 package no.nav.persondataapi.service
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
@@ -34,8 +37,12 @@ class PersonopplysningerService(
         responsLog: Boolean = false,
     ): PersonopplysningerResultat {
         // Hent person fra PDL og kontaktinfo fra KRR parallelt
-        val pdlResponse = pdlClient.hentPerson(personIdent)
-        val krrResultat = krrClient.hentKontaktinformasjon(personIdent)
+        val (pdlResponse, krrResultat) =
+            coroutineScope {
+                val pdlDeferred = async { pdlClient.hentPerson(personIdent) }
+                val krrDeferred = async(Dispatchers.IO) { krrClient.hentKontaktinformasjon(personIdent) }
+                pdlDeferred.await() to krrDeferred.await()
+            }
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
         traceLoggHvisAktivert(
             logger = logger,

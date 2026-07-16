@@ -14,6 +14,7 @@ data class PersonInformasjon(
     val fødselsdato: String,
     val dødsdato: String? = null,
     val navKontor: NavKontor? = null,
+    @Maskert
     val epost: String? = null,
 ) {
     data class Familiemedlem(

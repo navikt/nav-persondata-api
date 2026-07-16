@@ -217,6 +217,69 @@ class PersonopplysningerServiceTest {
         }
 
     @Test
+    fun `skal mappe epost fra KRR inn i personopplysninger`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                )
+
+            every { krrClient.hentKontaktinformasjon(any()) } returns KrrDataResultat(epost = "bruker@example.com")
+            every { kodeverkService.mapLandkodeTilLandnavn(any()) } returns "Norge"
+            every { kodeverkService.mapPostnummerTilPoststed(any()) } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+            assertEquals("bruker@example.com", data.epost)
+        }
+
+    @Test
+    fun `skal maskere epost når saksbehandler ikke har tilgang`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = false,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                )
+
+            every { krrClient.hentKontaktinformasjon(any()) } returns KrrDataResultat(epost = "bruker@example.com")
+            every { kodeverkService.mapLandkodeTilLandnavn(any()) } returns "Norge"
+            every { kodeverkService.mapPostnummerTilPoststed(any()) } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+            assertEquals("*******", data.epost)
+        }
+
+    @Test
+    fun `skal håndtere null epost fra KRR uten feil`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat = PersonDataResultat(data = person, statusCode = 200, errorMessage = null),
+                )
+
+            every { krrClient.hentKontaktinformasjon(any()) } returns KrrDataResultat(epost = null)
+            every { kodeverkService.mapLandkodeTilLandnavn(any()) } returns "Norge"
+            every { kodeverkService.mapPostnummerTilPoststed(any()) } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+            assertNull(data.epost)
+        }
+
+    @Test
     fun `skal mappe personopplysninger med barn og ektefelle`() =
         runBlocking {
             val person =
