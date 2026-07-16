@@ -1,1 +1,187 @@
-{  "data": {    "hentPerson": {      "falskIdentitet": null,      "bostedsadresse": [],      "oppholdsadresse": [],      "deltBosted": [],      "forelderBarnRelasjon": [        {          "relatertPersonsIdent": "10101012345",          "relatertPersonsRolle": "BARN",          "minRolleForPerson": "MOR",          "relatertPersonUtenFolkeregisteridentifikator": null,          "folkeregistermetadata": {            "aarsak": null,            "ajourholdstidspunkt": null,            "gyldighetstidspunkt": "2012-01-01T00:00:00",            "kilde": "SAKSBEHANDLER",            "opphoerstidspunkt": null          },          "metadata": {            "endringer": [],            "master": "FREG",            "opplysningsId": null,            "historisk": false          }        },        {          "relatertPersonsIdent": "15041412345",          "relatertPersonsRolle": "BARN",          "minRolleForPerson": "MOR",          "relatertPersonUtenFolkeregisteridentifikator": null,          "folkeregistermetadata": {            "aarsak": null,            "ajourholdstidspunkt": null,            "gyldighetstidspunkt": "2012-01-01T00:00:00",            "kilde": "SAKSBEHANDLER",            "opphoerstidspunkt": null          },          "metadata": {            "endringer": [],            "master": "FREG",            "opplysningsId": null,            "historisk": false          }        }      ],      "kontaktadresse": [],      "kontaktinformasjonForDoedsbo": [],      "utenlandskIdentifikasjonsnummer": [],      "adressebeskyttelse": [],      "foedested": [],      "foedselsdato": [        {          "foedselsaar": 1980,          "foedselsdato": null,          "metadata": {            "endringer": [],            "master": "FREG",            "opplysningsId": null,            "historisk": false          }        }      ],      "doedsfall": [],      "kjoenn": [],      "navn": [        {          "fornavn": "Test",          "mellomnavn": null,          "etternavn": "Bruker",          "metadata": {            "endringer": [],            "master": "FREG",            "opplysningsId": null,            "historisk": false          }        }      ],      "folkeregisterpersonstatus": [],      "identitetsgrunnlag": [],      "tilrettelagtKommunikasjon": [],      "folkeregisteridentifikator": [],      "navspersonidentifikator": [],      "statsborgerskap": [],      "sikkerhetstiltak": [],      "opphold": [],      "sivilstand": [        {          "type": "GIFT",          "gyldigFraOgMed": "2012-06-15",          "relatertVedSivilstand": "01017850123",          "bekreftelsesdato": null,          "folkeregistermetadata": {            "aarsak": null,            "ajourholdstidspunkt": null,            "gyldighetstidspunkt": "2012-01-01T00:00:00",            "kilde": "SAKSBEHANDLER",            "opphoerstidspunkt": null          },          "metadata": {            "endringer": [],            "master": "FREG",            "opplysningsId": null,            "historisk": false          }        }      ],      "telefonnummer": [],      "innflyttingTilNorge": [],      "utflyttingFraNorge": [],      "vergemaalEllerFremtidsfullmakt": [],      "foreldreansvar": [],      "rettsligHandleevne": [],      "doedfoedtBarn": []    }  }}
+{
+  "data": {
+    "hentPerson": {
+      "falskIdentitet": null,
+      "bostedsadresse": [
+        {
+          "angittFlyttedato": null,
+          "coAdressenavn": null,
+          "gyldigFraOgMed": "2022-03-15",
+          "gyldigTilOgMed": null,
+          "vegadresse": {
+            "matrikkelId": null,
+            "husbokstav": null,
+            "husnummer": "12",
+            "adressenavn": "Testgata",
+            "bruksenhetsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "0123",
+            "kommunenummer": "0301",
+            "bydelsnummer": null,
+            "koordinater": null
+          },
+          "matrikkeladresse": null,
+          "ukjentBosted": null,
+          "utenlandskAdresse": null,
+          "folkeregistermetadata": null,
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        },
+        {
+          "angittFlyttedato": null,
+          "coAdressenavn": null,
+          "gyldigFraOgMed": "2018-06-01",
+          "gyldigTilOgMed": "2022-03-14",
+          "vegadresse": {
+            "matrikkelId": null,
+            "husbokstav": null,
+            "husnummer": "5",
+            "adressenavn": "Gamlegata",
+            "bruksenhetsnummer": null,
+            "tilleggsnavn": null,
+            "postnummer": "0456",
+            "kommunenummer": "0301",
+            "bydelsnummer": null,
+            "koordinater": null
+          },
+          "matrikkeladresse": null,
+          "ukjentBosted": null,
+          "utenlandskAdresse": null,
+          "folkeregistermetadata": null,
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": true
+          }
+        }
+      ],
+      "oppholdsadresse": [],
+      "deltBosted": [],
+      "forelderBarnRelasjon": [
+        {
+          "relatertPersonsIdent": "10101012345",
+          "relatertPersonsRolle": "BARN",
+          "minRolleForPerson": "MOR",
+          "relatertPersonUtenFolkeregisteridentifikator": null,
+          "folkeregistermetadata": {
+            "aarsak": null,
+            "ajourholdstidspunkt": null,
+            "gyldighetstidspunkt": "2012-01-01T00:00:00",
+            "kilde": "SAKSBEHANDLER",
+            "opphoerstidspunkt": null
+          },
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        },
+        {
+          "relatertPersonsIdent": "15041412345",
+          "relatertPersonsRolle": "BARN",
+          "minRolleForPerson": "MOR",
+          "relatertPersonUtenFolkeregisteridentifikator": null,
+          "folkeregistermetadata": {
+            "aarsak": null,
+            "ajourholdstidspunkt": null,
+            "gyldighetstidspunkt": "2012-01-01T00:00:00",
+            "kilde": "SAKSBEHANDLER",
+            "opphoerstidspunkt": null
+          },
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "kontaktadresse": [],
+      "kontaktinformasjonForDoedsbo": [],
+      "utenlandskIdentifikasjonsnummer": [],
+      "adressebeskyttelse": [],
+      "foedested": [],
+      "foedselsdato": [
+        {
+          "foedselsaar": 1980,
+          "foedselsdato": null,
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "doedsfall": [],
+      "kjoenn": [],
+      "navn": [
+        {
+          "fornavn": "Test",
+          "mellomnavn": null,
+          "etternavn": "Bruker",
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "folkeregisterpersonstatus": [],
+      "identitetsgrunnlag": [],
+      "tilrettelagtKommunikasjon": [],
+      "folkeregisteridentifikator": [],
+      "navspersonidentifikator": [],
+      "statsborgerskap": [],
+      "sikkerhetstiltak": [],
+      "opphold": [],
+      "sivilstand": [
+        {
+          "type": "GIFT",
+          "gyldigFraOgMed": "2012-06-15",
+          "relatertVedSivilstand": "01017850123",
+          "bekreftelsesdato": null,
+          "folkeregistermetadata": {
+            "aarsak": null,
+            "ajourholdstidspunkt": null,
+            "gyldighetstidspunkt": "2012-01-01T00:00:00",
+            "kilde": "SAKSBEHANDLER",
+            "opphoerstidspunkt": null
+          },
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "telefonnummer": [
+        {
+          "landskode": "+47",
+          "nummer": "90123456",
+          "prioritet": 1,
+          "metadata": {
+            "endringer": [],
+            "master": "FREG",
+            "opplysningsId": null,
+            "historisk": false
+          }
+        }
+      ],
+      "innflyttingTilNorge": [],
+      "utflyttingFraNorge": [],
+      "vergemaalEllerFremtidsfullmakt": [],
+      "foreldreansvar": [],
+      "rettsligHandleevne": [],
+      "doedfoedtBarn": []
+    }
+  }
+}
