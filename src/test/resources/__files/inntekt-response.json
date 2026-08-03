@@ -1,1 +1,504 @@
-{"data": []}
+{
+  "data": [
+    {
+      "maaned": "2024-01",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-01",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-02-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-02",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-02",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-03-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-03",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-03",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-04-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-04",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-04",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-05-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-05",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-05",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-06-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-06",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-06",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-07-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-07",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-07",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-08-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-08",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-08",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-09-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-09",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-09",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-10-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 60000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-10",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-10",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-11-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-11",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-11",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2024-12-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2024-12",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2024-12",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-01-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2025-01",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2025-01",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-02-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2025-02",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2025-02",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-03-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2025-03",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2025-03",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-04-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2025-04",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2025-04",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-05-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 65000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "overtidsgodtgjoerelse",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2025-05",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2025-05",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2025-06-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 30000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "sykepenger",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2026-01",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2026-01",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2026-02-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 70000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2026-02",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2026-02",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2026-03-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 70000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maaned": "2026-03",
+      "opplysningspliktig": "810007702",
+      "underenhet": "810007842",
+      "norskident": "12345678901",
+      "versjoner": [
+        {
+          "maaned": "2026-03",
+          "opplysningspliktig": "810007702",
+          "underenhet": "810007842",
+          "norskident": "12345678901",
+          "oppsummeringstidspunkt": "2026-04-05T12:00:00+01:00",
+          "inntektListe": [
+            {
+              "type": "Loennsinntekt",
+              "beloep": 70000,
+              "fordel": "kontantytelse",
+              "beskrivelse": "fastloenn",
+              "inngaarIGrunnlagForTrekk": true,
+              "utloeserArbeidsgiveravgift": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,1 +1,2016 @@
-[]
+[
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-01-20",
+    "forfallsdato": "2024-01-20",
+    "utbetalingsdato": "2024-01-20",
+    "utbetalingNettobeloep": 51000,
+    "utbetalingsmelding": "Lønn januar 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-01-01",
+          "tom": "2024-01-31"
+        },
+        "ytelseNettobeloep": 51000,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9000,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 60000,
+        "bilagsnummer": "BIL-2024-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 60000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 60000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9000
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-02-20",
+    "forfallsdato": "2024-02-20",
+    "utbetalingsdato": "2024-02-20",
+    "utbetalingNettobeloep": 51000,
+    "utbetalingsmelding": "Lønn februar 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-02-01",
+          "tom": "2024-02-29"
+        },
+        "ytelseNettobeloep": 51000,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9000,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 60000,
+        "bilagsnummer": "BIL-2024-02-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 60000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 60000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9000
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-03-20",
+    "forfallsdato": "2024-03-20",
+    "utbetalingsdato": "2024-03-20",
+    "utbetalingNettobeloep": 51000,
+    "utbetalingsmelding": "Lønn mars 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-03-01",
+          "tom": "2024-03-31"
+        },
+        "ytelseNettobeloep": 51000,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9000,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 60000,
+        "bilagsnummer": "BIL-2024-03-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 60000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 60000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9000
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-10-20",
+    "forfallsdato": "2024-10-20",
+    "utbetalingsdato": "2024-10-20",
+    "utbetalingNettobeloep": 55250,
+    "utbetalingsmelding": "Lønn oktober 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-10-01",
+          "tom": "2024-10-31"
+        },
+        "ytelseNettobeloep": 55250,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9750,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 65000,
+        "bilagsnummer": "BIL-2024-10-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 65000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 65000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9750
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-11-20",
+    "forfallsdato": "2024-11-20",
+    "utbetalingsdato": "2024-11-20",
+    "utbetalingNettobeloep": 55250,
+    "utbetalingsmelding": "Lønn november 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-11-01",
+          "tom": "2024-11-30"
+        },
+        "ytelseNettobeloep": 55250,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9750,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 65000,
+        "bilagsnummer": "BIL-2024-11-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 65000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 65000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9750
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-12-20",
+    "forfallsdato": "2024-12-20",
+    "utbetalingsdato": "2024-12-20",
+    "utbetalingNettobeloep": 55250,
+    "utbetalingsmelding": "Lønn desember 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2024-12-01",
+          "tom": "2024-12-31"
+        },
+        "ytelseNettobeloep": 55250,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9750,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 65000,
+        "bilagsnummer": "BIL-2024-12-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 65000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 65000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9750
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-01-20",
+    "forfallsdato": "2025-01-20",
+    "utbetalingsdato": "2025-01-20",
+    "utbetalingNettobeloep": 55250,
+    "utbetalingsmelding": "Lønn januar 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2025-01-01",
+          "tom": "2025-01-31"
+        },
+        "ytelseNettobeloep": 55250,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9750,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 65000,
+        "bilagsnummer": "BIL-2025-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 65000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 65000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9750
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-02-20",
+    "forfallsdato": "2025-02-20",
+    "utbetalingsdato": "2025-02-20",
+    "utbetalingNettobeloep": 55250,
+    "utbetalingsmelding": "Lønn februar 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2025-02-01",
+          "tom": "2025-02-28"
+        },
+        "ytelseNettobeloep": 55250,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 9750,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 65000,
+        "bilagsnummer": "BIL-2025-02-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 65000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 65000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 9750
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-20",
+    "forfallsdato": "2026-01-20",
+    "utbetalingsdato": "2026-01-20",
+    "utbetalingNettobeloep": 59500,
+    "utbetalingsmelding": "Lønn januar 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2026-01-01",
+          "tom": "2026-01-31"
+        },
+        "ytelseNettobeloep": 59500,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 10500,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 70000,
+        "bilagsnummer": "BIL-2026-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 70000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 70000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 10500
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-02-20",
+    "forfallsdato": "2026-02-20",
+    "utbetalingsdato": "2026-02-20",
+    "utbetalingNettobeloep": 59500,
+    "utbetalingsmelding": "Lønn februar 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2026-02-01",
+          "tom": "2026-02-28"
+        },
+        "ytelseNettobeloep": 59500,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 10500,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 70000,
+        "bilagsnummer": "BIL-2026-02-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 70000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 70000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 10500
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-03-20",
+    "forfallsdato": "2026-03-20",
+    "utbetalingsdato": "2026-03-20",
+    "utbetalingNettobeloep": 59500,
+    "utbetalingsmelding": "Lønn mars 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Lønn",
+        "ytelsesperiode": {
+          "fom": "2026-03-01",
+          "tom": "2026-03-31"
+        },
+        "ytelseNettobeloep": 59500,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 10500,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 70000,
+        "bilagsnummer": "BIL-2026-03-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Fastlønn",
+            "satsbeloep": 70000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 70000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 10500
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-04-15",
+    "forfallsdato": "2024-04-15",
+    "utbetalingsdato": "2024-04-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger april 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2024-04-01",
+          "tom": "2024-04-14"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-2024-04-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-04-30",
+    "forfallsdato": "2024-04-30",
+    "utbetalingsdato": "2024-04-30",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger april 2024 (2)",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2024-04-15",
+          "tom": "2024-04-30"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-2024-04-002",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-05-15",
+    "forfallsdato": "2024-05-15",
+    "utbetalingsdato": "2024-05-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger mai 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2024-05-01",
+          "tom": "2024-05-14"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-2024-05-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-05-31",
+    "forfallsdato": "2024-05-31",
+    "utbetalingsdato": "2024-05-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger mai 2024 (2)",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2024-05-15",
+          "tom": "2024-05-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-2024-05-002",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-06-14",
+    "forfallsdato": "2024-06-14",
+    "utbetalingsdato": "2024-06-14",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger juni 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2024-06-01",
+          "tom": "2024-06-14"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-2024-06-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-03-20",
+    "forfallsdato": "2025-03-20",
+    "utbetalingsdato": "2025-03-20",
+    "utbetalingNettobeloep": 46750,
+    "utbetalingsmelding": "Sykepenger mars 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Sykepenger",
+        "ytelsesperiode": {
+          "fom": "2025-03-01",
+          "tom": "2025-03-31"
+        },
+        "ytelseNettobeloep": 46750,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 8250,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 55000,
+        "bilagsnummer": "SP-2025-03-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Sykepenger",
+            "satsbeloep": 55000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 55000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 8250
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-04-20",
+    "forfallsdato": "2025-04-20",
+    "utbetalingsdato": "2025-04-20",
+    "utbetalingNettobeloep": 46750,
+    "utbetalingsmelding": "Sykepenger april 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Sykepenger",
+        "ytelsesperiode": {
+          "fom": "2025-04-01",
+          "tom": "2025-04-30"
+        },
+        "ytelseNettobeloep": 46750,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 8250,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 55000,
+        "bilagsnummer": "SP-2025-04-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Sykepenger",
+            "satsbeloep": 55000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 55000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 8250
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-05-20",
+    "forfallsdato": "2025-05-20",
+    "utbetalingsdato": "2025-05-20",
+    "utbetalingNettobeloep": 46750,
+    "utbetalingsmelding": "Sykepenger mai 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Sykepenger",
+        "ytelsesperiode": {
+          "fom": "2025-05-01",
+          "tom": "2025-05-31"
+        },
+        "ytelseNettobeloep": 46750,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 8250,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 55000,
+        "bilagsnummer": "SP-2025-05-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Sykepenger",
+            "satsbeloep": 55000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 55000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 8250
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-09-20",
+    "forfallsdato": "2025-09-20",
+    "utbetalingsdato": "2025-09-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger september 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2025-09-01",
+          "tom": "2025-09-30"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2025-09-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-10-20",
+    "forfallsdato": "2025-10-20",
+    "utbetalingsdato": "2025-10-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger oktober 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2025-10-01",
+          "tom": "2025-10-31"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2025-10-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-11-20",
+    "forfallsdato": "2025-11-20",
+    "utbetalingsdato": "2025-11-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger november 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2025-11-01",
+          "tom": "2025-11-30"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2025-11-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-12-20",
+    "forfallsdato": "2025-12-20",
+    "utbetalingsdato": "2025-12-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger desember 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2025-12-01",
+          "tom": "2025-12-31"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2025-12-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-20",
+    "forfallsdato": "2026-01-20",
+    "utbetalingsdato": "2026-01-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger januar 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2026-01-01",
+          "tom": "2026-01-31"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2026-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-02-20",
+    "forfallsdato": "2026-02-20",
+    "utbetalingsdato": "2026-02-20",
+    "utbetalingNettobeloep": 44200,
+    "utbetalingsmelding": "Foreldrepenger februar 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Foreldrepenger",
+        "ytelsesperiode": {
+          "fom": "2026-02-01",
+          "tom": "2026-02-28"
+        },
+        "ytelseNettobeloep": 44200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 7800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 52000,
+        "bilagsnummer": "FP-2026-02-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Foreldrepenger",
+            "satsbeloep": 52000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 52000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 7800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-07-20",
+    "forfallsdato": "2024-07-20",
+    "utbetalingsdato": "2024-07-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP juli 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2024-07-01",
+          "tom": "2024-07-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-2024-07-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-08-20",
+    "forfallsdato": "2024-08-20",
+    "utbetalingsdato": "2024-08-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP august 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2024-08-01",
+          "tom": "2024-08-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-2024-08-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-09-20",
+    "forfallsdato": "2024-09-20",
+    "utbetalingsdato": "2024-09-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP september 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2024-09-01",
+          "tom": "2024-09-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-2024-09-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-06-20",
+    "forfallsdato": "2025-06-20",
+    "utbetalingsdato": "2025-06-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP juni 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-06-01",
+          "tom": "2025-06-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-2025-06-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-07-20",
+    "forfallsdato": "2025-07-20",
+    "utbetalingsdato": "2025-07-20",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP juli 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-07-01",
+          "tom": "2025-07-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-2025-07-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-03-20",
+    "forfallsdato": "2024-03-20",
+    "utbetalingsdato": "2024-03-20",
+    "utbetalingNettobeloep": 1766,
+    "utbetalingsmelding": "Barnetrygd mars 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2024-03-01",
+          "tom": "2024-03-31"
+        },
+        "ytelseNettobeloep": 1766,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 0,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 1766,
+        "bilagsnummer": "BT-2024-03-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Barnetrygd",
+            "satsbeloep": 1766,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 1766
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 0
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-12-20",
+    "forfallsdato": "2024-12-20",
+    "utbetalingsdato": "2024-12-20",
+    "utbetalingNettobeloep": 1766,
+    "utbetalingsmelding": "Barnetrygd desember 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2024-12-01",
+          "tom": "2024-12-31"
+        },
+        "ytelseNettobeloep": 1766,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 0,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 1766,
+        "bilagsnummer": "BT-2024-12-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Barnetrygd",
+            "satsbeloep": 1766,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 1766
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 0
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-06-20",
+    "forfallsdato": "2025-06-20",
+    "utbetalingsdato": "2025-06-20",
+    "utbetalingNettobeloep": 1766,
+    "utbetalingsmelding": "Barnetrygd juni 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2025-06-01",
+          "tom": "2025-06-30"
+        },
+        "ytelseNettobeloep": 1766,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 0,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 1766,
+        "bilagsnummer": "BT-2025-06-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Barnetrygd",
+            "satsbeloep": 1766,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 1766
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 0
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-12-20",
+    "forfallsdato": "2025-12-20",
+    "utbetalingsdato": "2025-12-20",
+    "utbetalingNettobeloep": 1766,
+    "utbetalingsmelding": "Barnetrygd desember 2025",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2025-12-01",
+          "tom": "2025-12-31"
+        },
+        "ytelseNettobeloep": 1766,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 0,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 1766,
+        "bilagsnummer": "BT-2025-12-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Barnetrygd",
+            "satsbeloep": 1766,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 1766
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 0
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-20",
+    "forfallsdato": "2026-01-20",
+    "utbetalingsdato": "2026-01-20",
+    "utbetalingNettobeloep": 1766,
+    "utbetalingsmelding": "Barnetrygd januar 2026",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Barnetrygd",
+        "ytelsesperiode": {
+          "fom": "2026-01-01",
+          "tom": "2026-01-31"
+        },
+        "ytelseNettobeloep": 1766,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 0,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 1766,
+        "bilagsnummer": "BT-2026-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Barnetrygd",
+            "satsbeloep": 1766,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 1766
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 0
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-01-20",
+    "forfallsdato": "2024-01-20",
+    "utbetalingsdato": "2024-01-20",
+    "utbetalingNettobeloep": 11660,
+    "utbetalingsmelding": "Overgangsstønad januar 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Overgangsstønad",
+        "ytelsesperiode": {
+          "fom": "2024-01-01",
+          "tom": "2024-01-31"
+        },
+        "ytelseNettobeloep": 11660,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 1940,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 13600,
+        "bilagsnummer": "OS-2024-01-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Overgangsstønad",
+            "satsbeloep": 13600,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 13600
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 1940
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-02-20",
+    "forfallsdato": "2024-02-20",
+    "utbetalingsdato": "2024-02-20",
+    "utbetalingNettobeloep": 11660,
+    "utbetalingsmelding": "Overgangsstønad februar 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Overgangsstønad",
+        "ytelsesperiode": {
+          "fom": "2024-02-01",
+          "tom": "2024-02-29"
+        },
+        "ytelseNettobeloep": 11660,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 1940,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 13600,
+        "bilagsnummer": "OS-2024-02-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Overgangsstønad",
+            "satsbeloep": 13600,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 13600
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 1940
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2024-03-20",
+    "forfallsdato": "2024-03-20",
+    "utbetalingsdato": "2024-03-20",
+    "utbetalingNettobeloep": 11660,
+    "utbetalingsmelding": "Overgangsstønad mars 2024",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Overgangsstønad",
+        "ytelsesperiode": {
+          "fom": "2024-03-01",
+          "tom": "2024-03-31"
+        },
+        "ytelseNettobeloep": 11660,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 1940,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 13600,
+        "bilagsnummer": "OS-2024-03-001",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Overgangsstønad",
+            "satsbeloep": 13600,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 13600
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 1940
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  }
+]

@@ -30,6 +30,7 @@ class InntektClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "inntektshistorikk"
+    private val kjentSkatteetatenFeilkode = "IM-006"
 
     @Cacheable(
         value = ["inntekt-historikk"],
@@ -93,24 +94,30 @@ class InntektClient(
                 )
             },
             onFailure = { error ->
+                val erKjentSkatteetatenFeil =
+                    error.message?.contains(kjentSkatteetatenFeilkode, ignoreCase = true) == true
                 val resultType =
                     when {
-                        erTimeout(error) -> {
-                            DownstreamResult.TIMEOUT
-                        }
+                        erTimeout(error) -> DownstreamResult.TIMEOUT
 
-                        error.message?.contains("ikke tilgang", ignoreCase = true) == true -> {
-                            DownstreamResult.CLIENT_ERROR
-                        }
+                        error.message?.contains(
+                            "ikke tilgang",
+                            ignoreCase = true,
+                        ) == true -> DownstreamResult.CLIENT_ERROR
 
-                        else -> {
-                            DownstreamResult.UNEXPECTED
-                        }
+                        else -> DownstreamResult.UNEXPECTED
                     }
 
                 metrics.counter(operationName, resultType).increment()
 
-                log.error("Feil ved henting av inntekter : ${error.message}", error)
+                if (erKjentSkatteetatenFeil) {
+                    log.warn(
+                        "Inntekt utilgjengelig — kjent Skatteetaten-feil ($kjentSkatteetatenFeilkode): ${error.message}",
+                    )
+                } else {
+                    log.error("Feil ved henting av inntekter: ${error.message}", error)
+                }
+
                 InntektDataResultat(
                     data = null,
                     statusCode = 500,

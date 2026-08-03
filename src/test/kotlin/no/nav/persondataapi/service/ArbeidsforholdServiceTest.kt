@@ -16,6 +16,7 @@ import no.nav.persondataapi.integrasjon.aareg.client.Identtype
 import no.nav.persondataapi.integrasjon.aareg.client.Kodeverksentitet
 import no.nav.persondataapi.integrasjon.aareg.client.Opplysningspliktig
 import no.nav.persondataapi.integrasjon.aareg.client.Rapporteringsmaaneder
+import no.nav.persondataapi.integrasjon.aareg.client.TimerMedTimeloenn
 import no.nav.persondataapi.integrasjon.ereg.client.EregClient
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
 import no.nav.persondataapi.rest.domene.PersonIdent
@@ -446,6 +447,73 @@ class ArbeidsforholdServiceTest {
             assertTrue(data.løpendeArbeidsforhold.all { it.organisasjonsnummer == "999888777" })
             assertTrue(data.historikk.all { it.organisasjonsnummer == "999888777" })
         }
+
+    @Test
+    fun `skal mappe timerMedTimeloenn fra arbeidsforhold`() =
+        runBlocking {
+            val brukertilgangService = mockk<BrukertilgangService>()
+            val aaregClient = mockk<AaregClient>()
+            val eregClient = mockk<EregClient>()
+
+            val timerMedTimeloenn =
+                listOf(
+                    TimerMedTimeloenn(
+                        antall = 160.5,
+                        startdato = "2024-01-01",
+                        sluttdato = "2024-01-31",
+                        rapporteringsmaaneder = Rapporteringsmaaneder(fra = YearMonth.of(2024, 1), til = null),
+                        sporingsinformasjon = null,
+                    ),
+                )
+            val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null, timerMedTimeloenn = timerMedTimeloenn)
+
+            every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+            every { aaregClient.hentArbeidsforhold(any()) } returns
+                AaregDataResultat(
+                    data = listOf(arbeidsforhold),
+                    statusCode = 200,
+                    errorMessage = null,
+                )
+            every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+            val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+            val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is ArbeidsforholdResultat.Success)
+            val data = (resultat as ArbeidsforholdResultat.Success).data
+            val mappetTimer = data.løpendeArbeidsforhold[0].timerMedTimeloenn
+            assertEquals(1, mappetTimer.size)
+            assertEquals(160.5, mappetTimer[0].antall)
+            assertEquals("2024-01-01", mappetTimer[0].startdato)
+            assertEquals("2024-01-31", mappetTimer[0].sluttdato)
+            assertEquals(YearMonth.of(2024, 1), mappetTimer[0].rapporteringsmaaneder?.fom)
+        }
+
+    @Test
+    fun `skal returnere tom liste for timerMedTimeloenn når arbeidsforhold mangler det`() =
+        runBlocking {
+            val brukertilgangService = mockk<BrukertilgangService>()
+            val aaregClient = mockk<AaregClient>()
+            val eregClient = mockk<EregClient>()
+
+            val arbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null, timerMedTimeloenn = null)
+
+            every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+            every { aaregClient.hentArbeidsforhold(any()) } returns
+                AaregDataResultat(
+                    data = listOf(arbeidsforhold),
+                    statusCode = 200,
+                    errorMessage = null,
+                )
+            every { eregClient.hentOrganisasjon(any()) } returns lagEregRespons("999888777", "Test Bedrift AS")
+
+            val service = ArbeidsforholdService(aaregClient, eregClient, brukertilgangService)
+            val resultat = service.hentArbeidsforholdForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is ArbeidsforholdResultat.Success)
+            val data = (resultat as ArbeidsforholdResultat.Success).data
+            assertTrue(data.løpendeArbeidsforhold[0].timerMedTimeloenn.isEmpty())
+        }
 }
 
 // Hjelpefunksjoner for å lage testdata
@@ -456,6 +524,7 @@ private fun lagArbeidsforhold(
     stillingsprosent: Double? = 100.0,
     timerPrUke: Double? = 37.5,
     yrkeBeskrivelse: String = "Konsulent",
+    timerMedTimeloenn: List<TimerMedTimeloenn>? = null,
 ): Arbeidsforhold =
     Arbeidsforhold(
         id = "test-id",
@@ -524,7 +593,7 @@ private fun lagArbeidsforhold(
             ),
         permisjoner = null,
         permitteringer = null,
-        timerMedTimeloenn = null,
+        timerMedTimeloenn = timerMedTimeloenn,
         idHistorikk = null,
         varsler = null,
         rapporteringsordning = Kodeverksentitet(kode = "A_ORDNINGEN", beskrivelse = "A-ordningen"),

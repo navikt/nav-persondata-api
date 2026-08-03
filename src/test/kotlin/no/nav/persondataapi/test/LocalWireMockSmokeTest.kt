@@ -4,7 +4,9 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
 import no.nav.persondataapi.integrasjon.aareg.client.AaregClient
+import no.nav.persondataapi.integrasjon.dagpenger.datadeling.DagpengerDatadelingClient
 import no.nav.persondataapi.integrasjon.inntekt.client.InntektClient
 import no.nav.persondataapi.integrasjon.kodeverk.client.KodeverkClient
 import no.nav.persondataapi.integrasjon.modiacontextholder.client.ModiaContextHolderClient
@@ -12,10 +14,12 @@ import no.nav.persondataapi.integrasjon.nom.NomClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.tilgangsmaskin.client.TilgangsmaskinClientImpl
 import no.nav.persondataapi.integrasjon.utbetaling.client.UtbetalingClient
+import no.nav.persondataapi.pensjonsgivendeInntekt.PensjonsgivendeInntektService
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.security.token.support.core.context.TokenValidationContext
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import no.nav.security.token.support.core.jwt.JwtToken
+import no.nav.security.token.support.core.jwt.JwtTokenClaims
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -38,6 +42,20 @@ class LocalWireMockSmokeTest {
                 WireMockConfiguration.wireMockConfig().dynamicPort().usingFilesUnderDirectory("src/test/resources"),
             ).apply {
                 start()
+                stubFor(
+                    WireMock
+                        .get(WireMock.urlPathEqualTo("/azuread/.well-known/openid-configuration"))
+                        .willReturn(
+                            WireMock.okJson(
+                                """{"issuer":"http://localhost:${port()}/azuread","jwks_uri":"http://localhost:${port()}/azuread/jwks","token_endpoint":"http://localhost:${port()}/azuread/token","authorization_endpoint":"http://localhost:${port()}/azuread/authorize","response_types_supported":["code"],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"]}""",
+                            ),
+                        ),
+                )
+                stubFor(
+                    WireMock
+                        .get(WireMock.urlPathEqualTo("/azuread/jwks"))
+                        .willReturn(WireMock.okJson("""{"keys":[]}""")),
+                )
             }
 
         @JvmStatic
@@ -45,6 +63,9 @@ class LocalWireMockSmokeTest {
         fun props(registry: DynamicPropertyRegistry) {
             val port = wiremock.port()
             registry.add("WIREMOCK_PORT") { port.toString() }
+            registry.add(
+                "AZURE_APP_WELL_KNOWN_URL",
+            ) { "http://localhost:$port/azuread/.well-known/openid-configuration" }
             registry.add("AZURE_OPENID_CONFIG_TOKEN_ENDPOINT") { "http://localhost:$port/oauth2/token" }
             registry.add("NAIS_TOKEN_EXCHANGE_ENDPOINT") { "http://localhost:$port/api/v1/token/exchange" }
             registry.add("PDL_URL") { "http://localhost:$port/pdl/graphql" }
@@ -88,6 +109,15 @@ class LocalWireMockSmokeTest {
     @Autowired
     lateinit var nomClient: NomClient
 
+    @Autowired
+    lateinit var aapClient: AapClient
+
+    @Autowired
+    lateinit var dagpengerDatadelingClient: DagpengerDatadelingClient
+
+    @Autowired
+    lateinit var pensjonsgivendeInntektService: PensjonsgivendeInntektService
+
     @MockitoBean
     lateinit var tokenValidationContextHolder: TokenValidationContextHolder
 
@@ -95,7 +125,9 @@ class LocalWireMockSmokeTest {
     fun settOppBrukertoken() {
         val context = mock(TokenValidationContext::class.java)
         val token = mock(JwtToken::class.java)
+        val claims = mock(JwtTokenClaims::class.java)
         given(token.encodedToken).willReturn("test-bruker-token")
+        given(token.jwtTokenClaims).willReturn(claims)
         given(context.firstValidToken).willReturn(token)
         given(tokenValidationContextHolder.getTokenValidationContext()).willReturn(context)
     }
@@ -192,5 +224,27 @@ class LocalWireMockSmokeTest {
                     .urlPathEqualTo("/api/v1/token/exchange"),
             ),
         )
+    }
+
+    @Test
+    fun `utvidet tidsvindu kaller klienter med 13 ar`() {
+        val personIdent = PersonIdent("12345678901")
+
+        val aapResultat = aapClient.hentAapMax(personIdent, utvidet = true)
+        val dagpengerResultat = dagpengerDatadelingClient.hentDagpengeMeldekort(personIdent, utvidet = true)
+        val utbetalingResultat = utbetalingClient.hentUtbetalingerForBruker(personIdent, utvidet = true)
+
+        assertTrue(aapResultat.statusCode == 200 || aapResultat.statusCode == 404)
+        assertTrue(dagpengerResultat.statusCode == 200 || dagpengerResultat.statusCode == 404)
+        assertTrue(utbetalingResultat.statusCode == 200 || utbetalingResultat.statusCode == 404)
+
+        runBlocking {
+            val pensjonsresultat =
+                pensjonsgivendeInntektService.hentPensjonsgivendeInntektForPerson(personIdent, utvidet = true)
+            assertTrue(
+                pensjonsresultat is PensjonsgivendeInntektService.PensjonsgivendeInntektResultat.Success ||
+                    pensjonsresultat is PensjonsgivendeInntektService.PensjonsgivendeInntektResultat.PersonIkkeFunnet,
+            )
+        }
     }
 }

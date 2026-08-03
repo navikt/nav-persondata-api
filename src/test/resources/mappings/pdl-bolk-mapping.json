@@ -1,13 +1,18 @@
 {
   "request": {
     "method": "POST",
-    "urlPath": "/dagpenger/datadeling/v1/meldekort"
+    "urlPath": "/pdl/graphql",
+    "bodyPatterns": [
+      {
+        "contains": "hentPersonBolk"
+      }
+    ]
   },
   "response": {
     "status": 200,
     "headers": {
       "Content-Type": "application/json;charset=UTF-8"
     },
-    "bodyFileName": "dp-datadeling-meldekort-response.json"
+    "bodyFileName": "pdl-bolk-response.json"
   }
 }

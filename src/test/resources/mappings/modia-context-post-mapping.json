@@ -1,13 +1,13 @@
 {
   "request": {
     "method": "POST",
-    "urlPath": "/dagpenger/datadeling/v1/meldekort"
+    "urlPath": "/api/context"
   },
   "response": {
     "status": 200,
     "headers": {
       "Content-Type": "application/json;charset=UTF-8"
     },
-    "bodyFileName": "dp-datadeling-meldekort-response.json"
+    "body": "{}"
   }
 }
