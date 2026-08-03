@@ -25,11 +25,12 @@ class InntektService(
         personIdent: PersonIdent,
         utvidet: Boolean = false,
     ): InntektResultat {
-        val kontrollperiode =
-            KontrollPeriode(
-                LocalDate.now().minusYears(if (utvidet) 13 else 5),
-                LocalDate.now(),
-            )
+        // A-ordningen har data fra januar 2015. Kall med maanedFom < 2015-01 gir IM-006
+        // (inputvalideringsfeil) fra Skatteetaten. Vi capper derfor fom-dato til A-ordningens start.
+        val aOrdningenStartDato = LocalDate.of(2015, 1, 1)
+        val beregnetFomDato = LocalDate.now().minusYears(if (utvidet) 13 else 5)
+        val fomDato = maxOf(beregnetFomDato, aOrdningenStartDato)
+        val kontrollperiode = KontrollPeriode(fomDato, LocalDate.now())
         // Hent inntekter fra InntektClient
         val inntektResponse = inntektClient.hentInntekter(personIdent = personIdent, periode = kontrollperiode)
         logger.info("Hentet inntekter for $personIdent (utvidet = $utvidet), status ${inntektResponse.statusCode}")
