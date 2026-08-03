@@ -402,7 +402,7 @@ class InntektServiceTest {
         }
 
     @Test
-    fun `skal bruke 13 år som startdato når utvidet er true`() =
+    fun `skal bruke A-ordningens startdato 2015-01-01 som fom når utvidet er true og 13 år tilbake er før 2015`() =
         runBlocking {
             val brukertilgangService = mockk<BrukertilgangService>()
             val inntektClient = mockk<InntektClient>()
@@ -421,7 +421,40 @@ class InntektServiceTest {
             val service = InntektService(inntektClient, eregClient, brukertilgangService)
             service.hentInntekterForPerson(PersonIdent("12345678901"), utvidet = true)
 
-            assertEquals(LocalDate.now().minusYears(13), periodSlot.captured.fom)
+            val forventetFom = maxOf(LocalDate.now().minusYears(13), LocalDate.of(2015, 1, 1))
+            assertEquals(forventetFom, periodSlot.captured.fom)
+        }
+
+    @Test
+    fun `fom-dato skal aldri være før A-ordningens startdato 2015-01-01`() =
+        runBlocking {
+            val brukertilgangService = mockk<BrukertilgangService>()
+            val inntektClient = mockk<InntektClient>()
+            val eregClient = mockk<EregClient>()
+            val periodSlot = slot<KontrollPeriode>()
+
+            every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns true
+            every { inntektClient.hentInntekter(any(), capture(periodSlot)) } returns
+                InntektDataResultat(
+                    data = InntektshistorikkApiUt(data = emptyList()),
+                    statusCode = 200,
+                    errorMessage = null,
+                )
+
+            val service = InntektService(inntektClient, eregClient, brukertilgangService)
+
+            // Test at fom aldri er < 2015-01-01, uavhengig av utvidet-flagg
+            service.hentInntekterForPerson(PersonIdent("12345678901"), utvidet = true)
+            assertTrue(
+                periodSlot.captured.fom >= LocalDate.of(2015, 1, 1),
+                "fom=${periodSlot.captured.fom} skal ikke være før 2015-01-01 (A-ordningens start)",
+            )
+
+            service.hentInntekterForPerson(PersonIdent("12345678901"), utvidet = false)
+            assertTrue(
+                periodSlot.captured.fom >= LocalDate.of(2015, 1, 1),
+                "fom=${periodSlot.captured.fom} skal ikke være før 2015-01-01 (A-ordningens start)",
+            )
         }
 }
 
