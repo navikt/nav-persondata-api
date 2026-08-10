@@ -28,22 +28,24 @@ fun Map<String, EregRespons>.orgNummerTilOrgNavn(orgnummer: String): String {
 }
 
 fun Person.gjeldendeFornavn(): String {
-    val navn = this.navn.firstOrNull() ?: return ""
+    // PdlClient henter nå historikk=true for hele hentPerson-kallet (SEARCH-46), så navn
+    // kan inneholde historiske oppføringer. Filtrer bort disse for å unngå å vise gammelt navn.
+    val navn = this.navn.firstOrNull { !it.metadata.historisk } ?: return ""
     return navn.fornavn
 }
 
 fun Person.gjeldendeSivilStand(): String {
-    val sivilstand = this.sivilstand.firstOrNull() ?: return "UKJENT"
+    val sivilstand = this.sivilstand.firstOrNull { !it.metadata.historisk } ?: return "UKJENT"
     return sivilstand.type.name
 }
 
 fun Person.gjeldendeMellomnavn(): String? {
-    val navn = this.navn.firstOrNull() ?: return null
+    val navn = this.navn.firstOrNull { !it.metadata.historisk } ?: return null
     return navn.mellomnavn
 }
 
 fun Person.gjeldendeEtternavn(): String {
-    val navn = this.navn.firstOrNull() ?: return ""
+    val navn = this.navn.firstOrNull { !it.metadata.historisk } ?: return ""
     return navn.etternavn
 }
 
@@ -120,7 +122,7 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
     return this.bostedsadresse
         .filter { adresse ->
             val tilDato = adresse.gyldigTilOgMed?.let { LocalDate.parse(it) }
-            tilDato == null || tilDato.isAfter(cutoff)
+            tilDato == null || !tilDato.isBefore(cutoff)
         }.mapNotNull { adresse ->
             val vegadresse = adresse.vegadresse
             val utenlandskAdresse = adresse.utenlandskAdresse
