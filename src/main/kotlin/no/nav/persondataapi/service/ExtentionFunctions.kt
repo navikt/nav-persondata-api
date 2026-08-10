@@ -48,7 +48,9 @@ fun Person.gjeldendeEtternavn(): String {
 }
 
 fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse? {
-    val adresse = this.bostedsadresse.firstOrNull() ?: return null
+    // Etter at historikk=true ble innført i PdlClient (SEARCH-46) inneholder bostedsadresse
+    // også historiske oppføringer. Filtrer bort disse slik at kun gjeldende adresse brukes.
+    val adresse = this.bostedsadresse.firstOrNull { !it.metadata.historisk } ?: return null
     val utenlandskAdresse = adresse.utenlandskAdresse
     val vegadresse = adresse.vegadresse
 

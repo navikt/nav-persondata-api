@@ -84,7 +84,9 @@ data class PersonInformasjon(
     )
 
     data class Telefonnummer(
+        @Maskert
         val landskode: String,
+        @Maskert("*")
         val nummer: String,
         val prioritet: Int,
     )
