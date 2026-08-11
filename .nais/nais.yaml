@@ -28,6 +28,8 @@ spec:
       allowAllUsers: false
       tenant: {{TENANT}}
       singlePageApplication: true
+      replyURLs:
+        - "{{INGRESS}}/swagger-ui/oauth2-redirect.html"
       claims:
         groups:
           - id: {{GROUPS.EXTENDED.id}} # 0000-GA-kontroll-Oppslag-Bruker-Utvidet

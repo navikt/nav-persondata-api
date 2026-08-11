@@ -24,6 +24,14 @@ class OpenApiConfiguration {
     @Value("\${application.name:nav-persondata-api}")
     private lateinit var applicationName: String
 
+    // Nais injiserer disse automatisk når azure.application.enabled: true.
+    // Standardverdiene er for prod-tenanten og brukes som fallback.
+    @Value("\${AZURE_OPENID_CONFIG_ISSUER:https://login.microsoftonline.com/navno.onmicrosoft.com/v2.0}")
+    private lateinit var azureOpenidConfigIssuer: String
+
+    @Value("\${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT:https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token}")
+    private lateinit var azureOpenidConfigTokenEndpoint: String
+
     @Bean
     fun customOpenAPI(): OpenAPI =
         OpenAPI()
@@ -66,11 +74,8 @@ class OpenApiConfiguration {
                                 OAuthFlows()
                                     .authorizationCode(
                                         OAuthFlow()
-                                            .authorizationUrl(
-                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize",
-                                            ).tokenUrl(
-                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token",
-                                            ),
+                                            .authorizationUrl("$azureOpenidConfigIssuer/authorize")
+                                            .tokenUrl(azureOpenidConfigTokenEndpoint),
                                     ),
                             ),
                     ),

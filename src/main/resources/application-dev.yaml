@@ -3,3 +3,5 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+    oauth:
+      client-id: ${AZURE_APP_CLIENT_ID}
