@@ -29,7 +29,9 @@ class OpenApiConfiguration {
     @Value("\${AZURE_OPENID_CONFIG_ISSUER:https://login.microsoftonline.com/navno.onmicrosoft.com/v2.0}")
     private lateinit var azureOpenidConfigIssuer: String
 
-    @Value("\${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT:https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token}")
+    @Value(
+        "\${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT:https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token}",
+    )
     private lateinit var azureOpenidConfigTokenEndpoint: String
 
     @Bean
