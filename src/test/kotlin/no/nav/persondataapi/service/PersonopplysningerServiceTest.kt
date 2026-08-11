@@ -117,6 +117,87 @@ class PersonopplysningerServiceTest {
         }
 
     @Test
+    fun `skal mappe telefonnummer og adresseHistorikk gjennom hentPersonopplysningerForPerson`() =
+        runBlocking {
+            val metadata = Metadata(endringer = emptyList(), master = "Freg", opplysningsId = "test", historisk = false)
+            val historiskMetadata = metadata.copy(historisk = true)
+
+            val gjeldendeAdresse =
+                no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse(
+                    vegadresse =
+                        no.nav.persondataapi.generated.pdl.hentperson.Vegadresse(
+                            matrikkelId = null,
+                            husbokstav = null,
+                            husnummer = "1",
+                            adressenavn = "Nyveien",
+                            bruksenhetsnummer = null,
+                            tilleggsnavn = null,
+                            postnummer = "0001",
+                            kommunenummer = "0301",
+                            bydelsnummer = null,
+                            koordinater = null,
+                        ),
+                    matrikkeladresse = null,
+                    utenlandskAdresse = null,
+                    ukjentBosted = null,
+                    metadata = metadata,
+                    folkeregistermetadata = null,
+                )
+            val historiskAdresse =
+                gjeldendeAdresse.copy(
+                    vegadresse = gjeldendeAdresse.vegadresse?.copy(adressenavn = "Gammelveien"),
+                    gyldigTilOgMed =
+                        java.time.LocalDate
+                            .now()
+                            .minusYears(1)
+                            .toString(),
+                    metadata = historiskMetadata,
+                )
+
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    bostedsadresse = listOf(historiskAdresse, gjeldendeAdresse),
+                    telefonnummer =
+                        listOf(
+                            no.nav.persondataapi.generated.pdl.hentperson.Telefonnummer(
+                                landskode = "+47",
+                                nummer = "12345678",
+                                prioritet = 1,
+                                metadata = metadata,
+                            ),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat =
+                        PersonDataResultat(
+                            data = person,
+                            statusCode = 200,
+                            errorMessage = null,
+                        ),
+                )
+
+            every { kodeverkService.mapPostnummerTilPoststed("0001") } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            assertEquals(1, data.telefonnummer.size)
+            assertEquals("12345678", data.telefonnummer.first().nummer)
+
+            assertEquals("Nyveien", data.adresse?.norskAdresse?.adressenavn)
+            assertEquals(2, data.adresseHistorikk.size)
+            assertTrue(data.adresseHistorikk.any { it.adresse.norskAdresse?.adressenavn == "Gammelveien" })
+        }
+
+    @Test
     fun `skal returnere PersonIkkeFunnet når PdlClient returnerer 404`() =
         runBlocking {
             val service =
@@ -554,6 +635,8 @@ private fun lagPerson(
     statsborgerskap: List<String> = emptyList(),
     forelderBarnRelasjon: List<ForelderBarnRelasjon> = emptyList(),
     sivilstand: List<Sivilstand> = emptyList(),
+    bostedsadresse: List<no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse>? = null,
+    telefonnummer: List<no.nav.persondataapi.generated.pdl.hentperson.Telefonnummer> = emptyList(),
 ): Person {
     val metadata = Metadata(endringer = emptyList(), master = "Freg", opplysningsId = "test", historisk = false)
 
@@ -595,7 +678,7 @@ private fun lagPerson(
         forelderBarnRelasjon = forelderBarnRelasjon,
         sivilstand = actualSivilstand,
         bostedsadresse =
-            listOf(
+            bostedsadresse ?: listOf(
                 no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse(
                     vegadresse = null,
                     matrikkeladresse = null,
@@ -621,7 +704,7 @@ private fun lagPerson(
         navspersonidentifikator = emptyList(),
         sikkerhetstiltak = emptyList(),
         opphold = emptyList(),
-        telefonnummer = emptyList(),
+        telefonnummer = telefonnummer,
         innflyttingTilNorge = emptyList(),
         utflyttingFraNorge = emptyList(),
         vergemaalEllerFremtidsfullmakt = emptyList(),
