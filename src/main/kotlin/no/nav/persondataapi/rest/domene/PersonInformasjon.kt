@@ -108,7 +108,7 @@ data class PersonInformasjon(
 
 /** En folkeregisteridentifikator (FNR eller D-nummer), med informasjon om den er historisk. */
 data class HistoriskIdent(
-    val identifikasjonsnummer: String,
+    @Maskert val identifikasjonsnummer: String,
     val type: String,
     val historisk: Boolean,
 )
