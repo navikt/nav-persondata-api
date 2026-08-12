@@ -49,6 +49,13 @@ jobs:
       - name: Kjør bygg
         run: ./gradlew build
 
+      - name: Last opp genererte GraphQL-kilder
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-sources
+          path: build/generated/
+          retention-days: 1
+
   sonarcloud:
     name: SonarCloud analyse
     runs-on: ubuntu-latest
@@ -68,11 +75,17 @@ jobs:
           java-version: "21"
           cache: gradle
 
+      - name: Last ned genererte GraphQL-kilder
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-sources
+          path: build/generated/
+
       - name: Gjør Gradle kjørbar
         run: chmod +x ./gradlew
 
       - name: Kjør SonarCloud analyse
-        run: ./gradlew test jacocoTestReport sonar
+        run: ./gradlew test jacocoTestReport sonar -x graphqlGenerateNomClient -x graphqlGeneratePdlClient
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
