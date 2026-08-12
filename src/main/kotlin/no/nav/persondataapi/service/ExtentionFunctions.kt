@@ -166,7 +166,7 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
 fun Person.folkeregisterIdenter(): List<HistoriskIdent> =
     folkeregisteridentifikator.map { ident ->
         HistoriskIdent(
-            identifikasjonsnummer = ident.identifikasjonsnummer,
+            personIdent = ident.identifikasjonsnummer,
             type = ident.type,
             historisk = ident.metadata.historisk,
         )

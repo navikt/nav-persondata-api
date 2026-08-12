@@ -662,9 +662,9 @@ class PersonopplysningerServiceTest {
 
             assertEquals(2, data.historiskeIdenter.size)
             val gjeldende = data.historiskeIdenter.first { !it.historisk }
-            assertEquals("12345678901", gjeldende.identifikasjonsnummer)
+            assertEquals("12345678901", gjeldende.personIdent)
             val historisk = data.historiskeIdenter.first { it.historisk }
-            assertEquals("09876543210", historisk.identifikasjonsnummer)
+            assertEquals("09876543210", historisk.personIdent)
         }
 }
 

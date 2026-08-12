@@ -314,10 +314,10 @@ class ExtentionFunctionTests {
 
         assertEquals(2, identer.size)
         val gjeldende = identer.first { !it.historisk }
-        assertEquals("12345678901", gjeldende.identifikasjonsnummer)
+        assertEquals("12345678901", gjeldende.personIdent)
         assertEquals("FOEDSELSNUMMER", gjeldende.type)
         val historisk = identer.first { it.historisk }
-        assertEquals("09876543210", historisk.identifikasjonsnummer)
+        assertEquals("09876543210", historisk.personIdent)
     }
 
     @Test
