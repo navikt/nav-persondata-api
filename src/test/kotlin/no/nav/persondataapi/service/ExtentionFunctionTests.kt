@@ -135,6 +135,35 @@ class ExtentionFunctionTests {
     }
 
     @Test
+    fun `adresseHistorikkSiste5År skal håndtere gyldigTilOgMed med klokkeslett fra ekte PDL`() {
+        // Reproduserer produksjonsfeil: PDL kan returnere DateTime-scalar med klokkeslett
+        // ("2023-08-01T00:00") i stedet for ren dato, som gjorde at LocalDate.parse() feilet
+        // med DateTimeParseException for ekte (Dolly-opprettede) testpersoner i dev.
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                bostedsadresser =
+                    listOf(
+                        lagBostedsadresse(
+                            "Nyliggata",
+                            historisk = true,
+                            gyldigTilOgMed = "${LocalDate.now().minusYears(2)}T00:00",
+                        ),
+                    ),
+            )
+
+        val historikk = person.adresseHistorikkSiste5År()
+
+        assertEquals(1, historikk.size)
+        assertEquals(
+            "Nyliggata",
+            historikk
+                .first()
+                .adresse.norskAdresse
+                ?.adressenavn,
+        )
+    }
+
+    @Test
     fun historikkDataSkalHåndtereNullVersjoner() {
         val historikkData =
             HistorikkData(
