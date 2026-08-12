@@ -117,11 +117,19 @@ fun Person.telefonnummer(): List<PersonInformasjon.Telefonnummer> =
             )
         }
 
+/**
+ * PDL sin GraphQL-scalar `DateTime` (brukt for bl.a. bostedsadresse.gyldigFraOgMed/gyldigTilOgMed)
+ * returnerer i praksis enten en ren dato ("2023-08-01") eller dato+klokkeslett
+ * ("2023-08-01T00:00" / "2023-08-01T00:00:00"). `LocalDate.parse()` feiler på sistnevnte.
+ * Vi trenger kun datodelen, så vi tar de 10 første tegnene (yyyy-MM-dd) uansett format.
+ */
+private fun parsePdlDatoTilLocalDate(pdlDato: String): LocalDate = LocalDate.parse(pdlDato.take(10))
+
 fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse> {
     val cutoff = LocalDate.now().minusYears(5)
     return this.bostedsadresse
         .filter { adresse ->
-            val tilDato = adresse.gyldigTilOgMed?.let { LocalDate.parse(it) }
+            val tilDato = adresse.gyldigTilOgMed?.let { parsePdlDatoTilLocalDate(it) }
             tilDato == null || !tilDato.isBefore(cutoff)
         }.mapNotNull { adresse ->
             val vegadresse = adresse.vegadresse
