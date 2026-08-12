@@ -250,7 +250,8 @@ class ExtentionFunctionTests {
     }
 
     @Test
-    fun merEnEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {        val historikkData =
+    fun merEnEttInnslagAvLonnsInntektSkalIkkeTelleIHistorikken() {
+        val historikkData =
             HistorikkData(
                 maaned = "2020-01-01",
                 opplysningspliktig = "123",
