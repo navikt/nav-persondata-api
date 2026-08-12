@@ -95,6 +95,7 @@ class PersonopplysningerService(
                         enhetNr = lokalKontor.enhetNr,
                         type = lokalKontor.type,
                     ),
+                historiskeIdenter = pdlData.folkeregisterIdenter(),
             )
 
         // Berik med kodeverkdata

@@ -7,6 +7,7 @@ import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.integrasjon.aareg.client.Arbeidsforhold
 import no.nav.persondataapi.integrasjon.aareg.client.Identtype
 import no.nav.persondataapi.integrasjon.ereg.client.EregRespons
+import no.nav.persondataapi.rest.domene.HistoriskIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import java.time.LocalDate
 
@@ -160,3 +161,13 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
             )
         }
 }
+
+/** Returnerer alle folkeregisteridentifikatorer (FNR og D-nummer) inkludert historiske. */
+fun Person.folkeregisterIdenter(): List<HistoriskIdent> =
+    folkeregisteridentifikator.map { ident ->
+        HistoriskIdent(
+            identifikasjonsnummer = ident.identifikasjonsnummer,
+            type = ident.type,
+            historisk = ident.metadata.historisk,
+        )
+    }
