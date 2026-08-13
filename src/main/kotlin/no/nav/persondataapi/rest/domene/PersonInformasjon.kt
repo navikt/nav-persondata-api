@@ -16,6 +16,7 @@ data class PersonInformasjon(
     val fødselsdato: String,
     val dødsdato: String? = null,
     val navKontor: NavKontor? = null,
+    val historiskeIdenter: List<HistoriskIdent> = emptyList(),
 ) {
     data class Familiemedlem(
         val ident: String,
@@ -104,3 +105,10 @@ data class PersonInformasjon(
         STRENGT_FORTROLIG_UTLAND,
     }
 }
+
+/** En folkeregisteridentifikator (FNR eller D-nummer), med informasjon om den er historisk. */
+data class HistoriskIdent(
+    @Maskert val personIdent: String,
+    val type: String,
+    val historisk: Boolean,
+)
