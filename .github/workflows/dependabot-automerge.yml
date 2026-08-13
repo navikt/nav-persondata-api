@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Sjekk for major version bump
         id: check_version
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -42,7 +42,7 @@ jobs:
 
       - name: Varsle Slack om blokkert major bump
         if: failure() && steps.check_version.outcome == 'failure'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Varsle Slack om merget Dependabot-PR
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
