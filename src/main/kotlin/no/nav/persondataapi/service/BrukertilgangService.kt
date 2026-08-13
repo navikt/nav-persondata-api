@@ -16,6 +16,14 @@ class BrukertilgangService(
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 
+        // M2M-tokens (client_credentials) har ingen NAVident-claim.
+        // Nais accessPolicy sikrer at kun godkjente applikasjoner når frem,
+        // så vi kan gi full tilgang uten tilgangsmaskin-kall.
+        val erSystemkall = token.jwtTokenClaims.get("NAVident") == null
+        if (erSystemkall) {
+            return BrukertilgangVurdering(status = 200, tilgang = "OK", harUtvidetTilgang = true)
+        }
+
         val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
 
         val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)
