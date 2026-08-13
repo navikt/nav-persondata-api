@@ -16,10 +16,11 @@ class BrukertilgangService(
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 
-        // M2M-tokens (client_credentials) har ingen NAVident-claim.
+        // Azure AD setter idtyp="app" eksplisitt for client_credentials-tokens (M2M).
+        // Tokens uten idtyp="app" (f.eks. OBO-tokens uten NAVident) vil ikke bypasse.
         // Nais accessPolicy sikrer at kun godkjente applikasjoner når frem,
         // så vi kan gi full tilgang uten tilgangsmaskin-kall.
-        val erSystemkall = token.jwtTokenClaims.get("NAVident") == null
+        val erSystemkall = token.jwtTokenClaims.get("idtyp") == "app"
         if (erSystemkall) {
             return BrukertilgangVurdering(status = 200, tilgang = "OK", harUtvidetTilgang = true)
         }
