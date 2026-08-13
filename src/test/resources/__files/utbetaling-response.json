@@ -2012,5 +2012,1277 @@
         "trekkListe": []
       }
     ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-09-15",
+    "forfallsdato": "2025-09-15",
+    "utbetalingsdato": "2025-09-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-09",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-09-01",
+          "tom": "2025-09-15"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-09-01",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-09-30",
+    "forfallsdato": "2025-09-30",
+    "utbetalingsdato": "2025-09-30",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-09",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-09-16",
+          "tom": "2025-09-30"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-09-02",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-10-16",
+    "forfallsdato": "2025-10-16",
+    "utbetalingsdato": "2025-10-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-10",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-10-01",
+          "tom": "2025-10-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-10-03",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-10-31",
+    "forfallsdato": "2025-10-31",
+    "utbetalingsdato": "2025-10-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-10",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-10-17",
+          "tom": "2025-10-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-10-04",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-11-15",
+    "forfallsdato": "2025-11-15",
+    "utbetalingsdato": "2025-11-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-11",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-11-01",
+          "tom": "2025-11-15"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-11-05",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-11-30",
+    "forfallsdato": "2025-11-30",
+    "utbetalingsdato": "2025-11-30",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-11",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-11-16",
+          "tom": "2025-11-30"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-11-06",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-12-16",
+    "forfallsdato": "2025-12-16",
+    "utbetalingsdato": "2025-12-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-12",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-12-01",
+          "tom": "2025-12-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-12-07",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-12-31",
+    "forfallsdato": "2025-12-31",
+    "utbetalingsdato": "2025-12-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2025-12",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2025-12-17",
+          "tom": "2025-12-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2025-12-08",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-16",
+    "forfallsdato": "2026-01-16",
+    "utbetalingsdato": "2026-01-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-01",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-01-01",
+          "tom": "2026-01-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-01-09",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-31",
+    "forfallsdato": "2026-01-31",
+    "utbetalingsdato": "2026-01-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-01",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-01-17",
+          "tom": "2026-01-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-01-10",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-02-14",
+    "forfallsdato": "2026-02-14",
+    "utbetalingsdato": "2026-02-14",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-02",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-02-01",
+          "tom": "2026-02-14"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-02-11",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-02-28",
+    "forfallsdato": "2026-02-28",
+    "utbetalingsdato": "2026-02-28",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-02",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-02-15",
+          "tom": "2026-02-28"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-02-12",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-03-16",
+    "forfallsdato": "2026-03-16",
+    "utbetalingsdato": "2026-03-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-03",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-03-01",
+          "tom": "2026-03-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-03-13",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-03-31",
+    "forfallsdato": "2026-03-31",
+    "utbetalingsdato": "2026-03-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-03",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-03-17",
+          "tom": "2026-03-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-03-14",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-04-15",
+    "forfallsdato": "2026-04-15",
+    "utbetalingsdato": "2026-04-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-04",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-04-01",
+          "tom": "2026-04-15"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-04-15",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-04-30",
+    "forfallsdato": "2026-04-30",
+    "utbetalingsdato": "2026-04-30",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-04",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-04-16",
+          "tom": "2026-04-30"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-04-16",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-05-16",
+    "forfallsdato": "2026-05-16",
+    "utbetalingsdato": "2026-05-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-05",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-05-01",
+          "tom": "2026-05-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-05-17",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-05-31",
+    "forfallsdato": "2026-05-31",
+    "utbetalingsdato": "2026-05-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-05",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-05-17",
+          "tom": "2026-05-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-05-18",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-06-15",
+    "forfallsdato": "2026-06-15",
+    "utbetalingsdato": "2026-06-15",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-06",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-06-01",
+          "tom": "2026-06-15"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-06-19",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-06-30",
+    "forfallsdato": "2026-06-30",
+    "utbetalingsdato": "2026-06-30",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-06",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-06-16",
+          "tom": "2026-06-30"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-06-20",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-07-16",
+    "forfallsdato": "2026-07-16",
+    "utbetalingsdato": "2026-07-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-07",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-07-01",
+          "tom": "2026-07-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-07-21",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-07-31",
+    "forfallsdato": "2026-07-31",
+    "utbetalingsdato": "2026-07-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-07",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-07-17",
+          "tom": "2026-07-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-07-22",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-08-16",
+    "forfallsdato": "2026-08-16",
+    "utbetalingsdato": "2026-08-16",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-08",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-08-01",
+          "tom": "2026-08-16"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-08-23",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-08-31",
+    "forfallsdato": "2026-08-31",
+    "utbetalingsdato": "2026-08-31",
+    "utbetalingNettobeloep": 11200,
+    "utbetalingsmelding": "Dagpenger 2026-08",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Dagpenger",
+        "ytelsesperiode": {
+          "fom": "2026-08-17",
+          "tom": "2026-08-31"
+        },
+        "ytelseNettobeloep": 11200,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 800,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 12000,
+        "bilagsnummer": "DP-DEMO12-2026-08-24",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "Dagpenger",
+            "satsbeloep": 12000,
+            "satstype": "2-ukers periode",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 12000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 800
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
   }
 ]
