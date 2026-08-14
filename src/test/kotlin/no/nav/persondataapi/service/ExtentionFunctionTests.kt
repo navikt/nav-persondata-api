@@ -5,6 +5,8 @@ import no.nav.inntekt.generated.model.Inntektsinformasjon
 import no.nav.inntekt.generated.model.Loennsinntekt
 import no.nav.inntekt.generated.model.YtelseFraOffentlige
 import no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse
+import no.nav.persondataapi.generated.pdl.hentperson.Folkeregisteridentifikator
+import no.nav.persondataapi.generated.pdl.hentperson.Folkeregistermetadata
 import no.nav.persondataapi.generated.pdl.hentperson.Metadata
 import no.nav.persondataapi.generated.pdl.hentperson.Telefonnummer
 import no.nav.persondataapi.generated.pdl.hentperson.Vegadresse
@@ -326,11 +328,59 @@ class ExtentionFunctionTests {
             )
         Assertions.assertTrue(historikkData.harHistorikkPåNormallønn())
     }
+
+    @Test
+    fun `folkeregisterIdenter skal returnere gjeldende og historiske identer`() {
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                folkeregisteridentifikatorer =
+                    listOf(
+                        lagFolkeregisteridentifikator("12345678901", historisk = false),
+                        lagFolkeregisteridentifikator("09876543210", historisk = true),
+                    ),
+            )
+
+        val identer = person.folkeregisterIdenter()
+
+        assertEquals(2, identer.size)
+        val gjeldende = identer.first { !it.historisk }
+        assertEquals("12345678901", gjeldende.personIdent)
+        assertEquals("FOEDSELSNUMMER", gjeldende.type)
+        val historisk = identer.first { it.historisk }
+        assertEquals("09876543210", historisk.personIdent)
+    }
+
+    @Test
+    fun `folkeregisterIdenter skal returnere tom liste når ingen identer finnes`() {
+        val person = lagPersonMedAdresserOgTelefon()
+
+        val identer = person.folkeregisterIdenter()
+
+        assertTrue(identer.isEmpty())
+    }
+
+    @Test
+    fun `folkeregisterIdenter skal bevare type fra PDL`() {
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                folkeregisteridentifikatorer =
+                    listOf(
+                        lagFolkeregisteridentifikator("12345678901", type = "FOEDSELSNUMMER"),
+                        lagFolkeregisteridentifikator("99999900001", type = "DNR", historisk = true),
+                    ),
+            )
+
+        val identer = person.folkeregisterIdenter()
+
+        assertEquals("FOEDSELSNUMMER", identer.first { !it.historisk }.type)
+        assertEquals("DNR", identer.first { it.historisk }.type)
+    }
 }
 
 private fun lagPersonMedAdresserOgTelefon(
     bostedsadresser: List<Bostedsadresse> = emptyList(),
     telefonnumre: List<Telefonnummer> = emptyList(),
+    folkeregisteridentifikatorer: List<Folkeregisteridentifikator> = emptyList(),
 ): no.nav.persondataapi.generated.pdl.hentperson.Person =
     no.nav.persondataapi.generated.pdl.hentperson.Person(
         navn = emptyList(),
@@ -351,7 +401,7 @@ private fun lagPersonMedAdresserOgTelefon(
         folkeregisterpersonstatus = emptyList(),
         identitetsgrunnlag = emptyList(),
         tilrettelagtKommunikasjon = emptyList(),
-        folkeregisteridentifikator = emptyList(),
+        folkeregisteridentifikator = folkeregisteridentifikatorer,
         navspersonidentifikator = emptyList(),
         sikkerhetstiltak = emptyList(),
         opphold = emptyList(),
@@ -364,3 +414,25 @@ private fun lagPersonMedAdresserOgTelefon(
         doedfoedtBarn = emptyList(),
         falskIdentitet = null,
     )
+
+private val tomFolkeregistermetadata =
+    Folkeregistermetadata(
+        aarsak = null,
+        ajourholdstidspunkt = null,
+        gyldighetstidspunkt = null,
+        kilde = null,
+        opphoerstidspunkt = null,
+        sekvens = null,
+    )
+
+private fun lagFolkeregisteridentifikator(
+    identifikasjonsnummer: String,
+    type: String = "FOEDSELSNUMMER",
+    historisk: Boolean = false,
+) = Folkeregisteridentifikator(
+    identifikasjonsnummer = identifikasjonsnummer,
+    status = "I_BRUK",
+    type = type,
+    folkeregistermetadata = tomFolkeregistermetadata,
+    metadata = if (historisk) historiskMetadata else standardMetadata,
+)

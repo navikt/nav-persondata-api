@@ -16,6 +16,15 @@ class BrukertilgangService(
         val context = tokenValidationContextHolder.getTokenValidationContext()
         val token = context.firstValidToken ?: throw IllegalStateException("Fant ikke gyldig token")
 
+        // Azure AD setter idtyp="app" eksplisitt for client_credentials-tokens (M2M).
+        // Tokens uten idtyp="app" (f.eks. OBO-tokens uten NAVident) vil ikke bypasse.
+        // Nais accessPolicy sikrer at kun godkjente applikasjoner når frem,
+        // så vi kan gi full tilgang uten tilgangsmaskin-kall.
+        val erSystemkall = token.jwtTokenClaims.get("idtyp") == "app"
+        if (erSystemkall) {
+            return BrukertilgangVurdering(status = 200, tilgang = "OK", harUtvidetTilgang = true)
+        }
+
         val groups = token.jwtTokenClaims.get("groups") as? List<String> ?: emptyList()
 
         val resultat = tilgangService.hentTilgangsresultat(personIdent, token.encodedToken)

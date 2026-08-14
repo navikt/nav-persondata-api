@@ -9,6 +9,8 @@ import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.enums.ForelderBarnRelasjonRolle
 import no.nav.persondataapi.generated.pdl.enums.Sivilstandstype
 import no.nav.persondataapi.generated.pdl.hentperson.Foedselsdato
+import no.nav.persondataapi.generated.pdl.hentperson.Folkeregisteridentifikator
+import no.nav.persondataapi.generated.pdl.hentperson.Folkeregistermetadata
 import no.nav.persondataapi.generated.pdl.hentperson.ForelderBarnRelasjon
 import no.nav.persondataapi.generated.pdl.hentperson.Metadata
 import no.nav.persondataapi.generated.pdl.hentperson.Navn
@@ -624,6 +626,46 @@ class PersonopplysningerServiceTest {
             assertNotNull(barn)
             assertEquals(PersonInformasjon.Skjerming.FORTROLIG, barn?.adressebeskyttelse)
         }
+
+    @Test
+    fun `skal mappe historiskeIdenter fra PDL til PersonInformasjon`() =
+        runBlocking {
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    folkeregisteridentifikator =
+                        listOf(
+                            lagFolkeregisteridentifikator("12345678901", historisk = false),
+                            lagFolkeregisteridentifikator("09876543210", historisk = true),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = true,
+                    personResultat =
+                        PersonDataResultat(
+                            data = person,
+                            statusCode = 200,
+                            errorMessage = null,
+                        ),
+                )
+
+            every { kodeverkService.mapPostnummerTilPoststed(any()) } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            assertEquals(2, data.historiskeIdenter.size)
+            val gjeldende = data.historiskeIdenter.first { !it.historisk }
+            assertEquals("12345678901", gjeldende.personIdent)
+            val historisk = data.historiskeIdenter.first { it.historisk }
+            assertEquals("09876543210", historisk.personIdent)
+        }
 }
 
 // Hjelpefunksjoner for å lage testdata
@@ -637,6 +679,7 @@ private fun lagPerson(
     sivilstand: List<Sivilstand> = emptyList(),
     bostedsadresse: List<no.nav.persondataapi.generated.pdl.hentperson.Bostedsadresse>? = null,
     telefonnummer: List<no.nav.persondataapi.generated.pdl.hentperson.Telefonnummer> = emptyList(),
+    folkeregisteridentifikator: List<Folkeregisteridentifikator> = emptyList(),
 ): Person {
     val metadata = Metadata(endringer = emptyList(), master = "Freg", opplysningsId = "test", historisk = false)
 
@@ -700,7 +743,7 @@ private fun lagPerson(
         folkeregisterpersonstatus = emptyList(),
         identitetsgrunnlag = emptyList(),
         tilrettelagtKommunikasjon = emptyList(),
-        folkeregisteridentifikator = emptyList(),
+        folkeregisteridentifikator = folkeregisteridentifikator,
         navspersonidentifikator = emptyList(),
         sikkerhetstiltak = emptyList(),
         opphold = emptyList(),
@@ -764,3 +807,26 @@ private fun lagBolkResultat(
                 adressebeskyttelse = listOf(BolkAdressebeskyttelse(gradering = gradering)),
             ),
     )
+
+private fun lagFolkeregisteridentifikator(
+    identifikasjonsnummer: String,
+    type: String = "FOEDSELSNUMMER",
+    historisk: Boolean = false,
+): Folkeregisteridentifikator {
+    val metadata = Metadata(endringer = emptyList(), master = "Freg", opplysningsId = "test", historisk = historisk)
+    return Folkeregisteridentifikator(
+        identifikasjonsnummer = identifikasjonsnummer,
+        status = "I_BRUK",
+        type = type,
+        folkeregistermetadata =
+            Folkeregistermetadata(
+                aarsak = null,
+                ajourholdstidspunkt = null,
+                gyldighetstidspunkt = null,
+                kilde = null,
+                opphoerstidspunkt = null,
+                sekvens = null,
+            ),
+        metadata = metadata,
+    )
+}
