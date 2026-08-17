@@ -50,7 +50,7 @@ jobs:
         run: ./gradlew build
 
       - name: Last opp genererte GraphQL-kilder
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: generated-sources
           path: build/generated/
