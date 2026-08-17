@@ -144,9 +144,23 @@ class MeldekortService(
                             val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
                             val utbetalingsgrad = utbetaling.utbetalingsgrad
 
+                            // tilOgMedDato er nullable i domenemodellen (Periode), men
+                            // AapMeldekortPeriode.tilOgMed er ikke-nullable i den eksponerte
+                            // DTO-en. Fall tilbake til fraOgMedDato (éndags-periode) i stedet
+                            // for å krasje hele kallet med NPE dersom Kelvin noen gang
+                            // returnerer en åpen/pågående utbetalingsperiode uten sluttdato.
+                            val tilOgMed =
+                                utbetaling.periode.tilOgMedDato ?: run {
+                                    logger.warn(
+                                        "AAP-utbetaling for vedtak ${aapvedtak.vedtakId} mangler tilOgMedDato " +
+                                            "— faller tilbake til fraOgMedDato (${utbetaling.periode.fraOgMedDato})",
+                                    )
+                                    utbetaling.periode.fraOgMedDato
+                                }
+
                             AapMeldekortPeriode(
                                 fraOgMed = utbetaling.periode.fraOgMedDato,
-                                tilOgMed = utbetaling.periode.tilOgMedDato!!,
+                                tilOgMed = tilOgMed,
                                 arbeidetTimer = arbeidetTimer,
                                 annenReduksjon = annenReduksjon,
                                 utbetalingsgrad = utbetalingsgrad,
