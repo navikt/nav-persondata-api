@@ -129,6 +129,7 @@ class MeldekortServiceTest {
         val service = MeldekortService(dpDatadelingClient, aapClient, brukertilgangService)
         val resultat = service.hentAAPMeldekortForPerson(PersonIdent("12345678901"), utvidet = true)
 
+        assertTrue(resultat is AAPMeldekortResultat.Success)
         val data = (resultat as AAPMeldekortResultat.Success).data
         assertTrue(data.flatMap { it.perioder }.all { it.arbeidetTimer == null })
     }
@@ -136,6 +137,7 @@ class MeldekortServiceTest {
 
 private fun lesJsonFraFil(filename: String): String {
     val resource = ClassPathResource(filename)
-    val inputStream = resource.inputStream
-    return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8)
+    return resource.inputStream.use { inputStream ->
+        StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8)
+    }
 }
