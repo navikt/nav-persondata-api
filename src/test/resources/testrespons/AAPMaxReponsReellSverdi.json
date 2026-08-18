@@ -1,0 +1,201 @@
+{
+  "vedtak": [
+    {
+      "dagsats": 1359,
+      "dagsatsEtterUføreReduksjon": 1359,
+      "vedtakId": "111603",
+      "status": "LØPENDE",
+      "saksnummer": "TEST_4XPDUSW",
+      "vedtaksdato": "2026-08-17",
+      "periode": {
+        "fraOgMedDato": "2025-01-15",
+        "tilOgMedDato": "2025-04-30"
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 535250,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "barnetilleggSats": 37,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": "O",
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-01-15",
+            "tilOgMedDato": "2025-04-30"
+          },
+          "belop": 103284,
+          "dagsats": 1359,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        }
+      ],
+      "samordningOgTpnr": []
+    },
+    {
+      "dagsats": 1426,
+      "dagsatsEtterUføreReduksjon": 1426,
+      "vedtakId": "111603",
+      "status": "LØPENDE",
+      "saksnummer": "TEST_4XPDUSW",
+      "vedtaksdato": "2026-08-17",
+      "periode": {
+        "fraOgMedDato": "2025-05-01",
+        "tilOgMedDato": "2025-12-31"
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 535250,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "barnetilleggSats": 37,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": "O",
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-05-01",
+            "tilOgMedDato": "2025-12-31"
+          },
+          "belop": 249550,
+          "dagsats": 1426,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        }
+      ],
+      "samordningOgTpnr": []
+    },
+    {
+      "dagsats": 1426,
+      "dagsatsEtterUføreReduksjon": 1426,
+      "vedtakId": "111603",
+      "status": "LØPENDE",
+      "saksnummer": "TEST_4XPDUSW",
+      "vedtaksdato": "2026-08-17",
+      "periode": {
+        "fraOgMedDato": "2026-01-01",
+        "tilOgMedDato": "2026-01-14"
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 535250,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "barnetilleggSats": 38,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": "O",
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-01-01",
+            "tilOgMedDato": "2026-01-14"
+          },
+          "belop": 14260,
+          "dagsats": 1426,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        }
+      ],
+      "samordningOgTpnr": []
+    },
+    {
+      "dagsats": 1426,
+      "dagsatsEtterUføreReduksjon": 1426,
+      "vedtakId": "111603",
+      "status": "LØPENDE",
+      "saksnummer": "TEST_4XPDUSW",
+      "vedtaksdato": "2026-08-17",
+      "periode": {
+        "fraOgMedDato": "2026-01-15",
+        "tilOgMedDato": "2026-04-30"
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 535250,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "barnetilleggSats": 38,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": "E",
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-01-15",
+            "tilOgMedDato": "2026-04-30"
+          },
+          "belop": 108376,
+          "dagsats": 1426,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        }
+      ],
+      "samordningOgTpnr": []
+    },
+    {
+      "dagsats": 1496,
+      "dagsatsEtterUføreReduksjon": 1496,
+      "vedtakId": "111603",
+      "status": "LØPENDE",
+      "saksnummer": "TEST_4XPDUSW",
+      "vedtaksdato": "2026-08-17",
+      "periode": {
+        "fraOgMedDato": "2026-05-01",
+        "tilOgMedDato": "2027-01-14"
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 535250,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "barnetilleggSats": 38,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": "E",
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-05-01",
+            "tilOgMedDato": "2026-08-09"
+          },
+          "belop": 106216,
+          "dagsats": 1496,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        },
+        {
+          "reduksjon": null,
+          "utbetalingsgrad": 0,
+          "periode": {
+            "fraOgMedDato": "2026-08-10",
+            "tilOgMedDato": "2026-08-17"
+          },
+          "belop": 0,
+          "dagsats": 0,
+          "barnetillegg": 0,
+          "barnetilegg": 0
+        }
+      ],
+      "samordningOgTpnr": []
+    }
+  ]
+}
