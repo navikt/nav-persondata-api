@@ -4,8 +4,6 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
-import io.swagger.v3.oas.models.security.OAuthFlow
-import io.swagger.v3.oas.models.security.OAuthFlows
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import io.swagger.v3.oas.models.servers.Server
@@ -44,7 +42,10 @@ class OpenApiConfiguration {
                         
                         ## Autentisering
                         Alle endepunkter krever gyldig Azure AD-token med riktige tilganger.
-                        Bruk OAuth 2.0 Authorization Code flow eller On-Behalf-Of flow.
+                        
+                        Trykk «Authorize» og lim inn et rått JWT-token (uten "Bearer "-prefiks).
+                        I dev/local kan et M2M-token hentes fra:
+                        `https://azure-token-generator.intern.dev.nav.no/api/m2m?aud=<cluster>:<team>:<app>`
                         """.trimIndent(),
                     ).version("1.0.0")
                     .contact(
@@ -60,18 +61,11 @@ class OpenApiConfiguration {
                     .addSecuritySchemes(
                         "azure-ad",
                         SecurityScheme()
-                            .type(SecurityScheme.Type.OAUTH2)
-                            .description("Azure AD autentisering. Krever gyldig NAV-bruker med riktige tilganger.")
-                            .flows(
-                                OAuthFlows()
-                                    .authorizationCode(
-                                        OAuthFlow()
-                                            .authorizationUrl(
-                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize",
-                                            ).tokenUrl(
-                                                "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token",
-                                            ),
-                                    ),
+                            .type(SecurityScheme.Type.HTTP)
+                            .scheme("bearer")
+                            .bearerFormat("JWT")
+                            .description(
+                                "Azure AD autentisering. Lim inn et gyldig JWT-token (M2M eller OBO) uten \"Bearer \"-prefiks.",
                             ),
                     ),
             ).addSecurityItem(SecurityRequirement().addList("azure-ad"))
