@@ -374,7 +374,7 @@
           "utbetalingsgrad": 100,
           "periode": {
             "fraOgMedDato": "2026-08-17",
-            "tilOgMedDato": "2026-08-31"
+            "tilOgMedDato": null
           },
           "belop": 10220,
           "dagsats": 1022,
