@@ -59,11 +59,13 @@ class MeldekortServiceTest {
     }
 
     @Test
-    fun `AAP - kaster ikke NPE når utbetalingsperiode mangler tilOgMedDato (åpen periode)`() {
-        // Regresjonstest for tidligere !!-krasj: domenemodellen Periode har
-        // tilOgMedDato som nullable, men den forrige koden brukte !! ved
-        // mapping til AapMeldekortPeriode. Kelvin kan i prinsippet returnere
-        // en pågående utbetalingsperiode uten kjent sluttdato.
+    fun `AAP - tilOgMedDato lik null betyr en ÅPEN periode og skal IKKE erstattes med fraOgMed`() {
+        // Regresjonstest for tidligere !!-krasj, OG for en påfølgende feilaktig
+        // fiks som (feilaktig) tolket null som en éndags-periode. Kelvin sin
+        // konvensjon: tilOgMedDato==null betyr at perioden løper fra fraOgMedDato
+        // og videre uten kjent sluttdato — samme semantikk som ÅpenPeriode og
+        // timerMedTimeloenn.sluttdato ellers i kodebasen. Skal sendes uendret
+        // (null) videre til frontend, IKKE kollapses til én dag.
         val vedtak =
             lagVedtak(
                 periode = Periode(LocalDate.parse("2026-01-01"), null),
@@ -81,8 +83,8 @@ class MeldekortServiceTest {
         assertTrue(resultat is AAPMeldekortResultat.Success)
         val data = (resultat as AAPMeldekortResultat.Success).data
         assertEquals(1, data.size)
-        // Faller tilbake til fraOgMed når tilOgMedDato mangler, i stedet for å krasje.
-        assertEquals(LocalDate.parse("2026-01-01"), data[0].perioder[0].tilOgMed)
+        assertNull(data[0].perioder[0].tilOgMed)
+        assertEquals(LocalDate.parse("2026-01-01"), data[0].perioder[0].fraOgMed)
     }
 
     @Test
