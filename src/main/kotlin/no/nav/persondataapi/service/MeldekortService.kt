@@ -144,9 +144,13 @@ class MeldekortService(
                             val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
                             val utbetalingsgrad = utbetaling.utbetalingsgrad
 
+                            // tilOgMedDato null betyr en ÅPEN periode (løper fra fraOgMedDato
+                            // og videre uten kjent sluttdato) — ikke en éndags-periode. Sendes
+                            // uendret videre til frontend, som håndterer åpne perioder på samme
+                            // måte som ÅpenPeriode/timerMedTimeloenn ellers.
                             AapMeldekortPeriode(
                                 fraOgMed = utbetaling.periode.fraOgMedDato,
-                                tilOgMed = utbetaling.periode.tilOgMedDato!!,
+                                tilOgMed = utbetaling.periode.tilOgMedDato,
                                 arbeidetTimer = arbeidetTimer,
                                 annenReduksjon = annenReduksjon,
                                 utbetalingsgrad = utbetalingsgrad,

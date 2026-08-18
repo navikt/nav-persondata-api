@@ -1,0 +1,387 @@
+{
+  "vedtak": [
+    {
+      "dagsats": 1022,
+      "dagsatsEtterUføreReduksjon": 1022,
+      "vedtakId": "AAP-DEMO12-1",
+      "status": "LØPENDE",
+      "saksnummer": "DEMO12AAP",
+      "vedtaksdato": "2025-09-01",
+      "periode": {
+        "fraOgMedDato": "2025-09-01",
+        "tilOgMedDato": null
+      },
+      "rettighetsType": "BISTANDSBEHOV",
+      "beregningsgrunnlag": 212984,
+      "barnMedStonad": 0,
+      "barnetillegg": 0,
+      "kildesystem": "KELVIN",
+      "samordningsId": null,
+      "opphorsAarsak": null,
+      "vedtaksTypeKode": null,
+      "vedtaksTypeNavn": null,
+      "utbetaling": [
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-09-01",
+            "tilOgMedDato": "2025-09-15"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-09-16",
+            "tilOgMedDato": "2025-09-30"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-10-01",
+            "tilOgMedDato": "2025-10-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-10-17",
+            "tilOgMedDato": "2025-10-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 40.18
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-11-01",
+            "tilOgMedDato": "2025-11-15"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 40.18
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-11-16",
+            "tilOgMedDato": "2025-11-30"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-12-01",
+            "tilOgMedDato": "2025-12-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2025-12-17",
+            "tilOgMedDato": "2025-12-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-01-01",
+            "tilOgMedDato": "2026-01-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-01-17",
+            "tilOgMedDato": "2026-01-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 40.18
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-02-01",
+            "tilOgMedDato": "2026-02-15"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 34.82
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-02-16",
+            "tilOgMedDato": "2026-02-28"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-03-01",
+            "tilOgMedDato": "2026-03-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-03-17",
+            "tilOgMedDato": "2026-03-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-04-01",
+            "tilOgMedDato": "2026-04-15"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-04-16",
+            "tilOgMedDato": "2026-04-30"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-05-01",
+            "tilOgMedDato": "2026-05-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-05-17",
+            "tilOgMedDato": "2026-05-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-06-01",
+            "tilOgMedDato": "2026-06-15"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-06-16",
+            "tilOgMedDato": "2026-06-30"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-07-01",
+            "tilOgMedDato": "2026-07-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-07-17",
+            "tilOgMedDato": "2026-07-31"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 85.71
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-08-01",
+            "tilOgMedDato": "2026-08-16"
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        },
+        {
+          "reduksjon": {
+            "annenReduksjon": 0,
+            "timerArbeidet": 80.36
+          },
+          "utbetalingsgrad": 100,
+          "periode": {
+            "fraOgMedDato": "2026-08-17",
+            "tilOgMedDato": null
+          },
+          "belop": 10220,
+          "dagsats": 1022,
+          "barnetilegg": 0,
+          "barnetillegg": 0
+        }
+      ]
+    }
+  ]
+}

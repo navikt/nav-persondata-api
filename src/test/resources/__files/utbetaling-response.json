@@ -3284,5 +3284,641 @@
         "trekkListe": []
       }
     ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-09-30",
+    "forfallsdato": "2025-09-30",
+    "utbetalingsdato": "2025-09-30",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2025-09",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-09-01",
+          "tom": "2025-09-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2025-09",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-10-31",
+    "forfallsdato": "2025-10-31",
+    "utbetalingsdato": "2025-10-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2025-10",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-10-01",
+          "tom": "2025-10-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2025-10",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-11-30",
+    "forfallsdato": "2025-11-30",
+    "utbetalingsdato": "2025-11-30",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2025-11",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-11-01",
+          "tom": "2025-11-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2025-11",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2025-12-31",
+    "forfallsdato": "2025-12-31",
+    "utbetalingsdato": "2025-12-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2025-12",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2025-12-01",
+          "tom": "2025-12-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2025-12",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-01-31",
+    "forfallsdato": "2026-01-31",
+    "utbetalingsdato": "2026-01-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-01",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-01-01",
+          "tom": "2026-01-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-01",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-02-28",
+    "forfallsdato": "2026-02-28",
+    "utbetalingsdato": "2026-02-28",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-02",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-02-01",
+          "tom": "2026-02-28"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-02",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-03-31",
+    "forfallsdato": "2026-03-31",
+    "utbetalingsdato": "2026-03-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-03",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-03-01",
+          "tom": "2026-03-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-03",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-04-30",
+    "forfallsdato": "2026-04-30",
+    "utbetalingsdato": "2026-04-30",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-04",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-04-01",
+          "tom": "2026-04-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-04",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-05-31",
+    "forfallsdato": "2026-05-31",
+    "utbetalingsdato": "2026-05-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-05",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-05-01",
+          "tom": "2026-05-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-05",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-06-30",
+    "forfallsdato": "2026-06-30",
+    "utbetalingsdato": "2026-06-30",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-06",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-06-01",
+          "tom": "2026-06-30"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-06",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-07-31",
+    "forfallsdato": "2026-07-31",
+    "utbetalingsdato": "2026-07-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-07",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-07-01",
+          "tom": "2026-07-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-07",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
+  },
+  {
+    "utbetaltTil": {
+      "aktoertype": "PERSON",
+      "ident": "12345678901",
+      "navn": "Kari Nordmann"
+    },
+    "utbetalingsmetode": "Bankoverføring",
+    "utbetalingsstatus": "UTBETALT",
+    "posteringsdato": "2026-08-31",
+    "forfallsdato": "2026-08-31",
+    "utbetalingsdato": "2026-08-31",
+    "utbetalingNettobeloep": 14450,
+    "utbetalingsmelding": "AAP 2026-08",
+    "utbetaltTilKonto": {
+      "kontonummer": "12345678903",
+      "kontotype": "Innskuddskonto"
+    },
+    "ytelseListe": [
+      {
+        "ytelsestype": "Arbeidsavklaringspenger",
+        "ytelsesperiode": {
+          "fom": "2026-08-01",
+          "tom": "2026-08-31"
+        },
+        "ytelseNettobeloep": 14450,
+        "rettighetshaver": {
+          "aktoertype": "PERSON",
+          "ident": "12345678901",
+          "navn": "Kari Nordmann"
+        },
+        "skattsum": 2550,
+        "trekksum": 0.0,
+        "ytelseskomponentersum": 17000,
+        "bilagsnummer": "AAP-DEMO12-2026-08",
+        "refundertForOrg": null,
+        "ytelseskomponentListe": [
+          {
+            "ytelseskomponenttype": "AAP-ytelse",
+            "satsbeloep": 17000,
+            "satstype": "Månedlig",
+            "satsantall": 1.0,
+            "ytelseskomponentbeloep": 17000
+          }
+        ],
+        "skattListe": [
+          {
+            "skattebeloep": 2550
+          }
+        ],
+        "trekkListe": []
+      }
+    ]
   }
 ]
