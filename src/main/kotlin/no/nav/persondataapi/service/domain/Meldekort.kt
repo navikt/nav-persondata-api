@@ -18,7 +18,11 @@ data class AapMeldekortDto(
 
 data class AapMeldekortPeriode(
     val fraOgMed: LocalDate,
-    val tilOgMed: LocalDate,
+    // Nullable: Kelvin lar tilOgMedDato være null for å indikere en ÅPEN
+    // periode (løper fra fraOgMed og videre uten kjent sluttdato), samme
+    // konvensjon som ÅpenPeriode og timerMedTimeloenn.sluttdato ellers i
+    // kodebasen. IKKE tolk null som en éndags-periode.
+    val tilOgMed: LocalDate?,
     val arbeidetTimer: Double?,
     val annenReduksjon: Float?,
     val utbetalingsgrad: Int?,
