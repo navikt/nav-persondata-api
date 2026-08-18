@@ -1,5 +1,6 @@
 package no.nav.persondataapi.integrasjon.aap.meldekort.domene
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import java.time.LocalDate
 
 data class AapMaximumRequest(
@@ -20,6 +21,9 @@ data class Vedtak(
     val periode: Periode,
     val rettighetsType: String,
     val dagsats: Int,
+    // Kildesystemet (Kelvin) sender feltnavnet med "ø" (dagsatsEtterUføreReduksjon).
+    // @JsonAlias trengs siden Kotlin-feltnavnet bruker ASCII "o" av portabilitetshensyn.
+    @JsonAlias("dagsatsEtterUføreReduksjon")
     val dagsatsEtterUforeReduksjon: Int?,
     val beregningsgrunnlag: Int,
     val barnMedStonad: Int,
