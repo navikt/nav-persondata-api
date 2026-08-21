@@ -4,6 +4,9 @@ import io.netty.handler.timeout.ReadTimeoutException
 import io.netty.handler.timeout.WriteTimeoutException
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRequest
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesArbeidstimerRequest
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesArbeidstimerRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesMeldeperiode
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Vedtak
 import no.nav.persondataapi.konfigurasjon.RetryPolicy
 import no.nav.persondataapi.konfigurasjon.rootCause
@@ -30,6 +33,7 @@ class AapClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
     private val operationName = "max"
+    private val holmesOperationName = "holmes-arbeidstimer"
 
     @Cacheable(
         value = ["aap"],
@@ -99,6 +103,75 @@ class AapClient(
         })
     }
 
+    /**
+     * Henter faktisk innrapporterte arbeidstimer per meldeperiode fra det
+     * dedikerte `/holmes/arbeidstimer`-endepunktet i aap-api-intern.
+     *
+     * Bakgrunn: `/maksimum` (se [hentAapMax]) sender alltid `reduksjon=null`
+     * for Kelvin-vedtak, uansett om personen faktisk har rapportert
+     * arbeidstimer på meldekortet. Team AAP laget derfor dette endepunktet
+     * spesifikt for oss (Watson Søk / team Holmes) — se
+     * https://github.com/navikt/aap-api-intern/issues/929.
+     *
+     * Feiler denne kallet (nettverk, 5xx, o.l.) returneres `null` slik at
+     * resten av AAP-meldekort-responsen fortsatt kan leveres — arbeidetTimer
+     * blir da bare stående som `null`/ukjent for perioden, i stedet for at
+     * hele oppslaget feiler.
+     */
+    @Cacheable(
+        value = ["aap-arbeidstimer"],
+        key = "#personIdent + '_' + #utvidet",
+        unless = "#result == null",
+    )
+    fun hentArbeidstimer(
+        personIdent: PersonIdent,
+        utvidet: Boolean,
+    ): HolmesArbeidstimerRespons? {
+        val antallÅr: Long = if (utvidet) 13 else 3
+        val oboToken = tokenService.getServiceToken(SCOPE.AAP_SCOPE)
+
+        return runCatching {
+            metrics.timer(holmesOperationName).recordCallable {
+                val requestBody =
+                    HolmesArbeidstimerRequest(
+                        personidentifikator = personIdent.value,
+                        fraOgMedDato = LocalDate.now().minusYears(antallÅr),
+                        tilOgMedDato = LocalDate.now(),
+                    )
+
+                webClient
+                    .post()
+                    .uri("/holmes/arbeidstimer")
+                    .header("Authorization", "Bearer $oboToken")
+                    .bodyValue(requestBody)
+                    .exchangeToMono { response ->
+                        val status = response.statusCode()
+                        if (status.is2xxSuccessful) {
+                            response.bodyToMono(object : ParameterizedTypeReference<HolmesArbeidstimerRespons>() {})
+                        } else {
+                            response.bodyToMono(String::class.java).map { body ->
+                                throw RuntimeException("Feil fra AAP holmes/arbeidstimer: HTTP $status – $body")
+                            }
+                        }
+                    }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-holmes-arbeidstimer"))
+                    .block()!!
+            }
+        }.fold(onSuccess = { respons ->
+            metrics.counter(holmesOperationName, DownstreamResult.SUCCESS).increment()
+            respons
+        }, onFailure = { error ->
+            val resultType =
+                when {
+                    erTimeout(error) -> DownstreamResult.TIMEOUT
+                    error.message?.contains("ikke tilgang", ignoreCase = true) == true -> DownstreamResult.CLIENT_ERROR
+                    else -> DownstreamResult.UNEXPECTED
+                }
+            metrics.counter(holmesOperationName, resultType).increment()
+            log.error("Feil ved henting av aap holmes/arbeidstimer: ${error.message}", error)
+            null
+        })
+    }
+
     private fun erTimeout(e: Throwable): Boolean =
         when (e.cause) {
             is TimeoutException -> true
@@ -113,3 +186,6 @@ data class AapMeldekortRespons(
     val statusCode: Int,
     val message: String?,
 )
+
+/** Flater ut alle `timerArbeid`-segmenter på tvers av meldeperioder til én liste. */
+fun HolmesArbeidstimerRespons.alleTimerArbeidSegmenter() = this.meldeperioder.flatMap(HolmesMeldeperiode::timerArbeid)

@@ -5,6 +5,9 @@ import io.mockk.mockk
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapClient
 import no.nav.persondataapi.integrasjon.aap.meldekort.client.AapMeldekortRespons
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.AapMaximumRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesArbeidstimerRespons
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesMeldeperiode
+import no.nav.persondataapi.integrasjon.aap.meldekort.domene.HolmesTimerArbeid
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Periode
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Reduksjon
 import no.nav.persondataapi.integrasjon.aap.meldekort.domene.Utbetaling
@@ -27,6 +30,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.util.StreamUtils
+import java.math.BigDecimal
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -117,6 +121,169 @@ class MeldekortServiceTest {
         val data = (resultat as AAPMeldekortResultat.Success).data
         assertEquals(12.5, data[0].perioder[0].arbeidetTimer)
         assertEquals(0.5f, data[0].perioder[0].annenReduksjon)
+    }
+
+    @Test
+    fun `AAP - henter arbeidetTimer fra Holmes-endepunktet når reduksjon er null (Kelvin-vedtak)`() {
+        // Reell verdenssituasjon: /maksimum sender alltid reduksjon=null for
+        // Kelvin-vedtak (aap-api-intern#929) — arbeidetTimer skal da komme
+        // fra det dedikerte Holmes-endepunktet i stedet.
+        val vedtak =
+            lagVedtak(
+                utbetaling =
+                    listOf(
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-01"), LocalDate.parse("2026-08-16")),
+                            reduksjon = null,
+                        ),
+                    ),
+            )
+        val holmesRespons =
+            lagHolmesRespons(
+                HolmesTimerArbeid(
+                    periodeFom = LocalDate.parse("2026-08-01"),
+                    periodeTom = LocalDate.parse("2026-08-16"),
+                    timerArbeidet = BigDecimal("40.0"),
+                ),
+            )
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = holmesRespons,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = false)
+
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        assertEquals(40.0, data[0].perioder[0].arbeidetTimer)
+    }
+
+    @Test
+    fun `AAP - proraterer arbeidetTimer når Holmes-meldeperiode kun delvis overlapper utbetalingsperioden`() {
+        // Holmes-meldeperioder er alltid 2 uker, mens /maksimum kan splitte
+        // utbetalingsperioder midt i en meldeperiode (f.eks. ved endret
+        // rettighetsType). 20 timer over 14 dager, hvorav 7 dager overlapper
+        // → forventet 10 timer (halvparten).
+        val vedtak =
+            lagVedtak(
+                utbetaling =
+                    listOf(
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-01"), LocalDate.parse("2026-08-07")),
+                            reduksjon = null,
+                        ),
+                    ),
+            )
+        val holmesRespons =
+            lagHolmesRespons(
+                HolmesTimerArbeid(
+                    periodeFom = LocalDate.parse("2026-08-01"),
+                    periodeTom = LocalDate.parse("2026-08-14"),
+                    timerArbeidet = BigDecimal("20.0"),
+                ),
+            )
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = holmesRespons,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = false)
+
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        assertEquals(10.0, data[0].perioder[0].arbeidetTimer)
+    }
+
+    @Test
+    fun `AAP - summen av pro-raterte deler tilsvarer original timerArbeidet ved splittet meldeperiode`() {
+        // Regresjonstest mot over-/undertelling: én Holmes-meldeperiode på
+        // 14 dager (20 timer) splittes av /maksimum i to utbetalingsperioder
+        // (7 dager hver). Summen av de to beregnede arbeidetTimer-verdiene
+        // skal være lik den opprinnelige totalen.
+        val vedtak =
+            lagVedtak(
+                utbetaling =
+                    listOf(
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-01"), LocalDate.parse("2026-08-07")),
+                            utbetalingsgrad = 100,
+                            reduksjon = null,
+                        ),
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-08"), LocalDate.parse("2026-08-14")),
+                            utbetalingsgrad = 50,
+                            reduksjon = null,
+                        ),
+                    ),
+            )
+        val holmesRespons =
+            lagHolmesRespons(
+                HolmesTimerArbeid(
+                    periodeFom = LocalDate.parse("2026-08-01"),
+                    periodeTom = LocalDate.parse("2026-08-14"),
+                    timerArbeidet = BigDecimal("20.0"),
+                ),
+            )
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = holmesRespons,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = false)
+
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        val sumArbeidetTimer = data[0].perioder.sumOf { it.arbeidetTimer ?: 0.0 }
+        assertEquals(20.0, sumArbeidetTimer)
+    }
+
+    @Test
+    fun `AAP - faller tilbake på reduksjon når Holmes-endepunktet ikke har overlappende data`() {
+        val vedtak =
+            lagVedtak(
+                utbetaling =
+                    listOf(
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-01"), LocalDate.parse("2026-08-14")),
+                            reduksjon = Reduksjon(annenReduksjon = null, timerArbeidet = 5.0),
+                        ),
+                    ),
+            )
+        // Holmes-data finnes, men for en helt annen periode
+        val holmesRespons =
+            lagHolmesRespons(
+                HolmesTimerArbeid(
+                    periodeFom = LocalDate.parse("2020-01-01"),
+                    periodeTom = LocalDate.parse("2020-01-14"),
+                    timerArbeidet = BigDecimal("40.0"),
+                ),
+            )
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = holmesRespons,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = false)
+
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        assertEquals(5.0, data[0].perioder[0].arbeidetTimer)
+    }
+
+    @Test
+    fun `AAP - fortsetter uten arbeidetTimer når Holmes-endepunktet returnerer null (feilet kall)`() {
+        val vedtak = lagVedtak(utbetaling = listOf(lagUtbetaling(reduksjon = null)))
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = null,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = false)
+
+        assertTrue(resultat is AAPMeldekortResultat.Success)
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        assertNull(data[0].perioder[0].arbeidetTimer)
     }
 
     @Test
@@ -355,6 +522,7 @@ private fun lagService(
     aapRespons: AapMeldekortRespons = AapMeldekortRespons(emptyList(), 200, null),
     dpRespons: DagpengerMeldekortRespons = DagpengerMeldekortRespons(emptyList(), 200, null),
     harTilgang: Boolean = true,
+    holmesRespons: HolmesArbeidstimerRespons? = null,
 ): MeldekortService {
     val brukertilgangService = mockk<BrukertilgangService>()
     val aapClient = mockk<AapClient>()
@@ -362,10 +530,24 @@ private fun lagService(
 
     every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
     every { aapClient.hentAapMax(any(), any()) } returns aapRespons
+    every { aapClient.hentArbeidstimer(any(), any()) } returns holmesRespons
     every { dpDatadelingClient.hentDagpengeMeldekort(any(), any()) } returns dpRespons
 
     return MeldekortService(dpDatadelingClient, aapClient, brukertilgangService)
 }
+
+private fun lagHolmesRespons(vararg segmenter: HolmesTimerArbeid): HolmesArbeidstimerRespons =
+    HolmesArbeidstimerRespons(
+        personIdent = IDENT,
+        meldeperioder =
+            listOf(
+                HolmesMeldeperiode(
+                    periodeFom = segmenter.minOf { it.periodeFom },
+                    periodeTom = segmenter.maxOf { it.periodeTom },
+                    timerArbeid = segmenter.toList(),
+                ),
+            ),
+    )
 
 private fun lagVedtak(
     vedtakId: String = "v1",
