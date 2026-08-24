@@ -287,6 +287,56 @@ class MeldekortServiceTest {
     }
 
     @Test
+    fun `AAP - full end-to-end mapping mot reell Holmes-respons for person med innsendt meldekort`() {
+        // Reell (anonymisert) respons fra /holmes/arbeidstimer for testperson
+        // 13429149309, mottatt fra team AAP under utviklingen av SEARCH-30.
+        // Kombineres her med /maksimum sine faktiske utbetalingsperioder for
+        // samme person og samme vedtak (saksnummer 4WC6DNK), slik disse ble
+        // observert i dev: Aug 1.–2. (grad 100, ingen arbeid rapportert),
+        // Aug 3.–16. (grad 73, meldekort med reelle timer innsendt) og
+        // Aug 17.–20. (grad 0).
+        val holmesRespons = lesHolmesFixture("testrespons/HolmesArbeidstimerReellSverdi.json")
+        val vedtak =
+            lagVedtak(
+                saksnummer = "4WC6DNK",
+                utbetaling =
+                    listOf(
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-01"), LocalDate.parse("2026-08-02")),
+                            utbetalingsgrad = 100,
+                            reduksjon = null,
+                        ),
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-03"), LocalDate.parse("2026-08-16")),
+                            utbetalingsgrad = 73,
+                            reduksjon = null,
+                        ),
+                        lagUtbetaling(
+                            periode = Periode(LocalDate.parse("2026-08-17"), LocalDate.parse("2026-08-20")),
+                            utbetalingsgrad = 0,
+                            reduksjon = null,
+                        ),
+                    ),
+            )
+        val service =
+            lagService(
+                aapRespons = AapMeldekortRespons(listOf(vedtak), 200, null),
+                holmesRespons = holmesRespons,
+            )
+
+        val resultat = service.hentAAPMeldekortForPerson(PersonIdent(IDENT), utvidet = true)
+
+        val data = (resultat as AAPMeldekortResultat.Success).data
+        assertEquals(3, data[0].perioder.size)
+        assertEquals(0.0, data[0].perioder[0].arbeidetTimer) // 1.–2. aug: ingen arbeid rapportert
+        assertEquals(8.0, data[0].perioder[1].arbeidetTimer) // 3.–16. aug: summen av de 6 segmentene
+        // 17.–20. aug: ligger i «hullet» i meldeperiode-rekken (ingen data
+        // fra Holmes for denne perioden) og har heller ingen reduksjon fra
+        // /maksimum → arbeidetTimer forblir ukjent (null), ikke 0.0.
+        assertNull(data[0].perioder[2].arbeidetTimer)
+    }
+
+    @Test
     fun `AAP - mapper vedtakPeriode fra vedtakets egen periode, ikke fra utbetalingsperioden`() {
         // vedtakPeriode og utbetalingsperiodene er forskjellige felter i
         // kildedataen (et vedtak kan spenne over lengre tid enn en enkelt
@@ -618,6 +668,11 @@ private fun lagMeldekort(
     )
 
 private fun lesAapFixture(filename: String): AapMaximumRespons {
+    val jsonString = lesJsonFraFil(filename)
+    return JsonUtils.fromJson(jsonString)
+}
+
+private fun lesHolmesFixture(filename: String): HolmesArbeidstimerRespons {
     val jsonString = lesJsonFraFil(filename)
     return JsonUtils.fromJson(jsonString)
 }
