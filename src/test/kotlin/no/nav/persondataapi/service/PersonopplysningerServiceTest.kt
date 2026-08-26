@@ -76,7 +76,7 @@ class PersonopplysningerServiceTest {
     }
 
     @Test
-    fun `skal maskere data når saksbehandler ikke har tilgang`() =
+    fun `skal ikke maskere navn, men skal maskere geolokaliserende informasjon når saksbehandler ikke har tilgang`() =
         runBlocking {
             val person =
                 lagPerson(
@@ -95,6 +95,20 @@ class PersonopplysningerServiceTest {
                         ),
                 )
 
+            val bolkResultat =
+                PersonBolkResultat(
+                    statusCode = 200,
+                    data =
+                        listOf(
+                            lagBolkResultat(
+                                ident = "11111111111",
+                                fornavn = "Barn",
+                                etternavn = "Testesen",
+                                foedselsdato = "2015-03-10",
+                            ),
+                        ),
+                )
+
             val service =
                 lagServiceMedStandardMocks(
                     harTilgang = false,
@@ -104,6 +118,7 @@ class PersonopplysningerServiceTest {
                             statusCode = 200,
                             errorMessage = null,
                         ),
+                    bolkResultat = bolkResultat,
                 )
 
             every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
@@ -112,10 +127,18 @@ class PersonopplysningerServiceTest {
 
             assertTrue(resultat is PersonopplysningerResultat.Success)
             val data = (resultat as PersonopplysningerResultat.Success).data
-            // Data skal være maskert - @Maskert-felter er erstattet med *******
-            assertEquals("*******", data.navn.fornavn)
-            assertEquals("*******", data.navn.mellomnavn)
-            assertEquals("*******", data.navn.etternavn)
+            // Navn skal IKKE maskeres selv om saksbehandler mangler tilgang
+            assertEquals("Ola", data.navn.fornavn)
+            assertEquals("Nordmann", data.navn.mellomnavn)
+            assertEquals("Testesen", data.navn.etternavn)
+            // Familiemedlemmers navn skal heller ikke maskeres
+            val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
+            assertNotNull(barn)
+            assertEquals("Barn", barn?.fornavn)
+            assertEquals("Testesen", barn?.etternavn)
+            // Geolokaliserende informasjon (NavKontor) skal fortsatt maskeres med @Maskert
+            assertEquals("*******", data.navKontor?.navn)
+            assertEquals("*******", data.navKontor?.enhetNr)
         }
 
     @Test
