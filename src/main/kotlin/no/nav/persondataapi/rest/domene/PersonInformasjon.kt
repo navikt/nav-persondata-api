@@ -1,6 +1,7 @@
 package no.nav.persondataapi.rest.domene
 
 import no.nav.persondataapi.rest.oppslag.Maskert
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 
 data class PersonInformasjon(
     val aktørId: String?,
@@ -110,7 +111,8 @@ data class PersonInformasjon(
  * saksbehandler uten full tilgang. Fødselsnummer regnes ikke som geoidentifiserende og
  * er nødvendig for konsumenter (f.eks. watson-admin-api) til korrelasjon og videre
  * tilgangskontroll — kun geoidentifiserende informasjon (adresse, poststed, kommunenummer,
- * NAV-kontor) og kontaktinfo skal maskeres, se øvrige @Maskert-felter i [PersonInformasjon].
+ * NAV-kontor sitt navn og enhetsnummer — maskering treffer kun String-felter, se
+ * [maskerObjekt]) og kontaktinfo skal maskeres, se øvrige @Maskert-felter i [PersonInformasjon].
  */
 data class HistoriskIdent(
     val personIdent: String,
