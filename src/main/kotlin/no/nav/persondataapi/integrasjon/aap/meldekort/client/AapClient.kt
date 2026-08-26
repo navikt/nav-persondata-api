@@ -128,10 +128,10 @@ class AapClient(
         utvidet: Boolean,
     ): HolmesArbeidstimerRespons? {
         val antallÅr: Long = if (utvidet) 13 else 3
-        val oboToken = tokenService.getServiceToken(SCOPE.AAP_SCOPE)
 
         return runCatching {
             metrics.timer(holmesOperationName).recordCallable {
+                val oboToken = tokenService.getServiceToken(SCOPE.AAP_SCOPE)
                 val requestBody =
                     HolmesArbeidstimerRequest(
                         personidentifikator = personIdent.value,
