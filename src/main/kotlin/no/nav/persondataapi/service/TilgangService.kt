@@ -24,9 +24,9 @@ class TilgangService(
         )
 
     fun harUtvidetTilgang(groups: List<String>): Boolean {
-        val utvidetTilgangIder = utvidetTilgangGrupper.mapNotNull { grupper.finnRolleId(it.azureGruoup) }
+        val utvidetTilgangId = utvidetTilgangGrupper.mapNotNull { grupper.finnRolleId(it.azureGruoup) }
         logger.info("Saksbehandler er medlem av $groups")
-        return utvidetTilgangIder.any { groups.contains(it) }
+        return utvidetTilgangId.any { groups.contains(it) }
     }
 
     fun sjekkTilgang(
