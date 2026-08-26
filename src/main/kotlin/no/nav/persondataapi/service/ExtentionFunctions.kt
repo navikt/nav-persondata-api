@@ -128,11 +128,38 @@ private fun parsePdlDatoTilLocalDate(pdlDato: String): LocalDate = LocalDate.par
 
 fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse> {
     val cutoff = LocalDate.now().minusYears(5)
-    return this.bostedsadresse
-        .filter { adresse ->
-            val tilDato = adresse.gyldigTilOgMed?.let { parsePdlDatoTilLocalDate(it) }
-            tilDato == null || !tilDato.isBefore(cutoff)
-        }.mapNotNull { adresse ->
+
+    // PDL har en kjent produksjonsfeil: for personer som har flyttet innenlands
+    // i løpet av de siste 5 årene rapporteres gyldigTilOgMed som "nåværende"
+    // (null/ikke satt) for ALLE adresser i historikken, ikke bare den faktisk
+    // gjeldende (siste). Vi må derfor selv utlede korrekt gyldigTilOgMed for
+    // alle adresser UNNTATT den kronologisk siste: en adresse regnes som
+    // avsluttet dagen før neste adresse i rekken starter — MED MINDRE PDL selv
+    // har oppgitt en gyldigTilOgMed som allerede ligger før neste adresses
+    // gyldigFraOgMed (et reelt opphold/gap, som da skal beholdes uendret).
+    val sortert =
+        this.bostedsadresse
+            .mapNotNull { adresse ->
+                val fraDato = adresse.gyldigFraOgMed?.let { parsePdlDatoTilLocalDate(it) } ?: return@mapNotNull null
+                Triple(adresse, fraDato, adresse.gyldigTilOgMed?.let { parsePdlDatoTilLocalDate(it) })
+            }.sortedBy { it.second }
+
+    return sortert
+        .mapIndexed { index, (adresse, fraDato, rawTilDato) ->
+            val nesteFraDato = sortert.getOrNull(index + 1)?.second
+            val korrigertTilDato =
+                when {
+                    nesteFraDato == null -> rawTilDato
+
+                    // Kronologisk siste adresse — behold PDL sin verdi (skal være null/nåværende)
+                    rawTilDato != null && rawTilDato.isBefore(nesteFraDato) -> rawTilDato
+
+                    // Reelt gap — stol på PDL
+                    else -> nesteFraDato.minusDays(1) // PDL-buggen — utled fra neste adresses startdato
+                }
+            Triple(adresse, fraDato, korrigertTilDato)
+        }.filter { (_, _, tilDato) -> tilDato == null || !tilDato.isBefore(cutoff) }
+        .mapNotNull { (adresse, _, korrigertTilDato) ->
             val vegadresse = adresse.vegadresse
             val utenlandskAdresse = adresse.utenlandskAdresse
 
@@ -165,7 +192,7 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
             PersonInformasjon.HistoriskAdresse(
                 adresse = PersonInformasjon.Bostedsadresse(norskAdresse, utlandAdresse),
                 gyldigFraOgMed = adresse.gyldigFraOgMed,
-                gyldigTilOgMed = adresse.gyldigTilOgMed,
+                gyldigTilOgMed = korrigertTilDato?.toString(),
             )
         }
 }
