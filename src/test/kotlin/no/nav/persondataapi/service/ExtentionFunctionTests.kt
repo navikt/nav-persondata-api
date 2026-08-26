@@ -121,9 +121,23 @@ class ExtentionFunctionTests {
             lagPersonMedAdresserOgTelefon(
                 bostedsadresser =
                     listOf(
-                        lagBostedsadresse("Gammelveien", historisk = true, gyldigTilOgMed = forGammel),
-                        lagBostedsadresse("Nyligveien", historisk = true, gyldigTilOgMed = innenfor),
-                        lagBostedsadresse("Nyveien", historisk = false),
+                        lagBostedsadresse(
+                            "Gammelveien",
+                            historisk = true,
+                            gyldigFraOgMed = LocalDate.now().minusYears(8).toString(),
+                            gyldigTilOgMed = forGammel,
+                        ),
+                        lagBostedsadresse(
+                            "Nyligveien",
+                            historisk = true,
+                            gyldigFraOgMed = LocalDate.now().minusYears(3).toString(),
+                            gyldigTilOgMed = innenfor,
+                        ),
+                        lagBostedsadresse(
+                            "Nyveien",
+                            historisk = false,
+                            gyldigFraOgMed = LocalDate.now().minusYears(1).toString(),
+                        ),
                     ),
             )
 
@@ -146,6 +160,7 @@ class ExtentionFunctionTests {
                         lagBostedsadresse(
                             "Nyliggata",
                             historisk = true,
+                            gyldigFraOgMed = "${LocalDate.now().minusYears(4)}T00:00",
                             gyldigTilOgMed = "${LocalDate.now().minusYears(2)}T00:00",
                         ),
                     ),
@@ -156,6 +171,113 @@ class ExtentionFunctionTests {
         assertEquals(1, historikk.size)
         assertEquals(
             "Nyliggata",
+            historikk
+                .first()
+                .adresse.norskAdresse
+                ?.adressenavn,
+        )
+    }
+
+    @Test
+    fun `adresseHistorikkSiste5År skal utlede korrekt tilOgMed ved PDL-feil med falske nåværende adresser`() {
+        // Reell PDL-produksjonsfeil: for personer som har flyttet innenlands i
+        // løpet av siste 5 år rapporterer PDL gyldigTilOgMed som "nåværende"
+        // (null) for ALLE adresser i historikken, ikke bare den faktisk
+        // gjeldende. Vi må selv utlede at en eldre adresse ble avsluttet dagen
+        // før neste adresse startet.
+        val førsteFlytting = LocalDate.now().minusYears(3)
+        val andreFlytting = LocalDate.now().minusYears(1)
+
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                bostedsadresser =
+                    listOf(
+                        // PDL-buggen: gyldigTilOgMed er null (feilaktig "nåværende") selv om
+                        // personen åpenbart flyttet videre (det finnes en nyere adresse under)
+                        lagBostedsadresse(
+                            "Gammelveien",
+                            historisk = true,
+                            gyldigFraOgMed = førsteFlytting.minusYears(2).toString(),
+                            gyldigTilOgMed = null,
+                        ),
+                        lagBostedsadresse(
+                            "Mellomveien",
+                            historisk = true,
+                            gyldigFraOgMed = førsteFlytting.toString(),
+                            gyldigTilOgMed = null,
+                        ),
+                        // Den faktisk nåværende adressen — SKAL fortsatt vise "nåværende"
+                        lagBostedsadresse(
+                            "Nyveien",
+                            historisk = false,
+                            gyldigFraOgMed = andreFlytting.toString(),
+                            gyldigTilOgMed = null,
+                        ),
+                    ),
+            )
+
+        val historikk = person.adresseHistorikkSiste5År().associateBy { it.adresse.norskAdresse?.adressenavn }
+
+        assertEquals(
+            førsteFlytting.minusDays(1).toString(),
+            historikk.getValue("Gammelveien").gyldigTilOgMed,
+        )
+        assertEquals(
+            andreFlytting.minusDays(1).toString(),
+            historikk.getValue("Mellomveien").gyldigTilOgMed,
+        )
+        assertNull(historikk.getValue("Nyveien").gyldigTilOgMed)
+    }
+
+    @Test
+    fun `adresseHistorikkSiste5År skal beholde PDL sin gyldigTilOgMed når det er et reelt gap mellom adresser`() {
+        val flytteDato = LocalDate.now().minusYears(2)
+        val faktiskFlyttUt = flytteDato.minusMonths(1) // Flyttet ut god tid før neste adresse startet
+
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                bostedsadresser =
+                    listOf(
+                        lagBostedsadresse(
+                            "Gammelveien",
+                            historisk = true,
+                            gyldigFraOgMed = flytteDato.minusYears(2).toString(),
+                            gyldigTilOgMed = faktiskFlyttUt.toString(),
+                        ),
+                        lagBostedsadresse(
+                            "Nyveien",
+                            historisk = false,
+                            gyldigFraOgMed = flytteDato.toString(),
+                        ),
+                    ),
+            )
+
+        val historikk = person.adresseHistorikkSiste5År().associateBy { it.adresse.norskAdresse?.adressenavn }
+
+        // Skal IKKE overskrives til flytteDato.minusDays(1) — PDL sin egen (tidligere) verdi er reell
+        assertEquals(faktiskFlyttUt.toString(), historikk.getValue("Gammelveien").gyldigTilOgMed)
+    }
+
+    @Test
+    fun `adresseHistorikkSiste5År skal ignorere adresser uten gyldigFraOgMed`() {
+        val person =
+            lagPersonMedAdresserOgTelefon(
+                bostedsadresser =
+                    listOf(
+                        lagBostedsadresse("Uten fraDato", historisk = true, gyldigFraOgMed = null),
+                        lagBostedsadresse(
+                            "Nyveien",
+                            historisk = false,
+                            gyldigFraOgMed = LocalDate.now().minusYears(1).toString(),
+                        ),
+                    ),
+            )
+
+        val historikk = person.adresseHistorikkSiste5År()
+
+        assertEquals(1, historikk.size)
+        assertEquals(
+            "Nyveien",
             historikk
                 .first()
                 .adresse.norskAdresse

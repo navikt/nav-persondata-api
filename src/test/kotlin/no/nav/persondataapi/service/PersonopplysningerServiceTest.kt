@@ -213,10 +213,20 @@ class PersonopplysningerServiceTest {
                     ukjentBosted = null,
                     metadata = metadata,
                     folkeregistermetadata = null,
+                    gyldigFraOgMed =
+                        java.time.LocalDate
+                            .now()
+                            .minusYears(1)
+                            .toString(),
                 )
             val historiskAdresse =
                 gjeldendeAdresse.copy(
                     vegadresse = gjeldendeAdresse.vegadresse?.copy(adressenavn = "Gammelveien"),
+                    gyldigFraOgMed =
+                        java.time.LocalDate
+                            .now()
+                            .minusYears(3)
+                            .toString(),
                     gyldigTilOgMed =
                         java.time.LocalDate
                             .now()
