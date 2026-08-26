@@ -30,8 +30,9 @@ spec:
       singlePageApplication: true
       claims:
         groups:
-          - id: {{GROUPS.EXTENDED.id}} # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
-          - id: {{GROUPS.BASIC.id}} # 0000-GA-kontroll-Oppslag-Bruker-Basic
+          {{#each GROUPS}}
+          - id: {{this.id}} # {{this.name}}
+          {{/each}}
         extra:
           - "NAVident"
           - "azp_name"
@@ -107,8 +108,9 @@ spec:
     - name: GRUPPER
       value: |
         [
-        { "id": "{{GROUPS.EXTENDED.id}}", "name": "{{GROUPS.EXTENDED.name}}" },
-        { "id": "{{GROUPS.BASIC.id}}", "name": "{{GROUPS.BASIC.name}}" }
+        {{#each GROUPS}}
+        { "id": "{{this.id}}", "name": "{{this.name}}" }{{#unless @last}},{{/unless}}
+        {{/each}}
         ]
     {{#each ENVS}}
     - name: {{name}}

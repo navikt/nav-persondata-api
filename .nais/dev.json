@@ -21,6 +21,22 @@
     "EXTENDED": {
       "id": "b734a20d-63e3-4b44-bb77-87f7f0b7f48a",
       "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    },
+    "WATSON": {
+      "id": "31c87a57-a338-4e12-87d7-8be2c39e8c53",
+      "name": "0000-CA-kontroll-Watson"
+    },
+    "WATSON_UTVIDET": {
+      "id": "5dce78d4-de94-4792-a594-0c15069fac39",
+      "name": "0000-CA-kontroll-Watson-Utvidet"
+    },
+    "WATSON_LEDER": {
+      "id": "994520b2-1925-4142-87ca-447e70df0e1c",
+      "name": "0000-CA-kontroll-Watson-Leder"
+    },
+    "WATSON_LEDER_UTVIDET": {
+      "id": "99007f77-5cf2-4553-bd8e-fc4ace7ae828",
+      "name": "0000-CA-kontroll-Watson-Leder-Utvidet"
     }
   },
   "ENVS": [

@@ -14,10 +14,19 @@ class TilgangService(
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
+    // Grupper med suffiks "-Utvidet" gir samme (utvidede) tilgang, uavhengig av om det er en
+    // leder-variant eller ikke — "leder" påvirker ikke selve tilgangsnivået.
+    private val utvidetTilgangGrupper =
+        listOf(
+            AdGrupper.UTVIDET_TILGANG,
+            AdGrupper.WATSON_UTVIDET_TILGANG,
+            AdGrupper.WATSON_LEDER_UTVIDET_TILGANG,
+        )
+
     fun harUtvidetTilgang(groups: List<String>): Boolean {
-        val utvidetTilgangId = grupper.finnRolleId(AdGrupper.UTVIDET_TILGANG.azureGruoup)
+        val utvidetTilgangId = utvidetTilgangGrupper.mapNotNull { grupper.finnRolleId(it.azureGruoup) }
         logger.info("Saksbehandler er medlem av $groups")
-        return utvidetTilgangId != null && groups.contains(utvidetTilgangId)
+        return utvidetTilgangId.any { groups.contains(it) }
     }
 
     fun sjekkTilgang(
@@ -129,4 +138,8 @@ enum class AdGrupper(
 ) {
     UTVIDET_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Utvidet"),
     BASIC_TILGANG("0000-GA-kontroll-Oppslag-Bruker-Basic"),
+    WATSON_UTVIDET_TILGANG("0000-CA-kontroll-Watson-Utvidet"),
+    WATSON_LEDER_UTVIDET_TILGANG("0000-CA-kontroll-Watson-Leder-Utvidet"),
+    WATSON_BASIC_TILGANG("0000-CA-kontroll-Watson"),
+    WATSON_LEDER_BASIC_TILGANG("0000-CA-kontroll-Watson-Leder"),
 }
