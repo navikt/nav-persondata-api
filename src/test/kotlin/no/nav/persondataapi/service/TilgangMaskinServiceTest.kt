@@ -78,6 +78,69 @@ class TilgangMaskinServiceTest {
 
         Assertions.assertEquals(200, tms.sjekkTilgang(PersonIdent("123458123465"), "2222"))
     }
+
+    private val alleGrupper =
+        Grupper(
+            """
+            [
+                { "id": "utvidet-id", "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet" },
+                { "id": "basic-id", "name": "0000-GA-kontroll-Oppslag-Bruker-Basic" },
+                { "id": "watson-id", "name": "0000-CA-kontroll-Watson" },
+                { "id": "watson-utvidet-id", "name": "0000-CA-kontroll-Watson-Utvidet" },
+                { "id": "watson-leder-id", "name": "0000-CA-kontroll-Watson-Leder" },
+                { "id": "watson-leder-utvidet-id", "name": "0000-CA-kontroll-Watson-Leder-Utvidet" }
+            ]
+            """.trimIndent(),
+        )
+
+    @Test
+    fun `medlem av eksisterende Utvidet-gruppe skal ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertTrue(tms.harUtvidetTilgang(listOf("utvidet-id")))
+    }
+
+    @Test
+    fun `medlem av eksisterende Basic-gruppe skal ikke ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertFalse(tms.harUtvidetTilgang(listOf("basic-id")))
+    }
+
+    @Test
+    fun `medlem av kun Watson skal ikke ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertFalse(tms.harUtvidetTilgang(listOf("watson-id")))
+    }
+
+    @Test
+    fun `medlem av Watson-Utvidet skal ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertTrue(tms.harUtvidetTilgang(listOf("watson-utvidet-id")))
+    }
+
+    @Test
+    fun `medlem av kun Watson-Leder skal ikke ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertFalse(tms.harUtvidetTilgang(listOf("watson-leder-id")))
+    }
+
+    @Test
+    fun `medlem av Watson-Leder-Utvidet skal ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertTrue(tms.harUtvidetTilgang(listOf("watson-leder-utvidet-id")))
+    }
+
+    @Test
+    fun `medlem uten noen kjente grupper skal ikke ha utvidet tilgang`() {
+        val tms = TilgangService(TilgangsMaskinMockClient(), grupper = alleGrupper)
+
+        Assertions.assertFalse(tms.harUtvidetTilgang(listOf("ukjent-gruppe-id")))
+    }
 }
 
 class TilgangsMaskinMockClient : TilgangsmaskinClient {
