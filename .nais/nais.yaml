@@ -30,12 +30,9 @@ spec:
       singlePageApplication: true
       claims:
         groups:
-          - id: {{GROUPS.EXTENDED.id}} # 0000-GA-kontroll-Oppslag-Bruker-Utvidet
-          - id: {{GROUPS.BASIC.id}} # 0000-GA-kontroll-Oppslag-Bruker-Basic
-          - id: {{GROUPS.WATSON.id}} # 0000-CA-kontroll-Watson
-          - id: {{GROUPS.WATSON_UTVIDET.id}} # 0000-CA-kontroll-Watson-Utvidet
-          - id: {{GROUPS.WATSON_LEDER.id}} # 0000-CA-kontroll-Watson-Leder
-          - id: {{GROUPS.WATSON_LEDER_UTVIDET.id}} # 0000-CA-kontroll-Watson-Leder-Utvidet
+          {{#each GROUPS}}
+          - id: {{this.id}} # {{this.name}}
+          {{/each}}
         extra:
           - "NAVident"
           - "azp_name"
@@ -111,12 +108,9 @@ spec:
     - name: GRUPPER
       value: |
         [
-        { "id": "{{GROUPS.EXTENDED.id}}", "name": "{{GROUPS.EXTENDED.name}}" },
-        { "id": "{{GROUPS.BASIC.id}}", "name": "{{GROUPS.BASIC.name}}" },
-        { "id": "{{GROUPS.WATSON.id}}", "name": "{{GROUPS.WATSON.name}}" },
-        { "id": "{{GROUPS.WATSON_UTVIDET.id}}", "name": "{{GROUPS.WATSON_UTVIDET.name}}" },
-        { "id": "{{GROUPS.WATSON_LEDER.id}}", "name": "{{GROUPS.WATSON_LEDER.name}}" },
-        { "id": "{{GROUPS.WATSON_LEDER_UTVIDET.id}}", "name": "{{GROUPS.WATSON_LEDER_UTVIDET.name}}" }
+        {{#each GROUPS}}
+        { "id": "{{this.id}}", "name": "{{this.name}}" }{{#unless @last}},{{/unless}}
+        {{/each}}
         ]
     {{#each ENVS}}
     - name: {{name}}
