@@ -142,6 +142,52 @@ class PersonopplysningerServiceTest {
         }
 
     @Test
+    fun `skal ikke maskere historiskeIdenter personIdent selv når saksbehandler ikke har tilgang`() =
+        runBlocking {
+            val person =
+                lagPerson(
+                    fornavn = "Ola",
+                    etternavn = "Testesen",
+                    foedselsdato = "2000-01-01",
+                    folkeregisteridentifikator =
+                        listOf(
+                            lagFolkeregisteridentifikator("12345678901", historisk = false),
+                            lagFolkeregisteridentifikator("09876543210", historisk = true),
+                        ),
+                )
+
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = false,
+                    personResultat =
+                        PersonDataResultat(
+                            data = person,
+                            statusCode = 200,
+                            errorMessage = null,
+                        ),
+                )
+
+            every { kodeverkService.mapPostnummerTilPoststed(any()) } returns "Oslo"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            val data = (resultat as PersonopplysningerResultat.Success).data
+
+            // personIdent er fødselsnummer, ikke geoidentifiserende informasjon, og skal
+            // derfor aldri maskeres — heller ikke når resten av responsen maskeres fordi
+            // saksbehandler mangler tilgang. Konsumenter (f.eks. watson-admin-api) er
+            // avhengige av en ekte, gjeldende ident for korrelasjon og videre tilgangskontroll.
+            assertEquals(2, data.historiskeIdenter.size)
+            val gjeldende = data.historiskeIdenter.first { !it.historisk }
+            assertEquals("12345678901", gjeldende.personIdent)
+            val historisk = data.historiskeIdenter.first { it.historisk }
+            assertEquals("09876543210", historisk.personIdent)
+            // Geolokaliserende informasjon skal derimot fortsatt maskeres
+            assertEquals("*******", data.navKontor?.navn)
+        }
+
+    @Test
     fun `skal mappe telefonnummer og adresseHistorikk gjennom hentPersonopplysningerForPerson`() =
         runBlocking {
             val metadata = Metadata(endringer = emptyList(), master = "Freg", opplysningsId = "test", historisk = false)
