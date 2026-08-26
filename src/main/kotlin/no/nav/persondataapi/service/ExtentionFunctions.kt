@@ -149,13 +149,14 @@ fun Person.adresseHistorikkSiste5År(): List<PersonInformasjon.HistoriskAdresse>
             val nesteFraDato = sortert.getOrNull(index + 1)?.second
             val korrigertTilDato =
                 when {
+                    // Kronologisk siste adresse — behold PDL sin verdi (skal være null/nåværende)
                     nesteFraDato == null -> rawTilDato
 
-                    // Kronologisk siste adresse — behold PDL sin verdi (skal være null/nåværende)
+                    // Reelt gap — stol på PDL
                     rawTilDato != null && rawTilDato.isBefore(nesteFraDato) -> rawTilDato
 
-                    // Reelt gap — stol på PDL
-                    else -> nesteFraDato.minusDays(1) // PDL-buggen — utled fra neste adresses startdato
+                    // PDL-buggen — utled fra neste adresses startdato
+                    else -> nesteFraDato.minusDays(1)
                 }
             Triple(adresse, fraDato, korrigertTilDato)
         }.filter { (_, _, tilDato) -> tilDato == null || !tilDato.isBefore(cutoff) }
