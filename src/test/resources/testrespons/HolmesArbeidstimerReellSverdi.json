@@ -1,0 +1,162 @@
+{
+  "personIdent": "13429149309",
+  "meldeperioder": [
+    {
+      "periodeFom": "2026-02-16",
+      "periodeTom": "2026-03-01",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-02-20",
+          "periodeTom": "2026-03-01",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-03-02",
+      "periodeTom": "2026-03-15",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-03-02",
+          "periodeTom": "2026-03-15",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-03-16",
+      "periodeTom": "2026-03-29",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-03-16",
+          "periodeTom": "2026-03-29",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-03-30",
+      "periodeTom": "2026-04-12",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-03-30",
+          "periodeTom": "2026-04-12",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-04-13",
+      "periodeTom": "2026-04-26",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-04-13",
+          "periodeTom": "2026-04-26",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-04-27",
+      "periodeTom": "2026-05-10",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-04-27",
+          "periodeTom": "2026-05-10",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-05-11",
+      "periodeTom": "2026-05-24",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-05-11",
+          "periodeTom": "2026-05-24",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-05-25",
+      "periodeTom": "2026-06-07",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-05-25",
+          "periodeTom": "2026-06-07",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-06-08",
+      "periodeTom": "2026-06-21",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-06-08",
+          "periodeTom": "2026-06-21",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-06-22",
+      "periodeTom": "2026-07-05",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-06-22",
+          "periodeTom": "2026-06-30",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-07-20",
+      "periodeTom": "2026-08-02",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-08-01",
+          "periodeTom": "2026-08-02",
+          "timerArbeidet": 0
+        }
+      ]
+    },
+    {
+      "periodeFom": "2026-08-03",
+      "periodeTom": "2026-08-16",
+      "timerArbeid": [
+        {
+          "periodeFom": "2026-08-03",
+          "periodeTom": "2026-08-05",
+          "timerArbeidet": 2
+        },
+        {
+          "periodeFom": "2026-08-06",
+          "periodeTom": "2026-08-06",
+          "timerArbeidet": 3
+        },
+        {
+          "periodeFom": "2026-08-07",
+          "periodeTom": "2026-08-07",
+          "timerArbeidet": 1
+        },
+        {
+          "periodeFom": "2026-08-08",
+          "periodeTom": "2026-08-09",
+          "timerArbeidet": 0
+        },
+        {
+          "periodeFom": "2026-08-10",
+          "periodeTom": "2026-08-14",
+          "timerArbeidet": 2
+        },
+        {
+          "periodeFom": "2026-08-15",
+          "periodeTom": "2026-08-16",
+          "timerArbeidet": 0
+        }
+      ]
+    }
+  ]
+}
