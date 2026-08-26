@@ -95,6 +95,20 @@ class PersonopplysningerServiceTest {
                         ),
                 )
 
+            val bolkResultat =
+                PersonBolkResultat(
+                    statusCode = 200,
+                    data =
+                        listOf(
+                            lagBolkResultat(
+                                ident = "11111111111",
+                                fornavn = "Barn",
+                                etternavn = "Testesen",
+                                foedselsdato = "2015-03-10",
+                            ),
+                        ),
+                )
+
             val service =
                 lagServiceMedStandardMocks(
                     harTilgang = false,
@@ -104,6 +118,7 @@ class PersonopplysningerServiceTest {
                             statusCode = 200,
                             errorMessage = null,
                         ),
+                    bolkResultat = bolkResultat,
                 )
 
             every { kodeverkService.mapLandkodeTilLandnavn("NOR") } returns "Norge"
@@ -116,6 +131,11 @@ class PersonopplysningerServiceTest {
             assertEquals("Ola", data.navn.fornavn)
             assertEquals("Nordmann", data.navn.mellomnavn)
             assertEquals("Testesen", data.navn.etternavn)
+            // Familiemedlemmers navn skal heller ikke maskeres
+            val barn = data.familemedlemmer.firstOrNull { it.ident == "11111111111" }
+            assertNotNull(barn)
+            assertEquals("Barn", barn?.fornavn)
+            assertEquals("Testesen", barn?.etternavn)
             // Geolokaliserende informasjon (NavKontor) skal fortsatt maskeres med @Maskert
             assertEquals("*******", data.navKontor?.navn)
             assertEquals("*******", data.navKontor?.enhetNr)
