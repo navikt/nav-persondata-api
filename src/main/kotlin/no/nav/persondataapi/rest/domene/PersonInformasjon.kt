@@ -1,6 +1,7 @@
 package no.nav.persondataapi.rest.domene
 
 import no.nav.persondataapi.rest.oppslag.Maskert
+import no.nav.persondataapi.rest.oppslag.maskerObjekt
 
 data class PersonInformasjon(
     val aktørId: String?,
@@ -103,9 +104,18 @@ data class PersonInformasjon(
     }
 }
 
-/** En folkeregisteridentifikator (FNR eller D-nummer), med informasjon om den er historisk. */
+/**
+ * En folkeregisteridentifikator (FNR eller D-nummer), med informasjon om den er historisk.
+ *
+ * [personIdent] maskeres bevisst ikke, selv om resten av responsen maskeres for en
+ * saksbehandler uten full tilgang. Fødselsnummer regnes ikke som geoidentifiserende og
+ * er nødvendig for konsumenter (f.eks. watson-admin-api) til korrelasjon og videre
+ * tilgangskontroll — kun geoidentifiserende informasjon (adresse, poststed, kommunenummer,
+ * NAV-kontor sitt navn og enhetsnummer — maskering treffer kun String-felter, se
+ * [maskerObjekt]) og kontaktinfo skal maskeres, se øvrige @Maskert-felter i [PersonInformasjon].
+ */
 data class HistoriskIdent(
-    @Maskert val personIdent: String,
+    val personIdent: String,
     val type: String,
     val historisk: Boolean,
 )
