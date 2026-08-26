@@ -8,6 +8,7 @@ import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.MeldekortStat
 import no.nav.persondataapi.integrasjon.dagpenger.meldekort.client.timerAsDouble
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
+import no.nav.persondataapi.service.domain.AapArbeidPerDag
 import no.nav.persondataapi.service.domain.AapMeldekortDto
 import no.nav.persondataapi.service.domain.AapMeldekortPeriode
 import no.nav.persondataapi.service.domain.AktivitetDto
@@ -175,12 +176,20 @@ class MeldekortService(
                             val annenReduksjon = utbetaling.reduksjon?.annenReduksjon
                             val utbetalingsgrad = utbetaling.utbetalingsgrad
 
+                            val arbeidPerDag =
+                                beregnArbeidPerDagFraHolmesSegmenter(
+                                    periodeFom = utbetaling.periode.fraOgMedDato,
+                                    periodeTom = tilOgMedEllerIDag,
+                                    segmenter = timerArbeidSegmenter,
+                                )
+
                             AapMeldekortPeriode(
                                 fraOgMed = utbetaling.periode.fraOgMedDato,
                                 tilOgMed = utbetaling.periode.tilOgMedDato,
                                 arbeidetTimer = arbeidetTimer,
                                 annenReduksjon = annenReduksjon,
                                 utbetalingsgrad = utbetalingsgrad,
+                                arbeidPerDag = arbeidPerDag,
                             )
                         },
                 )
@@ -234,6 +243,42 @@ internal fun beregnArbeidetTimerFraHolmesSegmenter(
 
     return if (harOverlapp) totalTimer.setScale(2, RoundingMode.HALF_UP).toDouble() else null
 }
+
+/**
+ * Pakker ut Holmes-endepunktets (RLE-komprimerte) `timerArbeid`-segmenter til
+ * individuelle dager, begrenset til overlappet mot en gitt utbetalingsperiode.
+ *
+ * Hvert segment dekker én eller flere sammenhengende dager med samme
+ * `timerArbeidet`-verdi (dager slås sammen når verdien er uendret) — dette
+ * er ikke tap av presisjon, kun en komprimert representasjon av ekte
+ * dag-for-dag-data. Se bekreftelse i PR-beskrivelsen (sammenlignet mot
+ * DSOP sitt eget dag-for-dag-endepunkt for samme person/periode).
+ *
+ * I motsetning til [beregnArbeidetTimerFraHolmesSegmenter] gjøres INGEN
+ * pro-ratering her — hver dag får nøyaktig den timerArbeidet-verdien som
+ * segmentet dagen tilhører oppgir.
+ */
+internal fun beregnArbeidPerDagFraHolmesSegmenter(
+    periodeFom: LocalDate,
+    periodeTom: LocalDate,
+    segmenter: List<HolmesTimerArbeid>,
+): List<AapArbeidPerDag> =
+    segmenter
+        .flatMap { segment ->
+            val effektivFom = maxOf(segment.periodeFom, periodeFom)
+            val effektivTom = minOf(segment.periodeTom, periodeTom)
+            if (effektivFom.isAfter(effektivTom)) {
+                emptyList()
+            } else {
+                val antallDager = ChronoUnit.DAYS.between(effektivFom, effektivTom)
+                (0..antallDager).map { offset ->
+                    AapArbeidPerDag(
+                        dag = effektivFom.plusDays(offset),
+                        timerArbeidet = segment.timerArbeidet.toDouble(),
+                    )
+                }
+            }
+        }.sortedBy { it.dag }
 
 enum class Tema {
     AAP,

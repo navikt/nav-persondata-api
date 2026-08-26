@@ -26,6 +26,16 @@ data class AapMeldekortPeriode(
     val arbeidetTimer: Double?,
     val annenReduksjon: Float?,
     val utbetalingsgrad: Int?,
+    // Dag-for-dag-nedbryting av arbeidetTimer, tilsvarende DagpengerMeldekortDag
+    // for dagpenger. Utledet fra /holmes/arbeidstimer sine (RLE-komprimerte)
+    // segmenter — se MeldekortService.beregnArbeidPerDagFraHolmesSegmenter.
+    // Tom liste hvis Holmes-endepunktet ikke har overlappende data for perioden.
+    val arbeidPerDag: List<AapArbeidPerDag> = emptyList(),
+)
+
+data class AapArbeidPerDag(
+    val dag: LocalDate,
+    val timerArbeidet: Double,
 )
 
 data class DagpengerMeldekortDto(
