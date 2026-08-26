@@ -76,7 +76,7 @@ class PersonopplysningerServiceTest {
     }
 
     @Test
-    fun `skal maskere data når saksbehandler ikke har tilgang`() =
+    fun `skal ikke maskere navn, men skal maskere geolokaliserende informasjon når saksbehandler ikke har tilgang`() =
         runBlocking {
             val person =
                 lagPerson(
@@ -112,10 +112,13 @@ class PersonopplysningerServiceTest {
 
             assertTrue(resultat is PersonopplysningerResultat.Success)
             val data = (resultat as PersonopplysningerResultat.Success).data
-            // Data skal være maskert - @Maskert-felter er erstattet med *******
-            assertEquals("*******", data.navn.fornavn)
-            assertEquals("*******", data.navn.mellomnavn)
-            assertEquals("*******", data.navn.etternavn)
+            // Navn skal IKKE maskeres selv om saksbehandler mangler tilgang
+            assertEquals("Ola", data.navn.fornavn)
+            assertEquals("Nordmann", data.navn.mellomnavn)
+            assertEquals("Testesen", data.navn.etternavn)
+            // Geolokaliserende informasjon (NavKontor) skal fortsatt maskeres med @Maskert
+            assertEquals("*******", data.navKontor?.navn)
+            assertEquals("*******", data.navKontor?.enhetNr)
         }
 
     @Test

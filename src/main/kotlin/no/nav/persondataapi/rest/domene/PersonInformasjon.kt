@@ -21,19 +21,16 @@ data class PersonInformasjon(
     data class Familiemedlem(
         val ident: String,
         val rolle: String,
-        @Maskert val fornavn: String? = null,
-        @Maskert val mellomnavn: String? = null,
-        @Maskert val etternavn: String? = null,
+        val fornavn: String? = null,
+        val mellomnavn: String? = null,
+        val etternavn: String? = null,
         val fødselsdato: String? = null,
         val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,
     )
 
     data class Navn(
-        @Maskert
         val fornavn: String,
-        @Maskert
         val mellomnavn: String?,
-        @Maskert
         val etternavn: String,
     )
 
