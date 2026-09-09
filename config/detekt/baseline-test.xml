@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassNaming:SisteXÅrServiceTest.kt:SisteXÅrServiceTest</ID>
+    <ID>FunctionParameterNaming:YtelseServiceTest.kt:beløp: BigDecimal</ID>
+    <ID>LargeClass:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest</ID>
+    <ID>LongMethod:ArbeidsforholdServiceTest.kt:private fun lagArbeidsforhold: Arbeidsforhold</ID>
+    <ID>LongMethod:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$@Test fun `full flow triggers downstream calls and wiremock records them`</ID>
+    <ID>LongMethod:MeldekortServiceTest.kt:MeldekortServiceTest$@Test fun `AAP - arbeidPerDag reflekterer ulike verdier på tvers av flere Holmes-segmenter`</ID>
+    <ID>LongMethod:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest$@Test fun `skal mappe telefonnummer og adresseHistorikk gjennom hentPersonopplysningerForPerson`</ID>
+    <ID>LongMethod:PersonopplysningerServiceTest.kt:private fun lagPerson: Person</ID>
+    <ID>LongParameterList:ArbeidsforholdServiceTest.kt:private fun lagArbeidsforhold: Arbeidsforhold</ID>
+    <ID>LongParameterList:MeldekortServiceTest.kt:private fun lagVedtak: Vedtak</ID>
+    <ID>LongParameterList:PersonopplysningerServiceTest.kt:private fun lagBolkResultat: HentPersonBolkResult</ID>
+    <ID>LongParameterList:PersonopplysningerServiceTest.kt:private fun lagPerson: Person</ID>
+    <ID>UnusedVariable:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$val aareg = aaregClient.hentArbeidsforhold(PersonIdent("12345678901"))</ID>
+    <ID>UnusedVariable:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$val inntekter = inntektClient.hentInntekter(PersonIdent("12345678901"))</ID>
+    <ID>UnusedVariable:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$val tilgang = tilgangClient.sjekkTilgang(PersonIdent("12345678901"), "dummy-token")</ID>
+    <ID>UnusedVariable:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$val utbetalinger = utbetalingClient.hentUtbetalingerForBruker(PersonIdent("12345678901"), false)</ID>
+    <ID>UseOrEmpty:EregParserResponsTest.kt:EregParserResponsTest$første ?.beskrivelser ?.values ?.firstOrNull() ?.tekst ?: ""</ID>
+    <ID>VariableNaming:ArbeidsforholdServiceTest.kt:ArbeidsforholdServiceTest$val løpendeArbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)</ID>
+    <ID>VariableNaming:EregParserResponsTest.kt:EregParserResponsTest$val første = liste.firstOrNull()</ID>
+    <ID>VariableNaming:ExtentionFunctionTests.kt:ExtentionFunctionTests$val førsteFlytting = LocalDate.now().minusYears(3)</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønn1 = lagLønnsinntekt( beskrivelse = "Fastlønn januar", beloep = BigDecimal("50000"), )</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønn2 = lagLønnsinntekt( beskrivelse = "Fastlønn februar", beloep = BigDecimal("51000"), )</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønnsinntekt = lagLønnsinntekt( beskrivelse = "Fastlønn", beloep = BigDecimal("50000"), antall = BigDecimal("1"), )</ID>
+    <ID>VariableNaming:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest$val navTilhørigetService = mockk&lt;NavTilhørighetService&gt;()</ID>
+    <ID>VariableNaming:SisteXÅrServiceTest.kt:SisteXÅrServiceTest$val detteÅret = Year.now().value</ID>
+  </CurrentIssues>
+</SmellBaseline>

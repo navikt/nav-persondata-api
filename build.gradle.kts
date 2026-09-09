@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.openapi.generator)
     alias(libs.plugins.spotless)
     alias(libs.plugins.sonarqube)
+    alias(libs.plugins.detekt)
     jacoco
 }
 
@@ -112,6 +113,34 @@ sonar {
         property("sonar.tests", "src/test/kotlin")
         property("sonar.exclusions", "build/generated/**")
     }
+}
+
+// Detekt supplerer SonarCloud — dekker bl.a. bruk av non-null assertion (!!),
+// som Sonar sin Kotlin-analysator ikke har noen regel for i det hele tatt
+// (verifisert mot SonarCloud sin regelkatalog for Kotlin, se Confluence-side
+// "nav-persondata-api — kodefunn og hvorfor Sonar ikke fanget dem").
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("$projectDir/config/detekt/detekt.yml")
+    baseline = file("$projectDir/config/detekt/baseline.xml")
+    source.setFrom(
+        "src/main/kotlin",
+        "src/test/kotlin",
+    )
+}
+
+tasks.withType<dev.detekt.gradle.Detekt>().configureEach {
+    // Generert kode (GraphQL-klienter, OpenAPI-modeller) regenereres på hvert
+    // bygg og eies ikke av oss — samme eksklusjon som sonar.exclusions.
+    exclude("**/build/generated/**", "**/build/generate-resources/**")
+    reports {
+        html.required.set(true)
+        checkstyle.required.set(true)
+        sarif.required.set(true)
+    }
+}
+tasks.withType<dev.detekt.gradle.DetektCreateBaselineTask>().configureEach {
+    exclude("**/build/generated/**", "**/build/generate-resources/**")
 }
 
 tasks.named("compileKotlin") {

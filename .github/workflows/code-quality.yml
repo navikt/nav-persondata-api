@@ -28,6 +28,38 @@ jobs:
       - name: Kjør ktlint
         run: ./gradlew spotlessCheck
 
+  detekt:
+    name: Statisk analyse (Detekt)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v6
+
+      - name: Sett opp Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Gjør Gradle kjørbar
+        run: chmod +x ./gradlew
+
+      # detektMain/detektTest (med type-resolution) brukes fremfor plain
+      # "detekt" — flere regler (bl.a. UnsafeCallOnNullableType for !!-bruk)
+      # krever type-resolution for å faktisk fungere.
+      - name: Kjør Detekt
+        run: ./gradlew detektMain detektTest
+
+      - name: Last opp Detekt-rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: detekt-report
+          path: build/reports/detekt/
+          retention-days: 14
+
   bygg:
     name: Bygg prosjekt
     runs-on: ubuntu-latest

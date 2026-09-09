@@ -30,3 +30,4 @@ replay_pid*
 /.gradle/
 
 src/main/resources/.env.local.properties
+*.hprof

@@ -16,6 +16,7 @@ wiremock = "3.13.2"
 springdoc = "3.0.2"
 swagger = "2.2.52"
 commons-lang3 = "3.20.0"
+detekt = "2.0.0-alpha.5"
 
 [libraries]
 # BOM
@@ -84,3 +85,4 @@ graphql-kotlin = { id = "com.expediagroup.graphql", version.ref = "graphql-kotli
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
