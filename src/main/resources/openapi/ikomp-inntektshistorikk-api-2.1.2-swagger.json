@@ -194,21 +194,28 @@
             "type" : "boolean"
           },
           "skatteOgAvgiftsregel" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "opptjeningsperiodeFom" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "nullable" : true
           },
           "opptjeningsperiodeTom" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "nullable" : true
           },
           "tilleggsinformasjon" : {
-            "$ref" : "#/components/schemas/Tilleggsinformasjon"
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Tilleggsinformasjon"
+            } ],
+            "nullable" : true
           },
           "manuellVurdering" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "nullable" : true
           }
         },
         "discriminator" : {
@@ -224,13 +231,16 @@
           "type" : "object",
           "properties" : {
             "antall" : {
-              "type" : "number"
+              "type" : "number",
+              "nullable" : true
             },
             "skattemessigBosattLand" : {
-              "type" : "string"
+              "type" : "string",
+              "nullable" : true
             },
             "opptjeningsland" : {
-              "type" : "string"
+              "type" : "string",
+              "nullable" : true
             }
           }
         } ]
@@ -266,7 +276,8 @@
             "type" : "number"
           },
           "beskrivelse" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         },
         "required" : [ "beloep" ]
@@ -289,29 +300,36 @@
           "type" : "object",
           "properties" : {
             "grunnpensjonsbeloep" : {
-              "type" : "number"
+              "type" : "number",
+              "nullable" : true
             },
             "tilleggspensjonsbeloep" : {
-              "type" : "number"
+              "type" : "number",
+              "nullable" : true
             },
             "ufoeregrad" : {
               "type" : "integer",
-              "format" : "int32"
+              "format" : "int32",
+              "nullable" : true
             },
             "pensjonsgrad" : {
               "type" : "integer",
-              "format" : "int32"
+              "format" : "int32",
+              "nullable" : true
             },
             "heravEtterlattepensjon" : {
-              "type" : "number"
+              "type" : "number",
+              "nullable" : true
             },
             "startdato" : {
               "type" : "string",
-              "format" : "date"
+              "format" : "date",
+              "nullable" : true
             },
             "sluttdato" : {
               "type" : "string",
-              "format" : "date"
+              "format" : "date",
+              "nullable" : true
             }
           }
         } ]
@@ -325,7 +343,8 @@
           "properties" : {
             "aaretUtbetalingenGjelderFor" : {
               "type" : "integer",
-              "format" : "int32"
+              "format" : "int32",
+              "nullable" : true
             }
           }
         } ]
@@ -339,11 +358,13 @@
           "properties" : {
             "startdato" : {
               "type" : "string",
-              "format" : "date"
+              "format" : "date",
+              "nullable" : true
             },
             "sluttdato" : {
               "type" : "string",
-              "format" : "date"
+              "format" : "date",
+              "nullable" : true
             }
           }
         } ]
@@ -380,7 +401,8 @@
           "type" : "object",
           "properties" : {
             "persontype" : {
-              "type" : "string"
+              "type" : "string",
+              "nullable" : true
             }
           }
         } ]
@@ -393,7 +415,8 @@
           "type" : "object",
           "properties" : {
             "kode" : {
-              "type" : "string"
+              "type" : "string",
+              "nullable" : true
             }
           }
         } ]
@@ -402,10 +425,12 @@
         "type" : "object",
         "properties" : {
           "kode" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "tekst" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
@@ -422,13 +447,16 @@
             "type" : "string"
           },
           "detail" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "code" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "content" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         },
         "required" : [ "type", "status", "title" ]
