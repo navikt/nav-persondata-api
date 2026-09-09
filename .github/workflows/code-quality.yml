@@ -28,27 +28,6 @@ jobs:
       - name: Kjør ktlint
         run: ./gradlew spotlessCheck
 
-  ktlint:
-    name: Kotlin linting (ktlint)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Sjekk ut kode
-        uses: actions/checkout@v6
-
-      - name: Sett opp Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: "21"
-          cache: gradle
-
-      - name: Gjør Gradle kjørbar
-        run: chmod +x ./gradlew
-
-      - name: Kjør ktlint
-        run: ./gradlew spotlessCheck
-
   detekt:
     name: Statisk analyse (Detekt)
     runs-on: ubuntu-latest

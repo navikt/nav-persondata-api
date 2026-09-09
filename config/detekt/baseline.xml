@@ -1,0 +1,164 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassNaming:HistoriskeÅrService.kt:HistoriskeÅrService</ID>
+    <ID>ClassNaming:Meldekort.kt:ÅpenPeriode</ID>
+    <ID>ClassNaming:NavTilhørighetService.kt:NavTilhørighetService</ID>
+    <ID>ClassNaming:NomClient.kt:SaksbehandlerTilhørighet</ID>
+    <ID>ClassNaming:NomClient.kt:SaksbehandlerTilhørighetResultat</ID>
+    <ID>ClassNaming:SisteXÅrServiceTest.kt:SisteXÅrServiceTest</ID>
+    <ID>ConstructorParameterNaming:ArbeidsgiverInformasjon.kt:ArbeidsgiverInformasjon$val løpendeArbeidsforhold: List&lt;ArbeidsgiverData&gt;</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon$val lønnsinntekt: List&lt;Lønnsdetaljer&gt; = emptyList()</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon$val næringsinntekt: List&lt;Lønnsdetaljer&gt; = emptyList()</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon.Lønnsdetaljer$val beløp: BigDecimal?</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon.Lønnsdetaljer$val lønnstype: String?</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val inntektsår: String</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val lønnsinntekt: Int = 0</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val næringsinntekt: Int = 0</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val aktørId: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val dødsdato: String? = null</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val fødselsdato: String</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon.Familiemedlem$val fødselsdato: String? = null</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon.UtenlandskAdresse$@Maskert val regionDistriktOmråde: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val aktørId: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val dødsdato: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val fødselsdato: String</ID>
+    <ID>ConstructorParameterNaming:PersonopplysningerService.kt:PersonopplysningerService$private val navTilhørighetService: NavTilhørighetService</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val access_token: String</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val expires_in: Int</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val token_type: String</ID>
+    <ID>ConstructorParameterNaming:Ytelse.kt:Ytelse.PeriodeInformasjon$val beløp: BigDecimal</ID>
+    <ID>ConstructorParameterNaming:Ytelse.kt:Ytelse.PeriodeInformasjon$val bruttoBeløp: BigDecimal? = null</ID>
+    <ID>ForbiddenComment:CacheAdminController.kt:CacheAdminController$// TODO: Burde vi ha en slags form for validering av hvem som sender denne?</ID>
+    <ID>FunctionNaming:CacheAdminService.kt:CacheAdminService$private fun CacheManager.tøm: Cache?</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun HistorikkData.harHistorikkPåNormallønn: Boolean</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun Person.adresseHistorikkSiste5År: List&lt;PersonInformasjon.HistoriskAdresse&gt;</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun Person.nåværendeBostedsadresse: PersonInformasjon.Bostedsadresse?</ID>
+    <ID>FunctionNaming:HistoriskeÅrService.kt:HistoriskeÅrService$fun hentTidligereÅrEkskludertNåværende: List&lt;Int&gt;</ID>
+    <ID>FunctionNaming:NomClient.kt:NomClient$@Cacheable( value = ["nom-ressurs"], key = "#navIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentSaksbehandlerTilhørighet: SaksbehandlerTilhørighetResultat</ID>
+    <ID>FunctionNaming:NomClient.kt:NomClient$internal fun håndterNomFeil: Pair&lt;Int, String?&gt;</ID>
+    <ID>FunctionNaming:PdlClient.kt:PdlClient$internal fun håndterPdlFeil: Pair&lt;Int, String?&gt;</ID>
+    <ID>FunctionNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$suspend fun hentPenjonsgivendeInntektForÅr: AarsResultat</ID>
+    <ID>FunctionNaming:PersonopplysningerService.kt:fun Person.nåværendeAdresseBeskyttelse: PersonInformasjon.Skjerming</ID>
+    <ID>FunctionParameterNaming:HistoriskeÅrService.kt:HistoriskeÅrService$antallår: Int</ID>
+    <ID>FunctionParameterNaming:RetryPolicy.kt:RetryPolicy$forsøk: Int = 3</ID>
+    <ID>FunctionParameterNaming:YtelseServiceTest.kt:beløp: BigDecimal</ID>
+    <ID>LargeClass:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest</ID>
+    <ID>LongMethod:AaregClient.kt:AaregClient$@Cacheable( value = ["aareg-arbeidsforhold"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentArbeidsforhold: AaregDataResultat</ID>
+    <ID>LongMethod:ArbeidsforholdServiceTest.kt:private fun lagArbeidsforhold: Arbeidsforhold</ID>
+    <ID>LongMethod:InntektClient.kt:InntektClient$@Cacheable( value = ["inntekt-historikk"], key = "#personIdent + '_' + #periode.fom + '_' + #periode.tom", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentInntekter: InntektDataResultat</ID>
+    <ID>LongMethod:InntektService.kt:InntektService$suspend fun hentInntekterForPerson: InntektResultat</ID>
+    <ID>LongMethod:LocalWireMockSmokeTest.kt:LocalWireMockSmokeTest$@Test fun `full flow triggers downstream calls and wiremock records them`</ID>
+    <ID>LongMethod:MeldekortService.kt:MeldekortService$fun hentAAPMeldekortForPerson: AAPMeldekortResultat</ID>
+    <ID>LongMethod:MeldekortService.kt:MeldekortService$fun hentDagpengeMeldekortForPerson: MeldekortResultat</ID>
+    <ID>LongMethod:MeldekortServiceTest.kt:MeldekortServiceTest$@Test fun `AAP - arbeidPerDag reflekterer ulike verdier på tvers av flere Holmes-segmenter`</ID>
+    <ID>LongMethod:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$@Cacheable( value = ["pensjonsgivende-inntekt"], key = "#personIdent + '_' + #inntektsaar", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentPensjonsgivendeInntekt: PensjonsgivendeInntektDataResultat</ID>
+    <ID>LongMethod:PersonopplysningerService.kt:PersonopplysningerService$suspend fun hentPersonopplysningerForPerson: PersonopplysningerResultat</ID>
+    <ID>LongMethod:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest$@Test fun `skal mappe telefonnummer og adresseHistorikk gjennom hentPersonopplysningerForPerson`</ID>
+    <ID>LongMethod:PersonopplysningerServiceTest.kt:private fun lagPerson: Person</ID>
+    <ID>LongMethod:UtbetalingClient.kt:UtbetalingClient$@Cacheable( value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentUtbetalingerForBruker: UtbetalingResultat</ID>
+    <ID>LoopWithTooManyJumpStatements:MeldekortService.kt:for</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$200</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$299</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$403</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$404</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$500</ID>
+    <ID>MagicNumber:BrukertilgangService.kt:BrukertilgangService$200</ID>
+    <ID>MagicNumber:ExtentionFunctions.kt:10</ID>
+    <ID>MagicNumber:InntektClient.kt:InntektClient$5</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$200</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$299</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$403</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$404</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$500</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$200</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$299</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$401</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$403</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$404</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$500</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$5</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$500</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$5000</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$504</ID>
+    <ID>MagicNumber:PdlClient.kt:PdlClient$500</ID>
+    <ID>MagicNumber:PdlClient.kt:PdlClient$504</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$200</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$404</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$500</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$599</ID>
+    <ID>MagicNumber:PersonIdent.kt:PersonIdent$11</ID>
+    <ID>MagicNumber:PersonIdent.kt:PersonIdent$6</ID>
+    <ID>MagicNumber:PersonbrukerController.kt:PersonbrukerController$403</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$200</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$299</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$403</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$404</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$500</ID>
+    <ID>MagicNumber:RetryPolicy.kt:RetryPolicy$200</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$200</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$204</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$500</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$30</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$5</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$50</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$200</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$299</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$401</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$403</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$404</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$500</ID>
+    <ID>ReturnCount:ArbeidsforholdService.kt:ArbeidsforholdService$suspend fun hentArbeidsforholdForPerson: ArbeidsforholdResultat</ID>
+    <ID>ReturnCount:InntektService.kt:InntektService$suspend fun hentInntekterForPerson: InntektResultat</ID>
+    <ID>ReturnCount:MeldekortService.kt:MeldekortService$fun hentAAPMeldekortForPerson: AAPMeldekortResultat</ID>
+    <ID>ReturnCount:MeldekortService.kt:MeldekortService$fun hentDagpengeMeldekortForPerson: MeldekortResultat</ID>
+    <ID>ReturnCount:NomClient.kt:NomClient$@Cacheable( value = ["nom-ressurs"], key = "#navIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentSaksbehandlerTilhørighet: SaksbehandlerTilhørighetResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$@Cacheable( value = ["pdl-geografisktilknytning"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentGeografiskTilknytning: GeografiskTilknytningResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$@Cacheable( value = ["pdl-person"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentPerson: PersonDataResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$suspend fun hentPersonBolk: PersonBolkResultat</ID>
+    <ID>ReturnCount:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$@Cacheable( value = ["pensjonsgivende-inntekt"], key = "#personIdent + '_' + #inntektsaar", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentPensjonsgivendeInntekt: PensjonsgivendeInntektDataResultat</ID>
+    <ID>ReturnCount:PersonopplysningerService.kt:PersonopplysningerService$suspend fun hentPersonopplysningerForPerson: PersonopplysningerResultat</ID>
+    <ID>ReturnCount:TilgangService.kt:fun TilgangMaskinResultat.harTilgangMedBasicAdgang: Boolean</ID>
+    <ID>ReturnCount:YtelseService.kt:YtelseService$fun hentYtelserForPerson: YtelserResultat</ID>
+    <ID>SwallowedException:MaskeringUtil.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AaregClient.kt:AaregClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:EregClient.kt:EregClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:MaskeringUtil.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:NomClient.kt:NomClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Norg2Client.kt:Norg2Client$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PdlClient.kt:PdlClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PdlClient.kt:PdlClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PersonbrukerController.kt:PersonbrukerController$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RetryPolicy.kt:RetryPolicy$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:RevisjonsloggService.kt:RevisjonsloggService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:UtbetalingClient.kt:UtbetalingClient$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:AapClient.kt:AapClient$throw RuntimeException("Feil fra AAP holmes/arbeidstimer: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:AapClient.kt:AapClient$throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:AaregClient.kt:AaregClient$throw RuntimeException("Feil ved parsing av Aareg-respons", ex)</ID>
+    <ID>TooGenericExceptionThrown:DagpengerDatadelingClient.kt:DagpengerDatadelingClient$throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:InntektClient.kt:InntektClient$throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:TilgangsmaskinClient.kt:TilgangsmaskinClientImpl$throw RuntimeException("Feil fra Tilgang: HTTP $status – $body")</ID>
+    <ID>TooManyFunctions:ExtentionFunctions.kt:no.nav.persondataapi.service.ExtentionFunctions.kt</ID>
+    <ID>TooManyFunctions:WebClientConfig.kt:WebClientConfig</ID>
+    <ID>UnusedParameter:PersonopplysningerService.kt:PersonopplysningerService$responsLog: Boolean = false</ID>
+    <ID>VariableNaming:AapClient.kt:AapClient$val antallÅr: Long = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:ArbeidsforholdService.kt:ArbeidsforholdService$val løpendeArbeidsforhold = alleArbeidsforhold .filter { it.ansettelsesperiode.sluttdato == null } .map { arbeidsforhold -&gt; mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold, unikeOrganisasjonsnumre) }</ID>
+    <ID>VariableNaming:ArbeidsforholdServiceTest.kt:ArbeidsforholdServiceTest$val løpendeArbeidsforhold = lagArbeidsforhold("999888777", sluttdato = null)</ID>
+    <ID>VariableNaming:CacheAdminService.kt:CacheAdminService$private val cacherSomTømmesPåPersonFlush = setOf( "inntekt-historikk", "pensjonsgivende-inntekt", )</ID>
+    <ID>VariableNaming:CacheAdminService.kt:CacheAdminService$val tømteCacher = cacheManager.cacheNames .mapNotNull { name -&gt; cacheManager .getCache(name) ?.also { it.clear() } ?.let { name } }.sorted()</ID>
+    <ID>VariableNaming:DagpengerDatadelingClient.kt:DagpengerDatadelingClient$val antallÅr: Long = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:EregParserResponsTest.kt:EregParserResponsTest$val første = liste.firstOrNull()</ID>
+    <ID>VariableNaming:ExtentionFunctionTests.kt:ExtentionFunctionTests$val førsteFlytting = LocalDate.now().minusYears(3)</ID>
+    <ID>VariableNaming:HistoriskeÅrService.kt:HistoriskeÅrService$val årListe = (0 until antallår).map { Year.now().minusYears(1).value - it }</ID>
+    <ID>VariableNaming:InntektService.kt:InntektService$val lønnsinntekt = inntektResponse.data ?.data .orEmpty() .flatMap { historikk -&gt; val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) { eregClient.hentOrganisasjon(historikk.opplysningspliktig) } else { null } var respons = historikk.versjoner .nyeste() ?.inntektListe ?.filterIsInstance&lt;Loennsinntekt&gt;() ?.map { loenn -&gt; InntektInformasjon.Lønnsdetaljer( arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn, periode = historikk.maaned, arbeidsforhold = "", stillingsprosent = "", lønnstype = loenn.beskrivelse, antall = loenn.antall, beløp = loenn.beloep, harFlereVersjoner = historikk.harHistorikkPåNormallønn(), ) }.orEmpty() if (respons.isEmpty() &amp;&amp; historikk.versjoner .eldste() ?.inntektListe ?.filterIsInstance&lt;Loennsinntekt&gt;() ?.isEmpty() == false ) { respons = listOf( InntektInformasjon.Lønnsdetaljer( arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn, periode = historikk.maaned, arbeidsforhold = "", stillingsprosent = "", lønnstype = historikk.versjoner .eldste() ?.inntektListe ?.first() ?.type, antall = null, beløp = BigDecimal.ZERO, harFlereVersjoner = true, ), ) } respons }</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønn1 = lagLønnsinntekt( beskrivelse = "Fastlønn januar", beloep = BigDecimal("50000"), )</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønn2 = lagLønnsinntekt( beskrivelse = "Fastlønn februar", beloep = BigDecimal("51000"), )</ID>
+    <ID>VariableNaming:InntektServiceTest.kt:InntektServiceTest$val lønnsinntekt = lagLønnsinntekt( beskrivelse = "Fastlønn", beloep = BigDecimal("50000"), antall = BigDecimal("1"), )</ID>
+    <ID>VariableNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$val antallÅr = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$val årListe = HistoriskeÅrService().hentTidligereÅrEkskludertNåværende(antallÅr)</ID>
+    <ID>VariableNaming:PersonopplysningerService.kt:PersonopplysningerService$val fødselsdato = bolk ?.person ?.foedselsdato ?.firstOrNull() ?.foedselsdato</ID>
+    <ID>VariableNaming:PersonopplysningerServiceTest.kt:PersonopplysningerServiceTest$val navTilhørigetService = mockk&lt;NavTilhørighetService&gt;()</ID>
+    <ID>VariableNaming:SisteXÅrServiceTest.kt:SisteXÅrServiceTest$val detteÅret = Year.now().value</ID>
+  </CurrentIssues>
+</SmellBaseline>
