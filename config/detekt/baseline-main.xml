@@ -1,0 +1,247 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>AbstractClassCanBeConcreteClass:BaseMetrics.kt:BaseDownstreamMetrics$BaseDownstreamMetrics</ID>
+    <ID>AbstractClassCanBeInterface:ArbeidsforholdService.kt:ArbeidsforholdResultat$ArbeidsforholdResultat</ID>
+    <ID>AbstractClassCanBeInterface:InntektService.kt:InntektResultat$InntektResultat</ID>
+    <ID>AbstractClassCanBeInterface:MeldekortService.kt:AAPMeldekortResultat$AAPMeldekortResultat</ID>
+    <ID>AbstractClassCanBeInterface:MeldekortService.kt:MeldekortResultat$MeldekortResultat</ID>
+    <ID>AbstractClassCanBeInterface:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService.AarsResultat$AarsResultat</ID>
+    <ID>AbstractClassCanBeInterface:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService.PensjonsgivendeInntektResultat$PensjonsgivendeInntektResultat</ID>
+    <ID>AbstractClassCanBeInterface:PersonopplysningerService.kt:PersonopplysningerResultat$PersonopplysningerResultat</ID>
+    <ID>AbstractClassCanBeInterface:YtelseService.kt:YtelserResultat$YtelserResultat</ID>
+    <ID>ClassNaming:HistoriskeÅrService.kt:HistoriskeÅrService</ID>
+    <ID>ClassNaming:Meldekort.kt:ÅpenPeriode</ID>
+    <ID>ClassNaming:NavTilhørighetService.kt:NavTilhørighetService</ID>
+    <ID>ClassNaming:NomClient.kt:SaksbehandlerTilhørighet</ID>
+    <ID>ClassNaming:NomClient.kt:SaksbehandlerTilhørighetResultat</ID>
+    <ID>ConstructorParameterNaming:ArbeidsgiverInformasjon.kt:ArbeidsgiverInformasjon$val løpendeArbeidsforhold: List&lt;ArbeidsgiverData&gt;</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon$val lønnsinntekt: List&lt;Lønnsdetaljer&gt; = emptyList()</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon$val næringsinntekt: List&lt;Lønnsdetaljer&gt; = emptyList()</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon.Lønnsdetaljer$val beløp: BigDecimal?</ID>
+    <ID>ConstructorParameterNaming:InntektInformasjon.kt:InntektInformasjon.Lønnsdetaljer$val lønnstype: String?</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val inntektsår: String</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val lønnsinntekt: Int = 0</ID>
+    <ID>ConstructorParameterNaming:PensjonsgivendeInntektService.kt:PensjonsGivendeInntektOppummering$val næringsinntekt: Int = 0</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val aktørId: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val dødsdato: String? = null</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon$val fødselsdato: String</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon.Familiemedlem$val fødselsdato: String? = null</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjon.kt:PersonInformasjon.UtenlandskAdresse$@Maskert val regionDistriktOmråde: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val aktørId: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val dødsdato: String?</ID>
+    <ID>ConstructorParameterNaming:PersonInformasjonV1Dto.kt:PersonInformasjonV1Dto$val fødselsdato: String</ID>
+    <ID>ConstructorParameterNaming:PersonopplysningerService.kt:PersonopplysningerService$private val navTilhørighetService: NavTilhørighetService</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val access_token: String</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val expires_in: Int</ID>
+    <ID>ConstructorParameterNaming:TokenService.kt:TokenResponse$val token_type: String</ID>
+    <ID>ConstructorParameterNaming:Ytelse.kt:Ytelse.PeriodeInformasjon$val beløp: BigDecimal</ID>
+    <ID>ConstructorParameterNaming:Ytelse.kt:Ytelse.PeriodeInformasjon$val bruttoBeløp: BigDecimal? = null</ID>
+    <ID>EmptyClassBlock:AldersUfoereEtterlatteAvtalefestetOgKrigspensjon.kt:AldersUfoereEtterlatteAvtalefestetOgKrigspensjon${ }</ID>
+    <ID>EmptyClassBlock:Avvik.kt:Avvik${ }</ID>
+    <ID>EmptyClassBlock:BonusFraForsvaret.kt:BonusFraForsvaret${ }</ID>
+    <ID>EmptyClassBlock:Etterbetalingsperiode.kt:Etterbetalingsperiode${ }</ID>
+    <ID>EmptyClassBlock:Forskuddstrekk.kt:Forskuddstrekk${ }</ID>
+    <ID>EmptyClassBlock:HistorikkData.kt:HistorikkData${ }</ID>
+    <ID>EmptyClassBlock:InntektshistorikkApiInn.kt:InntektshistorikkApiInn${ }</ID>
+    <ID>EmptyClassBlock:InntektshistorikkApiUt.kt:InntektshistorikkApiUt${ }</ID>
+    <ID>EmptyClassBlock:Inntektsinformasjon.kt:Inntektsinformasjon${ }</ID>
+    <ID>EmptyClassBlock:Loennsinntekt.kt:Loennsinntekt${ }</ID>
+    <ID>EmptyClassBlock:LottOgPartInnenFiske.kt:LottOgPartInnenFiske${ }</ID>
+    <ID>EmptyClassBlock:Naeringsinntekt.kt:Naeringsinntekt${ }</ID>
+    <ID>EmptyClassBlock:Nettoloennsordning.kt:Nettoloennsordning${ }</ID>
+    <ID>EmptyClassBlock:NorskKontinentalsokkel.kt:NorskKontinentalsokkel${ }</ID>
+    <ID>EmptyClassBlock:PensjonEllerTrygd.kt:PensjonEllerTrygd${ }</ID>
+    <ID>EmptyClassBlock:Problem.kt:Problem${ }</ID>
+    <ID>EmptyClassBlock:ReiseKostOgLosji.kt:ReiseKostOgLosji${ }</ID>
+    <ID>EmptyClassBlock:SpesielleInntjeningsforhold.kt:SpesielleInntjeningsforhold${ }</ID>
+    <ID>EmptyClassBlock:YtelseFraOffentlige.kt:YtelseFraOffentlige${ }</ID>
+    <ID>EnumNaming:AdressebeskyttelseGradering.kt:AdressebeskyttelseGradering$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:Endringstype.kt:Endringstype$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:ForelderBarnRelasjonRolle.kt:ForelderBarnRelasjonRolle$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:GtType.kt:GtType$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:Identitetsgrunnlagsstatus.kt:Identitetsgrunnlagsstatus$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:KjoennType.kt:KjoennType$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:KontaktadresseType.kt:KontaktadresseType$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:KontaktinformasjonForDoedsboSkifteform.kt:KontaktinformasjonForDoedsboSkifteform$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:Oppholdstillatelse.kt:Oppholdstillatelse$__UNKNOWN_VALUE</ID>
+    <ID>EnumNaming:Sivilstandstype.kt:Sivilstandstype$__UNKNOWN_VALUE</ID>
+    <ID>ForbiddenComment:CacheAdminController.kt:CacheAdminController$// TODO: Burde vi ha en slags form for validering av hvem som sender denne?</ID>
+    <ID>ForbiddenVoid:BegrunnetTilgangController.kt:BegrunnetTilgangController$Void</ID>
+    <ID>FunctionNaming:CacheAdminService.kt:CacheAdminService$private fun CacheManager.tøm: Cache?</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun HistorikkData.harHistorikkPåNormallønn: Boolean</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun Person.adresseHistorikkSiste5År: List&lt;PersonInformasjon.HistoriskAdresse&gt;</ID>
+    <ID>FunctionNaming:ExtentionFunctions.kt:fun Person.nåværendeBostedsadresse: PersonInformasjon.Bostedsadresse?</ID>
+    <ID>FunctionNaming:HistoriskeÅrService.kt:HistoriskeÅrService$fun hentTidligereÅrEkskludertNåværende: List&lt;Int&gt;</ID>
+    <ID>FunctionNaming:NomClient.kt:NomClient$@Cacheable( value = ["nom-ressurs"], key = "#navIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentSaksbehandlerTilhørighet: SaksbehandlerTilhørighetResultat</ID>
+    <ID>FunctionNaming:NomClient.kt:NomClient$internal fun håndterNomFeil: Pair&lt;Int, String?&gt;</ID>
+    <ID>FunctionNaming:PdlClient.kt:PdlClient$internal fun håndterPdlFeil: Pair&lt;Int, String?&gt;</ID>
+    <ID>FunctionNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$suspend fun hentPenjonsgivendeInntektForÅr: AarsResultat</ID>
+    <ID>FunctionNaming:PersonopplysningerService.kt:fun Person.nåværendeAdresseBeskyttelse: PersonInformasjon.Skjerming</ID>
+    <ID>FunctionParameterNaming:HistoriskeÅrService.kt:HistoriskeÅrService$antallår: Int</ID>
+    <ID>FunctionParameterNaming:RetryPolicy.kt:RetryPolicy$forsøk: Int = 3</ID>
+    <ID>HasPlatformType:RevisjonsloggService.kt:RevisjonsloggService$val logger = LoggerFactory.getLogger(javaClass)</ID>
+    <ID>HasPlatformType:RevisjonsloggService.kt:RevisjonsloggService$val revisjonslogg = LoggerFactory.getLogger("audit")</ID>
+    <ID>HasPlatformType:RevisjonsloggService.kt:RevisjonsloggService$var clock = Clock.systemDefaultZone()</ID>
+    <ID>HasPlatformType:TeamsLogger.kt:val teamLogsMarker = MarkerFactory.getMarker("TEAM_LOGS")</ID>
+    <ID>LongMethod:AaregClient.kt:AaregClient$@Cacheable( value = ["aareg-arbeidsforhold"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentArbeidsforhold: AaregDataResultat</ID>
+    <ID>LongMethod:InntektClient.kt:InntektClient$@Cacheable( value = ["inntekt-historikk"], key = "#personIdent + '_' + #periode.fom + '_' + #periode.tom", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentInntekter: InntektDataResultat</ID>
+    <ID>LongMethod:InntektService.kt:InntektService$suspend fun hentInntekterForPerson: InntektResultat</ID>
+    <ID>LongMethod:MeldekortService.kt:MeldekortService$fun hentAAPMeldekortForPerson: AAPMeldekortResultat</ID>
+    <ID>LongMethod:MeldekortService.kt:MeldekortService$fun hentDagpengeMeldekortForPerson: MeldekortResultat</ID>
+    <ID>LongMethod:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$@Cacheable( value = ["pensjonsgivende-inntekt"], key = "#personIdent + '_' + #inntektsaar", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentPensjonsgivendeInntekt: PensjonsgivendeInntektDataResultat</ID>
+    <ID>LongMethod:PersonopplysningerService.kt:PersonopplysningerService$suspend fun hentPersonopplysningerForPerson: PersonopplysningerResultat</ID>
+    <ID>LongMethod:UtbetalingClient.kt:UtbetalingClient$@Cacheable( value = ["utbetaling-bruker"], key = "#personIdent + '_' + #utvidet", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentUtbetalingerForBruker: UtbetalingResultat</ID>
+    <ID>LongParameterList:Naeringsinntekt.kt:Naeringsinntekt</ID>
+    <ID>LongParameterList:PensjonEllerTrygd.kt:PensjonEllerTrygd</ID>
+    <ID>LongParameterList:RevisjonsloggService.kt:RevisjonsLogger$fun createCefMessage: String</ID>
+    <ID>LongParameterList:YtelseFraOffentlige.kt:YtelseFraOffentlige</ID>
+    <ID>LoopWithTooManyJumpStatements:MeldekortService.kt:for</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$200</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$299</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$403</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$404</ID>
+    <ID>MagicNumber:ArbeidsforholdService.kt:ArbeidsforholdService$500</ID>
+    <ID>MagicNumber:BrukertilgangService.kt:BrukertilgangService$200</ID>
+    <ID>MagicNumber:ExtentionFunctions.kt:10</ID>
+    <ID>MagicNumber:InntektClient.kt:InntektClient$5</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$200</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$299</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$403</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$404</ID>
+    <ID>MagicNumber:InntektService.kt:InntektService$500</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$200</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$299</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$401</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$403</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$404</ID>
+    <ID>MagicNumber:MeldekortService.kt:MeldekortService$500</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$5</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$500</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$5000</ID>
+    <ID>MagicNumber:NomClient.kt:NomClient$504</ID>
+    <ID>MagicNumber:PdlClient.kt:PdlClient$500</ID>
+    <ID>MagicNumber:PdlClient.kt:PdlClient$504</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$200</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$404</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$500</ID>
+    <ID>MagicNumber:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$599</ID>
+    <ID>MagicNumber:PersonIdent.kt:PersonIdent$11</ID>
+    <ID>MagicNumber:PersonIdent.kt:PersonIdent$6</ID>
+    <ID>MagicNumber:PersonbrukerController.kt:PersonbrukerController$403</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$200</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$299</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$403</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$404</ID>
+    <ID>MagicNumber:PersonopplysningerService.kt:PersonopplysningerService$500</ID>
+    <ID>MagicNumber:RetryPolicy.kt:RetryPolicy$200</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$200</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$204</ID>
+    <ID>MagicNumber:TilgangService.kt:TilgangService$500</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$30</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$5</ID>
+    <ID>MagicNumber:WebClientConfig.kt:WebClientConfig.HttpClientKonfig$50</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$200</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$299</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$401</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$403</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$404</ID>
+    <ID>MagicNumber:YtelseService.kt:YtelseService$500</ID>
+    <ID>RedundantSuspendModifier:ArbeidsforholdService.kt:ArbeidsforholdService$suspend</ID>
+    <ID>RedundantSuspendModifier:InntektService.kt:InntektService$suspend</ID>
+    <ID>RedundantSuspendModifier:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$suspend</ID>
+    <ID>ReturnCount:ArbeidsforholdService.kt:ArbeidsforholdService$suspend fun hentArbeidsforholdForPerson: ArbeidsforholdResultat</ID>
+    <ID>ReturnCount:InntektService.kt:InntektService$suspend fun hentInntekterForPerson: InntektResultat</ID>
+    <ID>ReturnCount:MeldekortService.kt:MeldekortService$fun hentAAPMeldekortForPerson: AAPMeldekortResultat</ID>
+    <ID>ReturnCount:MeldekortService.kt:MeldekortService$fun hentDagpengeMeldekortForPerson: MeldekortResultat</ID>
+    <ID>ReturnCount:NomClient.kt:NomClient$@Cacheable( value = ["nom-ressurs"], key = "#navIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentSaksbehandlerTilhørighet: SaksbehandlerTilhørighetResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$@Cacheable( value = ["pdl-geografisktilknytning"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentGeografiskTilknytning: GeografiskTilknytningResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$@Cacheable( value = ["pdl-person"], key = "#personIdent", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) suspend fun hentPerson: PersonDataResultat</ID>
+    <ID>ReturnCount:PdlClient.kt:PdlClient$suspend fun hentPersonBolk: PersonBolkResultat</ID>
+    <ID>ReturnCount:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$@Cacheable( value = ["pensjonsgivende-inntekt"], key = "#personIdent + '_' + #inntektsaar", unless = "#result.statusCode != 200 &amp;&amp; #result.statusCode != 404", ) fun hentPensjonsgivendeInntekt: PensjonsgivendeInntektDataResultat</ID>
+    <ID>ReturnCount:PersonopplysningerService.kt:PersonopplysningerService$suspend fun hentPersonopplysningerForPerson: PersonopplysningerResultat</ID>
+    <ID>ReturnCount:TilgangService.kt:fun TilgangMaskinResultat.harTilgangMedBasicAdgang: Boolean</ID>
+    <ID>ReturnCount:YtelseService.kt:YtelseService$fun hentYtelserForPerson: YtelserResultat</ID>
+    <ID>SpreadOperator:Application.kt:(*args)</ID>
+    <ID>SwallowedException:MaskeringUtil.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AaregClient.kt:AaregClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:EregClient.kt:EregClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:MaskeringUtil.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:NomClient.kt:NomClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Norg2Client.kt:Norg2Client$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PdlClient.kt:PdlClient$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PdlClient.kt:PdlClient$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PersonbrukerController.kt:PersonbrukerController$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RetryPolicy.kt:RetryPolicy$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:RevisjonsloggService.kt:RevisjonsloggService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:UtbetalingClient.kt:UtbetalingClient$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:AapClient.kt:AapClient$throw RuntimeException("Feil fra AAP holmes/arbeidstimer: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:AapClient.kt:AapClient$throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:AaregClient.kt:AaregClient$throw RuntimeException("Feil ved parsing av Aareg-respons", ex)</ID>
+    <ID>TooGenericExceptionThrown:ApiUtil.kt:ApiUtil$throw RuntimeException(e)</ID>
+    <ID>TooGenericExceptionThrown:DagpengerDatadelingClient.kt:DagpengerDatadelingClient$throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:InntektClient.kt:InntektClient$throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body")</ID>
+    <ID>TooGenericExceptionThrown:TilgangsmaskinClient.kt:TilgangsmaskinClientImpl$throw RuntimeException("Feil fra Tilgang: HTTP $status – $body")</ID>
+    <ID>TooManyFunctions:ExtentionFunctions.kt:no.nav.persondataapi.service.ExtentionFunctions.kt</ID>
+    <ID>TooManyFunctions:WebClientConfig.kt:WebClientConfig</ID>
+    <ID>UnnecessaryFilter:MeldekortService.kt:MeldekortService$filter { meldekort -&gt; meldekort.status == MeldekortStatus.Innsendt }</ID>
+    <ID>UnnecessarySafeCall:PersonopplysningerService.kt:PersonopplysningerService$it.relatertPersonsRolle?.name</ID>
+    <ID>UnreachableCode:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$return runCatching { metrics.timer(operationName).recordCallable { val responseResult = webClient .post() .uri("/api/v1/pensjonsgivendeinntektforfolketrygden") .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .exchangeToMono { response -&gt; when { response.statusCode().is2xxSuccessful -&gt; { response .bodyToMono(SigrunPensjonsgivendeInntektResponse::class.java) .map { println(it) PensjonsgivendeInntektDataResultat( data = it, statusCode = 200, ) } } response.statusCode().value() == 404 -&gt; { Mono.just( PensjonsgivendeInntektDataResultat( data = SigrunPensjonsgivendeInntektResponse( inntektsaar = inntektsaar.toString(), emptyList(), ), statusCode = 404, errorMessage = null, ), ) } else -&gt; { response.bodyToMono(String::class.java).flatMap { body -&gt; Mono.error( RuntimeException( "Feil fra Sigrun: HTTP ${response.statusCode()} – $body", ), ) } } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "sigrun")) .block()!! responseResult } }.fold(onSuccess = { respons -&gt; metrics.counter(operationName, DownstreamResult.SUCCESS).increment() return PensjonsgivendeInntektDataResultat( data = respons.data, statusCode = 200, errorMessage = null, ) }, onFailure = { error -&gt; val resultType = when { erTimeout(error) -&gt; DownstreamResult.TIMEOUT error.message?.contains("ikke tilgang", ignoreCase = true) == true -&gt; DownstreamResult.CLIENT_ERROR else -&gt; DownstreamResult.UNEXPECTED } metrics.counter(operationName, resultType).increment() log.error("Feil ved henting av sigrun: ${error.message}", error) return PensjonsgivendeInntektDataResultat( data = null, statusCode = 500, errorMessage = error.rootCause().message, ) })</ID>
+    <ID>UnsafeCallOnNullableType:AapClient.kt:AapClient$webClient .post() .uri("/holmes/arbeidstimer") .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .exchangeToMono { response -&gt; val status = response.statusCode() if (status.is2xxSuccessful) { response.bodyToMono(object : ParameterizedTypeReference&lt;HolmesArbeidstimerRespons&gt;() {}) } else { response.bodyToMono(String::class.java).map { body -&gt; throw RuntimeException("Feil fra AAP holmes/arbeidstimer: HTTP $status – $body") } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-holmes-arbeidstimer")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:AapClient.kt:AapClient$webClient .post() .uri("/maksimum") .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .exchangeToMono { response -&gt; val status = response.statusCode() if (status.is2xxSuccessful) { response.bodyToMono(object : ParameterizedTypeReference&lt;AapMaximumRespons&gt;() {}) } else { response.bodyToMono(String::class.java).map { body -&gt; throw RuntimeException("Feil fra AAP maksimum: HTTP $status – $body") } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "aap-maksimum")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:AaregClient.kt:AaregClient$webClient .get() .uri { uriBuilder -&gt; uriBuilder .path("/v2/arbeidstaker/arbeidsforhold") .queryParam("historikk", "true") .queryParam("arbeidsforholdstatus", "AKTIV", "AVSLUTTET", "FREMTIDIG") .queryParam("rapporteringsordning", "A_ORDNINGEN") .build() }.header("Authorization", "Bearer $oboToken") .header("Nav-Call-Id", UUID.randomUUID().toString()) .header("Nav-Personident", personIdent.value) .exchangeToMono { response -&gt; val status = response.statusCode() // Les body som String (kan bare leses én gang), logg, og parse response .bodyToMono(String::class.java) .map { raw -&gt; if (status.is2xxSuccessful) { try { val parsed: List&lt;Arbeidsforhold&gt; = JsonUtils.fromJson(raw) status.value() to parsed } catch (ex: Exception) { log.error( "Klarte ikke å parse Aareg-respons. se Team Logs for full trace", ex, ) log.error( teamLogsMarker, "Klarte ikke å parse Aareg-respons. Rådata: $raw", ex, ) throw RuntimeException("Feil ved parsing av Aareg-respons", ex) } } else { throw HttpStatusException( status.value(), "Feil fra AaregAPI: HTTP $status – $raw", ) } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Aareg-arbeidsforhold")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:DagpengerDatadelingClient.kt:DagpengerDatadelingClient$webClient .post() .uri("/dagpenger/datadeling/v1/meldekort") .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .exchangeToMono { response -&gt; val status = response.statusCode() if (status.is2xxSuccessful) { response.bodyToMono(object : ParameterizedTypeReference&lt;List&lt;Meldekort&gt;&gt;() {}) } else { response.bodyToMono(String::class.java).map { body -&gt; throw RuntimeException("Feil fra DPDatadeling: HTTP $status – $body") } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "meldekort")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:EregClient.kt:EregClient$webClient .get() .uri { uriBuilder -&gt; uriBuilder .path("/v2/organisasjon/$orgnummer") .queryParam("inkluderHistorikk", "false") .queryParam("inkluderHierarki", "false") .build() }.retrieve() .bodyToMono(String::class.java) .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "ereg-organisasjon")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:InntektClient.kt:InntektClient$webClient .post() .uri("/rest/v2/inntektshistorikk") .header("Authorization", "Bearer $oboToken") .header("Nav-Call-Id", UUID.randomUUID().toString()) .bodyValue(requestBody) .exchangeToMono { response -&gt; val status = response.statusCode() if (status.is2xxSuccessful) { response.bodyToMono( object : ParameterizedTypeReference&lt;InntektshistorikkApiUt&gt;() {}, ) } else { response.bodyToMono(String::class.java).map { body -&gt; throw RuntimeException("Feil fra inntektsAPI: HTTP $status – $body") } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Inntektshistorikk")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:Norg2Client.kt:Norg2Client$webClient .get() .uri("/api/v1/enhet/navkontor/$lokalKontor") .retrieve() .bodyToMono(String::class.java) .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "Norg2")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:PdlClient.kt:PdlClient$response.data!!</ID>
+    <ID>UnsafeCallOnNullableType:PensjonsgivendeInntektClient.kt:PensjonsgivendeInntektClient$webClient .post() .uri("/api/v1/pensjonsgivendeinntektforfolketrygden") .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .exchangeToMono { response -&gt; when { response.statusCode().is2xxSuccessful -&gt; { response .bodyToMono(SigrunPensjonsgivendeInntektResponse::class.java) .map { println(it) PensjonsgivendeInntektDataResultat( data = it, statusCode = 200, ) } } response.statusCode().value() == 404 -&gt; { Mono.just( PensjonsgivendeInntektDataResultat( data = SigrunPensjonsgivendeInntektResponse( inntektsaar = inntektsaar.toString(), emptyList(), ), statusCode = 404, errorMessage = null, ), ) } else -&gt; { response.bodyToMono(String::class.java).flatMap { body -&gt; Mono.error( RuntimeException( "Feil fra Sigrun: HTTP ${response.statusCode()} – $body", ), ) } } } }.retryWhen(RetryPolicy.reactorRetrySpec(kilde = "sigrun")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$respons.data!!</ID>
+    <ID>UnsafeCallOnNullableType:PersonbrukerController.kt:PersonbrukerController$token!!</ID>
+    <ID>UnsafeCallOnNullableType:PersonopplysningerService.kt:PersonopplysningerService$it.relatertPersonsIdent!!</ID>
+    <ID>UnsafeCallOnNullableType:PersonopplysningerService.kt:PersonopplysningerService$it.relatertVedSivilstand!!</ID>
+    <ID>UnsafeCallOnNullableType:RetryPolicy.kt:cause.cause!!</ID>
+    <ID>UnsafeCallOnNullableType:TilgangsmaskinClient.kt:TilgangsmaskinClientImpl$webClient .post() .uri("/api/v1/komplett") .header("Authorization", "Bearer $oboToken") .header("Nav-Call-Id", UUID.randomUUID().toString()) .bodyValue(personIdent.value) .exchangeToMono { response -&gt; val status = response.statusCode() if (status.value() == 204) { Mono.just( TilgangMaskinResultat( type = null, title = null, status = 204, instance = null, brukerIdent = personIdent.value, navIdent = null, traceId = null, begrunnelse = null, kanOverstyres = true, ), ) } else if (status.is2xxSuccessful || status.is4xxClientError) { response.bodyToMono(object : ParameterizedTypeReference&lt;TilgangMaskinResultat&gt;() {}) } else { response.bodyToMono(String::class.java).map { body -&gt; logger.error("Feilrespons: $body") throw RuntimeException("Feil fra Tilgang: HTTP $status – $body") } } }.block()!!</ID>
+    <ID>UnsafeCallOnNullableType:TokenService.kt:TokenService$clientId!!</ID>
+    <ID>UnsafeCallOnNullableType:TokenService.kt:TokenService$clientSecret!!</ID>
+    <ID>UnsafeCallOnNullableType:TokenService.kt:TokenService$target!!</ID>
+    <ID>UnsafeCallOnNullableType:UtbetalingClient.kt:UtbetalingClient$webClient .post() .header("Authorization", "Bearer $oboToken") .bodyValue(requestBody) .retrieve() .bodyToMono(object : ParameterizedTypeReference&lt;List&lt;Utbetaling&gt;&gt;() {}) .retryWhen(RetryPolicy.reactorRetrySpec(kilde = "UtbetalingHistorikk")) .block()!!</ID>
+    <ID>UnsafeCallOnNullableType:YtelseService.kt:YtelseService$type!!</ID>
+    <ID>UnusedParameter:Exceptions.kt:DefaultExceptionHandler$ex: NotImplementedError</ID>
+    <ID>UnusedParameter:PersonopplysningerService.kt:PersonopplysningerService$responsLog: Boolean = false</ID>
+    <ID>UnusedPrivateProperty:AAPController.kt:AAPController$private val aapClient: AapClient</ID>
+    <ID>UnusedPrivateProperty:OpenApiConfiguration.kt:OpenApiConfiguration$@Value("\${application.name:nav-persondata-api}") private lateinit var applicationName: String</ID>
+    <ID>UnusedPrivateProperty:WebClientConfig.kt:WebClientConfig$private val observationRegistry: ObservationRegistry</ID>
+    <ID>UseCheckOrError:BrukertilgangService.kt:BrukertilgangService$throw IllegalStateException("Fant ikke gyldig token")</ID>
+    <ID>UseCheckOrError:ModiaContextHolderClient.kt:ModiaContextHolderClient$throw IllegalStateException("Fant ikke gyldig token")</ID>
+    <ID>UseCheckOrError:SaksbehandlerService.kt:SaksbehandlerService$throw IllegalStateException("Fant ikke gyldig token")</ID>
+    <ID>UseCheckOrError:TokenService.kt:TokenService$throw IllegalStateException("Access token mangler i token-respons")</ID>
+    <ID>UseOrEmpty:ArbeidsforholdService.kt:ArbeidsforholdService$arbeidsforhold.timerMedTimeloenn ?.map { timer -&gt; ArbeidsgiverInformasjon.TimerMedTimeloennDto( antall = timer.antall, startdato = timer.startdato, sluttdato = timer.sluttdato, rapporteringsmaaneder = timer.rapporteringsmaaneder?.let { ArbeidsgiverInformasjon.Rapporteringsperiode(fom = it.fra, tom = it.til) }, ) } ?: emptyList()</ID>
+    <ID>UseOrEmpty:BrukertilgangService.kt:BrukertilgangService$token.jwtTokenClaims.get("groups") as? List&lt;String&gt; ?: emptyList()</ID>
+    <ID>UseOrEmpty:ExtentionFunctions.kt:inntektInformasjon.inntektListe ?: emptyList()</ID>
+    <ID>UseOrEmpty:ExtentionFunctions.kt:this.versjoner ?: emptyList()</ID>
+    <ID>UseOrEmpty:KodeverkClient.kt:KodeverkClient$webClient .get() .uri("/api/v1/kodeverk/Landkoder/koder/betydninger?spraak=nb") .header("Authorization", "Bearer $token") .retrieve() .bodyToMono&lt;KodeverkResponse&gt;() .doOnError { ex -&gt; log.error("Feil ved henting av landkoder fra kodeverk", ex) }.onErrorResume { _ -&gt; // Returner en tom respons dersom noe feiler Mono.just(KodeverkResponse(emptyMap())) }.block() // fortsatt blocking ?.let { response -&gt; log.info("Hentet landkoder (${response.betydninger.keys.size} stk)") response.betydninger.entries.mapNotNull { (kode, betydninger) -&gt; betydninger .firstOrNull() ?.beskrivelser ?.values ?.firstOrNull() ?.tekst ?.let { Landkode(kode, it) } } } ?: emptyList()</ID>
+    <ID>UseOrEmpty:KodeverkClient.kt:KodeverkClient$webClient .get() .uri("/api/v1/kodeverk/Postnummer/koder/betydninger?spraak=nb") .header("Authorization", "Bearer $token") .retrieve() .bodyToMono&lt;KodeverkResponse&gt;() .doOnError { ex -&gt; log.error("Feil ved henting av postnummer fra kodeverk", ex) }.onErrorResume { _ -&gt; // Returner en tom respons dersom noe feiler Mono.just(KodeverkResponse(emptyMap())) }.block() // fortsatt blocking ?.let { response -&gt; log.info("Hentet postnummer (${response.betydninger.values.size} stk)") response.betydninger.entries.mapNotNull { (kode, betydninger) -&gt; betydninger .firstOrNull() ?.beskrivelser ?.values ?.firstOrNull() ?.term ?.let { PostnummerOgPoststed(kode, it) } } } ?: emptyList()</ID>
+    <ID>UseOrEmpty:MeldekortService.kt:MeldekortService$aapClient .hentArbeidstimer(personIdent, utvidet) ?.alleTimerArbeidSegmenter() ?: emptyList()</ID>
+    <ID>UseOrEmpty:PersonopplysningerService.kt:PersonopplysningerService$pdlData.foedselsdato.firstOrNull()?.foedselsdato ?: ""</ID>
+    <ID>UseOrEmpty:RevisjonsloggService.kt:RevisjonsLogger$subject?.let { " duid=$it" } ?: ""</ID>
+    <ID>VarCouldBeVal:OpenApiConfiguration.kt:OpenApiConfiguration$@Value("\${application.name:nav-persondata-api}") private lateinit var applicationName: String</ID>
+    <ID>VariableNaming:AapClient.kt:AapClient$val antallÅr: Long = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:ArbeidsforholdService.kt:ArbeidsforholdService$val løpendeArbeidsforhold = alleArbeidsforhold .filter { it.ansettelsesperiode.sluttdato == null } .map { arbeidsforhold -&gt; mapArbeidsforholdTilArbeidsgiverData(arbeidsforhold, unikeOrganisasjonsnumre) }</ID>
+    <ID>VariableNaming:CacheAdminService.kt:CacheAdminService$private val cacherSomTømmesPåPersonFlush = setOf( "inntekt-historikk", "pensjonsgivende-inntekt", )</ID>
+    <ID>VariableNaming:CacheAdminService.kt:CacheAdminService$val tømteCacher = cacheManager.cacheNames .mapNotNull { name -&gt; cacheManager .getCache(name) ?.also { it.clear() } ?.let { name } }.sorted()</ID>
+    <ID>VariableNaming:DagpengerDatadelingClient.kt:DagpengerDatadelingClient$val antallÅr: Long = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:HistoriskeÅrService.kt:HistoriskeÅrService$val årListe = (0 until antallår).map { Year.now().minusYears(1).value - it }</ID>
+    <ID>VariableNaming:InntektService.kt:InntektService$val lønnsinntekt = inntektResponse.data ?.data .orEmpty() .flatMap { historikk -&gt; val arbeidsgiver = if (historikk.opplysningspliktig.matches("\\d{9}".toRegex())) { eregClient.hentOrganisasjon(historikk.opplysningspliktig) } else { null } var respons = historikk.versjoner .nyeste() ?.inntektListe ?.filterIsInstance&lt;Loennsinntekt&gt;() ?.map { loenn -&gt; InntektInformasjon.Lønnsdetaljer( arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn, periode = historikk.maaned, arbeidsforhold = "", stillingsprosent = "", lønnstype = loenn.beskrivelse, antall = loenn.antall, beløp = loenn.beloep, harFlereVersjoner = historikk.harHistorikkPåNormallønn(), ) }.orEmpty() if (respons.isEmpty() &amp;&amp; historikk.versjoner .eldste() ?.inntektListe ?.filterIsInstance&lt;Loennsinntekt&gt;() ?.isEmpty() == false ) { respons = listOf( InntektInformasjon.Lønnsdetaljer( arbeidsgiver = arbeidsgiver?.navn?.sammensattnavn, periode = historikk.maaned, arbeidsforhold = "", stillingsprosent = "", lønnstype = historikk.versjoner .eldste() ?.inntektListe ?.first() ?.type, antall = null, beløp = BigDecimal.ZERO, harFlereVersjoner = true, ), ) } respons }</ID>
+    <ID>VariableNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$val antallÅr = if (utvidet) 13 else 3</ID>
+    <ID>VariableNaming:PensjonsgivendeInntektService.kt:PensjonsgivendeInntektService$val årListe = HistoriskeÅrService().hentTidligereÅrEkskludertNåværende(antallÅr)</ID>
+    <ID>VariableNaming:PersonopplysningerService.kt:PersonopplysningerService$val fødselsdato = bolk ?.person ?.foedselsdato ?.firstOrNull() ?.foedselsdato</ID>
+    <ID>WildcardImport:RestApi.kt:import io.swagger.v3.oas.annotations.*</ID>
+    <ID>WildcardImport:RestApi.kt:import io.swagger.v3.oas.annotations.enums.*</ID>
+    <ID>WildcardImport:RestApi.kt:import io.swagger.v3.oas.annotations.media.*</ID>
+    <ID>WildcardImport:RestApi.kt:import io.swagger.v3.oas.annotations.responses.*</ID>
+    <ID>WildcardImport:RestApi.kt:import io.swagger.v3.oas.annotations.security.*</ID>
+    <ID>WildcardImport:RestApi.kt:import org.springframework.web.bind.annotation.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

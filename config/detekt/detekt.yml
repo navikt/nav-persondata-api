@@ -1,0 +1,29 @@
+# Detekt-konfigurasjon for nav-persondata-api.
+#
+# Bygger på detekt sin default-konfigurasjon (`buildUponDefaultConfig = true`
+# i build.gradle.kts) — vi overstyrer/presiserer kun reglene vi har et
+# bevisst forhold til her. Alt annet arves fra default.
+#
+# Bakgrunn: SonarCloud sin Kotlin-analysator mangler regler for bl.a.
+# non-null assertion (!!) og printStackTrace()-bruk. Detekt dekker begge.
+# Se Confluence: "nav-persondata-api — kodefunn og hvorfor Sonar ikke
+# fanget dem".
+
+potential-bugs:
+  UnsafeCallOnNullableType:
+    active: true
+
+exceptions:
+  PrintStackTrace:
+    active: true
+  SwallowedException:
+    active: true
+  TooGenericExceptionCaught:
+    active: true
+
+style:
+  # Kodebasen har allerede en god del lengre funksjoner (integrasjonsklienter
+  # med when-blokker for HTTP-statuskoder). Ikke la dette blokkere innføringen
+  # av detekt — kan strammes inn senere.
+  MaxLineLength:
+    active: false

@@ -92,7 +92,7 @@ fun Person.nåværendeBostedsadresse(): PersonInformasjon.Bostedsadresse? {
 
 fun List<Inntektsinformasjon>?.nyeste(): Inntektsinformasjon? = this?.maxByOrNull { it.oppsummeringstidspunkt }
 
-fun List<Inntektsinformasjon>?.eldste(): Inntektsinformasjon? = this?.minByOrNull { it.oppsummeringstidspunkt }!!
+fun List<Inntektsinformasjon>?.eldste(): Inntektsinformasjon? = this?.minByOrNull { it.oppsummeringstidspunkt }
 
 fun HistorikkData.harHistorikkPåNormallønn(): Boolean {
     val versjoner = this.versjoner ?: emptyList()

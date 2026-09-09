@@ -61,7 +61,10 @@ class TilgangService(
             }
 
             else -> {
-                data?.status ?: resultat.statusCode!!
+                // Faller tilbake til 500 (ikke NPE) dersom både data.status og
+                // resultat.statusCode mangler — en uventet klientfeil skal gi
+                // et forutsigbart feilsvar, ikke krasje kallet.
+                data?.status ?: resultat.statusCode ?: 500
             }
         }
     }
