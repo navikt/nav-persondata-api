@@ -14,7 +14,7 @@ caffeine = "3.2.3"
 mockk = "1.14.9"
 wiremock = "3.13.2"
 springdoc = "3.1.0"
-swagger = "2.2.52"
+swagger = "2.2.55"
 commons-lang3 = "3.20.0"
 detekt = "2.0.0-alpha.5"
 
