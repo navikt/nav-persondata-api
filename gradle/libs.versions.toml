@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.4.0"
-spring-boot = "4.1.0"
+spring-boot = "4.1.1"
 spring-dependency-management = "1.1.7"
 graphql-kotlin = "10.2.2"
 openapi-generator = "7.25.0"

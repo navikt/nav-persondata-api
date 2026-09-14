@@ -60,6 +60,11 @@ repositories {
     mavenCentral()
 }
 
+// Spring Boot 4.1.1 sin BOM styrer Tomcat til 11.0.24, som fortsatt er sårbar
+// for CVE-2026-65905, CVE-2026-65182 og CVE-2026-68525. Overstyrer til 11.0.25
+// (fikset versjon) inntil en Spring Boot-versjon med nyere Tomcat er tilgjengelig.
+extra["tomcat.version"] = "11.0.25"
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
