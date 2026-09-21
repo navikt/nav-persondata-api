@@ -242,7 +242,7 @@ dependencies {
     implementation(libs.graphql.spring.client)
 
     // Feature toggles
-    implementation("io.getunleash:unleash-client-java:12.2.2")
+    implementation("io.getunleash:unleash-client-java:12.3.0")
 
     // Swagger UI og OpenAPI-dokumentasjon
     implementation(libs.springdoc.openapi)
