@@ -70,6 +70,9 @@ class WebClientConfig(
     @Value("\${MODIA_CONTEXT_HOLDER_URL}")
     lateinit var modiaContextHolderUrl: String
 
+    @Value("\${KRR_URL}")
+    lateinit var krrUrl: String
+
     @Value("\${NORG2_URL}")
     lateinit var norg2URL: String
 
@@ -446,6 +449,25 @@ class WebClientConfig(
             .build()
 
     @Bean
+    @Qualifier("krrHttpClient")
+    fun krrHttpClient(): HttpClient = httpClientFor("krr")
+
+    @Bean
+    fun krrWebClient(
+        builder: WebClient.Builder,
+        navCallIdHeaderFilter: ExchangeFilterFunction,
+        @Qualifier("krrHttpClient") krrHttpClient: HttpClient,
+    ): WebClient =
+        builder
+            .baseUrl(krrUrl)
+            .defaultHeaders {
+                it.accept = listOf(MediaType.APPLICATION_JSON)
+                it.contentType = MediaType.APPLICATION_JSON
+            }.clientConnector(ReactorClientHttpConnector(krrHttpClient))
+            .filter(navCallIdHeaderFilter)
+            .build()
+
+    @Bean
     fun navCallIdHeaderFilter(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { req ->
             Mono.deferContextual { ctx ->
@@ -493,6 +515,13 @@ class WebClientConfig(
             "tilgang" to HttpClientKonfig(poolNavn = "tilgang-pool"),
             "kodeverk" to HttpClientKonfig(poolNavn = "kodeverk-pool"),
             "modia-context-holder" to HttpClientKonfig(poolNavn = "modia-context-holder-pool"),
+            "krr" to
+                HttpClientKonfig(
+                    poolNavn = "krr-pool",
+                    connectTimeout = Duration.ofSeconds(2),
+                    responseTimeout = Duration.ofSeconds(3),
+                    readTimeout = Duration.ofSeconds(3),
+                ),
             "token" to HttpClientKonfig(poolNavn = "token-pool"),
             "azure-token" to HttpClientKonfig(poolNavn = "azure-token-pool"),
             "dpDatadeling" to HttpClientKonfig(poolNavn = "dp-datadeling-pool"),

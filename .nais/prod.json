@@ -93,6 +93,14 @@
       "value": "http://modiacontextholder.personoversikt"
     },
     {
+      "name": "KRR_URL",
+      "value": "http://digdir-krr-proxy.team-rocket"
+    },
+    {
+      "name": "KRR_SCOPE",
+      "value": "api://prod-gcp.team-rocket.digdir-krr-proxy/.default"
+    },
+    {
       "name": "DP_DATADELING_URL",
       "value": "https://dp-datadeling.intern.nav.no"
     },

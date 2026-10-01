@@ -3,11 +3,11 @@ package no.nav.persondataapi.service
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
+import no.nav.persondataapi.integrasjon.krr.KrrClient
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
-import no.nav.persondataapi.tracelogging.traceLoggHvisAktivert
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -19,6 +19,7 @@ class PersonopplysningerService(
     private val brukertilgangService: BrukertilgangService,
     private val kodeverkService: KodeverkService,
     private val navTilhørighetService: NavTilhørighetService,
+    private val krrClient: KrrClient,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -34,19 +35,8 @@ class PersonopplysningerService(
         // Hent person fra PDL
         val pdlResponse = pdlClient.hentPerson(personIdent)
         val lokalKontor = navTilhørighetService.finnLokalKontorForPersonIdent(personIdent)
-        traceLoggHvisAktivert(
-            logger = logger,
-            kilde = "PDL hentPerson",
-            personIdent = personIdent,
-            unit = pdlResponse,
-        )
-        traceLoggHvisAktivert(
-            logger = logger,
-            kilde = "PDL lokalKontor",
-            personIdent = personIdent,
-            unit = lokalKontor,
-        )
-        logger.info("Hentet personopplysninger for $personIdent, status ${pdlResponse.statusCode}")
+        // Ikke logg PDL-respons, fødselsnummer eller lokal tilhørighet, heller ikke ved trace-header.
+        logger.info("Hentet personopplysninger fra PDL, status ${pdlResponse.statusCode}")
 
         // Håndter feil fra PdlClient
         when (pdlResponse.statusCode) {
@@ -101,12 +91,13 @@ class PersonopplysningerService(
         // Berik med kodeverkdata
         var beriketPersonopplysninger = berikMedKodeverkData(personopplysninger)
 
-        logger.info("Hentet og mappet personopplysninger for $personIdent")
+        logger.info("Hentet og mappet personopplysninger")
 
-        if (!brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            logger.info(
-                "Saksbehandler har ikke tilgang til å hente personopplysninger for $personIdent. Maskerer responsen",
-            )
+        // RØD SONE: Ikke slå opp KRR før tilgang til denne personen er verifisert.
+        if (brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
+            beriketPersonopplysninger = beriketPersonopplysninger.copy(epost = krrClient.hentEpost(personIdent))
+        } else {
+            logger.info("Saksbehandler mangler full tilgang til personopplysninger. Maskerer responsen")
             beriketPersonopplysninger = maskerObjekt(beriketPersonopplysninger)
         }
 

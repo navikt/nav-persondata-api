@@ -11,6 +11,8 @@ data class PersonInformasjon(
     val adresse: Bostedsadresse? = null,
     val adresseHistorikk: List<HistoriskAdresse> = emptyList(),
     val telefonnummer: List<Telefonnummer> = emptyList(),
+    @Maskert
+    val epost: String? = null,
     val sivilstand: String? = null,
     val alder: Int,
     val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,

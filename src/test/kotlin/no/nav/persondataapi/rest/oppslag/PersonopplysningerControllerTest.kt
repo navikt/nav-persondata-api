@@ -36,6 +36,7 @@ class PersonopplysningerControllerTest {
             statsborgerskap = listOf("Norge"),
             navn = PersonInformasjon.Navn(fornavn = "Ola", mellomnavn = null, etternavn = "Nordmann"),
             adresse = null,
+            epost = "syntetisk@example.com",
             sivilstand = null,
             alder = 40,
             adressebeskyttelse = PersonInformasjon.Skjerming.UGRADERT,
@@ -61,6 +62,7 @@ class PersonopplysningerControllerTest {
             assertEquals("11111111111", personInfo.familemedlemmer[0].ident)
             assertEquals("BARN", personInfo.familemedlemmer[0].rolle)
             assertEquals("Liten", personInfo.familemedlemmer[0].fornavn)
+            assertEquals("syntetisk@example.com", personInfo.epost)
         }
 
     @Test

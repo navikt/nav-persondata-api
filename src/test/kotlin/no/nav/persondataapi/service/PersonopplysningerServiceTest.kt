@@ -4,6 +4,7 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.enums.ForelderBarnRelasjonRolle
@@ -18,6 +19,7 @@ import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentperson.Sivilstand
 import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
+import no.nav.persondataapi.integrasjon.krr.KrrClient
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
@@ -40,6 +42,7 @@ class PersonopplysningerServiceTest {
     val pdlClient = mockk<PdlClient>()
     val kodeverkService = mockk<KodeverkService>()
     val navTilhørigetService = mockk<NavTilhørighetService>()
+    val krrClient = mockk<KrrClient>()
 
     private fun lagServiceMedStandardMocks(
         harTilgang: Boolean = true,
@@ -71,9 +74,59 @@ class PersonopplysningerServiceTest {
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
         coEvery { pdlClient.hentPersonBolk(any()) } returns bolkResultat
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent(any()) } returns lokalKontor
+        every { krrClient.hentEpost(any()) } returns null
 
-        return PersonopplysningerService(pdlClient, brukertilgangService, kodeverkService, navTilhørigetService)
+        return PersonopplysningerService(
+            pdlClient,
+            brukertilgangService,
+            kodeverkService,
+            navTilhørigetService,
+            krrClient,
+        )
     }
+
+    @Test
+    fun `e-post fra KRR vises kun når saksbehandler har tilgang`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service = lagServiceMedStandardMocks(personResultat = PersonDataResultat(person, 200, null))
+            every { krrClient.hentEpost(any()) } returns "syntetisk@example.com"
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            assertEquals("syntetisk@example.com", (resultat as PersonopplysningerResultat.Success).data.epost)
+            verify(exactly = 1) { krrClient.hentEpost(any()) }
+        }
+
+    @Test
+    fun `e-post fra KRR hentes ikke når saksbehandler mangler tilgang til person`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service =
+                lagServiceMedStandardMocks(
+                    harTilgang = false,
+                    personResultat = PersonDataResultat(person, 200, null),
+                )
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            assertNull((resultat as PersonopplysningerResultat.Success).data.epost)
+            verify(exactly = 0) { krrClient.hentEpost(any()) }
+        }
+
+    @Test
+    fun `personoppslag virker når KRR ikke har e-post`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service = lagServiceMedStandardMocks(personResultat = PersonDataResultat(person, 200, null))
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertTrue(resultat is PersonopplysningerResultat.Success)
+            assertNull((resultat as PersonopplysningerResultat.Success).data.epost)
+        }
 
     @Test
     fun `skal ikke maskere navn, men skal maskere geolokaliserende informasjon når saksbehandler ikke har tilgang`() =
