@@ -3,7 +3,10 @@ package no.nav.persondataapi.rest.oppslag
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.swagger.v3.core.converter.ModelConverters
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.konfigurasjon.JsonUtils
 import no.nav.persondataapi.rest.domene.PersonIdent
 import no.nav.persondataapi.rest.domene.PersonInformasjon
 import no.nav.persondataapi.rest.domene.PersonInformasjonV1Dto
@@ -13,6 +16,8 @@ import no.nav.persondataapi.unleash.FeatureToggleService
 import no.nav.persondataapi.unleash.Toggle
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
@@ -80,6 +85,29 @@ class PersonopplysningerControllerTest {
             val v1Dto = data as PersonInformasjonV1Dto
             assertEquals(mapOf("11111111111" to "BARN"), v1Dto.familemedlemmer)
         }
+
+    @Test
+    fun `OpenAPI beskriver e-post i nytt responsformat og viser 200-eksempel`() {
+        val metode =
+            PersonopplysningerController::class.java.getMethod(
+                "hentPersonopplysninger",
+                OppslagRequestDto::class.java,
+                String::class.java,
+            )
+        val respons = metode.getAnnotation(ApiResponses::class.java).value.single { it.responseCode == "200" }
+        val innhold = respons.content.single()
+
+        assertTrue(innhold.schema.oneOf.contains(PersonopplysningerResponsV2Dokumentasjon::class))
+        assertTrue(innhold.schema.oneOf.contains(PersonopplysningerResponsV1Dokumentasjon::class))
+        val nyttEksempel = JsonUtils.mapper.readTree(innhold.examples.first { it.name.contains("KRR") }.value)
+        assertEquals("syntetisk@example.com", nyttEksempel["data"]["epost"].stringValue())
+        val gammeltEksempel = JsonUtils.mapper.readTree(innhold.examples.first { it.name.contains("Gammelt") }.value)
+        assertEquals(false, gammeltEksempel["data"].has("epost"))
+        val skjemaer = ModelConverters.getInstance().readAll(PersonopplysningerResponsV2Dokumentasjon::class.java)
+        val personSkjema = skjemaer.values.firstOrNull { it.properties?.containsKey("epost") == true }
+        assertNotNull(personSkjema)
+        assertEquals(true, personSkjema?.properties?.get("epost")?.nullable)
+    }
 
     @Test
     fun `returnerer 403 ved IngenTilgang uavhengig av feature-flagg`() =

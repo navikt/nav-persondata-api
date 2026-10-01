@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import no.nav.persondataapi.responstracing.LOGG_HEADER
+import no.nav.persondataapi.rest.domene.PersonInformasjon
+import no.nav.persondataapi.rest.domene.PersonInformasjonV1Dto
 import no.nav.persondataapi.rest.domene.tilV1Format
 import no.nav.persondataapi.service.PersonopplysningerResultat
 import no.nav.persondataapi.service.PersonopplysningerService
@@ -52,15 +54,26 @@ class PersonopplysningerController(
         value = [
             ApiResponse(
                 responseCode = "200",
-                description = "Personopplysninger hentet",
+                description = "Personopplysninger. E-post kun i nytt format når 1.2-flagget er på.",
                 content = [
                     Content(
-                        schema = Schema(implementation = OppslagResponseDto::class),
+                        schema =
+                            Schema(
+                                oneOf = [
+                                    PersonopplysningerResponsV1Dokumentasjon::class,
+                                    PersonopplysningerResponsV2Dokumentasjon::class,
+                                ],
+                            ),
                         examples = [
                             ExampleObject(
-                                name = "Vellykket respons",
+                                name = "Nytt responsformat med KRR-e-post",
                                 value =
-                                    """{"data": {"navn": "Ola Nordmann"}, "error": null}""",
+                                    """{"data":{"aktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"epost":"syntetisk@example.com"},"error":null}""",
+                            ),
+                            ExampleObject(
+                                name = "Gammelt responsformat uten e-post",
+                                value =
+                                    """{"data":{"aktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"familemedlemmer":{}},"error":null}""",
                             ),
                         ],
                     ),
@@ -133,3 +146,16 @@ class PersonopplysningerController(
             }
         }
 }
+
+/** OpenAPI-varianter for den eksisterende OppslagResponseDto-responsen. */
+@Schema(name = "PersonopplysningerResponsV1")
+data class PersonopplysningerResponsV1Dokumentasjon(
+    val data: PersonInformasjonV1Dto,
+    val error: String? = null,
+)
+
+@Schema(name = "PersonopplysningerResponsV2")
+data class PersonopplysningerResponsV2Dokumentasjon(
+    val data: PersonInformasjon,
+    val error: String? = null,
+)
