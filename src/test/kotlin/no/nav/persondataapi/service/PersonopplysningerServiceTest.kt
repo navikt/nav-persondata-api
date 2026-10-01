@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
+import no.nav.persondataapi.adressebeskyttelse.lagAdressebeskyttelse
 import no.nav.persondataapi.generated.pdl.enums.AdressebeskyttelseGradering
 import no.nav.persondataapi.generated.pdl.enums.ForelderBarnRelasjonRolle
 import no.nav.persondataapi.generated.pdl.enums.Sivilstandstype
@@ -114,6 +115,32 @@ class PersonopplysningerServiceTest {
             assertTrue(resultat is PersonopplysningerResultat.Success)
             assertNull((resultat as PersonopplysningerResultat.Success).data.epost)
             verify(exactly = 0) { krrClient.hentEpost(any()) }
+        }
+
+    @Test
+    fun `e-post hentes ikke ved kode 6 og 7 når saksbehandler mangler persontilgang`() =
+        runBlocking {
+            for (gradering in listOf(
+                AdressebeskyttelseGradering.FORTROLIG,
+                AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+            )) {
+                val person =
+                    lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+                        .copy(adressebeskyttelse = listOf(lagAdressebeskyttelse(gradering, historisk = false)))
+                val service =
+                    lagServiceMedStandardMocks(
+                        harTilgang = false,
+                        personResultat = PersonDataResultat(person, 200, null),
+                    )
+
+                val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+                assertTrue(resultat is PersonopplysningerResultat.Success)
+                val data = (resultat as PersonopplysningerResultat.Success).data
+                assertEquals(gradering.name, data.adressebeskyttelse.name)
+                assertNull(data.epost)
+                verify(exactly = 0) { krrClient.hentEpost(any()) }
+            }
         }
 
     @Test

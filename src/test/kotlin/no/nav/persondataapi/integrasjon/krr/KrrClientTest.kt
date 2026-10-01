@@ -13,12 +13,15 @@ import no.nav.security.token.support.core.jwt.JwtToken
 import no.nav.security.token.support.core.jwt.JwtTokenClaims
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.ExchangeFunction
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 class KrrClientTest {
     private val ident = PersonIdent("12345678901")
@@ -71,6 +74,25 @@ class KrrClientTest {
         assertEquals("syntetisk@example.com", client.hentEpost(ident))
         verify(exactly = 1) { exchange.exchange(any()) }
         assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "funnet").count())
+        val varighet = registry.find("personopplysninger_krr_epost_varighet").tags("resultat", "funnet").timer()
+        assertEquals(1L, varighet?.count())
+        assertTrue(varighet!!.totalTime(TimeUnit.NANOSECONDS) > 0)
+        assertEquals(
+            setOf("resultat"),
+            varighet.id.tags
+                .map { it.key }
+                .toSet(),
+        )
+    }
+
+    @Test
+    fun `henter e-post uten reservasjonsfelt og fjerner blanke tegn rundt adressen`() {
+        val (client, _) =
+            klient(
+                """{"personer":{"12345678901":{"personident":"12345678901","aktiv":true,"epostadresse":" syntetisk@example.com "}}}""",
+            )
+
+        assertEquals("syntetisk@example.com", client.hentEpost(ident))
     }
 
     @Test
@@ -85,6 +107,28 @@ class KrrClientTest {
                 """{"personer":{"12345678901":{"personident":"12345678901","aktiv":false,"reservert":false,"epostadresse":"syntetisk@example.com"}}}""",
             )
         assertNull(inaktiv.hentEpost(ident))
+        assertEquals(2.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "ikke_funnet").count())
+        assertEquals(
+            2L,
+            registry
+                .find("personopplysninger_krr_epost_varighet")
+                .tags("resultat", "ikke_funnet")
+                .timer()
+                ?.count(),
+        )
+    }
+
+    @Test
+    fun `skjuler manglende, tom eller blank e-post og tom personliste`() {
+        val svar =
+            listOf(
+                """{"personer":{"12345678901":{"personident":"12345678901","aktiv":true}}}""",
+                """{"personer":{"12345678901":{"personident":"12345678901","aktiv":true,"epostadresse":""}}}""",
+                """{"personer":{"12345678901":{"personident":"12345678901","aktiv":true,"epostadresse":"   "}}}""",
+                """{"personer":{}}""",
+            )
+        svar.forEach { assertNull(klient(it).first.hentEpost(ident)) }
+        assertEquals(4.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "ikke_funnet").count())
     }
 
     @Test
@@ -107,6 +151,52 @@ class KrrClientTest {
 
         assertNull(client.hentEpost(ident))
         assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "feil").count())
+        assertEquals(
+            1L,
+            registry
+                .find("personopplysninger_krr_epost_varighet")
+                .tags("resultat", "feil")
+                .timer()
+                ?.count(),
+        )
+    }
+
+    @Test
+    fun `tokenutveksling og nettverkstimeout feiler uten å vise e-post`() {
+        val (tokenFeil, tokenExchange) = klient("""{}""")
+        every { tokenService.exchangeToken(any(), SCOPE.KRR_SCOPE) } throws IllegalStateException("syntetisk feil")
+        assertNull(tokenFeil.hentEpost(ident))
+        verify(exactly = 0) { tokenExchange.exchange(any()) }
+
+        val (nettverksFeil, nettverksExchange) = klient("""{}""")
+        every { nettverksExchange.exchange(any()) } returns Mono.error(TimeoutException("syntetisk tidsavbrudd"))
+        assertNull(nettverksFeil.hentEpost(ident))
+        assertEquals(2.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "feil").count())
+        assertEquals(
+            2L,
+            registry
+                .find("personopplysninger_krr_epost_varighet")
+                .tags("resultat", "feil")
+                .timer()
+                ?.count(),
+        )
+    }
+
+    @Test
+    fun `uventet tom respons fra KRR gir ingen e-post og telles som feil`() {
+        val (client, _) = klient("", HttpStatus.NO_CONTENT)
+
+        assertNull(client.hentEpost(ident))
+        assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "feil").count())
+    }
+
+    @Test
+    fun `204 uten body gir ingen e-post`() {
+        val (client, exchange) = klient("""{}""")
+        every { exchange.exchange(any()) } returns Mono.just(ClientResponse.create(HttpStatus.NO_CONTENT).build())
+
+        assertNull(client.hentEpost(ident))
+        assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "ikke_funnet").count())
     }
 
     @Test
@@ -118,6 +208,40 @@ class KrrClientTest {
         assertNull(client.hentEpost(ident))
         verify(exactly = 0) { tokenService.exchangeToken(any(), any()) }
         verify(exactly = 0) { exchange.exchange(any()) }
+        assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "uten_bruker").count())
+        assertEquals(
+            1L,
+            registry
+                .find("personopplysninger_krr_epost_varighet")
+                .tags("resultat", "uten_bruker")
+                .timer()
+                ?.count(),
+        )
+    }
+
+    @Test
+    fun `NAVident med feil datatype kan ikke hente KRR-e-post`() {
+        val (client, exchange) = klient("""{}""")
+        val token = contextHolder.getTokenValidationContext().firstValidToken!!
+        every { token.jwtTokenClaims.get("NAVident") } returns 123
+
+        assertNull(client.hentEpost(ident))
+        verify(exactly = 0) { tokenService.exchangeToken(any(), any()) }
+        verify(exactly = 0) { exchange.exchange(any()) }
+    }
+
+    @Test
+    fun `tom NAVident og manglende tokenkontekst kan ikke hente KRR-e-post`() {
+        val (tomIdent, exchange) = klient("""{}""")
+        val token = contextHolder.getTokenValidationContext().firstValidToken!!
+        every { token.jwtTokenClaims.get("NAVident") } returns " "
+        assertNull(tomIdent.hentEpost(ident))
+        verify(exactly = 0) { exchange.exchange(any()) }
+
+        val (manglerKontekst, _) = klient("""{}""")
+        every { contextHolder.getTokenValidationContext() } throws IllegalStateException("ingen tokenkontekst")
+        assertNull(manglerKontekst.hentEpost(ident))
+        assertEquals(1.0, registry.counter("personopplysninger_krr_epost_oppslag", "resultat", "feil").count())
     }
 
     @Test
