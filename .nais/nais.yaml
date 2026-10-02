@@ -88,6 +88,9 @@ spec:
           namespace: nais-system
         - application: kodeverk-api
           namespace: team-rocket
+        - application: digdir-krr-proxy
+          namespace: team-rocket
+          cluster: {{GCP_CLUSTER}}
         - application: modiacontextholder
           namespace: personoversikt
         - application: dp-datadeling

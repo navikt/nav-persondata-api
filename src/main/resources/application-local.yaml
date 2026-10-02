@@ -81,6 +81,9 @@ KODEVERK_SCOPE: api://dev-gcp.team-rocket.kodeverk-api/.default
 MODIA_CONTEXT_HOLDER_URL: http://localhost:${WIREMOCK_PORT:7164}
 MODIA_CONTEXT_HOLDER_SCOPE: api://dev-gcp.personoversikt.modiacontextholder/.default
 
+KRR_URL: http://localhost:${WIREMOCK_PORT:7164}
+KRR_SCOPE: api://dev-gcp.team-rocket.digdir-krr-proxy/.default
+
 NORG2_URL: http://localhost:${WIREMOCK_PORT:7164}
 
 DP_DATADELING_URL: http://localhost:${WIREMOCK_PORT:7164}

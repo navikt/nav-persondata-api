@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest.oppslag
 
+import no.nav.persondataapi.rest.domene.PersonInformasjon
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
@@ -66,6 +67,20 @@ class MaskeringUtilTest {
 
         assertEquals("*******", maskertPerson.navn)
         assertEquals(30, maskertPerson.alder)
+    }
+
+    @Test
+    fun `skal maskere e-post i personinformasjon dersom responsen maskeres`() {
+        val person =
+            PersonInformasjon(
+                aktørId = null,
+                navn = PersonInformasjon.Navn("Ola", null, "Testesen"),
+                fødselsdato = "2000-01-01",
+                alder = 26,
+                epost = "syntetisk@example.com",
+            )
+
+        assertEquals("*******", maskerObjekt(person).epost)
     }
 
     @Test

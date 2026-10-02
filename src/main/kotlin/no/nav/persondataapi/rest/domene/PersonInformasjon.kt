@@ -1,5 +1,6 @@
 package no.nav.persondataapi.rest.domene
 
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.persondataapi.rest.oppslag.Maskert
 import no.nav.persondataapi.rest.oppslag.maskerObjekt
 
@@ -11,6 +12,14 @@ data class PersonInformasjon(
     val adresse: Bostedsadresse? = null,
     val adresseHistorikk: List<HistoriskAdresse> = emptyList(),
     val telefonnummer: List<Telefonnummer> = emptyList(),
+    @Maskert
+    @field:Schema(
+        description = "E-post fra KRR. Null ved reservasjon, inaktiv informasjon, manglende tilgang eller feil.",
+        nullable = true,
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+        example = "syntetisk@example.com",
+    )
+    val epost: String? = null,
     val sivilstand: String? = null,
     val alder: Int,
     val adressebeskyttelse: Skjerming = Skjerming.UGRADERT,

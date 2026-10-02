@@ -109,6 +109,14 @@
       "value": "http://modiacontextholder.personoversikt"
     },
     {
+      "name": "KRR_URL",
+      "value": "http://digdir-krr-proxy.team-rocket"
+    },
+    {
+      "name": "KRR_SCOPE",
+      "value": "api://dev-gcp.team-rocket.digdir-krr-proxy/.default"
+    },
+    {
       "name": "NORG2_URL",
       "value": "https://norg2.dev-fss-pub.nais.io/norg2"
     },
