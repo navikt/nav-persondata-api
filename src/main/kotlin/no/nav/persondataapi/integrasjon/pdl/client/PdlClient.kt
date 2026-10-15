@@ -2,9 +2,11 @@ package no.nav.persondataapi.integrasjon.pdl.client
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
+import no.nav.persondataapi.generated.pdl.HentAktorId
 import no.nav.persondataapi.generated.pdl.HentGeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.HentPerson
 import no.nav.persondataapi.generated.pdl.HentPersonBolk
+import no.nav.persondataapi.generated.pdl.enums.IdentGruppe
 import no.nav.persondataapi.generated.pdl.hentgeografisktilknytning.GeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.hentperson.Person
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
@@ -17,6 +19,7 @@ import no.nav.persondataapi.service.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -27,6 +30,45 @@ class PdlClient(
     private val graphQLClient: GraphQLWebClient,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+
+    suspend fun hentPdlAktorId(personIdent: PersonIdent): AktorIdResultat {
+        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
+        val query = HentAktorId(HentAktorId.Variables(ident = personIdent.value))
+        val startedAt = System.nanoTime()
+        return try {
+            val response =
+                coroutineRetry(kilde = "PDL-HentAktørId") {
+                    graphQLClient.execute(query) {
+                        header("Authorization", "Bearer $token")
+                        header(BEHANDLINGSNUMMER, BEHANDLINGSNUMMER_VERDI)
+                        header(TEMA, TEMA_VERDI)
+                    }
+                }
+            val errors = response.errors.orEmpty()
+            if (errors.isNotEmpty()) {
+                metrics.counter("HentAktørId", DownstreamResult.SERVER_ERROR).increment()
+                AktorIdResultat(null, HttpStatus.INTERNAL_SERVER_ERROR.value())
+            } else {
+                val pdlAktorId =
+                    response.data
+                        ?.hentIdenter
+                        ?.identer
+                        ?.firstOrNull { it.gruppe == IdentGruppe.AKTORID && !it.historisk }
+                        ?.ident
+                metrics.counter("HentAktørId", DownstreamResult.SUCCESS).increment()
+                AktorIdResultat(pdlAktorId, HttpStatus.OK.value())
+            }
+        } catch (e: Exception) {
+            metrics.counter("HentAktørId", DownstreamResult.UNEXPECTED).increment()
+            log.error("Uventet feil mot PDL (HentAktørId), exceptionType={}", e.javaClass.simpleName)
+            AktorIdResultat(null, HttpStatus.INTERNAL_SERVER_ERROR.value())
+        } finally {
+            metrics.timer("HentAktørId").record(
+                System.nanoTime() - startedAt,
+                java.util.concurrent.TimeUnit.NANOSECONDS,
+            )
+        }
+    }
 
     @Cacheable(
         value = ["pdl-person"],
@@ -251,6 +293,11 @@ data class PersonDataResultat(
     val data: Person?,
     val statusCode: Int, // f.eks. 200, 401, 500
     val errorMessage: String? = null,
+)
+
+data class AktorIdResultat(
+    val aktorId: String?,
+    val statusCode: Int,
 )
 
 data class GeografiskTilknytningResultat(

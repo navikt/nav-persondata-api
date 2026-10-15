@@ -2,6 +2,7 @@ package no.nav.persondataapi.service
 
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -22,6 +23,7 @@ import no.nav.persondataapi.generated.pdl.hentperson.Statsborgerskap
 import no.nav.persondataapi.generated.pdl.hentpersonbolk.HentPersonBolkResult
 import no.nav.persondataapi.integrasjon.krr.KrrClient
 import no.nav.persondataapi.integrasjon.norg2.client.NavLokalKontor
+import no.nav.persondataapi.integrasjon.pdl.client.AktorIdResultat
 import no.nav.persondataapi.integrasjon.pdl.client.GeografiskTilknytningResultat
 import no.nav.persondataapi.integrasjon.pdl.client.PdlClient
 import no.nav.persondataapi.integrasjon.pdl.client.PersonBolkResultat
@@ -72,6 +74,7 @@ class PersonopplysningerServiceTest {
 
         every { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns harTilgang
         coEvery { pdlClient.hentPerson(any()) } returns personResultat
+        coEvery { pdlClient.hentPdlAktorId(any()) } returns AktorIdResultat(null, 200)
         coEvery { pdlClient.hentGeografiskTilknytning(any()) } returns geoResultat
         coEvery { pdlClient.hentPersonBolk(any()) } returns bolkResultat
         coEvery { navTilhørigetService.finnLokalKontorForPersonIdent(any()) } returns lokalKontor
@@ -98,6 +101,23 @@ class PersonopplysningerServiceTest {
             assertTrue(resultat is PersonopplysningerResultat.Success)
             assertEquals("syntetisk@example.com", (resultat as PersonopplysningerResultat.Success).data.epost)
             verify(exactly = 1) { krrClient.hentEpost(any()) }
+        }
+
+    @Test
+    fun `PDL-aktør-ID hentes bare når saksbehandler har full tilgang`() =
+        runBlocking {
+            val person = lagPerson(fornavn = "Ola", etternavn = "Testesen", foedselsdato = "2000-01-01")
+            val service = lagServiceMedStandardMocks(personResultat = PersonDataResultat(person, 200, null))
+            coEvery { pdlClient.hentPdlAktorId(any()) } returns AktorIdResultat("1234567890123", 200)
+
+            val resultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertEquals("1234567890123", (resultat as PersonopplysningerResultat.Success).data.pdlAktørId)
+            coEvery { brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(any()) } returns false
+            val maskertResultat = service.hentPersonopplysningerForPerson(PersonIdent("12345678901"))
+
+            assertNull((maskertResultat as PersonopplysningerResultat.Success).data.pdlAktørId)
+            coVerify(exactly = 1) { pdlClient.hentPdlAktorId(any()) }
         }
 
     @Test

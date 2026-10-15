@@ -68,12 +68,12 @@ class PersonopplysningerController(
                             ExampleObject(
                                 name = "Nytt responsformat med KRR-e-post",
                                 value =
-                                    """{"data":{"aktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"epost":"syntetisk@example.com"},"error":null}""",
+                                    """{"data":{"aktørId":null,"pdlAktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"epost":"syntetisk@example.com"},"error":null}""",
                             ),
                             ExampleObject(
                                 name = "Gammelt responsformat uten e-post",
                                 value =
-                                    """{"data":{"aktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"familemedlemmer":{}},"error":null}""",
+                                    """{"data":{"aktørId":null,"pdlAktørId":null,"navn":{"fornavn":"Ola","mellomnavn":null,"etternavn":"Testesen"},"fødselsdato":"2000-01-01","alder":26,"familemedlemmer":{}},"error":null}""",
                             ),
                         ],
                     ),

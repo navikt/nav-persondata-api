@@ -118,6 +118,63 @@ class PdlClientTest {
         }
 
     @Test
+    fun `hentAktørId henter gjeldende aktør-ID fra identgruppen AKTORID`() =
+        runBlocking {
+            wireMock.stubFor(
+                post(urlPathEqualTo("/graphql"))
+                    .willReturn(
+                        aResponse()
+                            .withStatus(200)
+                            .withHeader("Content-Type", "application/json")
+                            .withBody(
+                                """
+                                {
+                                  "data": {
+                                    "hentIdenter": {
+                                      "identer": [
+                                        {"ident": "1234567890123", "gruppe": "AKTORID", "historisk": false},
+                                        {"ident": "9876543210123", "gruppe": "AKTORID", "historisk": true}
+                                      ]
+                                    }
+                                  }
+                                }
+                                """.trimIndent(),
+                            ),
+                    ),
+            )
+
+            val resultat =
+                PdlClient(tokenService, metrics, pdlGraphQLClient())
+                    .hentPdlAktorId(PersonIdent("12345678901"))
+
+            assertEquals(200, resultat.statusCode)
+            assertEquals("1234567890123", resultat.aktorId)
+        }
+
+    @Test
+    fun `hentAktørId returnerer tomt resultat ved PDL-feil uten å eksponere feiltekst`() =
+        runBlocking {
+            wireMock.stubFor(
+                post(urlPathEqualTo("/graphql"))
+                    .willReturn(
+                        aResponse()
+                            .withStatus(200)
+                            .withHeader("Content-Type", "application/json")
+                            .withBody(
+                                """{"errors":[{"message":"personident skal ikke logges","extensions":{"code":"internal_error"}}]}""",
+                            ),
+                    ),
+            )
+
+            val resultat =
+                PdlClient(tokenService, metrics, pdlGraphQLClient())
+                    .hentPdlAktorId(PersonIdent("12345678901"))
+
+            assertEquals(500, resultat.statusCode)
+            assertEquals(null, resultat.aktorId)
+        }
+
+    @Test
     fun `hentPersonBolk skal returnere 502 når PDL returnerer null data`() =
         runBlocking {
             wireMock.stubFor(
