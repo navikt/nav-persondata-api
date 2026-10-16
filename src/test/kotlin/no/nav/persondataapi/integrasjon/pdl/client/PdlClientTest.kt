@@ -16,6 +16,7 @@ import no.nav.persondataapi.service.SCOPE
 import no.nav.persondataapi.service.TokenService
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -173,6 +174,32 @@ class PdlClientTest {
             assertEquals(500, resultat.statusCode)
             assertEquals(null, resultat.aktorId)
         }
+
+    @Test
+    fun `hentAktørId returnerer tomt resultat når tjenestetoken ikke kan hentes`() {
+        every { tokenService.getServiceToken(SCOPE.PDL_SCOPE) } throws IllegalStateException("token service failed")
+
+        val resultat =
+            runBlocking {
+                PdlClient(tokenService, metrics, pdlGraphQLClient())
+                    .hentPdlAktorId(PersonIdent("12345678901"))
+            }
+
+        assertEquals(500, resultat.statusCode)
+        assertEquals(null, resultat.aktorId)
+    }
+
+    @Test
+    fun `hentAktørId ikke svelger coroutine cancellation`() {
+        every { tokenService.getServiceToken(SCOPE.PDL_SCOPE) } throws kotlinx.coroutines.CancellationException()
+
+        assertThrows(kotlinx.coroutines.CancellationException::class.java) {
+            runBlocking {
+                PdlClient(tokenService, metrics, pdlGraphQLClient())
+                    .hentPdlAktorId(PersonIdent("12345678901"))
+            }
+        }
+    }
 
     @Test
     fun `hentPersonBolk skal returnere 502 når PDL returnerer null data`() =

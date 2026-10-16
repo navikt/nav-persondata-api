@@ -2,6 +2,7 @@ package no.nav.persondataapi.integrasjon.pdl.client
 
 import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
+import kotlinx.coroutines.CancellationException
 import no.nav.persondataapi.generated.pdl.HentAktorId
 import no.nav.persondataapi.generated.pdl.HentGeografiskTilknytning
 import no.nav.persondataapi.generated.pdl.HentPerson
@@ -32,10 +33,10 @@ class PdlClient(
     private val log = LoggerFactory.getLogger(javaClass)
 
     suspend fun hentPdlAktorId(personIdent: PersonIdent): AktorIdResultat {
-        val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
         val query = HentAktorId(HentAktorId.Variables(ident = personIdent.value))
         val startedAt = System.nanoTime()
         return try {
+            val token = tokenService.getServiceToken(SCOPE.PDL_SCOPE)
             val response =
                 coroutineRetry(kilde = "PDL-HentAktørId") {
                     graphQLClient.execute(query) {
@@ -58,6 +59,8 @@ class PdlClient(
                 metrics.counter("HentAktørId", DownstreamResult.SUCCESS).increment()
                 AktorIdResultat(pdlAktorId, HttpStatus.OK.value())
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             metrics.counter("HentAktørId", DownstreamResult.UNEXPECTED).increment()
             log.error("Uventet feil mot PDL (HentAktørId), exceptionType={}", e.javaClass.simpleName)
