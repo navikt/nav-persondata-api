@@ -21,6 +21,14 @@
     "EXTENDED": {
       "id": "a1d74637-a6fc-41a9-9277-f368ee6745b3",
       "name": "0000-GA-kontroll-Oppslag-Bruker-Utvidet"
+    },
+    "WATSON": {
+      "id": "3d001f08-dde6-4093-b10d-da4569b9d178",
+      "name": "0000-CA-kontroll-Watson"
+    },
+    "WATSON_LEDER": {
+      "id": "450df3a0-0fc2-4b4c-a7f3-d9caa48fd0fd",
+      "name": "0000-CA-kontroll-Watson-Leder"
     }
   },
   "ENVS": [
