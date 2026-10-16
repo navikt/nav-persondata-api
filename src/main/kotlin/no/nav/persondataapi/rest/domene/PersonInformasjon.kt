@@ -27,6 +27,13 @@ data class PersonInformasjon(
     val dødsdato: String? = null,
     val navKontor: NavKontor? = null,
     val historiskeIdenter: List<HistoriskIdent> = emptyList(),
+    @field:Schema(
+        description = "Aktør-ID fra PDL. Returneres bare når kalleren har full tilgang.",
+        nullable = true,
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+    )
+    @Suppress("ConstructorParameterNaming")
+    val pdlAktørId: String? = null,
 ) {
     data class Familiemedlem(
         val ident: String,

@@ -137,7 +137,7 @@ detekt {
 tasks.withType<dev.detekt.gradle.Detekt>().configureEach {
     // Generert kode (GraphQL-klienter, OpenAPI-modeller) regenereres på hvert
     // bygg og eies ikke av oss — samme eksklusjon som sonar.exclusions.
-    exclude("**/build/generated/**", "**/build/generate-resources/**")
+    exclude("**/generated/**", "**/generate-resources/**")
     reports {
         html.required.set(true)
         checkstyle.required.set(true)

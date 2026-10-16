@@ -48,6 +48,7 @@ class PersonopplysningerControllerTest {
             fødselsdato = "1984-01-01",
             dødsdato = null,
             navKontor = null,
+            pdlAktørId = "1234567890123",
         )
 
     @Test
@@ -68,6 +69,7 @@ class PersonopplysningerControllerTest {
             assertEquals("BARN", personInfo.familemedlemmer[0].rolle)
             assertEquals("Liten", personInfo.familemedlemmer[0].fornavn)
             assertEquals("syntetisk@example.com", personInfo.epost)
+            assertEquals("1234567890123", personInfo.pdlAktørId)
         }
 
     @Test
@@ -84,6 +86,7 @@ class PersonopplysningerControllerTest {
             assertInstanceOf(PersonInformasjonV1Dto::class.java, data)
             val v1Dto = data as PersonInformasjonV1Dto
             assertEquals(mapOf("11111111111" to "BARN"), v1Dto.familemedlemmer)
+            assertEquals("1234567890123", v1Dto.pdlAktørId)
         }
 
     @Test

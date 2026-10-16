@@ -95,7 +95,16 @@ class PersonopplysningerService(
 
         // RØD SONE: Ikke slå opp KRR før tilgang til denne personen er verifisert.
         if (brukertilgangService.harSaksbehandlerTilgangTilPersonIdent(personIdent)) {
-            beriketPersonopplysninger = beriketPersonopplysninger.copy(epost = krrClient.hentEpost(personIdent))
+            val pdlAktorIdResultat = pdlClient.hentPdlAktorId(personIdent)
+            val pdlAktorId = pdlAktorIdResultat.aktorId
+            if (pdlAktorId == null) {
+                logger.error("Kunne ikke hente PDL-aktør-ID, status={}", pdlAktorIdResultat.statusCode)
+            }
+            beriketPersonopplysninger =
+                beriketPersonopplysninger.copy(
+                    epost = krrClient.hentEpost(personIdent),
+                    pdlAktørId = pdlAktorId,
+                )
         } else {
             logger.info("Saksbehandler mangler full tilgang til personopplysninger. Maskerer responsen")
             beriketPersonopplysninger = maskerObjekt(beriketPersonopplysninger)
