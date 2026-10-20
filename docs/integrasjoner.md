@@ -82,7 +82,7 @@ flowchart TD
 ## PDL (Persondata)
 - Protokoll: GraphQL via Expediagroup-klient.
 - Endepunkt: `${PDL_URL}` (`/graphql`).
-- Headers: `Authorization: Bearer <token>`, `behandlingsnummer=B634`, `TEMA=KTR`.
+- Headers: `Authorization: Bearer <token>`, `behandlingsnummer=B980`, `TEMA=KTR`. Headeren `Permissive-Mode: true` sendes kun i `dev-gcp`; den utelates i andre miljøer.
 - Cache: `pdl-person` og `pdl-geografisktilknytning`.
 - Bruk: Henter persondata og geografisk tilknytning for oppslag og NAV-kontorberikelse.
 
