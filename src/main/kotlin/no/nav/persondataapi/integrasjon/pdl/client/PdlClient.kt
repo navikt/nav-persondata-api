@@ -217,7 +217,7 @@ class PdlClient(
     companion object CustomHeaders {
         const val BEHANDLINGSNUMMER = "behandlingsnummer"
         const val TEMA = "TEMA"
-        const val BEHANDLINGSNUMMER_VERDI = "B634"
+        const val BEHANDLINGSNUMMER_VERDI = "B980"
         const val TEMA_VERDI = "KTR"
         const val TIMEOUT_MOT_PDL = "Timeout mot PDL"
     }

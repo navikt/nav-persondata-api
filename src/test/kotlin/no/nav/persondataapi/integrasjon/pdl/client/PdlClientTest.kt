@@ -4,7 +4,9 @@ import com.expediagroup.graphql.client.spring.GraphQLWebClient
 import com.expediagroup.graphql.client.types.GraphQLClientError
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.post
+import com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import io.mockk.every
@@ -42,6 +44,13 @@ class PdlClientTest {
 
     private fun pdlGraphQLClient(baseUrl: String = "http://localhost:${wireMock.port()}/graphql") =
         GraphQLWebClient(url = baseUrl, builder = WebClient.builder())
+
+    private fun verifyBehandlingsnummer() {
+        wireMock.verify(
+            postRequestedFor(urlPathEqualTo("/graphql"))
+                .withHeader("behandlingsnummer", equalTo("B980")),
+        )
+    }
 
     @Test
     fun `håndterPdlFeil skal returnere 404 når error code er not_found`() {
@@ -108,6 +117,7 @@ class PdlClientTest {
             assertEquals(200, resultat.statusCode)
             assertEquals(1, resultat.data.size)
             assertEquals("ok", resultat.data[0].code)
+            verifyBehandlingsnummer()
             assertEquals(
                 "Barn",
                 resultat.data[0]
@@ -150,6 +160,44 @@ class PdlClientTest {
 
             assertEquals(200, resultat.statusCode)
             assertEquals("1234567890123", resultat.aktorId)
+            verifyBehandlingsnummer()
+        }
+
+    @Test
+    fun `hentPerson sender behandlingsnummer B980`() =
+        runBlocking {
+            wireMock.stubFor(
+                post(urlPathEqualTo("/graphql"))
+                    .willReturn(
+                        aResponse()
+                            .withStatus(200)
+                            .withHeader("Content-Type", "application/json")
+                            .withBody("""{"data":{"hentPerson":null}}"""),
+                    ),
+            )
+
+            PdlClient(tokenService, metrics, pdlGraphQLClient()).hentPerson(PersonIdent("11111111111"))
+
+            verifyBehandlingsnummer()
+        }
+
+    @Test
+    fun `hentGeografiskTilknytning sender behandlingsnummer B980`() =
+        runBlocking {
+            wireMock.stubFor(
+                post(urlPathEqualTo("/graphql"))
+                    .willReturn(
+                        aResponse()
+                            .withStatus(200)
+                            .withHeader("Content-Type", "application/json")
+                            .withBody("""{"data":{"hentGeografiskTilknytning":null}}"""),
+                    ),
+            )
+
+            PdlClient(tokenService, metrics, pdlGraphQLClient())
+                .hentGeografiskTilknytning(PersonIdent("11111111111"))
+
+            verifyBehandlingsnummer()
         }
 
     @Test

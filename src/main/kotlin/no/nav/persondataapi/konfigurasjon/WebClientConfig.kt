@@ -29,6 +29,8 @@ import java.util.UUID
 @Configuration
 class WebClientConfig(
     private val observationRegistry: ObservationRegistry,
+    @Value("\${NAIS_CLUSTER_NAME:local}")
+    private val naisClusterName: String,
 ) {
     @Bean
     fun webClientBuilder(strategies: ExchangeStrategies): WebClient.Builder =
@@ -320,6 +322,9 @@ class WebClientConfig(
             .defaultHeaders {
                 it.accept = listOf(MediaType.APPLICATION_JSON)
                 it.contentType = MediaType.APPLICATION_JSON
+                if (naisClusterName == "dev-gcp") {
+                    it.set("Permissive-Mode", "true")
+                }
             }.clientConnector(ReactorClientHttpConnector(pdlHttpClient))
             .observationConvention(convention)
             .filter(navCallIdHeaderFilter)
