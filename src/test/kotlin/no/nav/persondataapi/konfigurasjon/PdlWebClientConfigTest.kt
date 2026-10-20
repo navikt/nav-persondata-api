@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.core.env.MapPropertySource
+import org.springframework.core.env.StandardEnvironment
 import org.springframework.web.reactive.function.client.DefaultClientRequestObservationConvention
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
@@ -49,6 +50,8 @@ class PdlWebClientConfigTest {
                 )
 
                 val context = AnnotationConfigApplicationContext()
+                context.environment.propertySources.remove(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME)
+                context.environment.propertySources.remove(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME)
                 val properties =
                     mutableMapOf<String, Any>(
                         "PDL_URL" to "${wireMock.baseUrl()}/graphql",
@@ -67,7 +70,10 @@ class PdlWebClientConfigTest {
 
                     assertEquals(
                         testtilfelle.permissiveMode,
-                        wireMock.allServeEvents.single().request.getHeader("Permissive-Mode"),
+                        wireMock.allServeEvents
+                            .single()
+                            .request
+                            .getHeader("Permissive-Mode"),
                         "NAIS_CLUSTER_NAME=${testtilfelle.naisClusterName ?: "(mangler)"}",
                     )
                 } finally {
