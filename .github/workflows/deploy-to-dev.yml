@@ -53,14 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: nais/deploy/actions/deploy@v2
+      - uses: nais/deploy/actions/deploy@v3
         name: Deploy Unleash API-token
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/unleash-api-token.yaml
           VARS: .nais/dev.json
-      - uses: nais/deploy/actions/deploy@v2
+      - uses: nais/deploy/actions/deploy@v3
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
